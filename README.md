@@ -1,2 +1,2 @@
 # ScrabbleAR-Grupo22
-Integrantes : 
+Integrantes : Delmas Leonardo
