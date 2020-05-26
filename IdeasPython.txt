@@ -6,4 +6,4 @@ Como se donde poner las palabras?
 Cuando abrimos configuraciones , que se abra una ventana o que la pantalla principal
 cambie?
 En configuracion , se tendria que dejar al usuario cambiar los puntos de cada ficha?
-Prueba------ Prueba3 CAMBIO de MARCOOOOO
+Prueba------ Prueba3 
