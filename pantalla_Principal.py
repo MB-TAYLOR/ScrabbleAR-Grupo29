@@ -35,5 +35,6 @@ while True:
         break
     elif boton_cliqueado =='OPCIONES':
         print(boton_cliqueado)
+        window.close()
         #Aca abro la nueva ventana en el mismo lugar que la anterior , luego de cerrar la principal
         break
