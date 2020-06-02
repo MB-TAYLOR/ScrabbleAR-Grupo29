@@ -1,12 +1,17 @@
 import json
 import PySimpleGUI as sg
-import csv 
+from Opciones import Ventana_Opciones
+import csv
 
 #Aca Arranca La Pantalla Principal----------------------------------------------------------------------------------------------------------------------------------------------
-
-
+archivo_csv=open('Archivo_Opciones.csv','r')
+perfiles=csv.reader(archivo_csv)
+for perfil in perfiles:
+    if((len(perfil))>0):
+        perfil_Actual=perfil[0]
+archivo_csv.close()
 #Columnas
-columna_izquierda=[     [sg.Text("USUARIO:(USUARIO)")],  #Tomar el nombre del usuario del archivo que se deberia generar desde el menu opciones
+columna_izquierda=[     [sg.Text("USUARIO:"+str(perfil_Actual))],  #Tomar el nombre del usuario del archivo que se deberia generar desde el menu opciones
                         [sg.Button(button_text="JUGAR",size=(40,4),pad=(0,20))],
                         [sg.Button(button_text="OPCIONES",size=(40,4),pad=(0,20))],
                         [sg.Button(button_text="VER TOP 10",size=(40,4),pad=(0,20))],                          ]
@@ -34,7 +39,7 @@ while True:
         #Aca abro una ventana al lado de la principal
         break
     elif boton_cliqueado =='OPCIONES':
-        print(boton_cliqueado)
         window.close()
+        Ventana_Opciones()
         #Aca abro la nueva ventana en el mismo lugar que la anterior , luego de cerrar la principal
         break

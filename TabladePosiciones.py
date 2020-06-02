@@ -1,4 +1,4 @@
-import PySimpleGUI as sg 
+import PySimpleGUI as sg
 sg.ChangeLookAndFeel('BrownBlue') # change style
 
 WIN_W: int = 90
@@ -12,7 +12,7 @@ menu_layout: list = [[sg.Button('Total'), [file_open_Total]],
                      [sg.Button('Facil'),[file_open_Facil]],
                      [sg.Button('Medio'),[file_open_Medio]],
                      [sg.Button('Dificil'),[file_open_Dificil]]]
-            
+
 layout: list = [[sg.Menu(menu_layout)],
                 [sg.Text('> New file <', font=('Consolas', 10), size=(WIN_W, 1), key='_INFO_')],
                 [sg.Multiline(font=('Consolas', 12), size=(WIN_W, WIN_H), key='_BODY_')],

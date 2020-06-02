@@ -133,4 +133,5 @@ def Ventana_Opciones ():
 
 
 #PROGRAMA PRINCIPAL
-values = Ventana_Opciones()
+if __name__ == "__main__":
+    values = Ventana_Opciones()
