@@ -105,7 +105,6 @@ def Layout():
     return layout
 
 def Ventana_Opciones ():
-    sg.theme('DarkAmber')
     window = sg.Window('Opciones', Layout())
     while True:
         event, values = window.read()
@@ -129,7 +128,7 @@ def Ventana_Opciones ():
         if event in (None, 'Salir'):
             break
     window.close()
-    return values
+    return event
 
 
 #PROGRAMA PRINCIPAL
