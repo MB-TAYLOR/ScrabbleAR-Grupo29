@@ -6,7 +6,10 @@ WIN_H: int = 25
 filename:str = None
 
 # string variables to shorten loop and menu code
-file_open: str = 'Open..........(CTRL+O)'
+file_open_Total: str = ''
+file_open_Facil: str = ''
+file_open_Medio: str = ''
+file_open_Dificil: str = ''
 
 menu_layout: list = [[sg.Button('Total'), [file_open_Total]],
                      [sg.Button('Facil'),[file_open_Facil]],
