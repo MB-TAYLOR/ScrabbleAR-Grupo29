@@ -17,10 +17,10 @@ menu_layout: list = [[Total],
                      [Dificil]]
 
 layout: list = [[sg.Menu(menu_layout)],
-                [sg.Text('> New file <', font=('Consolas', 10), size=(WIN_W, 1), key='_INFO_')],
+                [sg.Text('', font=('Consolas', 10), size=(WIN_W, 1), key='_INFO_')],
                 [sg.Multiline(font=('Consolas', 12), size=(WIN_W, WIN_H), key='_BODY_')]]
 
-window: object = sg.Window('Notepad', layout=layout, margins=(0, 0), resizable=True, return_keyboard_events=True)
+window: object = sg.Window('Top', layout=layout, margins=(0, 0), resizable=True, return_keyboard_events=True)
 window.read(timeout=1)
 window.maximize()
 window['_BODY_'].expand(expand_x=True, expand_y=True)
