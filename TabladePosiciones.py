@@ -1,4 +1,4 @@
-import PySimpleGUI asimport PySimpleGUI as sg 
+import PySimpleGUI as sg 
 sg.ChangeLookAndFeel('BrownBlue') # change style
 
 WIN_W: int = 90
