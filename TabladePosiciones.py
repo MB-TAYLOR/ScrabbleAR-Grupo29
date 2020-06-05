@@ -10,11 +10,13 @@ Total: str = 'Total'
 Facil: str = 'Facil'
 Medio: str = 'Medio'
 Dificil: str = 'Dificil'
+Salir: str = 'Salir'
 
 menu_layout: list = [[Total],
                      [Facil],
                      [Medio],
-                     [Dificil]]
+                     [Dificil],
+                     [Salir]]
 
 layout: list = [[sg.Menu(menu_layout)],
                 [sg.Text('', font=('Consolas', 10), size=(WIN_W, 1), key='_INFO_')],
@@ -42,7 +44,7 @@ def open_file() -> str:
 while True:
     event, values = window.read()
 
-    if event in (None, 'Salir'):
+    if event in (Salir, 'o:79'):
         break
     if event in (Total, 'o:79'):
         filename = open_file(Puntajes_Total.txt)
