@@ -1,3 +1,5 @@
 30 turnos por jugador ,tiempo por turno 1 min      normal 60x2x30 seg
 30 turnos por jugador ,tiempo por turno 45 seg	   medio  45x2x30 seg
 30 turnos por jugador ,tiempo por turno 30 seg     dificil 30x2x30 seg
+
+Usar tablas para mejorar el TOP 10
