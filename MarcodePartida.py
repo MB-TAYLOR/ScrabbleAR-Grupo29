@@ -27,8 +27,8 @@ def generar_Pantalla():
     while True:
         event, values = window.read()
           if event in ('Pausar',None):
-           layout = [[sg.Text('¿Arrojas la toalla?')],
-                     [sg.exit(), sg.Cancel()]]      
+           layout = [[sg.Text('¿Reanudar?')],
+                     [, sg.Stop()]]      
             window = sg.Window('Pausa', layout)
          if event in ('Rendirse',None):
            layout = [[sg.Text('¿Arrojas la toalla?')],
