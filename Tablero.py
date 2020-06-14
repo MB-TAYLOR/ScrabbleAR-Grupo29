@@ -12,9 +12,9 @@ def Generar_Dicc():
 
 def Layout(Lista_Atril):
     MAX_ROWS = MAX_COL = 15
-    formato_fichas_cpu={'filename':r'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Ficha.png','size':(40,40),'pad':(7,3)  }
+    formato_fichas_cpu={'filename':r'd:\Users\usuario\Documents\GitHub\ScrabbleAR-Grupo29\Ficha.png','size':(40,40),'pad':(7,3)  }
 
-    formato_fichas_jugador={'font':('',25),'button_color':(None,'black'),'image_filename':r'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Ficha.png','image_size':(40,40),'pad':(7,3)  }
+    formato_fichas_jugador={'font':('',25),'button_color':(None,'black'),'image_filename':r'd:\Users\usuario\Documents\GitHub\ScrabbleAR-Grupo29\Ficha.png','image_size':(40,40),'pad':(7,3)  }
 
     Letra_1=Generador_de_letras()
     Lista_Atril.append(Letra_1)
@@ -38,7 +38,7 @@ def Layout(Lista_Atril):
                                        (sg.Image(**formato_fichas_cpu)),
                                        (sg.Image(**formato_fichas_cpu)),
                                        (sg.Image(**formato_fichas_cpu))],
-    [(sg.Image(filename=r'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Atril_back.png',pad=(20,3)))],
+    [(sg.Image(filename=r'd:\Users\usuario\Documents\GitHub\ScrabbleAR-Grupo29\Atril_back.png',pad=(20,3)))],
     [sg.Button('', size=(4, 2),key=(0,i),pad=(0,0))for i in range(MAX_ROWS)],
     [sg.Button('', size=(4, 2),key=(1,i),pad=(0,0))for i in range(MAX_ROWS)],
     [sg.Button('', size=(4, 2),key=(2,i),pad=(0,0))for i in range(MAX_ROWS)],
@@ -61,7 +61,7 @@ def Layout(Lista_Atril):
                             (sg.Button(button_text=Letra_5,key='4',**formato_fichas_jugador)),
                             (sg.Button(button_text=Letra_6,key='5',**formato_fichas_jugador)),
                             (sg.Button(button_text=Letra_7,key='6',**formato_fichas_jugador)) ],
-     [(sg.Image(filename=r'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Atril.png'))]]
+     [(sg.Image(filename=r'd:\Users\usuario\Documents\GitHub\ScrabbleAR-Grupo29\Atril.png'))]]
 
     return layout
 
