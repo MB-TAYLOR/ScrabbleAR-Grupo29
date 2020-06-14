@@ -1,5 +1,8 @@
 import PySimpleGUI as sg
 import csv
+import math
+import time
+from AiMaquina import Ai
 
 sg.ChangeLookAndFeel('BrownBlue') # change style
 def generar_Pantalla():
@@ -11,6 +14,16 @@ def generar_Pantalla():
 
     window: object = sg.Window('Top', layout=layout, margins=(0, 0), resizable=True, return_keyboard_events=True)
     
+    #run = raw_input("Start? > ")
+    def Timer(run,pausar,terminar)
+      secs = 0
+      if run == "start":
+      while (secs != 30) && (terminar != True):
+        if (pausar = True):
+          print(">>>>>>>>>>>>>>>>>>>>> {}".format(secs))
+          time.sleep(1)
+          secs += 1
+  
     def modificar_dato(filename,puntaje):
       filas = 10
       fila = 1
