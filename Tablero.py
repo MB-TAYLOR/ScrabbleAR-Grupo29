@@ -139,6 +139,8 @@ while True:
         break
     if (type(event) == str):     #Si event es una Letra:
         letra_1 = Lista_Atril[int(event)]
+        aux_letra_1= event
+        window[aux_letra_1].update(button_color=('#3CC839','#FDD357'))
         event = window.read()[0]
         if (type(event) != str): #Si event no es una letra(Por descarte tiene que ser una coordenada):
             Dicc[event] = letra_1
@@ -152,6 +154,7 @@ while True:
                 window[str(Pos_letra_2)].update(letra_1)
                 Lista_Atril[Pos_letra_1] = letra_2
                 Lista_Atril[Pos_letra_2] = letra_1
+        window[aux_letra_1].update(button_color=('black','#FDD357'))
     else:
          sg.popup('Hint: Primero selecciona una letra!',no_titlebar=True,background_color='Black',button_color=('Black','White'))
 print(Lista_Atril)
