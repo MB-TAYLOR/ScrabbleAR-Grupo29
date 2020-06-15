@@ -55,12 +55,11 @@ def Update_Tablero():
          "14,0":"white","14,1":"white","14,2":"white","14,3":"white","14,4":"blue","14,5":"white","14,6":"white","14,7":"white","14,8":"white","14,9":"white","14,10":"red","14,11":"white","14,12":"white","14,13":"white","14,14":"white",
              }
              ]
-    tablero_random=(Lista_Tableros[randint(0,2)])
+    tablero_random=(Lista_Tableros[randint(0,(len(Lista_Tableros)-1))])
     for x in range(15):
         for y in range(15):
             coord = (x,y)
             Pos_Dicc = str(x) + ',' + str(y)
-
             window[coord].update(button_color=('Black',str(tablero_random[Pos_Dicc])))
     return
 
