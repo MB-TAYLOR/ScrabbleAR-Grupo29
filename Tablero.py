@@ -158,7 +158,7 @@ def Acciones_Usuario(event,Dicc,Lista_Atril):
                 Lista_Atril[Pos_letra_2] = letra_1
         window[aux_letra_1].update(button_color=('black','#FDD357'))
     else:
-         sg.popup('Hint: Primero selecciona una letra!',no_titlebar=True,background_color='Black',button_color=('Black','White'))
+         sg.popup('Hint: Primero selecciona una letra!',no_titlebar=True,background_color='Black',button_color=('Black','White'),keep_on_top=True)
 
 #PROGRAMA PRINCIPAL
 #sg.theme('Black')
