@@ -60,6 +60,7 @@ def Update_Tablero():
         for y in range(15):
             coord = (x,y)
             Pos_Dicc = str(x) + ',' + str(y)
+
             window[coord].update(button_color=('Black',str(tablero_random[Pos_Dicc])))
     return
 
@@ -91,7 +92,7 @@ def Layout(Lista_Atril):
     Letra_7=Generador_de_letras()
     Lista_Atril.append(Letra_7)
 
-    layout =  [[sg.Text('',pad=(45,3)),(sg.Image(**formato_fichas_cpu)),
+    Layout_1 =  [[sg.Text('',pad=(45,3)),(sg.Image(**formato_fichas_cpu)),
                                        (sg.Image(**formato_fichas_cpu)),
                                        (sg.Image(**formato_fichas_cpu)),
                                        (sg.Image(**formato_fichas_cpu)),
@@ -123,20 +124,21 @@ def Layout(Lista_Atril):
                             (sg.Button(button_text=Letra_7,key='6',**formato_fichas_jugador)) ],
      [(sg.Image(filename=r'd:\Users\usuario\Documents\GitHub\ScrabbleAR-Grupo29\Atril.png'))]]
 
-    return layout
 
 
-#PROGRAMA PRINCIPAL
-#sg.theme('Black')
-Lista_Atril = []
-Dicc = Generar_Dicc()
-window = sg.Window('Tablero', Layout(Lista_Atril),location=(530,0))
-window.read(timeout=1)           #Es correcto esta solucion?(Hacer doble read?)
-Update_Tablero()
-while True:
-    event = window.read()[0]     #Leo solamente el "event" porque las "values" estan vacias,no sirven.
-    if event in (None, 'Exit'):  #Event puede ser una tupla con Coordenadas O una posicion de la letra seleccionada del atril
-        break
+
+    Layout_2 = [ [sg.Text('Tiempo Disponible',font=("impact",20))],[sg.Text('              30:00',font=("impact",20))],[sg.Text('Puntos CPU',font=("impact",20))],
+    [sg.Text('0',font=("impact",20))],[sg.Text('Puntos Usuario',font=("impact",20))],[sg.Text('0',font=("impact",20))],
+    [sg.Button(button_text='Pausar',size=(15,0),font=("default",20),pad=((5,0),(400,0)))],[sg.Button(button_text='Rendirse',size=(15,0),font=("default",20))],
+    [sg.Button(button_text='Salir',size=(15,0),font=("default",20))]
+
+
+
+                                                                                                                                        ]
+    return (Layout_1,Layout_2)
+
+
+def Acciones_Usuario(event,Dicc,Lista_Atril):
     if (type(event) == str):     #Si event es una Letra:
         letra_1 = Lista_Atril[int(event)]
         aux_letra_1= event
@@ -157,5 +159,27 @@ while True:
         window[aux_letra_1].update(button_color=('black','#FDD357'))
     else:
          sg.popup('Hint: Primero selecciona una letra!',no_titlebar=True,background_color='Black',button_color=('Black','White'))
+
+#PROGRAMA PRINCIPAL
+#sg.theme('Black')
+
+#Definimos la parte derecha del layout
+
+
+
+#Mezcla de las 2 partes
+Lista_Atril = []
+
+diseño=[     [sg.Column((Layout(Lista_Atril))[0]),sg.Column((Layout(Lista_Atril))[1])    ]      ]
+
+Dicc = Generar_Dicc()
+window = sg.Window('Tablero',diseño ,location=(530,0))
+window.read(timeout=1)           #Es correcto esta solucion?(Hacer doble read?)
+Update_Tablero()
+while True:
+    event = window.read()[0]     #Leo solamente el "event" porque las "values" estan vacias,no sirven.
+    if event in (None, 'Exit'):  #Event puede ser una tupla con Coordenadas O una posicion de la letra seleccionada del atril
+        break
+    Acciones_Usuario(event,Dicc,Lista_Atril)
 print(Lista_Atril)
 window.close()
