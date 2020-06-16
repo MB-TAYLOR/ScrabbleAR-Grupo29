@@ -176,7 +176,7 @@ window.read(timeout=1)           #Es correcto esta solucion?(Hacer doble read?)
 Update_Tablero()
 while True:
     event = window.read()[0]     #Leo solamente el "event" porque las "values" estan vacias,no sirven.
-    if event in (None, 'Exit'):  #Event puede ser una tupla con Coordenadas O una posicion de la letra seleccionada del atril
+    if event in (None, 'Salir'):  #Event puede ser una tupla con Coordenadas O una posicion de la letra seleccionada del atril
         break
     Acciones_Usuario(event,Dicc,Lista_Atril)
 print(Lista_Atril)
