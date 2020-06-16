@@ -46,3 +46,36 @@ tablero3={"0,0":"white","0,1":"white","0,2":"white","0,3":"white","0,4":"white",
           "13,0":"white","13,1":"white","13,2":"white","13,3":"white","13,4":"white","13,5":"white","13,6":"white","13,7":"white","13,8":"white","13,9":"white","13,10":"white","13,11":"white","13,12":"white","13,13":"white","13,14":"white",
           "14,0":"white","14,1":"white","14,2":"white","14,3":"white","14,4":"white","14,5":"white","14,6":"white","14,7":"white","14,8":"white","14,9":"white","14,10":"white","14,11":"white","14,12":"white","14,13":"white","14,14":"white",
           }
+
+
+import time
+
+def Timer(run,pausar,terminar,dificultad):
+    if(dificultad=="Facil"):
+        secs = 60*2*30
+    elif(dificultad=="Normal"):
+        secs=45*2*30
+    elif (dificultad =="Dificil"):
+        secs=30*2*30
+    if run == "start":
+        #Aca iria todo el codigo de el tablero
+        while (secs >= 0) & (terminar == False):
+            if (pausar == True):
+                #Aca iria el PopUp que pregunta si quieres pausar o no
+                    #Acciones a tomar cuando se pause
+                break#Esto no va (solo para que corra codigo)
+            elif (terminar == True):
+                    #Aca se deberia de cortar la ejecucion del programa , guardar la partida
+
+                break
+
+            if secs >= 60:
+                minutos = secs // 60
+                secs_print=secs % 60
+            print(">>>>>>>>>>>>>>>>>>>>> {}:{}".format(minutos,secs_print))  # se va a necesitar usar HILOS para poder mantener el timer andando durante toda la ejecucion
+            time.sleep(1)
+            secs -= 1
+
+
+pausa=False
+Timer("start",pausa,False,"Dificil")
