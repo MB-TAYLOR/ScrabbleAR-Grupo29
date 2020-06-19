@@ -10,7 +10,6 @@ MAX_ROWS = MAX_COL = 15
 def Fin_Tiempo(terminar):
     terminar[0] = True
 
-
 def Timer(run,pausar,terminar,dificultad):
     if(dificultad=="Facil"):
         secs = 60*2*30
@@ -25,8 +24,7 @@ def Timer(run,pausar,terminar,dificultad):
             if secs >= 60:
                 minutos = secs // 60
                 secs_print=secs % 60
-            window['Tiempo'].update("{}:{}".format(minutos,secs_print)) #NO SALE COMPLETO EN PANTALLA
-            print(">> {}:{}".format(minutos,secs_print))
+            window['Tiempo'].update("{}:{}".format(minutos,secs_print))
             time.sleep(1)
             secs -= 1
 
@@ -166,10 +164,10 @@ def Llenar_Atril(Lista_Atril):
             window[pos].update(Lista_Atril[pos])
 
 def Coord_Ocupada(LCO,event):
-    for coord in LCO:
-        if (event == coord):
-            return True
-    return False
+    if (event in LCO):
+        return True
+    else:
+        return False
 
 def Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril):
     Dicc[event] = letra_1
@@ -178,7 +176,26 @@ def Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril):
     window[pos_letra_1].update('')
     return Dicc
 
-def Acciones_Usuario(event,Dicc,Lista_Atril,LCO):
+def Coord_Adyacentes(coord):
+    x,y=coord
+    coord1=(x+1,y)
+    coord2=(x,y+1)
+    coord3=(x-1,y)
+    coord4=(x,y-1)
+    return coord1,coord2,coord3,coord4
+
+def Coord_Disponible(LCO,CCD):
+    for x in range(len(LCO)):
+        for y in Coord_Adyacentes(LCO[x]):
+            CCD.add(y)
+
+def Coord_Desbloqueada(CCD,event):
+    if (event in CCD):
+        return True
+    else:
+        return False
+
+def Acciones_Usuario(event,Dicc,Lista_Atril,LCO,CCD):
     if (type(event) == int) and (Lista_Atril[event] != ''):  #Si event es ENTERO #Event es la posicion de la letra pulsada
         letra_1 = Lista_Atril[event]
         pos_letra_1= event
@@ -189,9 +206,13 @@ def Acciones_Usuario(event,Dicc,Lista_Atril,LCO):
                 if (Dicc[(7,7)] == ''):
                     if (event == (7,7)):
                         Dicc = Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril)
+                        LCO.append(event)
+                        Coord_Disponible(LCO,CCD)
                 else:
-                    Dicc = Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril)
-                LCO.append(event)
+                    if Coord_Desbloqueada(CCD,event):
+                        Dicc = Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril)
+                        LCO.append(event)
+                        Coord_Disponible(LCO,CCD)
         else:
             letra_2 = Lista_Atril[event]
             pos_letra_2 = event
@@ -245,7 +266,6 @@ def Turno(Turno_Usuario):
 
 sg.theme('DarkBlue')
 Lista_Atril = []
-LCO = [] #Lista de Coordenadas Ocupadas
 Terminar = [False]
 Dicc = Generar_Dicc()
 diseño = [ [sg.Column((Layout_Tabla(Lista_Atril))),
@@ -257,14 +277,27 @@ Turno_Usuario = bool(random.getrandbits(1))
 Turno(Turno_Usuario)
 T=Thread(target=Timer,args=("start",False,Terminar,"Dificil"))
 T.start()
+Fin = False
+CCD=set() #Conjunto de Coordenadas  Disponibles
+LCO = []  #Lista de Coordenadas Ocupadas
 while True:
-    event = window.Read()[0]
-    if event in (None, 'Salir'):
+    while (Turno_Usuario): #Mientras sea el turno del usuario:
+        event = window.Read()[0]
+
+        if event in (None, 'Salir'):
+            Fin = True
+            break
+
+        Acciones_Usuario(event,Dicc,Lista_Atril,LCO,CCD)
+
+        if (event == 'Terminar turno'):
+            Llenar_Atril(Lista_Atril)
+            break
+    #while (Turno_Usuario == False):
+        #ACTUA LA MAQUINA
+    if Fin:
         Fin_Tiempo(Terminar)
         T.join()
         break
-    Acciones_Usuario(event,Dicc,Lista_Atril,LCO)
-    if (event == 'Terminar turno'):
-        Llenar_Atril(Lista_Atril)
-print(Lista_Atril)
+    Turno_Usuario = not Turno_Usuario
 window.close()
