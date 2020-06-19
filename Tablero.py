@@ -1,10 +1,15 @@
 import PySimpleGUI as sg
+import random
 from random import randint
 from Generadores import Generador_de_letras
 import time
 from threading import Thread
 
 MAX_ROWS = MAX_COL = 15
+
+def Fin_Tiempo(terminar):
+    terminar[0] = True
+
 
 def Timer(run,pausar,terminar,dificultad):
     if(dificultad=="Facil"):
@@ -14,13 +19,14 @@ def Timer(run,pausar,terminar,dificultad):
     elif (dificultad =="Dificil"):
         secs=30*2*30
     if run == "start":
-        while (secs >= 0) & (terminar == False):
+        while (secs >= 0) & (terminar[0] == False):
             if (pausar == True):
                 return(pausar)
             if secs >= 60:
                 minutos = secs // 60
                 secs_print=secs % 60
-            print(">>>>>>>>>>>>>>>>>>>>> {}:{}".format(minutos,secs_print))  # se va a necesitar usar HILOS para poder mantener el timer andando durante toda la ejecucion
+            window['Tiempo'].update("{}:{}".format(minutos,secs_print)) #NO SALE COMPLETO EN PANTALLA
+            print(">> {}:{}".format(minutos,secs_print))
             time.sleep(1)
             secs -= 1
 
@@ -94,15 +100,17 @@ def Generar_Dicc():
 def Layout_Columna():
 
     layout = [ [sg.Text('Tiempo Disponible',font=("impact",20))],
-               [sg.Text('              30:00',font=("impact",20))],
+               [sg.Text('30:00',pad=(70,3),font=("Bahnschrift",20),key=('Tiempo'))],
                [sg.Text('Puntos CPU',font=("impact",20))],
                [sg.Text('0',font=("impact",20))],
                [sg.Text('Puntos Usuario',font=("impact",20))],
                [sg.Text('0',font=("impact",20))],
-               [sg.Button(button_text='Saltar',size=(15,0),font=("Unispace",20),pad=((5,0),(330,0)))],
-               [sg.Button(button_text='Pausar',size=(15,0),font=("default",20))],
-               [sg.Button(button_text='Rendirse',size=(15,0),font=("default",20))],
-               [sg.Button(button_text='Salir',size=(15,0),font=("default",20))] ]
+               [sg.Button(button_text='Terminar turno',size=(15,0),font=("Unispace",20),pad=((5,0),(233,2)))],
+               [sg.Button(button_text='Validar',size=(15,0),font=("Unispace",20),pad=((5,0),(5,3)))],
+               [sg.Button(button_text='Intercambiar fichas',size=(15,0),font=("Unispace",20))],
+               [sg.Button(button_text='Pa',key='Pausar',font=("default",19),pad=((5,43),(5,3)) ),
+                sg.Button(button_text='Re',key='Rendirse',font=("default",19),pad=((5,42),(5,3)) ),
+                sg.Button(button_text='Sa',key='Salir',font=("default",19))] ]
 
     return layout
 
@@ -110,7 +118,7 @@ def Layout_Tabla(Lista_Atril):
     MAX_ROWS = MAX_COL = 15
     formato_fichas_cpu={'filename':r'd:\Users\usuario\Documents\GitHub\ScrabbleAR-Grupo29\Ficha.png','size':(40,40),'pad':(7,3)  }
 
-    formato_fichas_jugador={'font':('',25),'button_color':(None,'black'),'image_filename':r'd:\Users\usuario\Documents\GitHub\ScrabbleAR-Grupo29\Ficha.png','image_size':(40,40),'pad':(7,3)  }
+    #formato_fichas_jugador={'font':('',25),'button_color':(None,'black'),'image_filename':r'd:\Users\usuario\Documents\GitHub\ScrabbleAR-Grupo29\Ficha.png','image_size':(40,40),'pad':(7,3)  }
 
     Letra_1=Generador_de_letras()
     Lista_Atril.append(Letra_1)
@@ -138,26 +146,52 @@ def Layout_Tabla(Lista_Atril):
 
     layout.extend([[sg.Button('', size=(4, 2),key=(i,j),pad=(0,0))for j in range(MAX_COL)] for i in range(MAX_ROWS)])
 
-    layout.extend([[sg.Text('',key='texto2',pad=(35,3)),(sg.Button(button_text=Letra_1,key=0,**formato_fichas_jugador)),
-                                                        (sg.Button(button_text=Letra_2,key=1,**formato_fichas_jugador)),
-                                                        (sg.Button(button_text=Letra_3,key=2,**formato_fichas_jugador)),
-                                                        (sg.Button(button_text=Letra_4,key=3,**formato_fichas_jugador)),
-                                                        (sg.Button(button_text=Letra_5,key=4,**formato_fichas_jugador)),
-                                                        (sg.Button(button_text=Letra_6,key=5,**formato_fichas_jugador)),
-                                                        (sg.Button(button_text=Letra_7,key=6,**formato_fichas_jugador))],
+    layout.extend([[sg.Text('',key='texto2',pad=(28,3)),
+                    (sg.Button(button_text=Letra_1,key=0,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'))),
+                    (sg.Button(button_text=Letra_2,key=1,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'))),
+                    (sg.Button(button_text=Letra_3,key=2,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'))),
+                    (sg.Button(button_text=Letra_4,key=3,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'))),
+                    (sg.Button(button_text=Letra_5,key=4,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'))),
+                    (sg.Button(button_text=Letra_6,key=5,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'))),
+                    (sg.Button(button_text=Letra_7,key=6,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357')))],
                     [(sg.Image(filename=r'd:\Users\usuario\Documents\GitHub\ScrabbleAR-Grupo29\Atril.png',key='texto'))]])
 
     return layout
 
-def Acciones_Usuario(event,Dicc,Lista_Atril):
-    if (type(event) == int):     #Si event es ENTERO #Event es la posicion de la letra pulsada
+def Llenar_Atril(Lista_Atril):
+    #Falta una condicion de fin de turno para que se llenen las fichas
+    for pos in range(len(Lista_Atril)):
+        if (Lista_Atril[pos] == ''):
+            Lista_Atril[pos] = Generador_de_letras()
+            window[pos].update(Lista_Atril[pos])
+
+def Coord_Ocupada(LCO,event):
+    for coord in LCO:
+        if (event == coord):
+            return True
+    return False
+
+def Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril):
+    Dicc[event] = letra_1
+    window[event].update(letra_1,button_color=('black','#FDD357'))
+    Lista_Atril[pos_letra_1] = ''
+    window[pos_letra_1].update('')
+    return Dicc
+
+def Acciones_Usuario(event,Dicc,Lista_Atril,LCO):
+    if (type(event) == int) and (Lista_Atril[event] != ''):  #Si event es ENTERO #Event es la posicion de la letra pulsada
         letra_1 = Lista_Atril[event]
         pos_letra_1= event
-        window[pos_letra_1].update(button_color=('#3CC839','#FDD357'))
+        window[pos_letra_1].update(button_color=('white','#57C3FD'))
         event = window.read()[0]
-        if (type(event) != int): #Si event no es una letra(Por descarte tiene que ser una coordenada):
-            Dicc[event] = letra_1
-            window[event].update(str(letra_1),button_color=('black','#FDD357'))
+        if (type(event) != int):                            #Si event es coordenada Y no esta ocupada:
+            if (Coord_Ocupada(LCO,event) == False):         #event es en donde quiero poner la ficha
+                if (Dicc[(7,7)] == ''):
+                    if (event == (7,7)):
+                        Dicc = Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril)
+                else:
+                    Dicc = Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril)
+                LCO.append(event)
         else:
             letra_2 = Lista_Atril[event]
             pos_letra_2 = event
@@ -169,24 +203,68 @@ def Acciones_Usuario(event,Dicc,Lista_Atril):
         window[pos_letra_1].update(button_color=('black','#FDD357'))
     else:
         if (type(event) == tuple):
-            sg.popup('Ayuda: Primero selecciona una letra!',no_titlebar=True,background_color='Black',button_color=('Black','White'),keep_on_top=True)
+            if Coord_Ocupada(LCO,event): #Si la coordenada esta ocupada:
+                if (event != (7,7)):
+                    coord = event
+                    window[coord].update(button_color=('white','#57C3FD'))
+                    event = window.read()[0]
+                    if (type(event) == int):
+                        if (Lista_Atril[event] == ''): #FichaTablero x FichaAtrilVacia
+                            Lista_Atril[event] = Dicc[coord]
+                            window[coord].update('',button_color=('white','white')) #Temporal(Tengo que actualizar el dicc con los colores D:)
+                            window[event].update(Dicc[coord])
+                            Dicc[coord] = ''
+                            LCO.remove(coord)
+                        else: #FichaTablero x FichaAtril
+                            window[coord].update(button_color=('black','#FDD357'))
+                    else:
+                        if Coord_Ocupada(LCO,event): #FichaTablero x FichaTablero:
+                            aux = Dicc[event]
+                            Dicc[event] = Dicc[coord]
+                            Dicc[coord] = aux
+                            window[event].update(Dicc[event])
+                            window[coord].update(aux)
+                            window[coord].update(button_color=('black','#FDD357'))
+                        else:                        #FichaTablero x TableroVacio:
+                            Dicc[event] = Dicc[coord]
+                            Dicc[coord] = ''
+                            window[coord].update('',button_color=('white','white')) #Temporal
+                            window[event].update(Dicc[event],button_color=('black','#FDD357'))
+                            LCO.remove(coord)
+                            LCO.append(event)
+            else:
+                sg.popup('Primero selecciona una letra!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True)
+
+def Turno(Turno_Usuario):
+    if Turno_Usuario:
+        sg.popup('Estas Listo?\nEmpiezas tu',custom_text="Si,lo estoy",no_titlebar=True,keep_on_top=True)
+    else:
+        sg.popup('Estas Listo?\nEmpieza la IA',custom_text="Si,lo estoy",no_titlebar=True,keep_on_top=True)
 
 #PROGRAMA PRINCIPAL
-sg.theme('DarkBlack1')
+
+sg.theme('DarkBlue')
 Lista_Atril = []
-diseño = [ [sg.Column((Layout_Tabla(Lista_Atril))),
-           sg.Column(Layout_Columna())] ]
+LCO = [] #Lista de Coordenadas Ocupadas
+Terminar = [False]
 Dicc = Generar_Dicc()
-window = sg.Window('Tablero',diseño ,location=(530,0))
+diseño = [ [sg.Column((Layout_Tabla(Lista_Atril))),
+            sg.Column(Layout_Columna())] ]
+window = sg.Window('Tablero',diseño ,location=(400,0))
 window.read(timeout=1)           #Es correcto esta solucion?(Hacer doble read?)
 Update_Tablero()
-#sg.popup('Estas Listo?',custom_text="Si,lo estoy",no_titlebar=True,keep_on_top=True)
-#T=Thread(target=Timer,args=("start",False,False,"Dificil"))
-#T.start()
+Turno_Usuario = bool(random.getrandbits(1))
+Turno(Turno_Usuario)
+T=Thread(target=Timer,args=("start",False,Terminar,"Dificil"))
+T.start()
 while True:
     event = window.Read()[0]
     if event in (None, 'Salir'):
-        #T.join()
+        Fin_Tiempo(Terminar)
+        T.join()
         break
-    Acciones_Usuario(event,Dicc,Lista_Atril)
+    Acciones_Usuario(event,Dicc,Lista_Atril,LCO)
+    if (event == 'Terminar turno'):
+        Llenar_Atril(Lista_Atril)
+print(Lista_Atril)
 window.close()
