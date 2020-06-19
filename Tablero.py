@@ -195,6 +195,26 @@ def Coord_Desbloqueada(CCD,event):
     else:
         return False
 
+def Eliminar_Coords(CCD,coord):
+    if (coord != (0,0)) and (coord != (14,14)) and (coord != (14,0)) and (coord != (0,14)):
+        CCD.discard(((coord[0]-1),coord[1]))     #Arriba
+        CCD.discard((coord[0],(coord[1]+1)))     #Derecha
+        CCD.discard(((coord[0]+1),coord[1]))     #Abajo
+        CCD.discard((coord[0],(coord[1]-1)))     #Izquierda
+    else:
+        if (coord == (0,0)):
+            CCD.discard((coord[0],(coord[1]+1)))     #Derecha
+            CCD.discard(((coord[0]+1),coord[1]))     #Abajo
+        elif (coord == (14,14)):
+            CCD.discard(((coord[0]-1),coord[1]))     #Arriba
+            CCD.discard((coord[0],(coord[1]-1)))     #Izquierda
+        elif (coord == (14,0)):
+            CCD.discard(((coord[0]-1),coord[1]))     #Arriba
+            CCD.discard((coord[0],(coord[1]+1)))     #Derecha
+        elif (coord == (0,14)):
+            CCD.discard(((coord[0]+1),coord[1]))     #Abajo
+            CCD.discard((coord[0],(coord[1]-1)))     #Izquierda
+
 def Acciones_Usuario(event,Dicc,Lista_Atril,LCO,CCD):
     if (type(event) == int) and (Lista_Atril[event] != ''):  #Si event es ENTERO #Event es la posicion de la letra pulsada
         letra_1 = Lista_Atril[event]
@@ -239,20 +259,28 @@ def Acciones_Usuario(event,Dicc,Lista_Atril,LCO,CCD):
                         else: #FichaTablero x FichaAtril
                             window[coord].update(button_color=('black','#FDD357'))
                     else:
-                        if Coord_Ocupada(LCO,event): #FichaTablero x FichaTablero:
-                            aux = Dicc[event]
-                            Dicc[event] = Dicc[coord]
-                            Dicc[coord] = aux
-                            window[event].update(Dicc[event])
-                            window[coord].update(aux)
+                        if (event != (7,7)):
+                            if Coord_Ocupada(LCO,event): #FichaTablero x FichaTablero:
+                                aux = Dicc[event]
+                                Dicc[event] = Dicc[coord]
+                                Dicc[coord] = aux
+                                window[event].update(Dicc[event])
+                                window[coord].update(aux)
+                                window[coord].update(button_color=('black','#FDD357'))
+                            else:                        #FichaTablero x TableroVacio:
+                                if Coord_Desbloqueada(CCD,event):
+                                    Dicc[event] = Dicc[coord]
+                                    Dicc[coord] = ''
+                                    window[coord].update('',button_color=('white','white')) #Temporal
+                                    window[event].update(Dicc[event],button_color=('black','#FDD357'))
+                                    LCO.remove(coord)
+                                    LCO.append(event)
+                                    Coord_Disponible(LCO,CCD)
+                                    Eliminar_Coords(CCD,coord)
+                                else:
+                                    window[coord].update(button_color=('black','#FDD357'))
+                        else:
                             window[coord].update(button_color=('black','#FDD357'))
-                        else:                        #FichaTablero x TableroVacio:
-                            Dicc[event] = Dicc[coord]
-                            Dicc[coord] = ''
-                            window[coord].update('',button_color=('white','white')) #Temporal
-                            window[event].update(Dicc[event],button_color=('black','#FDD357'))
-                            LCO.remove(coord)
-                            LCO.append(event)
             else:
                 sg.popup('Primero selecciona una letra!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True)
 
