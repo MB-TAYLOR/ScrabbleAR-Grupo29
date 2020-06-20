@@ -278,7 +278,7 @@ def Turno(Turno_Usuario):
 
 #PROGRAMA PRINCIPAL
 def genero_Tablero():
-    sg.theme('DarkBlue')
+    
     Lista_Atril = []
     Terminar = [False]
     Dicc = Generar_Dicc()

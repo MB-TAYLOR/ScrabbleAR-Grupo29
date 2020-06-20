@@ -30,7 +30,7 @@ def establezco_PP(nombre):
     diseño=[        [sg.Column(columna_izquierda),sg.Column(columna_derecha)]       ]
 
 #Aplico y muestro
-
+    sg.theme('DarkBlue')
     window = sg.Window('Pantalla Principal',diseño,location=(540,100),size=(1035,650))
     boton_cliqueado,datos_ingresados=window.Read()
     while True:
