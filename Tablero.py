@@ -277,8 +277,7 @@ def Turno(Turno_Usuario):
         sg.popup('Estas Listo?\nEmpieza la IA',custom_text="Si,lo estoy",no_titlebar=True,keep_on_top=True)
 
 #PROGRAMA PRINCIPAL
-def genero_Tablero():
-    
+def genero_Tablero():    
     Lista_Atril = []
     Terminar = [False]
     Dicc = Generar_Dicc()

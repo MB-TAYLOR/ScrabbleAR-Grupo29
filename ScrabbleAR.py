@@ -23,14 +23,14 @@ def establezco_PP(nombre):
                             [sg.Button(button_text="OPCIONES",size=(40,4),pad=(0,20))],
                             [sg.Button(button_text="VER TOP 10",size=(40,4),pad=(0,20))],            ]
 
-    columna_derecha=[       [sg.Text("ESCRABBLE-AR",font=("default",40),pad=(130,0))],
+    columna_derecha=[       [sg.Text("SCRABBLE-AR",font=("default",40),pad=(130,0))],
                             [sg.Button(button_text="SALIR",size=(10,3),pad=((550,0),(510,0)))]       ]
 
 #Diseño
     diseño=[        [sg.Column(columna_izquierda),sg.Column(columna_derecha)]       ]
 
 #Aplico y muestro
-    sg.theme('DarkBlue')
+
     window = sg.Window('Pantalla Principal',diseño,location=(540,100),size=(1035,650))
     boton_cliqueado,datos_ingresados=window.Read()
     while True:
@@ -38,7 +38,6 @@ def establezco_PP(nombre):
             break
         elif boton_cliqueado == 'JUGAR':
             #Aca abro la nueva ventana en el mismo lugar que la anterior , luego de cerrar la principal
-
             window.close()
             if(genero_Tablero()in(None,'Salir')):
                 establezco_PP(obtengo_Perfil())
