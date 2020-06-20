@@ -2,9 +2,11 @@ import json
 import PySimpleGUI as sg
 from Opciones import Ventana_Opciones
 from TabladePosiciones import genero_Top
+from Tablero import genero_Tablero
 import csv
 
 #Aca Arranca La Pantalla Principal----------------------------------------------------------------------------------------------------------------------------------------------
+
 def obtengo_Perfil():                                #Busco el nombre del ultimo usuario registrado
     archivo_csv=open('Archivo_Opciones.csv','r')
     perfiles=csv.reader(archivo_csv)
@@ -36,8 +38,10 @@ def establezco_PP(nombre):
             break
         elif boton_cliqueado == 'JUGAR':
             #Aca abro la nueva ventana en el mismo lugar que la anterior , luego de cerrar la principal
-            print(boton_cliqueado)
+
             window.close()
+            if(genero_Tablero()in(None,'Salir')):
+                establezco_PP(obtengo_Perfil())
             break
         elif boton_cliqueado =='VER TOP 10':
             #Aca abro la nueva ventana en el mismo lugar que la anterior , luego de cerrar la principal

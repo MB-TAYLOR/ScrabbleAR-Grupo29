@@ -10,7 +10,7 @@ MAX_ROWS = MAX_COL = 15
 def Fin_Tiempo(terminar):
     terminar[0] = True
 
-def Timer(run,pausar,terminar,dificultad):
+def Timer(run,pausar,terminar,dificultad,window):  #No anda cuando es importado , solo anda si se ejecuta el tablero como __main__
     if(dificultad=="Facil"):
         secs = 60*2*30
     elif(dificultad=="Normal"):
@@ -28,7 +28,7 @@ def Timer(run,pausar,terminar,dificultad):
             time.sleep(1)
             secs -= 1
 
-def Update_Tablero():
+def Update_Tablero(window):
     Lista_Tableros=[
         {"0,0":"white","0,1":"white","0,2":"red","0,3":"white","0,4":"green","0,5":"white","0,6":"white","0,7":"white","0,8":"white","0,9":"white","0,10":"green","0,11":"white","0,12":"red","0,13":"white","0,14":"white",
          "1,0":"white","1,1":"green","1,2":"white","1,3":"white","1,4":"white","1,5":"orange","1,6":"white","1,7":"blue","1,8":"white","1,9":"orange","1,10":"white","1,11":"white","1,12":"white","1,13":"green","1,14":"white",
@@ -84,9 +84,8 @@ def Update_Tablero():
         for y in range(15):
             coord = (x,y)
             Pos_Dicc = str(x) + ',' + str(y)
-
             window[coord].update(button_color=('Black',str(tablero_random[Pos_Dicc])))
-    return
+
 
 def Generar_Dicc():
     Dicc = {}
@@ -117,7 +116,7 @@ def Layout_Tabla(Lista_Atril):
     formato_fichas_cpu={'filename':r'd:\Users\usuario\Documents\GitHub\ScrabbleAR-Grupo29\Ficha.png','size':(40,40),'pad':(7,3)  }
 
     #formato_fichas_jugador={'font':('',25),'button_color':(None,'black'),'image_filename':r'd:\Users\usuario\Documents\GitHub\ScrabbleAR-Grupo29\Ficha.png','image_size':(40,40),'pad':(7,3)  }
-
+    #Para luego reemplazar los colores dados por el boton con imagenes
     Letra_1=Generador_de_letras()
     Lista_Atril.append(Letra_1)
     Letra_2=Generador_de_letras()
@@ -156,8 +155,7 @@ def Layout_Tabla(Lista_Atril):
 
     return layout
 
-def Llenar_Atril(Lista_Atril):
-    #Falta una condicion de fin de turno para que se llenen las fichas
+def Llenar_Atril(Lista_Atril,window):
     for pos in range(len(Lista_Atril)):
         if (Lista_Atril[pos] == ''):
             Lista_Atril[pos] = Generador_de_letras()
@@ -169,7 +167,7 @@ def Coord_Ocupada(LCO,event):
     else:
         return False
 
-def Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril):
+def Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril,window):
     Dicc[event] = letra_1
     window[event].update(letra_1,button_color=('black','#FDD357'))
     Lista_Atril[pos_letra_1] = ''
@@ -196,13 +194,14 @@ def Coord_Desbloqueada(CCD,event):
         return False
 
 def Eliminar_Coords(CCD,coord):
+    '''Elimina Coordenadas.'''
     CCD.discard(((coord[0]-1),coord[1]))     #Arriba
     CCD.discard((coord[0],(coord[1]+1)))     #Derecha
     CCD.discard(((coord[0]+1),coord[1]))     #Abajo
     CCD.discard((coord[0],(coord[1]-1)))     #Izquierda
 
 
-def Acciones_Usuario(event,Dicc,Lista_Atril,LCO,CCD):
+def Acciones_Usuario(event,Dicc,Lista_Atril,LCO,CCD,window):
     if (type(event) == int) and (Lista_Atril[event] != ''):  #Si event es ENTERO #Event es la posicion de la letra pulsada
         letra_1 = Lista_Atril[event]
         pos_letra_1= event
@@ -212,12 +211,12 @@ def Acciones_Usuario(event,Dicc,Lista_Atril,LCO,CCD):
             if (Coord_Ocupada(LCO,event) == False):         #event es en donde quiero poner la ficha
                 if (Dicc[(7,7)] == ''):
                     if (event == (7,7)):
-                        Dicc = Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril)
+                        Dicc = Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril,window)
                         LCO.append(event)
                         Coord_Disponible(LCO,CCD)
                 else:
                     if Coord_Desbloqueada(CCD,event):
-                        Dicc = Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril)
+                        Dicc = Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril,window)
                         LCO.append(event)
                         Coord_Disponible(LCO,CCD)
         else:
@@ -278,41 +277,42 @@ def Turno(Turno_Usuario):
         sg.popup('Estas Listo?\nEmpieza la IA',custom_text="Si,lo estoy",no_titlebar=True,keep_on_top=True)
 
 #PROGRAMA PRINCIPAL
-
-sg.theme('DarkBlue')
-Lista_Atril = []
-Terminar = [False]
-Dicc = Generar_Dicc()
-diseño = [ [sg.Column((Layout_Tabla(Lista_Atril))),
-            sg.Column(Layout_Columna())] ]
-window = sg.Window('Tablero',diseño ,location=(400,0))
-window.read(timeout=1)           #Es correcto esta solucion?(Hacer doble read?)
-Update_Tablero()
-Turno_Usuario = bool(random.getrandbits(1))
-Turno(Turno_Usuario)
-T=Thread(target=Timer,args=("start",False,Terminar,"Dificil"))
-T.start()
-Fin = False
-CCD=set() #Conjunto de Coordenadas  Disponibles
-LCO = []  #Lista de Coordenadas Ocupadas
-while True:
-    while (Turno_Usuario): #Mientras sea el turno del usuario:
-        event = window.Read()[0]
-
-        if event in (None, 'Salir'):
-            Fin = True
+def genero_Tablero():
+    sg.theme('DarkBlue')
+    Lista_Atril = []
+    Terminar = [False]
+    Dicc = Generar_Dicc()
+    diseño = [ [sg.Column((Layout_Tabla(Lista_Atril))),
+                sg.Column(Layout_Columna())] ]
+    window = sg.Window('Tablero',diseño ,location=(400,0))
+    window.read(timeout=1)           #Es correcto esta solucion?(Hacer doble read?)
+    Update_Tablero(window)
+    Turno_Usuario = bool(random.getrandbits(1))
+    Turno(Turno_Usuario)
+#    T=Thread(target=Timer,args=("start",False,Terminar,"Dificil",window))
+#    T.start()
+    Fin = False
+    CCD=set() #Conjunto de Coordenadas  Disponibles
+    LCO = []  #Lista de Coordenadas Ocupadas
+    while True:
+        while (Turno_Usuario): #Mientras sea el turno del usuario:
+            event = window.Read()[0]
+            if event in (None, 'Salir'):
+                Fin = True
+                break
+            Acciones_Usuario(event,Dicc,Lista_Atril,LCO,CCD,window)
+            if (event == 'Terminar turno'):
+                Llenar_Atril(Lista_Atril,window)
+                break
+        #while (Turno_Usuario == False):
+            #ACTUA LA MAQUINA
+        if Fin:
+            Fin_Tiempo(Terminar)
+#            T.join()
             break
-
-        Acciones_Usuario(event,Dicc,Lista_Atril,LCO,CCD)
-
-        if (event == 'Terminar turno'):
-            Llenar_Atril(Lista_Atril)
-            break
-    #while (Turno_Usuario == False):
-        #ACTUA LA MAQUINA
-    if Fin:
-        Fin_Tiempo(Terminar)
-        T.join()
-        break
-    Turno_Usuario = not Turno_Usuario
-window.close()
+        Turno_Usuario = not Turno_Usuario
+    window.close()
+    return(event)
+#ProgramaPrincipal-------------
+if __name__ == "__main__":
+    genero_Tablero()
