@@ -196,24 +196,11 @@ def Coord_Desbloqueada(CCD,event):
         return False
 
 def Eliminar_Coords(CCD,coord):
-    if (coord != (0,0)) and (coord != (14,14)) and (coord != (14,0)) and (coord != (0,14)):
-        CCD.discard(((coord[0]-1),coord[1]))     #Arriba
-        CCD.discard((coord[0],(coord[1]+1)))     #Derecha
-        CCD.discard(((coord[0]+1),coord[1]))     #Abajo
-        CCD.discard((coord[0],(coord[1]-1)))     #Izquierda
-    else:
-        if (coord == (0,0)):
-            CCD.discard((coord[0],(coord[1]+1)))     #Derecha
-            CCD.discard(((coord[0]+1),coord[1]))     #Abajo
-        elif (coord == (14,14)):
-            CCD.discard(((coord[0]-1),coord[1]))     #Arriba
-            CCD.discard((coord[0],(coord[1]-1)))     #Izquierda
-        elif (coord == (14,0)):
-            CCD.discard(((coord[0]-1),coord[1]))     #Arriba
-            CCD.discard((coord[0],(coord[1]+1)))     #Derecha
-        elif (coord == (0,14)):
-            CCD.discard(((coord[0]+1),coord[1]))     #Abajo
-            CCD.discard((coord[0],(coord[1]-1)))     #Izquierda
+    CCD.discard(((coord[0]-1),coord[1]))     #Arriba
+    CCD.discard((coord[0],(coord[1]+1)))     #Derecha
+    CCD.discard(((coord[0]+1),coord[1]))     #Abajo
+    CCD.discard((coord[0],(coord[1]-1)))     #Izquierda
+
 
 def Acciones_Usuario(event,Dicc,Lista_Atril,LCO,CCD):
     if (type(event) == int) and (Lista_Atril[event] != ''):  #Si event es ENTERO #Event es la posicion de la letra pulsada
