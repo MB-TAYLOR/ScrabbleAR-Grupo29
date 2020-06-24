@@ -2,7 +2,7 @@ import itertools as it
 from pattern.es import spelling,lexicon,parse
 
 Tipo= {'adj':["AO", "JJ","AQ","DI","DT"],
-'sus':["NC", "NCS","NCP", "NNS","NP", "NNP","W"],#Borre el sus "NN" para que ande 
+'sus':["NC", "NCS","NCP", "NNS","NP", "NNP","W"],#Borre el sus "NN" para que ande
 'verb':[ "VAG", "VBG", "VAI","VAN", "MD", "VAS" , "VMG" , "VMI", "VB", "VMM" ,"VMN" , "VMP", "VBN","VMS","VSG", "VSI","VSN", "VSP","VSS" ]
 }
 
@@ -20,7 +20,7 @@ def verificar_Medio_Dificil(palabra,existe):
 def verificar_Palabra(palabra,dificultad):
     existe=False
     palabra=palabra.lower()
-    if(len(palabra)>2):
+    if(len(palabra)>=2):
         if (dificultad=="Facil"):
             for x in range(len(Tipo['sus'])):
                 if(parse(palabra).split("/")[1]==Tipo['sus'][x]):
@@ -36,4 +36,4 @@ def verificar_Palabra(palabra,dificultad):
 
  #---------Porgrama Principal---
 if __name__ == '__main__':
-    print(verificar_Palabra("pelota","Facil"))
+    print(verificar_Palabra("si","Facil"))
