@@ -266,7 +266,7 @@ def Turno(Turno_Usuario):
     else:
         sg.popup('Estas Listo?\nEmpieza la IA',custom_text="Si,lo estoy",no_titlebar=True,keep_on_top=True)
 
-def Validar(Palabra):
+def Validar(Palabra,LCOPR,Dicc):
     if len(LCOPR) > 1:
         if (LCOPR[0][0] == LCOPR[1][0]): #Si entra la palabra formada esta en Horizontal
             LCOPR = sorted(LCOPR, key=lambda tup: tup[1])
@@ -313,11 +313,11 @@ def genero_Tablero():
             Acciones_Usuario(event,Dicc,Lista_Atril,LCO,LCOPR,CCD,window)
 
             if (event == 'Validar'):
-                Palabra = Validar(Palabra)
+                Palabra = Validar(Palabra,LCOPR,Dicc)
 
             elif (event == 'Terminar turno'):
                 if (Palabra == '') and (LCOPR != []):
-                    Palabra = Validar(Palabra)
+                    Palabra = Validar(Palabra,LCOPR,Dicc)
                 #Faltaria calcular el puntaje y actualizar el puntajeUsuario en pantalla
                 Llenar_Atril(Lista_Atril,window)
                 break
