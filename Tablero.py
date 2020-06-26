@@ -1,34 +1,17 @@
-import PySimpleGUI as sg
-import random
-from random import randint
+from palabra_Existe import verificar_Palabra
 from Generadores import Generador_de_letras
-import time
 from threading import Thread
+import PySimpleGUI as sg
+from random import randint
+import random
+import time
 
 MAX_ROWS = MAX_COL = 15
 
 def Fin_Tiempo(terminar):
     terminar[0] = True
 
-def Timer(run,pausar,terminar,dificultad,window):  #No anda cuando es importado , solo anda si se ejecuta el tablero como __main__
-    if(dificultad=="Facil"):
-        secs = 60*2*30
-    elif(dificultad=="Normal"):
-        secs=45*2*30
-    elif (dificultad =="Dificil"):
-        secs=30*2*30
-    if run == "start":
-        while (secs >= 0) & (terminar[0] == False):
-            if (pausar == True):
-                return(pausar)
-            if secs >= 60:
-                minutos = secs // 60
-                secs_print=secs % 60
-            window['Tiempo'].update("{}:{}".format(minutos,secs_print))
-            time.sleep(1)
-            secs -= 1
-
-def Update_Tablero(window):
+def Update_Tablero(window,Dicc):
     Lista_Tableros=[
         {"0,0":"white","0,1":"white","0,2":"red","0,3":"white","0,4":"green","0,5":"white","0,6":"white","0,7":"white","0,8":"white","0,9":"white","0,10":"green","0,11":"white","0,12":"red","0,13":"white","0,14":"white",
          "1,0":"white","1,1":"green","1,2":"white","1,3":"white","1,4":"white","1,5":"yellow","1,6":"white","1,7":"blue","1,8":"white","1,9":"yellow","1,10":"white","1,11":"white","1,12":"white","1,13":"green","1,14":"white",
@@ -79,19 +62,21 @@ def Update_Tablero(window):
          "14,0":"white","14,1":"white","14,2":"white","14,3":"white","14,4":"blue","14,5":"white","14,6":"white","14,7":"white","14,8":"white","14,9":"white","14,10":"red","14,11":"white","14,12":"white","14,13":"white","14,14":"white",
              }
              ]
-    tablero_random=(Lista_Tableros[randint(0,(len(Lista_Tableros)-1))])
+    num = randint(0,(len(Lista_Tableros)-1))
+    tablero_random=(Lista_Tableros[num])
     for x in range(15):
         for y in range(15):
             coord = (x,y)
             Pos_Dicc = str(x) + ',' + str(y)
+            Dicc[coord][1] = tablero_random[Pos_Dicc]
             window[coord].update(button_color=('Black',str(tablero_random[Pos_Dicc])))
-
+    return Dicc
 
 def Generar_Dicc():
     Dicc = {}
     for j in range(MAX_COL):
         for i in range(MAX_ROWS):
-            Dicc[(j,i)] = ''
+            Dicc[(j,i)] = ['','White']
     return Dicc
 
 def Layout_Columna():
@@ -168,7 +153,7 @@ def Coord_Ocupada(LCO,event):
         return False
 
 def Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril,window):
-    Dicc[event] = letra_1
+    Dicc[event][0] = letra_1
     window[event].update(letra_1,button_color=('black','#FDD357'))
     Lista_Atril[pos_letra_1] = ''
     window[pos_letra_1].update('')
@@ -200,24 +185,25 @@ def Eliminar_Coords(CCD,coord):
     CCD.discard(((coord[0]+1),coord[1]))     #Abajo
     CCD.discard((coord[0],(coord[1]-1)))     #Izquierda
 
-
-def Acciones_Usuario(event,Dicc,Lista_Atril,LCO,CCD,window):
-    if (type(event) == int) and (Lista_Atril[event] != ''):  #Si event es ENTERO #Event es la posicion de la letra pulsada
+def Acciones_Usuario(event,Dicc,Lista_Atril,LCO,LCOPR,CCD,window):
+    if (type(event) == int) and (Lista_Atril[event] != ''):  #Si event es ENTERO(Por ende la posicion de la letra del atril):
         letra_1 = Lista_Atril[event]
         pos_letra_1= event
         window[pos_letra_1].update(button_color=('white','#57C3FD'))
         event = window.read()[0]
         if (type(event) != int):                            #Si event es coordenada Y no esta ocupada:
             if (Coord_Ocupada(LCO,event) == False):         #event es en donde quiero poner la ficha
-                if (Dicc[(7,7)] == ''):
+                if (Dicc[(7,7)][0] == ''):                  #Si la cordenada de inicio esta vacia (Es el primer turno):
                     if (event == (7,7)):
                         Dicc = Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril,window)
                         LCO.append(event)
+                        LCOPR.append(event)
                         Coord_Disponible(LCO,CCD)
                 else:
                     if Coord_Desbloqueada(CCD,event):
                         Dicc = Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril,window)
                         LCO.append(event)
+                        LCOPR.append(event)
                         Coord_Disponible(LCO,CCD)
         else:
             letra_2 = Lista_Atril[event]
@@ -228,39 +214,43 @@ def Acciones_Usuario(event,Dicc,Lista_Atril,LCO,CCD,window):
                 Lista_Atril[pos_letra_1] = letra_2
                 Lista_Atril[pos_letra_2] = letra_1
         window[pos_letra_1].update(button_color=('black','#FDD357'))
-    else:
-        if (type(event) == tuple):
-            if Coord_Ocupada(LCO,event): #Si la coordenada esta ocupada:
+    else:                                #Si event NO es entero:
+        if (type(event) == tuple):       #Comprobamos que sea una tupla(coordenada del tablero)
+            if Coord_Ocupada(LCO,event) and (Coord_Ocupada(LCOPR,event)): #Si la coordenada esta ocupada:
                 if (event != (7,7)):
                     coord = event
                     window[coord].update(button_color=('white','#57C3FD'))
                     event = window.read()[0]
                     if (type(event) == int):
-                        if (Lista_Atril[event] == ''): #FichaTablero x FichaAtrilVacia
-                            Lista_Atril[event] = Dicc[coord]
-                            window[coord].update('',button_color=('white','white')) #Temporal(Tengo que actualizar el dicc con los colores D:)
-                            window[event].update(Dicc[coord])
-                            Dicc[coord] = ''
+                        if (Lista_Atril[event] == ''):   #FichaTablero x FichaAtrilVacia
+                            Lista_Atril[event] = Dicc[coord][0]
+                            window[coord].update('',button_color=('white',Dicc[coord][1]))
+                            window[event].update(Dicc[coord][0])
+                            Dicc[coord][0] = ''
                             LCO.remove(coord)
-                        else: #FichaTablero x FichaAtril
+                            LCOPR.remove(coord)
+                            Eliminar_Coords(CCD,coord)
+                        else:                            #FichaTablero x FichaAtril
                             window[coord].update(button_color=('black','#FDD357'))
                     else:
                         if (event != (7,7)):
                             if Coord_Ocupada(LCO,event): #FichaTablero x FichaTablero:
-                                aux = Dicc[event]
-                                Dicc[event] = Dicc[coord]
-                                Dicc[coord] = aux
-                                window[event].update(Dicc[event])
+                                aux = Dicc[event][0]
+                                Dicc[event][0] = Dicc[coord][0]
+                                Dicc[coord][0] = aux
+                                window[event].update(Dicc[event][0])
                                 window[coord].update(aux)
                                 window[coord].update(button_color=('black','#FDD357'))
                             else:                        #FichaTablero x TableroVacio:
                                 if Coord_Desbloqueada(CCD,event):
-                                    Dicc[event] = Dicc[coord]
-                                    Dicc[coord] = ''
-                                    window[coord].update('',button_color=('white','white')) #Temporal
-                                    window[event].update(Dicc[event],button_color=('black','#FDD357'))
+                                    Dicc[event][0] = Dicc[coord][0]
+                                    Dicc[coord][0] = ''
+                                    window[coord].update('',button_color=('white',Dicc[coord][1]))
+                                    window[event].update(Dicc[event][0],button_color=('black','#FDD357'))
                                     LCO.remove(coord)
                                     LCO.append(event)
+                                    LCOPR.remove(coord)
+                                    LCOPR.append(event)
                                     Coord_Disponible(LCO,CCD)
                                     Eliminar_Coords(CCD,coord)
                                 else:
@@ -268,13 +258,33 @@ def Acciones_Usuario(event,Dicc,Lista_Atril,LCO,CCD,window):
                         else:
                             window[coord].update(button_color=('black','#FDD357'))
             else:
-                sg.popup('Primero selecciona una letra!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True)
+                sg.popup('No puedes interactuar con las fichas ya colocadas!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True) if Coord_Ocupada(LCO,event) else sg.popup('Primero selecciona una letra!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True)
 
 def Turno(Turno_Usuario):
     if Turno_Usuario:
         sg.popup('Estas Listo?\nEmpiezas tu',custom_text="Si,lo estoy",no_titlebar=True,keep_on_top=True)
     else:
         sg.popup('Estas Listo?\nEmpieza la IA',custom_text="Si,lo estoy",no_titlebar=True,keep_on_top=True)
+
+def Validar(Palabra):
+    if len(LCOPR) > 1:
+        if (LCOPR[0][0] == LCOPR[1][0]): #Si entra la palabra formada esta en Horizontal
+            LCOPR = sorted(LCOPR, key=lambda tup: tup[1])
+            for coord in LCOPR:
+                Palabra = Palabra + Dicc[coord][0]
+        else:                            #Sino esta en vertical
+            LCOPR = sorted(LCOPR, key=lambda tup: tup[0])
+            for coord in LCOPR:
+                Palabra = Palabra + Dicc[coord][0]
+        if verificar_Palabra(Palabra,'Facil'): #Facil a modo de ejemplo
+            sg.popup(Palabra+' es una palabra valida :D',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True)
+        else:
+            sg.popup(Palabra+' no es una palabra valida D:',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True)
+            Palabra = ''
+    else:
+        sg.popup('Debes formar palabras de por lo menos 3 Letras!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True)
+    return Palabra
+
 
 #PROGRAMA PRINCIPAL
 def genero_Tablero():
@@ -283,31 +293,38 @@ def genero_Tablero():
     Dicc = Generar_Dicc()
     diseño = [ [sg.Column((Layout_Tabla(Lista_Atril))),
                 sg.Column(Layout_Columna())] ]
-    window = sg.Window('Tablero',diseño ,location=(400,0))
-    window.read(timeout=1)           #Es correcto esta solucion?(Hacer doble read?)
-    Update_Tablero(window)
+    window = sg.Window('Tablero',diseño ,location=(400,0),finalize=True)
+    Dicc = Update_Tablero(window,Dicc)
     Turno_Usuario = bool(random.getrandbits(1))
     Turno(Turno_Usuario)
-#    T=Thread(target=Timer,args=("start",False,Terminar,"Dificil",window))
-#    T.start()
     Fin = False
+    Puntaje_Total = 0
     CCD=set() #Conjunto de Coordenadas  Disponibles
     LCO = []  #Lista de Coordenadas Ocupadas
     while True:
+        LCOPR = [] #Lista de Coordenadas Ocupadas Por Ronda
+        PPR = 0    #Puntos Por Ronda
         while (Turno_Usuario): #Mientras sea el turno del usuario:
+            Palabra = ''
             event = window.Read()[0]
             if event in (None, 'Salir'):
                 Fin = True
                 break
-            Acciones_Usuario(event,Dicc,Lista_Atril,LCO,CCD,window)
-            if (event == 'Terminar turno'):
+            Acciones_Usuario(event,Dicc,Lista_Atril,LCO,LCOPR,CCD,window)
+
+            if (event == 'Validar'):
+                Palabra = Validar(Palabra)
+
+            elif (event == 'Terminar turno'):
+                if (Palabra == '') and (LCOPR != []):
+                    Palabra = Validar(Palabra)
+                #Faltaria calcular el puntaje y actualizar el puntajeUsuario en pantalla
                 Llenar_Atril(Lista_Atril,window)
                 break
         #while (Turno_Usuario == False):
             #ACTUA LA MAQUINA
         if Fin:
             Fin_Tiempo(Terminar)
-#            T.join()
             break
         Turno_Usuario = not Turno_Usuario
     window.close()
