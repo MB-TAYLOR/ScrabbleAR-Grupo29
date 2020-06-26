@@ -2,7 +2,7 @@ import itertools as it
 from pattern.es import spelling,lexicon,parse
 
 Tipo= {'adj':["AO", "JJ","AQ","DI","DT"],
-'sus':["NC", "NCS","NCP", "NNS","NP", "NNP","W"],#Borre el sus "NN" para que ande
+'sus':["NC", "NCS","NCP", "NNS","NP", "NNP","W"],#Borre el sus "NN" para que ande , sino , valida toda palabra  inexistente como "sus"
 'verb':[ "VAG", "VBG", "VAI","VAN", "MD", "VAS" , "VMG" , "VMI", "VB", "VMM" ,"VMN" , "VMP", "VBN","VMS","VSG", "VSI","VSN", "VSP","VSS" ]
 }
 
@@ -36,4 +36,4 @@ def verificar_Palabra(palabra,dificultad):
 
  #---------Porgrama Principal---
 if __name__ == '__main__':
-    print(verificar_Palabra("si","Facil"))
+    print(verificar_Palabra("sp","Facil"))
