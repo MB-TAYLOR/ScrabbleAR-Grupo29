@@ -1,4 +1,3 @@
-import itertools as it
 from pattern.es import spelling,lexicon,parse
 
 Tipo= {'adj':["AO", "JJ","AQ","DI","DT"],
@@ -9,12 +8,10 @@ Tipo= {'adj':["AO", "JJ","AQ","DI","DT"],
 
 def verificar_Medio_Dificil(palabra,existe):
     if palabra in spelling.keys() and palabra in lexicon.keys(): #Dificultad -> Medio(Sea adjetivo o verbo)
-        for x in range(len(Tipo['verb'])):
-            if(x <= (len(Tipo['adj'])-1) ):
-                if(parse(palabra).split("/")[1]==Tipo['adj'][x]):
-                    existe=True
-            if(parse(palabra).split("/")[1]==Tipo['verb'][x]):
-                existe=True
+        if(parse(palabra).split("/")[1] in Tipo['adj']):
+            existe=True
+        elif(parse(palabra).split("/")[1] in Tipo['verb']):
+            existe=True
     return(existe)
 
 def verificar_Palabra(palabra,dificultad):
@@ -22,18 +19,15 @@ def verificar_Palabra(palabra,dificultad):
     palabra=palabra.lower()
     if(len(palabra)>=2):
         if (dificultad=="Facil"):
-            for x in range(len(Tipo['sus'])):
-                if(parse(palabra).split("/")[1]==Tipo['sus'][x]):
-                    existe=True
-                elif (palabra in spelling.keys() or palabra in lexicon.keys()):
-                        existe=True
+            if(parse(palabra).split("/")[1] in Tipo['sus']):
+                existe=True
+            elif (palabra in spelling.keys() or palabra in lexicon.keys()):
+                existe=True
         elif(dificultad=="Medio"):
-            verificar_Medio_Dificil(palabra,existe)
+            existe=verificar_Medio_Dificil(palabra,existe)
         elif(dificultad=="Dificil"):
-            verificar_Medio_Dificil(palabra,existe)
+            existe=verificar_Medio_Dificil(palabra,existe)
     return(existe)
-
-
  #---------Porgrama Principal---
 if __name__ == '__main__':
-    print(verificar_Palabra("sp","Facil"))
+    print(verificar_Palabra("Correr","Facil"))

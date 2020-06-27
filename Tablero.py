@@ -1,5 +1,6 @@
 from palabra_Existe import verificar_Palabra
-from Generadores import Generador_de_letras
+from Generadores import Generador_de_letras,Selector_de_coordenadas_disponibles
+from AiMaquina import formar_palabra
 from threading import Thread
 import PySimpleGUI as sg
 from random import randint
@@ -170,7 +171,8 @@ def Coord_Adyacentes(coord):
 def Coord_Disponible(LCO,CCD):
     for x in range(len(LCO)):
         for y in Coord_Adyacentes(LCO[x]):
-            CCD.add(y)
+            if(((y[0]< 15)and(y[1]< 15))and((y[0]>-1)and(y[1]>-1))):
+                CCD.add(y)
 
 def Coord_Desbloqueada(CCD,event):
     if (event in CCD):
@@ -185,27 +187,49 @@ def Eliminar_Coords(CCD,coord):
     CCD.discard(((coord[0]+1),coord[1]))     #Abajo
     CCD.discard((coord[0],(coord[1]-1)))     #Izquierda
 
+def FichaVaciaxFichaTablero(event,coord,Dicc,Lista_Atril,window,LCO,LCOPR,CCD):
+    Lista_Atril[event] = Dicc[coord][0]
+    window[coord].update('',button_color=('white',Dicc[coord][1]))
+    window[event].update(Dicc[coord][0])
+    Dicc[coord][0] = ''
+    LCO.remove(coord)
+    LCOPR.remove(coord)
+    Eliminar_Coords(CCD,coord)
+
+def Reemplazar_FichaxTablero(event,coord,Dicc,Lista_Atril,window):
+    aux = Dicc[coord][0]
+    Dicc[coord][0] = Lista_Atril[event]
+    Lista_Atril[event] = aux
+    window[coord].update(Dicc[coord][0])
+    window[event].update(Lista_Atril[event])
+
+def Update_Fichas_Colocadas(LCOPR,window):
+    for coord in LCOPR:
+        window[coord].update(button_color=('black','#E4BE4D'))
+
 def Acciones_Usuario(event,Dicc,Lista_Atril,LCO,LCOPR,CCD,window):
     if (type(event) == int) and (Lista_Atril[event] != ''):  #Si event es ENTERO(Por ende la posicion de la letra del atril):
         letra_1 = Lista_Atril[event]
         pos_letra_1= event
         window[pos_letra_1].update(button_color=('white','#57C3FD'))
         event = window.read()[0]
-        if (type(event) != int):                            #Si event es coordenada Y no esta ocupada:
-            if (Coord_Ocupada(LCO,event) == False):         #event es en donde quiero poner la ficha
-                if (Dicc[(7,7)][0] == ''):                  #Si la cordenada de inicio esta vacia (Es el primer turno):
+        if (type(event) != int):                             #Si event es coordenada Y no esta ocupada:
+            if (Coord_Ocupada(LCOPR,event) == False):        #FichaAtril x TableroVacio
+                if (Dicc[(7,7)][0] == ''):                   #Si la cordenada de inicio esta vacia (Es el primer turno):
                     if (event == (7,7)):
                         Dicc = Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril,window)
                         LCO.append(event)
                         LCOPR.append(event)
                         Coord_Disponible(LCO,CCD)
                 else:
-                    if Coord_Desbloqueada(CCD,event):
+                    if (Coord_Ocupada(LCO,event) != True) and Coord_Desbloqueada(CCD,event):
                         Dicc = Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril,window)
                         LCO.append(event)
                         LCOPR.append(event)
                         Coord_Disponible(LCO,CCD)
-        else:
+            else:                               #FichaAtril x FichaTablero
+                Reemplazar_FichaxTablero(pos_letra_1,event,Dicc,Lista_Atril,window)
+        else:              #FichaAtril X FichaAtril (Intercambio)
             letra_2 = Lista_Atril[event]
             pos_letra_2 = event
             if (pos_letra_1 != pos_letra_2):
@@ -216,47 +240,51 @@ def Acciones_Usuario(event,Dicc,Lista_Atril,LCO,LCOPR,CCD,window):
         window[pos_letra_1].update(button_color=('black','#FDD357'))
     else:                                #Si event NO es entero:
         if (type(event) == tuple):       #Comprobamos que sea una tupla(coordenada del tablero)
-            if Coord_Ocupada(LCO,event) and (Coord_Ocupada(LCOPR,event)): #Si la coordenada esta ocupada:
-                if (event != (7,7)):
-                    coord = event
-                    window[coord].update(button_color=('white','#57C3FD'))
-                    event = window.read()[0]
+            if Coord_Ocupada(LCOPR,event): #Si la coordenada esta ocupada:
+                coord = event
+                window[coord].update(button_color=('white','#57C3FD'))
+                event = window.read()[0]
+                if coord != (7,7):
                     if (type(event) == int):
                         if (Lista_Atril[event] == ''):   #FichaTablero x FichaAtrilVacia
-                            Lista_Atril[event] = Dicc[coord][0]
-                            window[coord].update('',button_color=('white',Dicc[coord][1]))
-                            window[event].update(Dicc[coord][0])
-                            Dicc[coord][0] = ''
-                            LCO.remove(coord)
-                            LCOPR.remove(coord)
-                            Eliminar_Coords(CCD,coord)
+                            FichaVaciaxFichaTablero(event,coord,Dicc,Lista_Atril,window,LCO,LCOPR,CCD)
                         else:                            #FichaTablero x FichaAtril
+                            Reemplazar_FichaxTablero(event,coord,Dicc,Lista_Atril,window)
                             window[coord].update(button_color=('black','#FDD357'))
                     else:
-                        if (event != (7,7)):
-                            if Coord_Ocupada(LCO,event): #FichaTablero x FichaTablero:
-                                aux = Dicc[event][0]
-                                Dicc[event][0] = Dicc[coord][0]
-                                Dicc[coord][0] = aux
-                                window[event].update(Dicc[event][0])
-                                window[coord].update(aux)
-                                window[coord].update(button_color=('black','#FDD357'))
-                            else:                        #FichaTablero x TableroVacio:
-                                if Coord_Desbloqueada(CCD,event):
-                                    Dicc[event][0] = Dicc[coord][0]
-                                    Dicc[coord][0] = ''
-                                    window[coord].update('',button_color=('white',Dicc[coord][1]))
-                                    window[event].update(Dicc[event][0],button_color=('black','#FDD357'))
-                                    LCO.remove(coord)
-                                    LCO.append(event)
-                                    LCOPR.remove(coord)
-                                    LCOPR.append(event)
-                                    Coord_Disponible(LCO,CCD)
-                                    Eliminar_Coords(CCD,coord)
-                                else:
-                                    window[coord].update(button_color=('black','#FDD357'))
-                        else:
+                        if Coord_Ocupada(LCOPR,event): #FichaTablero x FichaTablero:
+                            aux = Dicc[event][0]
+                            Dicc[event][0] = Dicc[coord][0]
+                            Dicc[coord][0] = aux
+                            window[event].update(Dicc[event][0])
+                            window[coord].update(aux)
                             window[coord].update(button_color=('black','#FDD357'))
+                        else:                        #FichaTablero x TableroVacio:
+                            if (Coord_Ocupada(LCO,event) != True) and (Coord_Desbloqueada(CCD,event)):
+                                Dicc[event][0] = Dicc[coord][0]
+                                Dicc[coord][0] = ''
+                                window[coord].update('',button_color=('white',Dicc[coord][1]))
+                                window[event].update(Dicc[event][0],button_color=('black','#FDD357'))
+                                LCO.remove(coord)
+                                LCO.append(event)
+                                LCOPR.remove(coord)
+                                LCOPR.append(event)
+                                Coord_Disponible(LCO,CCD)
+                                Eliminar_Coords(CCD,coord)
+                            else:
+                                window[coord].update(button_color=('black','#FDD357'))
+                else: #Coord es (7,7):
+                    if Coord_Ocupada(LCOPR,event):
+                        aux = Dicc[event][0]
+                        Dicc[event][0] = Dicc[coord][0]
+                        Dicc[coord][0] = aux
+                        window[event].update(Dicc[event][0])
+                        window[coord].update(aux)
+                        window[coord].update(button_color=('black','#FDD357'))
+                    elif (type(event) == int):
+                        if (Lista_Atril[event] != ''):
+                            Reemplazar_FichaxTablero(event,coord,Dicc,Lista_Atril,window)
+                        window[coord].update(button_color=('black','#FDD357'))
             else:
                 sg.popup('No puedes interactuar con las fichas ya colocadas!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True) if Coord_Ocupada(LCO,event) else sg.popup('Primero selecciona una letra!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True)
 
@@ -265,6 +293,10 @@ def Turno(Turno_Usuario):
         sg.popup('Estas Listo?\nEmpiezas tu',custom_text="Si,lo estoy",no_titlebar=True,keep_on_top=True)
     else:
         sg.popup('Estas Listo?\nEmpieza la IA',custom_text="Si,lo estoy",no_titlebar=True,keep_on_top=True)
+
+def Eliminar_Elementos_Ocupados_CDD(LCO,CCD):
+    for L in LCO:
+        CCD.discard(L)
 
 def Validar(Palabra,LCOPR,Dicc):
     if len(LCOPR) > 1:
@@ -277,14 +309,86 @@ def Validar(Palabra,LCOPR,Dicc):
             for coord in LCOPR:
                 Palabra = Palabra + Dicc[coord][0]
         if verificar_Palabra(Palabra,'Facil'): #Facil a modo de ejemplo
-            sg.popup(Palabra+' es una palabra valida :D',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True)
+            sg.popup(Palabra+' es una palabra valida :D',text_color='black',title='Ayuda',background_color='#57FD57',button_color=('black','white'),keep_on_top=True)
         else:
-            sg.popup(Palabra+' no es una palabra valida D:',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True)
+            sg.popup(Palabra+' no es una palabra valida D:',text_color='black',title='Ayuda',background_color='#FD5757',button_color=('Black','White'),keep_on_top=True)
             Palabra = ''
     else:
-        sg.popup('Debes formar palabras de por lo menos 3 Letras!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True)
+        sg.popup('Debes formar palabras de por lo menos 2 letras!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True)
     return Palabra
 
+def TerminarTurno(Palabra,Dicc,Lista_Atril,LCOPR,LCO,CCD,window):
+    if (Palabra == '') and (LCOPR != []):
+        Palabra = Validar(Palabra,LCOPR,Dicc)
+        if (Palabra == ''):
+            for Pos in range(len(Lista_Atril)):
+                if (Lista_Atril[Pos] == ''): # Si esta posicion esta vacia:
+                    FichaVaciaxFichaTablero(Pos,LCOPR[0],Dicc,Lista_Atril,window,LCO,LCOPR,CCD)
+
+def Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc):
+    print(coordenadas_CPU)
+    Palabra=Palabra.upper()
+    for x in range(len(Palabra)):
+        window[(coordenadas_CPU[0],coordenadas_CPU[1]+x)].update(str(Palabra[x]),button_color=('black','#FDD357'))
+        Dicc[(coordenadas_CPU[0],coordenadas_CPU[1]+x)][0] =str(Palabra[x])
+        LCO.append((coordenadas_CPU[0],coordenadas_CPU[1]+x))
+        Coord_Disponible(LCO,CCD)
+        Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
+
+def Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc):
+    print(coordenadas_CPU)
+    Palabra=Palabra.upper()
+    for y in range(len(Palabra)):
+        window[(coordenadas_CPU[0]+y,coordenadas_CPU[1])].update(str(Palabra[y]),button_color=('black','#FDD357'))
+        Dicc[(coordenadas_CPU[0]+y,coordenadas_CPU[1])][0] =str(Palabra[y])
+        LCO.append((coordenadas_CPU[0]+y,coordenadas_CPU[1]))
+        Coord_Disponible(LCO,CCD)
+        Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
+
+def Acciones_CPU(window,CCD,LCO,Dicc):
+    intento=True
+    Letras=""
+    puede_Colocarse=False
+    for x in range(7):
+        Letras=Letras+Generador_de_letras() #Hasta tener hecha la bolsa genero letras de esta forma
+    Palabra=formar_palabra(Letras,"Medio") #Facil a modo de ejemplo
+    if Palabra != "":
+        if CCD == set():
+            for x in range(len(Palabra)):  #En el primer case , donde CCD esta vacio y se debe empezar en el cuadro 7,7
+                Palabra=Palabra.upper()
+                window[(7,7+x)].update(str(Palabra[x]),button_color=('black','#FDD357'))
+                Dicc[7,7+x][0] =str(Palabra[x])
+                LCO.append((7,7+x))
+                Coord_Disponible(LCO,CCD)
+                Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
+        else:
+            while intento :
+                print(Palabra)
+                coordenadas_CPU=Selector_de_coordenadas_disponibles(CCD)
+                if(coordenadas_CPU in CCD) and(not(coordenadas_CPU in LCO)):
+                    if(((len(Palabra)+coordenadas_CPU[1])<15)and((len(Palabra)+coordenadas_CPU[1])>-1)):  #si se va a pasar del tablero al poner la palabra  verticalmente
+                        for y in range(len(Palabra)):
+                            if(((coordenadas_CPU[0],coordenadas_CPU[1]+(y)) in LCO)or(Dicc[(coordenadas_CPU[0],coordenadas_CPU[1]+(y))][0]!='')):#Si las coordenada esta ocupada , sale y busca otra coordenada disponible
+                                puede_Colocarse=False
+                                break
+                            else:
+                                puede_Colocarse=True
+                        if(puede_Colocarse):
+                            Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc)
+                            intento=False
+                    elif(((len(Palabra)+coordenadas_CPU[0])<15)and((len(Palabra)+coordenadas_CPU[0])>-1)):#si se va a pasar del tablero al poner la palabra horizontalmente
+                        for x in range(len(Palabra)):
+                            if(((coordenadas_CPU[0]+(x),coordenadas_CPU[1]) in LCO)or(Dicc[(coordenadas_CPU[0]+(x),coordenadas_CPU[1])][0]!='')):#Si la coordenada esta ocupada , sale y busca otra coordenada disponible
+                                puede_Colocarse=False
+                                break
+                            else:
+                                puede_Colocarse=True
+
+                        if(puede_Colocarse):
+                            Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc)
+                            intento=False
+    else:
+        print("No hay palabra valida en este momento para la CPU")
 
 #PROGRAMA PRINCIPAL
 def genero_Tablero():
@@ -310,22 +414,25 @@ def genero_Tablero():
             if event in (None, 'Salir'):
                 Fin = True
                 break
+
             Acciones_Usuario(event,Dicc,Lista_Atril,LCO,LCOPR,CCD,window)
 
             if (event == 'Validar'):
                 Palabra = Validar(Palabra,LCOPR,Dicc)
 
             elif (event == 'Terminar turno'):
-                if (Palabra == '') and (LCOPR != []):
-                    Palabra = Validar(Palabra,LCOPR,Dicc)
+                TerminarTurno(Palabra,Dicc,Lista_Atril,LCOPR,LCO,CCD,window)
+
                 #Faltaria calcular el puntaje y actualizar el puntajeUsuario en pantalla
                 Llenar_Atril(Lista_Atril,window)
                 break
-        #while (Turno_Usuario == False):
-            #ACTUA LA MAQUINA
+        while (Turno_Usuario == False):
+            Acciones_CPU(window,CCD,LCO,Dicc)
+            break
         if Fin:
             Fin_Tiempo(Terminar)
             break
+        #Update_Fichas_Colocadas(LCOPR,window)
         Turno_Usuario = not Turno_Usuario
     window.close()
     return(event)

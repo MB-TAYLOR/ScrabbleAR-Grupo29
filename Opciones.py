@@ -2,7 +2,7 @@ import PySimpleGUI as sg
 import csv
 
 def Cargar(values,window):
-    arch = open('Archivo_Opciones.csv','r')
+    arch = open(r'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Archivo_Opciones.csv','r')
     reader = csv.reader(arch)
     for row in reader:
         if (len(row) > 0):
@@ -34,13 +34,13 @@ def Cargar(values,window):
     return values
 
 def AgregarDatos(values):
-    arch = open('Archivo_Opciones.csv','a')
+    arch = open(r'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Archivo_Opciones.csv','a')
     writer = csv.writer(arch)
     writer.writerow([values['Usuario'].strip(),values['Facil'],values['Normal'],values['Dificil'],values['Lote1'],values['Lote2'],values['Lote3'],values['Lote4'],values['Lote5'],values['Lote6'],values['Lote7']])
     arch.close()
 
 def GuardarDatos(lista):
-    arch = open('Archivo_Opciones.csv','w')
+    arch = open(r'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Archivo_Opciones.csv','w')
     writer = csv.writer(arch)
     writer.writerow(['Usuario','Facil','Normal','Dificil','Lote1','Lote2','Lote3','Lote4','Lote5','Lote6','Lote7'])
     for row in lista:
@@ -48,7 +48,7 @@ def GuardarDatos(lista):
     arch.close()
 
 def LeerDatos():
-    arch = open('Archivo_Opciones.csv','r')
+    arch = open(r'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Archivo_Opciones.csv','r')
     reader = csv.reader(arch)
     datos = []
     index = 0
