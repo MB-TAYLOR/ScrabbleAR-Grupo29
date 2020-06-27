@@ -9,6 +9,30 @@ import time
 
 MAX_ROWS = MAX_COL = 15
 
+
+Bolsa_Diccionario={"A":11,"B":3,"C":4,"D":4,"E":11,"F":2,"G":2,"H":2,"I":6,"J":2,"K":1,"L":4,"LL":1,"M":3,"N":5,
+                  "Ñ":1,"O":8,"P":2,"Q":1,"R":4,"RR":1,"S":7,"T":4,"U":6,"V":2,"W":1,"X":1,"Y":1,"Z":1}
+Cant_letras=101
+
+def Letra_Bolsa(Bolsa_Diccionario):
+    global Cant_letras
+    sigue=True
+    letra=""
+    while((sigue)and(Cant_letras > 14)):
+        x=random.randint(0,(len(Bolsa_Diccionario.keys())-1))
+        letra=list(Bolsa_Diccionario.keys())[x]
+        if(Bolsa_Diccionario[letra]> 0):
+            Bolsa_Diccionario[letra]=(Bolsa_Diccionario[letra])-1
+            print("Letras restantes",Cant_letras)
+            Cant_letras=Cant_letras-1
+            sigue=False
+            print("Letras restantes",Cant_letras)
+        if Cant_letras < 14 :
+            print("Se deberia acabar el juego porque uno de los 2 jugadores no tiene sus 7 fichas")
+            break
+        print("Bolsa",Bolsa_Diccionario)
+    return(letra)
+
 def Fin_Tiempo(terminar):
     terminar[0] = True
 
@@ -103,19 +127,19 @@ def Layout_Tabla(Lista_Atril):
 
     #formato_fichas_jugador={'font':('',25),'button_color':(None,'black'),'image_filename':r'd:\Users\usuario\Documents\GitHub\ScrabbleAR-Grupo29\Ficha.png','image_size':(40,40),'pad':(7,3)  }
     #Para luego reemplazar los colores dados por el boton con imagenes
-    Letra_1=Generador_de_letras()
+    Letra_1=Letra_Bolsa(Bolsa_Diccionario)
     Lista_Atril.append(Letra_1)
-    Letra_2=Generador_de_letras()
+    Letra_2=Letra_Bolsa(Bolsa_Diccionario)
     Lista_Atril.append(Letra_2)
-    Letra_3=Generador_de_letras()
+    Letra_3=Letra_Bolsa(Bolsa_Diccionario)
     Lista_Atril.append(Letra_3)
-    Letra_4=Generador_de_letras()
+    Letra_4=Letra_Bolsa(Bolsa_Diccionario)
     Lista_Atril.append(Letra_4)
-    Letra_5=Generador_de_letras()
+    Letra_5=Letra_Bolsa(Bolsa_Diccionario)
     Lista_Atril.append(Letra_5)
-    Letra_6=Generador_de_letras()
+    Letra_6=Letra_Bolsa(Bolsa_Diccionario)
     Lista_Atril.append(Letra_6)
-    Letra_7=Generador_de_letras()
+    Letra_7=Letra_Bolsa(Bolsa_Diccionario)
     Lista_Atril.append(Letra_7)
 
     layout = [[sg.Text('',key='texto1',pad=(45,3)),(sg.Image(**formato_fichas_cpu,key='fichasbot1')),
@@ -144,7 +168,7 @@ def Layout_Tabla(Lista_Atril):
 def Llenar_Atril(Lista_Atril,window):
     for pos in range(len(Lista_Atril)):
         if (Lista_Atril[pos] == ''):
-            Lista_Atril[pos] = Generador_de_letras()
+            Lista_Atril[pos] = Letra_Bolsa(Bolsa_Diccionario)
             window[pos].update(Lista_Atril[pos])
 
 def Coord_Ocupada(LCO,event):
@@ -348,7 +372,7 @@ def Acciones_CPU(window,CCD,LCO,Dicc):
     Letras=""
     puede_Colocarse=False
     for x in range(7):
-        Letras=Letras+Generador_de_letras() #Hasta tener hecha la bolsa genero letras de esta forma
+        Letras=Letras+Letra_Bolsa(Bolsa_Diccionario) #Hasta tener hecha la bolsa genero letras de esta forma
     Palabra=formar_palabra(Letras,"Medio") #Facil a modo de ejemplo
     if Palabra != "":
         if CCD == set():
