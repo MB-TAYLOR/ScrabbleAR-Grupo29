@@ -326,20 +326,18 @@ def TerminarTurno(Palabra,Dicc,Lista_Atril,LCOPR,LCO,CCD,window):
                     FichaVaciaxFichaTablero(Pos,LCOPR[0],Dicc,Lista_Atril,window,LCO,LCOPR,CCD)
 
 def Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc):
-    print(coordenadas_CPU)
     Palabra=Palabra.upper()
     for x in range(len(Palabra)):
-        window[(coordenadas_CPU[0],coordenadas_CPU[1]+x)].update(str(Palabra[x]),button_color=('black','#FDD357'))
+        window[(coordenadas_CPU[0],coordenadas_CPU[1]+x)].update(str(Palabra[x]),button_color=('black','#7D4DE4'))
         Dicc[(coordenadas_CPU[0],coordenadas_CPU[1]+x)][0] =str(Palabra[x])
         LCO.append((coordenadas_CPU[0],coordenadas_CPU[1]+x))
         Coord_Disponible(LCO,CCD)
         Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
 
 def Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc):
-    print(coordenadas_CPU)
     Palabra=Palabra.upper()
     for y in range(len(Palabra)):
-        window[(coordenadas_CPU[0]+y,coordenadas_CPU[1])].update(str(Palabra[y]),button_color=('black','#FDD357'))
+        window[(coordenadas_CPU[0]+y,coordenadas_CPU[1])].update(str(Palabra[y]),button_color=('black','#7D4DE4'))
         Dicc[(coordenadas_CPU[0]+y,coordenadas_CPU[1])][0] =str(Palabra[y])
         LCO.append((coordenadas_CPU[0]+y,coordenadas_CPU[1]))
         Coord_Disponible(LCO,CCD)
@@ -356,14 +354,13 @@ def Acciones_CPU(window,CCD,LCO,Dicc):
         if CCD == set():
             for x in range(len(Palabra)):  #En el primer case , donde CCD esta vacio y se debe empezar en el cuadro 7,7
                 Palabra=Palabra.upper()
-                window[(7,7+x)].update(str(Palabra[x]),button_color=('black','#FDD357'))
+                window[(7,7+x)].update(str(Palabra[x]),button_color=('black','#7D4DE4'))
                 Dicc[7,7+x][0] =str(Palabra[x])
                 LCO.append((7,7+x))
                 Coord_Disponible(LCO,CCD)
                 Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
         else:
             while intento :
-                print(Palabra)
                 coordenadas_CPU=Selector_de_coordenadas_disponibles(CCD)
                 if(coordenadas_CPU in CCD) and(not(coordenadas_CPU in LCO)):
                     if(((len(Palabra)+coordenadas_CPU[1])<15)and((len(Palabra)+coordenadas_CPU[1])>-1)):  #si se va a pasar del tablero al poner la palabra  verticalmente
@@ -432,7 +429,7 @@ def genero_Tablero():
         if Fin:
             Fin_Tiempo(Terminar)
             break
-        #Update_Fichas_Colocadas(LCOPR,window)
+        Update_Fichas_Colocadas(LCOPR,window)
         Turno_Usuario = not Turno_Usuario
     window.close()
     return(event)
