@@ -1,5 +1,5 @@
 from palabra_Existe import verificar_Palabra
-from Generadores import Generador_de_letras,Selector_de_coordenadas_disponibles
+from Generadores import Selector_de_coordenadas_disponibles
 from AiMaquina import formar_palabra
 from threading import Thread
 import PySimpleGUI as sg
@@ -12,25 +12,22 @@ MAX_ROWS = MAX_COL = 15
 
 Bolsa_Diccionario={"A":11,"B":3,"C":4,"D":4,"E":11,"F":2,"G":2,"H":2,"I":6,"J":2,"K":1,"L":4,"LL":1,"M":3,"N":5,
                   "Ñ":1,"O":8,"P":2,"Q":1,"R":4,"RR":1,"S":7,"T":4,"U":6,"V":2,"W":1,"X":1,"Y":1,"Z":1}
-Cant_letras=101
+Cant_fichas=101
 
 def Letra_Bolsa(Bolsa_Diccionario):
-    global Cant_letras
+    global Cant_fichas
     sigue=True
     letra=""
-    while((sigue)and(Cant_letras > 14)):
+    while((sigue)and(Cant_fichas >= 14)):
         x=random.randint(0,(len(Bolsa_Diccionario.keys())-1))
         letra=list(Bolsa_Diccionario.keys())[x]
         if(Bolsa_Diccionario[letra]> 0):
             Bolsa_Diccionario[letra]=(Bolsa_Diccionario[letra])-1
-            print("Letras restantes",Cant_letras)
-            Cant_letras=Cant_letras-1
+            Cant_fichas=Cant_fichas-1
             sigue=False
-            print("Letras restantes",Cant_letras)
-        if Cant_letras < 14 :
-            print("Se deberia acabar el juego porque uno de los 2 jugadores no tiene sus 7 fichas")
             break
-        print("Bolsa",Bolsa_Diccionario)
+    if Cant_fichas < 14 :
+        print("El juego ACABA porque uno de los 2 jugadores no tiene sus 7 fichas")
     return(letra)
 
 def Fin_Tiempo(terminar):
@@ -338,7 +335,7 @@ def Validar(Palabra,LCOPR,Dicc):
             sg.popup(Palabra+' no es una palabra valida D:',text_color='black',title='Ayuda',background_color='#FD5757',button_color=('Black','White'),keep_on_top=True)
             Palabra = ''
     else:
-        sg.popup('Debes formar palabras de por lo menos 2 letras!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True)
+        sg.popup('Debes formar palabras de por lo menos 2 fichas_CPU!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True)
     return Palabra
 
 def TerminarTurno(Palabra,Dicc,Lista_Atril,LCOPR,LCO,CCD,window):
@@ -348,6 +345,22 @@ def TerminarTurno(Palabra,Dicc,Lista_Atril,LCOPR,LCO,CCD,window):
             for Pos in range(len(Lista_Atril)):
                 if (Lista_Atril[Pos] == ''): # Si esta posicion esta vacia:
                     FichaVaciaxFichaTablero(Pos,LCOPR[0],Dicc,Lista_Atril,window,LCO,LCOPR,CCD)
+def elimino_fichas_Usadas(fichas_CPU,Palabra):
+    for x in range(len(Palabra)):
+        fichas_CPU=fichas_CPU.replace(Palabra[x].upper(),"") #Elimino las fichas usadas
+    return(fichas_CPU)
+
+
+def intercambio_Fichas(fichas_CPU):
+    global Cant_fichas
+    for x in range(len(fichas_CPU)):
+        Bolsa_Diccionario[fichas_CPU[x]]=(Bolsa_Diccionario[fichas_CPU[x]])+1
+        Cant_fichas=Cant_fichas+1
+    fichas_CPU=""
+    for x in range(7):
+        fichas_CPU=fichas_CPU+Letra_Bolsa(Bolsa_Diccionario)
+    return(fichas_CPU)
+
 
 def Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc):
     Palabra=Palabra.upper()
@@ -367,14 +380,25 @@ def Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc):
         Coord_Disponible(LCO,CCD)
         Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
 
-def Acciones_CPU(window,CCD,LCO,Dicc):
+def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU):
+    global Cant_fichas
+    Palabra=fichas_CPU
     intento=True
-    Letras=""
     puede_Colocarse=False
-    for x in range(7):
-        Letras=Letras+Letra_Bolsa(Bolsa_Diccionario) #Hasta tener hecha la bolsa genero letras de esta forma
-    Palabra=formar_palabra(Letras,"Medio") #Facil a modo de ejemplo
+    if (contador_Turnos_CPU ==0):
+        for x in range(7):
+            fichas_CPU=fichas_CPU+Letra_Bolsa(Bolsa_Diccionario) #En la primera jugada toma 7 fichas aleatorias de la bolsa
+            Palabra=formar_palabra(fichas_CPU,"Medio") #Facil a modo de ejemplo
+        contador_Turnos_CPU=contador_Turnos_CPU+1
+    else:
+        Palabra=formar_palabra(fichas_CPU,"Medio")
+        contador_Turnos_CPU=contador_Turnos_CPU+1
+    if(((contador_Turnos_CPU % 3)==0) and (Cant_fichas > 14 )):
+        fichas_CPU=intercambio_Fichas(fichas_CPU)
+        Palabra=formar_palabra(fichas_CPU,"Medio") #Facil a modo de ejemplo
+        contador_Turnos_CPU=contador_Turnos_CPU+1
     if Palabra != "":
+        fichas_CPU=elimino_fichas_Usadas(fichas_CPU,Palabra)
         if CCD == set():
             for x in range(len(Palabra)):  #En el primer case , donde CCD esta vacio y se debe empezar en el cuadro 7,7
                 Palabra=Palabra.upper()
@@ -384,32 +408,37 @@ def Acciones_CPU(window,CCD,LCO,Dicc):
                 Coord_Disponible(LCO,CCD)
                 Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
         else:
-            while intento :
-                coordenadas_CPU=Selector_de_coordenadas_disponibles(CCD)
-                if(coordenadas_CPU in CCD) and(not(coordenadas_CPU in LCO)):
-                    if(((len(Palabra)+coordenadas_CPU[1])<15)and((len(Palabra)+coordenadas_CPU[1])>-1)):  #si se va a pasar del tablero al poner la palabra  verticalmente
-                        for y in range(len(Palabra)):
-                            if(((coordenadas_CPU[0],coordenadas_CPU[1]+(y)) in LCO)or(Dicc[(coordenadas_CPU[0],coordenadas_CPU[1]+(y))][0]!='')):#Si las coordenada esta ocupada , sale y busca otra coordenada disponible
-                                puede_Colocarse=False
-                                break
-                            else:
-                                puede_Colocarse=True
-                        if(puede_Colocarse):
-                            Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc)
-                            intento=False
-                    elif(((len(Palabra)+coordenadas_CPU[0])<15)and((len(Palabra)+coordenadas_CPU[0])>-1)):#si se va a pasar del tablero al poner la palabra horizontalmente
-                        for x in range(len(Palabra)):
-                            if(((coordenadas_CPU[0]+(x),coordenadas_CPU[1]) in LCO)or(Dicc[(coordenadas_CPU[0]+(x),coordenadas_CPU[1])][0]!='')):#Si la coordenada esta ocupada , sale y busca otra coordenada disponible
-                                puede_Colocarse=False
-                                break
-                            else:
-                                puede_Colocarse=True
-
-                        if(puede_Colocarse):
-                            Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc)
-                            intento=False
+            for x in range(len(CCD)) :
+                if(intento):
+                    coordenadas_CPU=Selector_de_coordenadas_disponibles(CCD)
+                    if(coordenadas_CPU in CCD) and(not(coordenadas_CPU in LCO)):
+                        if(((len(Palabra)+coordenadas_CPU[1])<15)and((len(Palabra)+coordenadas_CPU[1])>-1)):  #si se va a pasar del tablero al poner la palabra  verticalmente
+                            for y in range(len(Palabra)):
+                                if(((coordenadas_CPU[0],coordenadas_CPU[1]+(y)) in LCO)or(Dicc[(coordenadas_CPU[0],coordenadas_CPU[1]+(y))][0]!='')):#Si las coordenada esta ocupada , sale y busca otra coordenada disponible
+                                    puede_Colocarse=False
+                                    break
+                                else:
+                                    puede_Colocarse=True
+                            if(puede_Colocarse):
+                                Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc)
+                                intento=False
+                        elif(((len(Palabra)+coordenadas_CPU[0])<15)and((len(Palabra)+coordenadas_CPU[0])>-1)):#si se va a pasar del tablero al poner la palabra horizontalmente
+                            for x in range(len(Palabra)):
+                                if(((coordenadas_CPU[0]+(x),coordenadas_CPU[1]) in LCO)or(Dicc[(coordenadas_CPU[0]+(x),coordenadas_CPU[1])][0]!='')):#Si la coordenada esta ocupada , sale y busca otra coordenada disponible
+                                    puede_Colocarse=False
+                                    break
+                                else:
+                                    puede_Colocarse=True
+                            if(puede_Colocarse):
+                                Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc)
+                                intento=False
     else:
-        print("No hay palabra valida en este momento para la CPU")
+        print("No hay palabra valida en este momento para la CPU ,la CPU pasa el turno")
+    while(((len(fichas_CPU))<7)and(Cant_fichas >= 14)):          #Añado fichas de la bolsa para compeltar 7 al finalizar el turno
+        fichas_CPU=fichas_CPU+Letra_Bolsa(Bolsa_Diccionario)
+    if((len(fichas_CPU))<7):
+        print("La CPU no tiene fichas suficientes para continuar , el juego termino")
+    return(contador_Turnos_CPU,fichas_CPU)
 
 #PROGRAMA PRINCIPAL
 def genero_Tablero():
@@ -423,6 +452,8 @@ def genero_Tablero():
     Turno_Usuario = bool(random.getrandbits(1))
     Turno(Turno_Usuario)
     Fin = False
+    fichas_CPU=""
+    contador_Turnos_CPU=0
     Puntaje_Total = 0
     CCD=set() #Conjunto de Coordenadas  Disponibles
     LCO = []  #Lista de Coordenadas Ocupadas
@@ -448,7 +479,7 @@ def genero_Tablero():
                 Llenar_Atril(Lista_Atril,window)
                 break
         while (Turno_Usuario == False):
-            Acciones_CPU(window,CCD,LCO,Dicc)
+            contador_Turnos_CPU,fichas_CPU=Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU)
             break
         if Fin:
             Fin_Tiempo(Terminar)
