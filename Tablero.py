@@ -130,9 +130,9 @@ def Layout_Columna():
 
 def Layout_Tabla(Lista_Atril):
     MAX_ROWS = MAX_COL = 15
-    formato_fichas_cpu={'filename':r'd:\Users\usuario\Documents\GitHub\ScrabbleAR-Grupo29\Ficha.png','size':(40,40),'pad':(7,3)  }
+    formato_fichas_cpu={'filename':'Ficha.png','size':(40,40),'pad':(7,3)  }
 
-    #formato_fichas_jugador={'font':('',25),'button_color':(None,'black'),'image_filename':r'd:\Users\usuario\Documents\GitHub\ScrabbleAR-Grupo29\Ficha.png','image_size':(40,40),'pad':(7,3)  }
+    #formato_fichas_jugador={'font':('',25),'button_color':(None,'black'),'image_filename':'Ficha.png','image_size':(40,40),'pad':(7,3)  }
     #Para luego reemplazar los colores dados por el boton con imagenes
     Letra_1=Letra_Bolsa(Bolsa_Diccionario)
     Lista_Atril.append(Letra_1)
@@ -156,7 +156,7 @@ def Layout_Tabla(Lista_Atril):
                                                     (sg.Image(**formato_fichas_cpu,key='fichasbot5')),
                                                     (sg.Image(**formato_fichas_cpu,key='fichasbot6')),
                                                     (sg.Image(**formato_fichas_cpu,key='fichasbot7'))],
-                [(sg.Image(filename=r'd:\Users\usuario\Documents\GitHub\ScrabbleAR-Grupo29\Atril_back.png',key='atril',pad=(20,3)))]]
+                [(sg.Image(filename='Atril_back.png',key='atril',pad=(20,3)))]]
 
     layout.extend([[sg.Button('', size=(4, 2),key=(i,j),pad=(0,0))for j in range(MAX_COL)] for i in range(MAX_ROWS)])
 
@@ -168,7 +168,7 @@ def Layout_Tabla(Lista_Atril):
                     (sg.Button(button_text=Letra_5,key=4,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'))),
                     (sg.Button(button_text=Letra_6,key=5,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'))),
                     (sg.Button(button_text=Letra_7,key=6,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357')))],
-                    [(sg.Image(filename=r'd:\Users\usuario\Documents\GitHub\ScrabbleAR-Grupo29\Atril.png',key='texto'))]])
+                    [(sg.Image(filename='Atril.png',key='texto'))]])
 
     return layout
 

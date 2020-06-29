@@ -8,7 +8,7 @@ import csv
 #Aca Arranca La Pantalla Principal----------------------------------------------------------------------------------------------------------------------------------------------
 
 def obtengo_Perfil():                                #Busco el nombre del ultimo usuario registrado
-    archivo_csv=open(r'd:\Users\usuario\Documents\GitHub\ScrabbleAR-Grupo29\Archivo_Opciones.csv','r')
+    archivo_csv=open('Archivo_Opciones.csv','r')
     perfiles=csv.reader(archivo_csv)
     for perfil in perfiles:
         if((len(perfil))>0):
