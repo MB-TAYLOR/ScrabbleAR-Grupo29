@@ -2,53 +2,53 @@ import PySimpleGUI as sg
 import csv
 
 def Cargar(values,window):
-    arch = open(r'd:\Users\usuario\Documents\GitHub\ScrabbleAR-Grupo29\Archivo_Opciones.csv','r')
+    arch = open('Archivo_Opciones.csv','r')
     reader = csv.reader(arch)
     for row in reader:
         if (len(row) > 0):
-            if (row[0] == values['Usuario']):
-                values['Facil'] = row[1]
-                values['Normal'] = row[2]
-                values['Dificil'] = row[3]
+            if (row[1] == values['Usuario']):
+                values['Facil'] = row[2]
+                values['Normal'] = row[3]
+                values['Dificil'] = row[4]
                 if (values['Facil'] == 'True'):
                     window['Facil'].update(values['Facil'])
                 elif(values['Normal'] == 'True'):
                     window['Normal'].update(values['Normal'])
                 else:
                     window['Dificil'].update(values['Dificil'])
-                values['Lote1'] = row[4]
+                values['Lote1'] = row[5]
                 window['Lote1'].update(values['Lote1'])
-                values['Lote2'] = row[5]
+                values['Lote2'] = row[6]
                 window['Lote2'].update(values['Lote2'])
-                values['Lote3'] = row[6]
+                values['Lote3'] = row[7]
                 window['Lote3'].update(values['Lote3'])
-                values['Lote4'] = row[7]
+                values['Lote4'] = row[8]
                 window['Lote4'].update(values['Lote4'])
-                values['Lote5'] = row[8]
+                values['Lote5'] = row[9]
                 window['Lote5'].update(values['Lote5'])
-                values['Lote6'] = row[9]
+                values['Lote6'] = row[10]
                 window['Lote6'].update(values['Lote6'])
-                values['Lote7'] = row[10]
+                values['Lote7'] = row[11]
                 window['Lote7'].update(values['Lote7'])
     arch.close()
     return values
 
 def AgregarDatos(values):
-    arch = open(r'd:\Users\usuario\Documents\GitHub\ScrabbleAR-Grupo29\Archivo_Opciones.csv','a')
+    arch = open('Archivo_Opciones.csv','a')
     writer = csv.writer(arch)
-    writer.writerow([values['Usuario'].strip(),values['Facil'],values['Normal'],values['Dificil'],values['Lote1'],values['Lote2'],values['Lote3'],values['Lote4'],values['Lote5'],values['Lote6'],values['Lote7']])
+    writer.writerow([True,values['Usuario'].strip(),values['Facil'],values['Normal'],values['Dificil'],values['Lote1'],values['Lote2'],values['Lote3'],values['Lote4'],values['Lote5'],values['Lote6'],values['Lote7']])
     arch.close()
 
 def GuardarDatos(lista):
-    arch = open(r'd:\Users\usuario\Documents\GitHub\ScrabbleAR-Grupo29\Archivo_Opciones.csv','w')
+    arch = open('Archivo_Opciones.csv','w')
     writer = csv.writer(arch)
-    writer.writerow(['Usuario','Facil','Normal','Dificil','Lote1','Lote2','Lote3','Lote4','Lote5','Lote6','Lote7'])
+    writer.writerow(['Actual','Usuario','Facil','Normal','Dificil','Lote1','Lote2','Lote3','Lote4','Lote5','Lote6','Lote7'])
     for row in lista:
-        writer.writerow([row['Usuario'].strip(),row['Facil'],row['Normal'],row['Dificil'],row['Lote1'],row['Lote2'],row['Lote3'],row['Lote4'],row['Lote5'],row['Lote6'],row['Lote7']])
+        writer.writerow([row['Actual'],row['Usuario'].strip(),row['Facil'],row['Normal'],row['Dificil'],row['Lote1'],row['Lote2'],row['Lote3'],row['Lote4'],row['Lote5'],row['Lote6'],row['Lote7']])
     arch.close()
 
 def LeerDatos():
-    arch = open(r'd:\Users\usuario\Documents\GitHub\ScrabbleAR-Grupo29\Archivo_Opciones.csv','r')
+    arch = open('Archivo_Opciones.csv','r')
     reader = csv.reader(arch)
     datos = []
     index = 0
@@ -88,7 +88,7 @@ def RestablecerPredeterminado(values,window):
     return values
 
 def Layout():
-    layout = [[sg.Text('Usuario:'),sg.Input(size=(15, 6),key='Usuario',default_text='Usuario1'),sg.OK('Cargar')],
+    layout = [[sg.Text('Usuario:'),sg.Input(size=(15, 6),key='Usuario',default_text='Usuario1'),sg.OK('Cargar perfil',key='Cargar')],
             [sg.Text('Dificultad:',pad=(5,20)),
             sg.Radio('Facil','Dificultad',key='Facil'),
             sg.Radio('Normal','Dificultad', default='1',key='Normal'),
@@ -104,29 +104,55 @@ def Layout():
             [sg.Save('Guardar'),sg.OK('Restablecer predeterminado'),sg.Exit('Salir')]]
     return layout
 
+def Poner_Todos_En_Falso(lista):
+    arch = open('Archivo_Opciones.csv','w')
+    writer = csv.writer(arch)
+    writer.writerow(['Actual','Usuario','Facil','Normal','Dificil','Lote1','Lote2','Lote3','Lote4','Lote5','Lote6','Lote7'])
+    i = 0
+    for row in lista:
+        lista[i]['Actual'] = False
+        writer.writerow([False,row['Usuario'].strip(),row['Facil'],row['Normal'],row['Dificil'],row['Lote1'],row['Lote2'],row['Lote3'],row['Lote4'],row['Lote5'],row['Lote6'],row['Lote7']])
+        i = i + 1
+    arch.close()
+
 def Ventana_Opciones ():
     window = sg.Window('Opciones', Layout())
     while True:
         event, values = window.read()
 
+        if event in (None, 'Salir'):
+            break
+
         if (event == 'Restablecer predeterminado'):
             values = RestablecerPredeterminado(values,window)
 
-        elif (event == 'Guardar'):
+        elif (event == 'Guardar') or (event == 'Cargar'):
             Lista = LeerDatos()
             existe = list(filter(lambda jug:values['Usuario'].strip() == jug['Usuario'],Lista))
-            if existe != []: #Reemplazo la configuracion del usuario existente
-                Lista.pop(Lista.index(existe[0]))
-                Lista.append(values)
-                GuardarDatos(Lista)
-            else: #Simplemente lo agrego
-                AgregarDatos(values)
+            if (event == 'Guardar'):
+                if values['Usuario'] != '':
+                    if existe != []: #Reemplazo la configuracion del usuario existente
+                        Lista.pop(Lista.index(existe[0]))
+                        Lista.append(values)
+                        GuardarDatos(Lista)
+                        sg.popup('El perfil se modifico exitosamente!',title='Aviso',keep_on_top=True)
+                    else: #Simplemente lo agrego
+                        Poner_Todos_En_Falso(Lista)
+                        AgregarDatos(values)
+                        sg.popup('El perfil se guardo exitosamente!',title='Aviso',keep_on_top=True)
+                else:
+                    sg.popup('No puedes guardar un usuario vacio!',title='Aviso',keep_on_top=True)
+            else:           #Cargar
+                if existe != []:
+                    Lista.pop(Lista.index(existe[0]))
+                    existe[0]['Actual'] = True
+                    Poner_Todos_En_Falso(Lista)
+                    Lista.append(existe[0])
+                    GuardarDatos(Lista)
+                    values = Cargar(values,window)
+                else:
+                    sg.popup('No se encontro ningun usuario con ese nombre',title='Aviso',keep_on_top=True)
 
-        else:                   #Cargar
-            values = Cargar(values,window)
-
-        if event in (None, 'Salir'):
-            break
     window.close()
     return event
 

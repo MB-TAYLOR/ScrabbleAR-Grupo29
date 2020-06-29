@@ -6,6 +6,7 @@ import PySimpleGUI as sg
 from random import randint
 import random
 import time
+import csv
 
 MAX_ROWS = MAX_COL = 15
 
@@ -84,6 +85,7 @@ def Update_Tablero(window,Dicc):
          "14,0":"white","14,1":"white","14,2":"white","14,3":"white","14,4":"blue","14,5":"white","14,6":"white","14,7":"white","14,8":"white","14,9":"white","14,10":"red","14,11":"white","14,12":"white","14,13":"white","14,14":"white",
              }
              ]
+
     num = randint(0,(len(Lista_Tableros)-1))
     tablero_random=(Lista_Tableros[num])
     for x in range(15):
@@ -104,17 +106,20 @@ def Generar_Dicc():
 def Layout_Columna():
 
     layout = [ [sg.Text('Tiempo Disponible',font=("impact",20))],
-               [sg.Text('30:00',pad=(70,3),font=("Bahnschrift",20),key=('Tiempo'))],
-               [sg.Text('Puntos CPU',font=("impact",20))],
-               [sg.Text('0',font=("impact",20))],
-               [sg.Text('Puntos Usuario',font=("impact",20))],
-               [sg.Text('0',font=("impact",20))],
-               [sg.Button(button_text='Terminar turno',size=(15,0),font=("Unispace",20),pad=((5,0),(233,2)))],
+               [sg.Text('00:60  |   30:00',pad=(20,3),font=("Bahnschrift",20),key=('Tiempo'))],
+               [sg.Text('__________________________________')],
+               [sg.Text('Puntos CPU',key='PuntosCPU',font=("impact",20))],
+               [sg.Text('0000',key='PuntajeCPU',font=("impact",20))],
+               [sg.Text('__________________________________')],
+               [sg.Text('Puntos Usuario',key='PuntosUsuario',font=("impact",20))],
+               [sg.Text('0000',key='PuntajeUsuario',font=("impact",20))],
+               [sg.Text('__________________________________')],
+               [sg.Button(button_text='Terminar turno',size=(15,0),font=("Unispace",20),pad=((5,0),(158,2)))],
                [sg.Button(button_text='Validar',size=(15,0),font=("Unispace",20),pad=((5,0),(5,3)))],
                [sg.Button(button_text='Intercambiar fichas',size=(15,0),font=("Unispace",20))],
-               [sg.Button(button_text='Pausar',key='Pausar',font=("default",16),pad=((5,0),(0,0)) ),# font=("default",19),pad=((5,43),(5,3))
-                sg.Button(button_text='Rendirse',key='Rendirse',font=("default",16),pad=((5,0),(0,0)) ),#19
-                sg.Button(button_text='Salir',key='Salir',font=("default",16))] ]#19
+               [sg.Button(button_text='Pausar',key='Pausar',font=("default",16),pad=((5,0),(3,0)) ), #font=("default",19),pad=((5,43),(5,3))
+                sg.Button(button_text='Rendirse',key='Rendirse',font=("default",16),pad=((5,0),(2,0)) ),#font=("default",19),pad=((5,43),(5,3))
+                sg.Button(button_text='Salir',key='Salir',font=("default",16))] ]#font=("default",19)
 
     return layout
 
@@ -345,11 +350,12 @@ def TerminarTurno(Palabra,Dicc,Lista_Atril,LCOPR,LCO,CCD,window):
             for Pos in range(len(Lista_Atril)):
                 if (Lista_Atril[Pos] == ''): # Si esta posicion esta vacia:
                     FichaVaciaxFichaTablero(Pos,LCOPR[0],Dicc,Lista_Atril,window,LCO,LCOPR,CCD)
+    return Palabra
+
 def elimino_fichas_Usadas(fichas_CPU,Palabra):
     for x in range(len(Palabra)):
         fichas_CPU=fichas_CPU.replace(Palabra[x].upper(),"") #Elimino las fichas usadas
     return(fichas_CPU)
-
 
 def intercambio_Fichas(fichas_CPU):
     global Cant_fichas
@@ -439,8 +445,41 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU):
         print("La CPU no tiene fichas suficientes para continuar , el juego termino")
     return(contador_Turnos_CPU,fichas_CPU)
 
+def Importar_Datos():
+    arch = open(r'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Archivo_Opciones.csv','r')
+    reader = csv.reader(arch)
+    index = 0
+    for row in reader:
+        if (len(row) > 0):
+            if (index != 0):
+                if (row[0] == 'True'):
+                    if (row[2] == 'True'):
+                        dificultad =  'Facil'
+                    elif (row[3] == 'True'):
+                        dificultad =  'Normal'
+                    elif (row[4] == 'True'):
+                        dificultad =  'Dificil'
+                    Usuario = row[1]
+                    Lista_Lotes = [int(float(row[5])),int(float(row[6])),int(float(row[7])),int(float(row[8])),int(float(row[9])),int(float(row[10])),int(float(row[11]))]
+                    arch.close()
+                    return Usuario,dificultad,Lista_Lotes
+            else:
+                index = index + 1
+
+def Calcular_Puntaje(Palabra,Dicc_Puntajes):
+    PPR = 0
+    for letra in Palabra:
+        PPR = PPR + Dicc_Puntajes[letra]
+    return PPR
+
+
 #PROGRAMA PRINCIPAL
 def genero_Tablero():
+    Usuario,Dificultad,Lista_Lotes = Importar_Datos()
+
+    Dicc_Puntajes = {"A":Lista_Lotes[0],"B":Lista_Lotes[2],"C":Lista_Lotes[1],"D":Lista_Lotes[1],"E":Lista_Lotes[0],"F":Lista_Lotes[3],"G":Lista_Lotes[1],"H":Lista_Lotes[3],"I":Lista_Lotes[0],"J":Lista_Lotes[4],"K":Lista_Lotes[5],"L":Lista_Lotes[0],"LL":Lista_Lotes[5],"M":Lista_Lotes[2],"N":Lista_Lotes[0],
+                      "Ñ":Lista_Lotes[5],"O":Lista_Lotes[0],"P":Lista_Lotes[2],"Q":Lista_Lotes[5],"R":Lista_Lotes[0],"RR":Lista_Lotes[5],"S":Lista_Lotes[0],"T":Lista_Lotes[0],"U":Lista_Lotes[0],"V":Lista_Lotes[3],"W":Lista_Lotes[5],"X":Lista_Lotes[5],"Y":Lista_Lotes[3],"Z":Lista_Lotes[6]}
+
     Lista_Atril = []
     Terminar = [False]
     Dicc = Generar_Dicc()
@@ -448,21 +487,27 @@ def genero_Tablero():
                 sg.Column(Layout_Columna())] ]
     window = sg.Window('Tablero',diseño ,location=(400,0),finalize=True)
     Dicc = Update_Tablero(window,Dicc)
+    window['PuntosUsuario'].update('Puntos' + Usuario)
     Turno_Usuario = bool(random.getrandbits(1))
     Turno(Turno_Usuario)
     Fin = False
     fichas_CPU=""
     contador_Turnos_CPU=0
     Puntaje_Total = 0
-    CCD=set() #Conjunto de Coordenadas  Disponibles
-    LCO = []  #Lista de Coordenadas Ocupadas
+    CCD=set()                   #Conjunto de Coordenadas  Disponibles
+    LCO = []                    #Lista de Coordenadas Ocupadas
     while True:
-        LCOPR = [] #Lista de Coordenadas Ocupadas Por Ronda
-        PPR = 0    #Puntos Por Ronda
-        while (Turno_Usuario): #Mientras sea el turno del usuario:
+        LCOPR = []              #Lista de Coordenadas Ocupadas Por Ronda
+        while (Turno_Usuario):  #Mientras sea el turno del usuario:
             Palabra = ''
             event = window.Read()[0]
             if event in (None, 'Salir'):
+
+                event_popup = sg.popup_yes_no('Ey! estas saliendo en mitad de una partida\n¿Quieres posponerla?',title='Aviso',keep_on_top=True)
+                #if (event_popup == 'Yes'):
+                    #Pospone la partida
+                #else:
+                    #No la pospone y sale sin guardar
                 Fin = True
                 break
 
@@ -472,11 +517,16 @@ def genero_Tablero():
                 Palabra = Validar(Palabra,LCOPR,Dicc)
 
             elif (event == 'Terminar turno'):
-                TerminarTurno(Palabra,Dicc,Lista_Atril,LCOPR,LCO,CCD,window)
+                Palabra = TerminarTurno(Palabra,Dicc,Lista_Atril,LCOPR,LCO,CCD,window)
 
-                #Faltaria calcular el puntaje y actualizar el puntajeUsuario en pantalla
+                if (Palabra != ''):
+                    PPR = Calcular_Puntaje(Palabra,Dicc_Puntajes) #Puntaje por ronda
+                    Puntaje_Total = Puntaje_Total + PPR
+                    window['PuntajeUsuario'].update(str(Puntaje_Total))
+
                 Llenar_Atril(Lista_Atril,window)
                 break
+
         while (Turno_Usuario == False):
             contador_Turnos_CPU,fichas_CPU=Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU)
             break
