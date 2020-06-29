@@ -387,6 +387,7 @@ def Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc):
 
 def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU):
     global Cant_fichas
+    CCD_CPU=CCD
     Palabra=fichas_CPU
     intento=True
     puede_Colocarse=False
@@ -404,7 +405,7 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU):
         contador_Turnos_CPU=contador_Turnos_CPU+1
     if Palabra != "":
         fichas_CPU=elimino_fichas_Usadas(fichas_CPU,Palabra)
-        if CCD == set():
+        if CCD_CPU == set():
             for x in range(len(Palabra)):  #En el primer case , donde CCD esta vacio y se debe empezar en el cuadro 7,7
                 Palabra=Palabra.upper()
                 window[(7,7+x)].update(str(Palabra[x]),button_color=('black','#7D4DE4'))
@@ -413,14 +414,15 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU):
                 Coord_Disponible(LCO,CCD)
                 Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
         else:
-            for x in range(len(CCD)) :
+            for x in range(len(CCD_CPU)) :
                 if(intento):
-                    coordenadas_CPU=Selector_de_coordenadas_disponibles(CCD)
-                    if(coordenadas_CPU in CCD) and(not(coordenadas_CPU in LCO)):
+                    coordenadas_CPU=Selector_de_coordenadas_disponibles(CCD_CPU)
+                    if(coordenadas_CPU in CCD_CPU) and(not(coordenadas_CPU in LCO)):
                         if(((len(Palabra)+coordenadas_CPU[1])<15)and((len(Palabra)+coordenadas_CPU[1])>-1)):  #si se va a pasar del tablero al poner la palabra  verticalmente
                             for y in range(len(Palabra)):
                                 if(((coordenadas_CPU[0],coordenadas_CPU[1]+(y)) in LCO)or(Dicc[(coordenadas_CPU[0],coordenadas_CPU[1]+(y))][0]!='')):#Si las coordenada esta ocupada , sale y busca otra coordenada disponible
                                     puede_Colocarse=False
+                                    CCD_CPU.discard(coordenadas_CPU)
                                     break
                                 else:
                                     puede_Colocarse=True
@@ -431,6 +433,7 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU):
                             for x in range(len(Palabra)):
                                 if(((coordenadas_CPU[0]+(x),coordenadas_CPU[1]) in LCO)or(Dicc[(coordenadas_CPU[0]+(x),coordenadas_CPU[1])][0]!='')):#Si la coordenada esta ocupada , sale y busca otra coordenada disponible
                                     puede_Colocarse=False
+                                    CCD_CPU.discard(coordenadas_CPU)
                                     break
                                 else:
                                     puede_Colocarse=True
@@ -494,7 +497,7 @@ def genero_Tablero():
     fichas_CPU=""
     contador_Turnos_CPU=0
     Puntaje_Total = 0
-    CCD=set()                   #Conjunto de Coordenadas  Disponibles
+    CCD=set()                #Conjunto de Coordenadas  Disponibles
     LCO = []                    #Lista de Coordenadas Ocupadas
     while True:
         LCOPR = []              #Lista de Coordenadas Ocupadas Por Ronda
