@@ -90,9 +90,9 @@ def RestablecerPredeterminado(values,window):
 def Layout():
     layout = [[sg.Text('Usuario:'),sg.Input(size=(15, 6),key='Usuario',default_text='Usuario1'),sg.OK('Cargar perfil',key='Cargar')],
             [sg.Text('Dificultad:',pad=(5,20)),
-            sg.Radio('Facil','Dificultad',key='Facil'),
-            sg.Radio('Normal','Dificultad', default='1',key='Normal'),
-            sg.Radio('Dificil','Dificultad',key='Dificil')],
+            sg.Radio('Facil','Dificultad',key='Facil',tooltip='En "Facil" se aplicaran los siguientes cambios:\n_____________\nSe aceptaran: Adjetivos, Sustantivos y Verbos\nTiempo por ronda: 60sg \nTiempo Total: 60Min'),
+            sg.Radio('Normal','Dificultad', default='1',key='Normal',tooltip='En "Normal" se aplicaran los siguientes cambios:\n_____________\nSe aceptaran: Sustantivos y Verbos\nTiempo por ronda: 45sg \nTiempo Total: 45Min'),
+            sg.Radio('Dificil','Dificultad',key='Dificil',tooltip='En "Dificil" se aplicaran los siguientes cambios:\n_____________\nSe aceptaran: Adjetivos,Sustantivos y Verbos(De forma Aleatoria)\nTiempo por ronda: 30sg \nTiempo Total: 30Min')],
             [sg.Text('Cantidad de puntos por ficha:')],
             [sg.Text('A E O S I U N L R T:'),sg.Slider(range=(1,2),orientation="h",size=(6,10),pad=((5,3),(0,15)),default_value=1,key='Lote1')],
             [sg.Text('C D G :'),sg.Slider(range=(1,3),orientation="h",size=(6,10),pad=((82,3),(0,15)),default_value=2,key='Lote2')],
