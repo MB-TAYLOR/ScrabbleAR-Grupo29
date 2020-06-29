@@ -112,9 +112,9 @@ def Layout_Columna():
                [sg.Button(button_text='Terminar turno',size=(15,0),font=("Unispace",20),pad=((5,0),(233,2)))],
                [sg.Button(button_text='Validar',size=(15,0),font=("Unispace",20),pad=((5,0),(5,3)))],
                [sg.Button(button_text='Intercambiar fichas',size=(15,0),font=("Unispace",20))],
-               [sg.Button(button_text='Pa',key='Pausar',font=("default",19),pad=((5,43),(5,3)) ),
-                sg.Button(button_text='Re',key='Rendirse',font=("default",19),pad=((5,42),(5,3)) ),
-                sg.Button(button_text='Sa',key='Salir',font=("default",19))] ]
+               [sg.Button(button_text='Pausar',key='Pausar',font=("default",16),pad=((5,0),(0,0)) ),# font=("default",19),pad=((5,43),(5,3))
+                sg.Button(button_text='Rendirse',key='Rendirse',font=("default",16),pad=((5,0),(0,0)) ),#19
+                sg.Button(button_text='Salir',key='Salir',font=("default",16))] ]#19
 
     return layout
 
@@ -360,7 +360,6 @@ def intercambio_Fichas(fichas_CPU):
     for x in range(7):
         fichas_CPU=fichas_CPU+Letra_Bolsa(Bolsa_Diccionario)
     return(fichas_CPU)
-
 
 def Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc):
     Palabra=Palabra.upper()
