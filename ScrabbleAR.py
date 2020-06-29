@@ -12,7 +12,7 @@ def obtengo_Perfil():                                #Busco el nombre del ultimo
     perfiles=csv.reader(archivo_csv)
     for perfil in perfiles:
         if((len(perfil))>0):
-            perfil_Actual=perfil[0]
+            perfil_Actual=perfil[1]
     archivo_csv.close()
     return(perfil_Actual)
 
