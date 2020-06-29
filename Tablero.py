@@ -238,8 +238,9 @@ def Update_Fichas_Colocadas(LCOPR,window):
     for coord in LCOPR:
         window[coord].update(button_color=('black','#E4BE4D'))
 
-def Acciones_Usuario(event,Dicc,Lista_Atril,LCO,LCOPR,CCD,window):
+def Acciones_Usuario(event,Dicc,Lista_Atril,LCO,LCOPR,CCD,window,puedo_intercambiar):
     if (type(event) == int) and (Lista_Atril[event] != ''):  #Si event es ENTERO(Por ende la posicion de la letra del atril):
+        puedo_intercambiar=False
         letra_1 = Lista_Atril[event]
         pos_letra_1= event
         window[pos_letra_1].update(button_color=('white','#57C3FD'))
@@ -271,6 +272,7 @@ def Acciones_Usuario(event,Dicc,Lista_Atril,LCO,LCOPR,CCD,window):
         window[pos_letra_1].update(button_color=('black','#FDD357'))
     else:                                #Si event NO es entero:
         if (type(event) == tuple):       #Comprobamos que sea una tupla(coordenada del tablero)
+            puedo_intercambiar=False
             if Coord_Ocupada(LCOPR,event): #Si la coordenada esta ocupada:
                 coord = event
                 window[coord].update(button_color=('white','#57C3FD'))
@@ -318,7 +320,7 @@ def Acciones_Usuario(event,Dicc,Lista_Atril,LCO,LCOPR,CCD,window):
                         window[coord].update(button_color=('black','#FDD357'))
             else:
                 sg.popup('No puedes interactuar con las fichas ya colocadas!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True) if Coord_Ocupada(LCO,event) else sg.popup('Primero selecciona una letra!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True)
-
+    return(puedo_intercambiar)
 def Turno(Turno_Usuario):
     if Turno_Usuario:
         sg.popup('Estas Listo?\nEmpiezas tu',custom_text="Si,lo estoy",no_titlebar=True,keep_on_top=True)
@@ -511,6 +513,7 @@ def genero_Tablero():
     CCD=set()                #Conjunto de Coordenadas  Disponibles
     LCO = []                    #Lista de Coordenadas Ocupadas
     while True:
+        puedo_intercambiar=True
         LCOPR = []              #Lista de Coordenadas Ocupadas Por Ronda
         while (Turno_Usuario):  #Mientras sea el turno del usuario:
             Palabra = ''
@@ -523,15 +526,17 @@ def genero_Tablero():
                 #else:
                     #No la pospone y sale sin guardar
                 Fin = True
+                puedo_intercambiar=False
                 break
 
-            Acciones_Usuario(event,Dicc,Lista_Atril,LCO,LCOPR,CCD,window)
-
+            puedo_intercambiar=Acciones_Usuario(event,Dicc,Lista_Atril,LCO,LCOPR,CCD,window,puedo_intercambiar)
             if (event == 'Validar'):
                 Palabra = Validar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega)
+                puedo_intercambiar=False
 
             elif (event == 'Terminar turno'):
                 Palabra = TerminarTurno(Palabra,Dicc,Lista_Atril,LCOPR,LCO,CCD,window,Dificultad,Dificil_se_juega)
+                puedo_intercambiar=False
 
                 if (Palabra != ''):
                     PPR = Calcular_Puntaje(Palabra,Dicc_Puntajes) #Puntaje por ronda
@@ -540,7 +545,18 @@ def genero_Tablero():
 
                 Llenar_Atril(Lista_Atril,window)
                 break
-
+            elif((event == "Intercambiar fichas")and(puedo_intercambiar)):
+                cadena_Atril=""
+                for x in range(len(Lista_Atril)):
+                    cadena_Atril=cadena_Atril+Lista_Atril[x]
+                nuevas_fichas=intercambio_Fichas(cadena_Atril)
+                print(cadena_Atril)
+                for y in range(len(Lista_Atril)):
+                    print(nuevas_fichas)
+                    print(Lista_Atril)
+                    Lista_Atril[y]=nuevas_fichas[y]
+                    window[y].update(str(nuevas_fichas[y])) #Se puede hacer ilimitadas veces en el mismo turno ,solo por ahora , esta implementado para que puedan
+                                                            #probar el ingresar palabras y validarlas sin inconvenientes
         while (Turno_Usuario == False):
             contador_Turnos_CPU,fichas_CPU=Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega)
             break
