@@ -8,6 +8,11 @@ import random
 import time
 import csv
 
+def aleatorio_Dificil():
+    lista_opciones=["verb","sus","adj"]
+    x=random.randint(0,2)
+    return(lista_opciones[x])
+
 MAX_ROWS = MAX_COL = 15
 
 
@@ -324,7 +329,7 @@ def Eliminar_Elementos_Ocupados_CDD(LCO,CCD):
     for L in LCO:
         CCD.discard(L)
 
-def Validar(Palabra,LCOPR,Dicc,Dificultad):
+def Validar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega):
     if len(LCOPR) > 1:
         if (LCOPR[0][0] == LCOPR[1][0]): #Si entra la palabra formada esta en Horizontal
             LCOPR = sorted(LCOPR, key=lambda tup: tup[1])
@@ -334,7 +339,7 @@ def Validar(Palabra,LCOPR,Dicc,Dificultad):
             LCOPR = sorted(LCOPR, key=lambda tup: tup[0])
             for coord in LCOPR:
                 Palabra = Palabra + Dicc[coord][0]
-        if verificar_Palabra(Palabra,Dificultad):
+        if verificar_Palabra(Palabra,Dificultad,Dificil_se_juega):
             sg.popup(Palabra+' es una palabra valida :D',text_color='black',title='Ayuda',background_color='#57FD57',button_color=('black','white'),keep_on_top=True)
         else:
             sg.popup(Palabra+' no es una palabra valida D:',text_color='black',title='Ayuda',background_color='#FD5757',button_color=('Black','White'),keep_on_top=True)
@@ -343,9 +348,9 @@ def Validar(Palabra,LCOPR,Dicc,Dificultad):
         sg.popup('Debes formar palabras de por lo menos 2 fichas_CPU!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True)
     return Palabra
 
-def TerminarTurno(Palabra,Dicc,Lista_Atril,LCOPR,LCO,CCD,window,Dificultad):
+def TerminarTurno(Palabra,Dicc,Lista_Atril,LCOPR,LCO,CCD,window,Dificultad,Dificil_se_juega):
     if (Palabra == '') and (LCOPR != []):
-        Palabra = Validar(Palabra,LCOPR,Dicc,Dificultad)
+        Palabra = Validar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega)
         if (Palabra == ''):
             for Pos in range(len(Lista_Atril)):
                 if (Lista_Atril[Pos] == ''): # Si esta posicion esta vacia:
@@ -385,7 +390,7 @@ def Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc):
         Coord_Disponible(LCO,CCD)
         Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
 
-def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad):
+def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega):
     global Cant_fichas
     CCD_CPU=CCD
     Palabra=fichas_CPU
@@ -394,14 +399,14 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad):
     if (contador_Turnos_CPU ==0):
         for x in range(7):
             fichas_CPU=fichas_CPU+Letra_Bolsa(Bolsa_Diccionario) #En la primera jugada toma 7 fichas aleatorias de la bolsa
-            Palabra=formar_palabra(fichas_CPU,Dificultad)
+            Palabra=formar_palabra(fichas_CPU,Dificultad,Dificil_se_juega)
         contador_Turnos_CPU=contador_Turnos_CPU+1
     else:
-        Palabra=formar_palabra(fichas_CPU,Dificultad)
+        Palabra=formar_palabra(fichas_CPU,Dificultad,Dificil_se_juega)
         contador_Turnos_CPU=contador_Turnos_CPU+1
     if(((contador_Turnos_CPU % 3)==0) and (Cant_fichas > 14 )):
         fichas_CPU=intercambio_Fichas(fichas_CPU)
-        Palabra=formar_palabra(fichas_CPU,Dificultad)
+        Palabra=formar_palabra(fichas_CPU,Dificultad,Dificil_se_juega)
         contador_Turnos_CPU=contador_Turnos_CPU+1
     if Palabra != "":
         fichas_CPU=elimino_fichas_Usadas(fichas_CPU,Palabra)
@@ -481,6 +486,10 @@ def Calcular_Puntaje(Palabra,Dicc_Puntajes):
 #PROGRAMA PRINCIPAL
 def genero_Tablero():
     Usuario,Dificultad,Lista_Lotes = Importar_Datos()
+    if(Dificultad=="Dificil"):
+        Dificil_se_juega=aleatorio_Dificil()
+    else:
+        Dificil_se_juega="Default"
 
     Dicc_Puntajes = {"A":Lista_Lotes[0],"B":Lista_Lotes[2],"C":Lista_Lotes[1],"D":Lista_Lotes[1],"E":Lista_Lotes[0],"F":Lista_Lotes[3],"G":Lista_Lotes[1],"H":Lista_Lotes[3],"I":Lista_Lotes[0],"J":Lista_Lotes[4],"K":Lista_Lotes[5],"L":Lista_Lotes[0],"LL":Lista_Lotes[5],"M":Lista_Lotes[2],"N":Lista_Lotes[0],
                       "Ñ":Lista_Lotes[5],"O":Lista_Lotes[0],"P":Lista_Lotes[2],"Q":Lista_Lotes[5],"R":Lista_Lotes[0],"RR":Lista_Lotes[5],"S":Lista_Lotes[0],"T":Lista_Lotes[0],"U":Lista_Lotes[0],"V":Lista_Lotes[3],"W":Lista_Lotes[5],"X":Lista_Lotes[5],"Y":Lista_Lotes[3],"Z":Lista_Lotes[6]}
@@ -519,10 +528,10 @@ def genero_Tablero():
             Acciones_Usuario(event,Dicc,Lista_Atril,LCO,LCOPR,CCD,window)
 
             if (event == 'Validar'):
-                Palabra = Validar(Palabra,LCOPR,Dicc,Dificultad)
+                Palabra = Validar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega)
 
             elif (event == 'Terminar turno'):
-                Palabra = TerminarTurno(Palabra,Dicc,Lista_Atril,LCOPR,LCO,CCD,window,Dificultad)
+                Palabra = TerminarTurno(Palabra,Dicc,Lista_Atril,LCOPR,LCO,CCD,window,Dificultad,Dificil_se_juega)
 
                 if (Palabra != ''):
                     PPR = Calcular_Puntaje(Palabra,Dicc_Puntajes) #Puntaje por ronda
@@ -533,7 +542,7 @@ def genero_Tablero():
                 break
 
         while (Turno_Usuario == False):
-            contador_Turnos_CPU,fichas_CPU=Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad)
+            contador_Turnos_CPU,fichas_CPU=Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega)
             break
         if Fin:
             Fin_Tiempo(Terminar)

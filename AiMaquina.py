@@ -1,5 +1,6 @@
 import itertools as it
 from pattern.es import spelling,lexicon,parse
+import random
 
 Tipo= {'adj':["AO", "JJ","AQ","DI","DT"],
 'sus':["NC", "NCS","NCP", "NNS","NP", "NNP","W"],#Revisar volver a comprobar en facil , primero en spell y lexi luego en sus
@@ -16,13 +17,32 @@ def palabra_larga(lista_palabras):
             max=len(x)
             palabra_max=x
     return(palabra_max)
-def Medio_Dificil(i,palabras_existentes):
+def Facil(i,palabras_existentes):
+    if (i in spelling.keys() or i in lexicon.keys()):
+        if(parse(i).split("/")[1] in Tipo['sus']):
+            palabras_existentes.append(i)
+        elif(parse(i).split("/")[1] in Tipo['adj']):
+            palabras_existentes.append(i)
+        elif(parse(i).split("/")[1] in Tipo['verb']):
+            palabras_existentes.append(i)
+def Medio(i,palabras_existentes):
     if i in spelling.keys() and i in lexicon.keys(): #Dificultad -> Medio(Sea adjetivo o verbo)
-            if(parse(i).split("/")[1] in Tipo['adj']):
-                palabras_existentes.append(i)
-            if(parse(i).split("/")[1] in Tipo['verb']):
-                palabras_existentes.append(i)
-def formar_palabra(letras,dificultad):
+        if(parse(i).split("/")[1] in Tipo['verb']):
+            palabras_existentes.append(i)
+        elif(parse(i).split("/")[1] in Tipo['sus']):
+            palabras_existentes.append(i)
+def Dificil(i,palabras_existentes,Dificil_elegido):
+    if i in spelling.keys() and i in lexicon.keys(): #Dificultad -> Medio(Sea adjetivo o verbo)
+            if(Dificil_elegido=="adj"):
+                if(parse(i).split("/")[1] in Tipo['adj']):
+                    palabras_existentes.append(i)
+            elif(Dificil_elegido =="verb"):
+                if(parse(i).split("/")[1] in Tipo['verb']):
+                    palabras_existentes.append(i)
+            elif(Dificil_elegido=="sus"):
+                if(parse(i).split("/")[1] in Tipo['sus']):
+                    palabras_existentes.append(i)
+def formar_palabra(letras,dificultad,Dificil_elegido):
     letras=letras.lower()
     palabras = set()
     for i in range(2,len(letras)+1):
@@ -30,17 +50,14 @@ def formar_palabra(letras,dificultad):
     palabras_existentes=[]
     for i in palabras:
         if (dificultad=="Facil"):
-            if (i in spelling.keys() or i in lexicon.keys()):
-                palabras_existentes.append(i)
-            elif(parse(i).split("/")[1] in Tipo['sus']):
-                    palabras_existentes.append(i)
+            Facil(i,palabras_existentes)
         elif(dificultad=="Medio"):
-            Medio_Dificil(i,palabras_existentes)
+            Medio(i,palabras_existentes)
         elif(dificultad=="Dificil"):
-            Medio_Dificil(i,palabras_existentes)
+            Dificil(i,palabras_existentes,Dificil_elegido)
     return(palabra_larga(palabras_existentes))
 
 
   #---------Porgrama Principal---
 if __name__ == '__main__':
-    print(formar_palabra("cornere","Facil"))
+    print(formar_palabra("oef","Dificil","adj"))
