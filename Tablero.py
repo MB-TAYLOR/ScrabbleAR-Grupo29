@@ -446,7 +446,7 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU):
     return(contador_Turnos_CPU,fichas_CPU)
 
 def Importar_Datos():
-    arch = open(r'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Archivo_Opciones.csv','r')
+    arch = open('Archivo_Opciones.csv','r')
     reader = csv.reader(arch)
     index = 0
     for row in reader:
