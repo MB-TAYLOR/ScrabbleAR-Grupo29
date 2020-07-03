@@ -8,17 +8,16 @@ import random
 import time
 import csv
 
-def aleatorio_Dificil():
-    lista_opciones=["verb","sus","adj"]
-    x=random.randint(0,2)
-    return(lista_opciones[x])
-
 MAX_ROWS = MAX_COL = 15
-
 
 Bolsa_Diccionario={"A":11,"B":3,"C":4,"D":4,"E":11,"F":2,"G":2,"H":2,"I":6,"J":2,"K":1,"L":4,"LL":1,"M":3,"N":5,
                   "Ñ":1,"O":8,"P":2,"Q":1,"R":4,"RR":1,"S":7,"T":4,"U":6,"V":2,"W":1,"X":1,"Y":1,"Z":1}
 Cant_fichas=101
+
+def aleatorio_Dificil():
+    lista_opciones=["verb","sus","adj"]
+    x=random.randint(0,2)
+    return(lista_opciones[x])
 
 def Letra_Bolsa(Bolsa_Diccionario):
     global Cant_fichas
@@ -184,12 +183,15 @@ def Coord_Ocupada(LCO,event):
     else:
         return False
 
-def Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril,window):
+def Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril,window,LCO,LCOPR,CCD):
     Dicc[event][0] = letra_1
     window[event].update(letra_1,button_color=('black','#FDD357'))
     Lista_Atril[pos_letra_1] = ''
     window[pos_letra_1].update('')
-    return Dicc
+    LCO.append(event)
+    LCOPR.append(event)
+    Coord_Disponible(LCO,CCD)
+    Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
 
 def Coord_Adyacentes(coord):
     x,y=coord
@@ -226,6 +228,7 @@ def FichaVaciaxFichaTablero(event,coord,Dicc,Lista_Atril,window,LCO,LCOPR,CCD):
     LCO.remove(coord)
     LCOPR.remove(coord)
     Eliminar_Coords(CCD,coord)
+    Coord_Disponible(LCO,CCD)
 
 def Reemplazar_FichaxTablero(event,coord,Dicc,Lista_Atril,window):
     aux = Dicc[coord][0]
@@ -238,89 +241,6 @@ def Update_Fichas_Colocadas(LCOPR,window):
     for coord in LCOPR:
         window[coord].update(button_color=('black','#E4BE4D'))
 
-def Acciones_Usuario(event,Dicc,Lista_Atril,LCO,LCOPR,CCD,window,puedo_intercambiar):
-    if (type(event) == int) and (Lista_Atril[event] != ''):  #Si event es ENTERO(Por ende la posicion de la letra del atril):
-        puedo_intercambiar=False
-        letra_1 = Lista_Atril[event]
-        pos_letra_1= event
-        window[pos_letra_1].update(button_color=('white','#57C3FD'))
-        event = window.read()[0]
-        if (type(event) != int):                             #Si event es coordenada Y no esta ocupada:
-            if (Coord_Ocupada(LCOPR,event) == False):        #FichaAtril x TableroVacio
-                if (Dicc[(7,7)][0] == ''):                   #Si la cordenada de inicio esta vacia (Es el primer turno):
-                    if (event == (7,7)):
-                        Dicc = Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril,window)
-                        LCO.append(event)
-                        LCOPR.append(event)
-                        Coord_Disponible(LCO,CCD)
-                else:
-                    if (Coord_Ocupada(LCO,event) != True) and Coord_Desbloqueada(CCD,event):
-                        Dicc = Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril,window)
-                        LCO.append(event)
-                        LCOPR.append(event)
-                        Coord_Disponible(LCO,CCD)
-            else:                               #FichaAtril x FichaTablero
-                Reemplazar_FichaxTablero(pos_letra_1,event,Dicc,Lista_Atril,window)
-        else:              #FichaAtril X FichaAtril (Intercambio)
-            letra_2 = Lista_Atril[event]
-            pos_letra_2 = event
-            if (pos_letra_1 != pos_letra_2):
-                window[pos_letra_1].update(letra_2)
-                window[pos_letra_2].update(letra_1)
-                Lista_Atril[pos_letra_1] = letra_2
-                Lista_Atril[pos_letra_2] = letra_1
-        window[pos_letra_1].update(button_color=('black','#FDD357'))
-    else:                                #Si event NO es entero:
-        if (type(event) == tuple):       #Comprobamos que sea una tupla(coordenada del tablero)
-            puedo_intercambiar=False
-            if Coord_Ocupada(LCOPR,event): #Si la coordenada esta ocupada:
-                coord = event
-                window[coord].update(button_color=('white','#57C3FD'))
-                event = window.read()[0]
-                if coord != (7,7):
-                    if (type(event) == int):
-                        if (Lista_Atril[event] == ''):   #FichaTablero x FichaAtrilVacia
-                            FichaVaciaxFichaTablero(event,coord,Dicc,Lista_Atril,window,LCO,LCOPR,CCD)
-                        else:                            #FichaTablero x FichaAtril
-                            Reemplazar_FichaxTablero(event,coord,Dicc,Lista_Atril,window)
-                            window[coord].update(button_color=('black','#FDD357'))
-                    else:
-                        if Coord_Ocupada(LCOPR,event): #FichaTablero x FichaTablero:
-                            aux = Dicc[event][0]
-                            Dicc[event][0] = Dicc[coord][0]
-                            Dicc[coord][0] = aux
-                            window[event].update(Dicc[event][0])
-                            window[coord].update(aux)
-                            window[coord].update(button_color=('black','#FDD357'))
-                        else:                        #FichaTablero x TableroVacio:
-                            if (Coord_Ocupada(LCO,event) != True) and (Coord_Desbloqueada(CCD,event)):
-                                Dicc[event][0] = Dicc[coord][0]
-                                Dicc[coord][0] = ''
-                                window[coord].update('',button_color=('white',Dicc[coord][1]))
-                                window[event].update(Dicc[event][0],button_color=('black','#FDD357'))
-                                LCO.remove(coord)
-                                LCO.append(event)
-                                LCOPR.remove(coord)
-                                LCOPR.append(event)
-                                Coord_Disponible(LCO,CCD)
-                                Eliminar_Coords(CCD,coord)
-                            else:
-                                window[coord].update(button_color=('black','#FDD357'))
-                else: #Coord es (7,7):
-                    if Coord_Ocupada(LCOPR,event):
-                        aux = Dicc[event][0]
-                        Dicc[event][0] = Dicc[coord][0]
-                        Dicc[coord][0] = aux
-                        window[event].update(Dicc[event][0])
-                        window[coord].update(aux)
-                        window[coord].update(button_color=('black','#FDD357'))
-                    elif (type(event) == int):
-                        if (Lista_Atril[event] != ''):
-                            Reemplazar_FichaxTablero(event,coord,Dicc,Lista_Atril,window)
-                        window[coord].update(button_color=('black','#FDD357'))
-            else:
-                sg.popup('No puedes interactuar con las fichas ya colocadas!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True) if Coord_Ocupada(LCO,event) else sg.popup('Primero selecciona una letra!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True)
-    return(puedo_intercambiar)
 def Turno(Turno_Usuario):
     if Turno_Usuario:
         sg.popup('Estas Listo?\nEmpiezas tu',custom_text="Si,lo estoy",no_titlebar=True,keep_on_top=True)
@@ -364,6 +284,14 @@ def elimino_fichas_Usadas(fichas_CPU,Palabra):
         fichas_CPU=fichas_CPU.replace(Palabra[x].upper(),"") #Elimino las fichas usadas
     return(fichas_CPU)
 
+def Intercambio_FichasTablero(Dicc,event,coord,window):
+    aux = Dicc[event][0]
+    Dicc[event][0] = Dicc[coord][0]
+    Dicc[coord][0] = aux
+    window[event].update(Dicc[event][0])
+    window[coord].update(aux)
+    window[coord].update(button_color=('black','#FDD357'))
+
 def intercambio_Fichas(fichas_CPU):
     global Cant_fichas
     for x in range(len(fichas_CPU)):
@@ -373,6 +301,33 @@ def intercambio_Fichas(fichas_CPU):
     for x in range(7):
         fichas_CPU=fichas_CPU+Letra_Bolsa(Bolsa_Diccionario)
     return(fichas_CPU)
+
+def Importar_Datos():
+    arch = open('Archivo_Opciones.csv','r')
+    reader = csv.reader(arch)
+    index = 0
+    for row in reader:
+        if (len(row) > 0):
+            if (index != 0):
+                if (row[0] == 'True'):
+                    if (row[2] == 'True'):
+                        dificultad =  'Facil'
+                    elif (row[3] == 'True'):
+                        dificultad =  'Medio'
+                    elif (row[4] == 'True'):
+                        dificultad =  'Dificil'
+                    Usuario = row[1]
+                    Lista_Lotes = [int(float(row[5])),int(float(row[6])),int(float(row[7])),int(float(row[8])),int(float(row[9])),int(float(row[10])),int(float(row[11]))]
+                    arch.close()
+                    return Usuario,dificultad,Lista_Lotes
+            else:
+                index = index + 1
+
+def Calcular_Puntaje(Palabra,Dicc_Puntajes):
+    PPR = 0
+    for letra in Palabra:
+        PPR = PPR + Dicc_Puntajes[letra]
+    return PPR
 
 def Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc):
     Palabra=Palabra.upper()
@@ -457,33 +412,51 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
         print("La CPU no tiene fichas suficientes para continuar , el juego termino")
     return(contador_Turnos_CPU,fichas_CPU)
 
-def Importar_Datos():
-    arch = open('Archivo_Opciones.csv','r')
-    reader = csv.reader(arch)
-    index = 0
-    for row in reader:
-        if (len(row) > 0):
-            if (index != 0):
-                if (row[0] == 'True'):
-                    if (row[2] == 'True'):
-                        dificultad =  'Facil'
-                    elif (row[3] == 'True'):
-                        dificultad =  'Medio'
-                    elif (row[4] == 'True'):
-                        dificultad =  'Dificil'
-                    Usuario = row[1]
-                    Lista_Lotes = [int(float(row[5])),int(float(row[6])),int(float(row[7])),int(float(row[8])),int(float(row[9])),int(float(row[10])),int(float(row[11]))]
-                    arch.close()
-                    return Usuario,dificultad,Lista_Lotes
-            else:
-                index = index + 1
-
-def Calcular_Puntaje(Palabra,Dicc_Puntajes):
-    PPR = 0
-    for letra in Palabra:
-        PPR = PPR + Dicc_Puntajes[letra]
-    return PPR
-
+def Acciones_Usuario(event1,event,Dicc,Lista_Atril,LCO,LCOPR,CCD,window,puedo_intercambiar):
+    if (type(event1) == int) and (Lista_Atril[event1] != ''):  #Si event es ENTERO(Por ende la posicion de la letra del atril):
+        puedo_intercambiar=False
+        letra_1 = Lista_Atril[event1]
+        pos_letra_1= event1
+        if (type(event) != int):                             #Si event es coordenada Y no esta ocupada:
+            if (Coord_Ocupada(LCOPR,event) == False):        #FichaAtril x TableroVacio
+                if (Dicc[(7,7)][0] == ''):                   #Si la cordenada de inicio esta vacia (Es el primer turno):
+                    if (event == (7,7)):
+                        Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril,window,LCO,LCOPR,CCD)
+                elif (Coord_Ocupada(LCO,event) != True) and Coord_Desbloqueada(CCD,event):
+                    Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril,window,LCO,LCOPR,CCD)
+            else:                               #FichaAtril x FichaTablero
+                Reemplazar_FichaxTablero(pos_letra_1,event,Dicc,Lista_Atril,window)
+        else:              #FichaAtril X FichaAtril (Intercambio)
+            letra_2 = Lista_Atril[event]
+            pos_letra_2 = event
+            if (pos_letra_1 != pos_letra_2):
+                window[pos_letra_1].update(letra_2)
+                window[pos_letra_2].update(letra_1)
+                Lista_Atril[pos_letra_1] = letra_2
+                Lista_Atril[pos_letra_2] = letra_1
+        window[pos_letra_1].update(button_color=('black','#FDD357'))
+    elif (type(event1) == tuple):  #Comprobamos que sea una tupla(coordenada del tablero)
+        puedo_intercambiar=False
+        if Coord_Ocupada(LCOPR,event1): #Si la coordenada esta ocupada:
+            coord = event1
+            if coord != (7,7):
+                if (type(event) == int):
+                    if (Lista_Atril[event] == ''):   #FichaTablero x FichaAtrilVacia
+                        FichaVaciaxFichaTablero(event,coord,Dicc,Lista_Atril,window,LCO,LCOPR,CCD)
+                    else:                            #FichaTablero x FichaAtril
+                        Reemplazar_FichaxTablero(event,coord,Dicc,Lista_Atril,window)
+                        window[coord].update(button_color=('black','#FDD357'))
+                elif Coord_Ocupada(LCOPR,event): #FichaTablero x FichaTablero(Intercambio):
+                    Intercambio_FichasTablero(Dicc,event,coord,window)
+            elif Coord_Ocupada(LCOPR,event): #FichaTablero(7,7) x FichaTablero(Intercambio):
+                Intercambio_FichasTablero(Dicc,event,coord,window)
+            elif (type(event) == int):          #FichaTablero(7,7) x FichaAtril(Intercambio):
+                if (Lista_Atril[event] != ''):
+                    Reemplazar_FichaxTablero(event,coord,Dicc,Lista_Atril,window)
+                window[coord].update(button_color=('black','#FDD357'))
+        else:
+            sg.popup('No puedes interactuar con las fichas ya colocadas!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True) if Coord_Ocupada(LCO,event) else sg.popup('Primero selecciona una letra!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True)
+    return(puedo_intercambiar)
 
 #PROGRAMA PRINCIPAL
 def genero_Tablero():
@@ -512,6 +485,8 @@ def genero_Tablero():
     Puntaje_Total = 0
     CCD=set()                #Conjunto de Coordenadas  Disponibles
     LCO = []                    #Lista de Coordenadas Ocupadas
+    Se_necesitan_dos = False
+    event1 = ''
     while True:
         puedo_intercambiar=True
         LCOPR = []              #Lista de Coordenadas Ocupadas Por Ronda
@@ -519,7 +494,6 @@ def genero_Tablero():
             Palabra = ''
             event = window.Read()[0]
             if event in (None, 'Salir'):
-
                 event_popup = sg.popup_yes_no('Ey! estas saliendo en mitad de una partida\n¿Quieres posponerla?',title='Aviso',keep_on_top=True)
                 #if (event_popup == 'Yes'):
                     #Pospone la partida
@@ -529,7 +503,15 @@ def genero_Tablero():
                 puedo_intercambiar=False
                 break
 
-            puedo_intercambiar=Acciones_Usuario(event,Dicc,Lista_Atril,LCO,LCOPR,CCD,window,puedo_intercambiar)
+            if (type(event) == int) or (type(event) == tuple):
+                if event1 == '':
+                    event1 = event
+                    if not(event1 in LCO):
+                        window[event1].update(button_color=('white','#57C3FD'))
+                else:
+                    puedo_intercambiar=Acciones_Usuario(event1,event,Dicc,Lista_Atril,LCO,LCOPR,CCD,window,puedo_intercambiar)
+                    event1 = ''
+
             if (event == 'Validar'):
                 Palabra = Validar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega)
                 puedo_intercambiar=False
@@ -550,10 +532,7 @@ def genero_Tablero():
                 for x in range(len(Lista_Atril)):
                     cadena_Atril=cadena_Atril+Lista_Atril[x]
                 nuevas_fichas=intercambio_Fichas(cadena_Atril)
-                print(cadena_Atril)
                 for y in range(len(Lista_Atril)):
-                    print(nuevas_fichas)
-                    print(Lista_Atril)
                     Lista_Atril[y]=nuevas_fichas[y]
                     window[y].update(str(nuevas_fichas[y])) #Se puede hacer ilimitadas veces en el mismo turno ,solo por ahora , esta implementado para que puedan
                                                             #probar el ingresar palabras y validarlas sin inconvenientes
