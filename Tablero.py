@@ -10,17 +10,37 @@ import csv
 
 MAX_ROWS = MAX_COL = 15
 
-Bolsa_Diccionario={"A":11,"B":3,"C":4,"D":4,"E":11,"F":2,"G":2,"H":2,"I":6,"J":2,"K":1,"L":4,"LL":1,"M":3,"N":5,
-                  "Ñ":1,"O":8,"P":2,"Q":1,"R":4,"RR":1,"S":7,"T":4,"U":6,"V":2,"W":1,"X":1,"Y":1,"Z":1}
-Cant_fichas=101
+def tiempo_dificultad(dificultad):
+    tiempo_ronda=0
+    jugadores=2
+    rondas_totales=30
+    if(dificultad=="Facil"):
+        tiempo_ronda=60
+        secs =tiempo_ronda*jugadores*rondas_totales
+    elif(dificultad=="Normal"):
+        tiempo_ronda=45
+        secs=tiempo_ronda*jugadores*rondas_totales
+    elif (dificultad =="Dificil"):
+        tiempo_ronda=30
+        secs=tiempo_ronda*jugadores*rondas_totales
+    return((secs*100),(tiempo_ronda*100))
+
+def intercambio_Fichas(fichas_CPU):
+    global Cant_fichas
+    for x in range(len(fichas_CPU)):
+        Bolsa_Diccionario[fichas_CPU[x]]=(Bolsa_Diccionario[fichas_CPU[x]])+1
+        Cant_fichas=Cant_fichas+1
+    fichas_CPU=""
+    for x in range(7):
+        fichas_CPU=fichas_CPU+Letra_Bolsa(Bolsa_Diccionario)
+    return(fichas_CPU)
 
 def aleatorio_Dificil():
     lista_opciones=["verb","sus","adj"]
     x=random.randint(0,2)
     return(lista_opciones[x])
 
-def Letra_Bolsa(Bolsa_Diccionario):
-    global Cant_fichas
+def Letra_Bolsa(Bolsa_Diccionario,Cant_fichas):
     sigue=True
     letra=""
     while((sigue)and(Cant_fichas >= 14)):
@@ -34,9 +54,6 @@ def Letra_Bolsa(Bolsa_Diccionario):
     if Cant_fichas < 14 :
         print("El juego ACABA porque uno de los 2 jugadores no tiene sus 7 fichas")
     return(letra)
-
-def Fin_Tiempo(terminar):
-    terminar[0] = True
 
 def Update_Tablero(window,Dicc):
     Lista_Tableros=[
@@ -109,10 +126,10 @@ def Generar_Dicc():
 
 def Layout_Columna():
 
-    layout = [ [sg.Text('Tiempo Disponible',font=("impact",20))],
-               [sg.Text('00:60  |   30:00',pad=(20,3),font=("Bahnschrift",20),key=('Tiempo'))],
+    layout = [ [sg.Text('Tiempo Disponible',font=("impact",20),pad=((15,3),(5,3)))],
+               [sg.Text("00:00",font=("Bahnschrift",20),key=('Tiempo_Ronda'),pad=((35,3),(5,3))),sg.Text('|',font=("Bahnschrift",20)),sg.Text("00:00",font=("Bahnschrift",20),key=('Tiempo'))],
                [sg.Text('__________________________________')],
-               [sg.Text('Puntos CPU',key='PuntosCPU',font=("impact",20))],
+               [sg.Text('Puntos  CPU',key='PuntosCPU',font=("impact",20))],
                [sg.Text('0000',key='PuntajeCPU',font=("impact",20))],
                [sg.Text('__________________________________')],
                [sg.Text('Puntos Usuario',key='PuntosUsuario',font=("impact",20))],
@@ -127,25 +144,25 @@ def Layout_Columna():
 
     return layout
 
-def Layout_Tabla(Lista_Atril):
+def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas):
     MAX_ROWS = MAX_COL = 15
     formato_fichas_cpu={'filename':'Ficha.png','size':(40,40),'pad':(7,3)  }
 
     #formato_fichas_jugador={'font':('',25),'button_color':(None,'black'),'image_filename':'Ficha.png','image_size':(40,40),'pad':(7,3)  }
     #Para luego reemplazar los colores dados por el boton con imagenes
-    Letra_1=Letra_Bolsa(Bolsa_Diccionario)
+    Letra_1=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
     Lista_Atril.append(Letra_1)
-    Letra_2=Letra_Bolsa(Bolsa_Diccionario)
+    Letra_2=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
     Lista_Atril.append(Letra_2)
-    Letra_3=Letra_Bolsa(Bolsa_Diccionario)
+    Letra_3=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
     Lista_Atril.append(Letra_3)
-    Letra_4=Letra_Bolsa(Bolsa_Diccionario)
+    Letra_4=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
     Lista_Atril.append(Letra_4)
-    Letra_5=Letra_Bolsa(Bolsa_Diccionario)
+    Letra_5=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
     Lista_Atril.append(Letra_5)
-    Letra_6=Letra_Bolsa(Bolsa_Diccionario)
+    Letra_6=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
     Lista_Atril.append(Letra_6)
-    Letra_7=Letra_Bolsa(Bolsa_Diccionario)
+    Letra_7=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
     Lista_Atril.append(Letra_7)
 
     layout = [[sg.Text('',key='texto1',pad=(45,3)),(sg.Image(**formato_fichas_cpu,key='fichasbot1')),
@@ -171,10 +188,10 @@ def Layout_Tabla(Lista_Atril):
 
     return layout
 
-def Llenar_Atril(Lista_Atril,window):
+def Llenar_Atril(Lista_Atril,window,Bolsa_Diccionario,Cant_fichas):
     for pos in range(len(Lista_Atril)):
         if (Lista_Atril[pos] == ''):
-            Lista_Atril[pos] = Letra_Bolsa(Bolsa_Diccionario)
+            Lista_Atril[pos] = Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
             window[pos].update(Lista_Atril[pos])
 
 def Coord_Ocupada(LCO,event):
@@ -182,16 +199,6 @@ def Coord_Ocupada(LCO,event):
         return True
     else:
         return False
-
-def Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril,window,LCO,LCOPR,CCD):
-    Dicc[event][0] = letra_1
-    window[event].update(letra_1,button_color=('black','#FDD357'))
-    Lista_Atril[pos_letra_1] = ''
-    window[pos_letra_1].update('')
-    LCO.append(event)
-    LCOPR.append(event)
-    Coord_Disponible(LCO,CCD)
-    Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
 
 def Coord_Adyacentes(coord):
     x,y=coord
@@ -220,86 +227,39 @@ def Eliminar_Coords(CCD,coord):
     CCD.discard(((coord[0]+1),coord[1]))     #Abajo
     CCD.discard((coord[0],(coord[1]-1)))     #Izquierda
 
-def FichaVaciaxFichaTablero(event,coord,Dicc,Lista_Atril,window,LCO,LCOPR,CCD):
-    Lista_Atril[event] = Dicc[coord][0]
-    window[coord].update('',button_color=('white',Dicc[coord][1]))
-    window[event].update(Dicc[coord][0])
-    Dicc[coord][0] = ''
-    LCO.remove(coord)
-    LCOPR.remove(coord)
-    Eliminar_Coords(CCD,coord)
-    Coord_Disponible(LCO,CCD)
-
-def Reemplazar_FichaxTablero(event,coord,Dicc,Lista_Atril,window):
-    aux = Dicc[coord][0]
-    Dicc[coord][0] = Lista_Atril[event]
-    Lista_Atril[event] = aux
-    window[coord].update(Dicc[coord][0])
-    window[event].update(Lista_Atril[event])
-
 def Update_Fichas_Colocadas(LCOPR,window):
     for coord in LCOPR:
         window[coord].update(button_color=('black','#E4BE4D'))
 
-def Turno(Turno_Usuario):
+def Mensaje_Turno(Turno_Usuario):
     if Turno_Usuario:
-        sg.popup('Estas Listo?\nEmpiezas tu',custom_text="Si,lo estoy",no_titlebar=True,keep_on_top=True)
+        sg.popup('Estas Listo?\nEs tu turno',custom_text="Si,lo estoy",no_titlebar=True,keep_on_top=True)
     else:
-        sg.popup('Estas Listo?\nEmpieza la IA',custom_text="Si,lo estoy",no_titlebar=True,keep_on_top=True)
+        sg.popup('Estas Listo?\nEs el turno de la IA',custom_text="Si,lo estoy",no_titlebar=True,keep_on_top=True)
 
 def Eliminar_Elementos_Ocupados_CDD(LCO,CCD):
     for L in LCO:
         CCD.discard(L)
 
-def Validar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega):
-    if len(LCOPR) > 1:
-        if (LCOPR[0][0] == LCOPR[1][0]): #Si entra la palabra formada esta en Horizontal
-            LCOPR = sorted(LCOPR, key=lambda tup: tup[1])
-            for coord in LCOPR:
-                Palabra = Palabra + Dicc[coord][0]
-        else:                            #Sino esta en vertical
-            LCOPR = sorted(LCOPR, key=lambda tup: tup[0])
-            for coord in LCOPR:
-                Palabra = Palabra + Dicc[coord][0]
-        if verificar_Palabra(Palabra,Dificultad,Dificil_se_juega):
-            sg.popup(Palabra+' es una palabra valida :D',text_color='black',title='Ayuda',background_color='#57FD57',button_color=('black','white'),keep_on_top=True)
-        else:
-            sg.popup(Palabra+' no es una palabra valida D:',text_color='black',title='Ayuda',background_color='#FD5757',button_color=('Black','White'),keep_on_top=True)
-            Palabra = ''
+def Verificar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega):
+    if (LCOPR[0][0] == LCOPR[1][0]): #Si entra la palabra formada esta en Horizontal
+        LCOPR = sorted(LCOPR, key=lambda tup: tup[1])
+        for coord in LCOPR:
+            Palabra = Palabra + Dicc[coord][0]
+    else:                            #Sino esta en vertical
+        LCOPR = sorted(LCOPR, key=lambda tup: tup[0])
+        for coord in LCOPR:
+            Palabra = Palabra + Dicc[coord][0]
+    if verificar_Palabra(Palabra,Dificultad,Dificil_se_juega):
+        sg.popup(Palabra+' es una palabra valida :D',text_color='black',title='Ayuda',background_color='#57FD57',button_color=('black','white'),keep_on_top=True,non_blocking=True)
     else:
-        sg.popup('Debes formar palabras de por lo menos 2 fichas_CPU!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True)
-    return Palabra
-
-def TerminarTurno(Palabra,Dicc,Lista_Atril,LCOPR,LCO,CCD,window,Dificultad,Dificil_se_juega):
-    if (Palabra == '') and (LCOPR != []):
-        Palabra = Validar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega)
-        if (Palabra == ''):
-            for Pos in range(len(Lista_Atril)):
-                if (Lista_Atril[Pos] == ''): # Si esta posicion esta vacia:
-                    FichaVaciaxFichaTablero(Pos,LCOPR[0],Dicc,Lista_Atril,window,LCO,LCOPR,CCD)
+        sg.popup(Palabra+' no es una palabra valida D:',text_color='black',title='Ayuda',background_color='#FD5757',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
+        Palabra = ''
     return Palabra
 
 def elimino_fichas_Usadas(fichas_CPU,Palabra):
     for x in range(len(Palabra)):
         fichas_CPU=fichas_CPU.replace(Palabra[x].upper(),"") #Elimino las fichas usadas
-    return(fichas_CPU)
-
-def Intercambio_FichasTablero(Dicc,event,coord,window):
-    aux = Dicc[event][0]
-    Dicc[event][0] = Dicc[coord][0]
-    Dicc[coord][0] = aux
-    window[event].update(Dicc[event][0])
-    window[coord].update(aux)
-    window[coord].update(button_color=('black','#FDD357'))
-
-def intercambio_Fichas(fichas_CPU):
-    global Cant_fichas
-    for x in range(len(fichas_CPU)):
-        Bolsa_Diccionario[fichas_CPU[x]]=(Bolsa_Diccionario[fichas_CPU[x]])+1
-        Cant_fichas=Cant_fichas+1
-    fichas_CPU=""
-    for x in range(7):
-        fichas_CPU=fichas_CPU+Letra_Bolsa(Bolsa_Diccionario)
     return(fichas_CPU)
 
 def Importar_Datos():
@@ -347,15 +307,14 @@ def Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc):
         Coord_Disponible(LCO,CCD)
         Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
 
-def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega):
-    global Cant_fichas
+def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Bolsa_Diccionario,Cant_fichas):
     CCD_CPU=CCD
     Palabra=fichas_CPU
     intento=True
     puede_Colocarse=False
     if (contador_Turnos_CPU ==0):
         for x in range(7):
-            fichas_CPU=fichas_CPU+Letra_Bolsa(Bolsa_Diccionario) #En la primera jugada toma 7 fichas aleatorias de la bolsa
+            fichas_CPU=fichas_CPU+Letra_Bolsa(Bolsa_Diccionario,Cant_fichas) #En la primera jugada toma 7 fichas aleatorias de la bolsa
             Palabra=formar_palabra(fichas_CPU,Dificultad,Dificil_se_juega)
         contador_Turnos_CPU=contador_Turnos_CPU+1
     else:
@@ -407,56 +366,188 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
     else:
         print("No hay palabra valida en este momento para la CPU ,la CPU pasa el turno")
     while(((len(fichas_CPU))<7)and(Cant_fichas >= 14)):          #Añado fichas de la bolsa para compeltar 7 al finalizar el turno
-        fichas_CPU=fichas_CPU+Letra_Bolsa(Bolsa_Diccionario)
+        fichas_CPU=fichas_CPU+Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
     if((len(fichas_CPU))<7):
         print("La CPU no tiene fichas suficientes para continuar , el juego termino")
     return(contador_Turnos_CPU,fichas_CPU)
 
-def Acciones_Usuario(event1,event,Dicc,Lista_Atril,LCO,LCOPR,CCD,window,puedo_intercambiar):
-    if (type(event1) == int) and (Lista_Atril[event1] != ''):  #Si event es ENTERO(Por ende la posicion de la letra del atril):
-        puedo_intercambiar=False
-        letra_1 = Lista_Atril[event1]
-        pos_letra_1= event1
-        if (type(event) != int):                             #Si event es coordenada Y no esta ocupada:
-            if (Coord_Ocupada(LCOPR,event) == False):        #FichaAtril x TableroVacio
-                if (Dicc[(7,7)][0] == ''):                   #Si la cordenada de inicio esta vacia (Es el primer turno):
-                    if (event == (7,7)):
-                        Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril,window,LCO,LCOPR,CCD)
-                elif (Coord_Ocupada(LCO,event) != True) and Coord_Desbloqueada(CCD,event):
-                    Colocar_Ficha(Dicc,letra_1,pos_letra_1,event,Lista_Atril,window,LCO,LCOPR,CCD)
-            else:                               #FichaAtril x FichaTablero
-                Reemplazar_FichaxTablero(pos_letra_1,event,Dicc,Lista_Atril,window)
-        else:              #FichaAtril X FichaAtril (Intercambio)
-            letra_2 = Lista_Atril[event]
-            pos_letra_2 = event
-            if (pos_letra_1 != pos_letra_2):
-                window[pos_letra_1].update(letra_2)
-                window[pos_letra_2].update(letra_1)
-                Lista_Atril[pos_letra_1] = letra_2
-                Lista_Atril[pos_letra_2] = letra_1
-        window[pos_letra_1].update(button_color=('black','#FDD357'))
-    elif (type(event1) == tuple):  #Comprobamos que sea una tupla(coordenada del tablero)
-        puedo_intercambiar=False
-        if Coord_Ocupada(LCOPR,event1): #Si la coordenada esta ocupada:
-            coord = event1
-            if coord != (7,7):
-                if (type(event) == int):
-                    if (Lista_Atril[event] == ''):   #FichaTablero x FichaAtrilVacia
-                        FichaVaciaxFichaTablero(event,coord,Dicc,Lista_Atril,window,LCO,LCOPR,CCD)
-                    else:                            #FichaTablero x FichaAtril
-                        Reemplazar_FichaxTablero(event,coord,Dicc,Lista_Atril,window)
-                        window[coord].update(button_color=('black','#FDD357'))
-                elif Coord_Ocupada(LCOPR,event): #FichaTablero x FichaTablero(Intercambio):
-                    Intercambio_FichasTablero(Dicc,event,coord,window)
-            elif Coord_Ocupada(LCOPR,event): #FichaTablero(7,7) x FichaTablero(Intercambio):
-                Intercambio_FichasTablero(Dicc,event,coord,window)
-            elif (type(event) == int):          #FichaTablero(7,7) x FichaAtril(Intercambio):
-                if (Lista_Atril[event] != ''):
-                    Reemplazar_FichaxTablero(event,coord,Dicc,Lista_Atril,window)
-                window[coord].update(button_color=('black','#FDD357'))
+def Actualizar_CFT(CFT,Dicc_Bolsa):
+    CFT = 0
+    for cant in Dicc_Bolsa.values():
+        CFT = CFT + cant
+    return CFT
+def Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window):
+    for Pos in range(len(Lista_Atril)):
+        if (Lista_Atril[Pos] == ''): # Si esta posicion esta vacia:
+            Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,LCOPR[0],Pos,window)
+
+def Validar(LCOPR,Dicc,Dificultad,PrimerRonda,Palabra,Dificil_se_juega):
+    if Palabra_bien_colocada(LCOPR):
+        if PrimerRonda:
+            if ((7,7) in LCOPR):
+                Palabra = Verificar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega)
+            else:
+                sg.popup('Debes colocar una letra en la casilla "Inicio"!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
         else:
-            sg.popup('No puedes interactuar con las fichas ya colocadas!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True) if Coord_Ocupada(LCO,event) else sg.popup('Primero selecciona una letra!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True)
-    return(puedo_intercambiar)
+            Palabra = Verificar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega)
+    return Palabra
+
+def Palabra_bien_colocada(LCOPR):
+    if len(LCOPR) > 1:
+        Vertical = True
+        Horizontal = True
+        for i in range(2):
+            if (Horizontal):
+                LCOPR = sorted(LCOPR, key=lambda tup: tup[1])
+                for x in range(len(LCOPR)-1):
+                    sig = x + 1
+                    if (LCOPR[x][0] != LCOPR[sig][0]) or ((LCOPR[x][1] + 1) != LCOPR[sig][1]):
+                        Horizontal = False
+            else:
+                LCOPR = sorted(LCOPR, key=lambda tup: tup[0])
+                for x in range(len(LCOPR)-1):
+                    sig = x + 1
+                    if (LCOPR[x][1] != LCOPR[sig][1]) or ((LCOPR[x][0] + 1) != LCOPR[sig][0]):
+                        Vertical = False
+        if Horizontal or Vertical:
+            return True
+        else:
+            sg.popup('Esta palabra esta mal colocada!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
+            return False
+    else:
+        sg.popup('Debes formar palabras de por lo menos 2 fichas!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
+        return False
+
+def TerminarTurno(LCOPR,LCO,CCD,Dicc,Lista_Atril,PTU,Palabra,Dificultad,PrimerRonda,Dificil_se_juega,Dicc_Puntajes,Dicc_Bolsa,CFT,window):
+    if (Palabra == '') and (LCOPR != []): #Si no se valido antes Y en el tablero hay fichas:
+        Palabra = Validar(LCOPR,Dicc,Dificultad,PrimerRonda,Palabra,Dificil_se_juega)
+
+    if (Palabra != ''):
+        PPR = Calcular_Puntaje(Palabra,Dicc_Puntajes) #Puntaje por ronda
+        PTU = PTU + PPR
+        window['PuntajeUsuario'].update(str(PTU))
+        Llenar_Atril(Lista_Atril,window,Dicc_Bolsa,CFT)
+    else:
+        Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window)
+    return PTU
+
+
+def Actualizar_LCO(LCOPR,LCO):
+    for coord in LCOPR:
+        LCO.append(coord)
+
+def Intercambio_FichasTablero(LCOPR,Dicc,event1,event2,window):
+    if Coord_Ocupada(LCOPR,event2):
+        aux = Dicc[event2][0]
+        Dicc[event2][0] = Dicc[event1][0]
+        Dicc[event1][0] = aux
+        window[event2].update(Dicc[event2][0])
+        window[event1].update(aux)
+    window[event1].update(button_color=('black','#FDD357'))
+
+def Intercambio_FichasAtril(Lista_Atril,Pos_letra1,Pos_letra2,window):
+    if (Pos_letra1 != Pos_letra2):
+        window[Pos_letra1].update(Lista_Atril[Pos_letra2])
+        window[Pos_letra2].update(Lista_Atril[Pos_letra1])
+        aux = Lista_Atril[Pos_letra2]
+        Lista_Atril[Pos_letra2] = Lista_Atril[Pos_letra1]
+        Lista_Atril[Pos_letra1] = aux
+    window[Pos_letra1].update(button_color=('black','#FDD357'))
+
+def Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window):
+    aux = Dicc[event1][0]
+    Dicc[event1][0] = Lista_Atril[event2]
+    Lista_Atril[event2] = aux
+    window[event1].update(Dicc[event1][0],button_color=('black','#FDD357'))
+    window[event2].update(Lista_Atril[event2],button_color=('black','#FDD357'))
+
+def Colocar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,Letra1,event1,event2,window):
+    Dicc[event2][0] = Letra1
+    window[event2].update(Letra1,button_color=('black','#FDD357'))
+    Lista_Atril[event1] = ''
+    window[event1].update('')
+    LCOPR.append(event2)
+    Coord_Disponible(LCOPR,CCD) #Ya que LCOPR contiene unicamente las fichas actuales se tiene
+    Coord_Disponible(LCO,CCD)   #que usar LCO para completar la actualizacion/eliminacion de elementos en CCD
+    Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
+    Eliminar_Elementos_Ocupados_CDD(LCOPR,CCD)
+    window[event1].update(button_color=('black','#FDD357'))
+
+def Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window):
+    Lista_Atril[event2] = Dicc[event1][0]
+    window[event1].update('',button_color=('white',Dicc[event1][1]))
+    window[event2].update(Dicc[event1][0])
+    Dicc[event1][0] = ''
+    LCOPR.remove(event1)
+    Eliminar_Coords(CCD,event1) #Ya que LCOPR contiene unicamente las fichas actuales se tiene
+    Coord_Disponible(LCOPR,CCD) #que usar LCO para completar la actualizacion/eliminacion de elementos en CCD
+    Coord_Disponible(LCO,CCD)
+    Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
+    Eliminar_Elementos_Ocupados_CDD(LCOPR,CCD)
+
+def Acciones_Usuario(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window):
+    if (not (event2 in LCO)): #Esto es para saber si por ejemplo, Se quiere intercambiar una (fichaAtril o FichaTablero) con una ficha ya colocada
+
+        if (type(event1) == int) and (type(event2) == tuple):        #Atril X Tablero:
+            if (Coord_Ocupada(LCOPR,event2)):                       #Intercambio FichaAtril X Tablero:
+                Intercambio_Fichas(Dicc,Lista_Atril,event2,event1,window)
+            else:                                                   #Colocar Ficha:
+                Colocar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,Lista_Atril[event1],event1,event2,window)
+
+        elif (type(event1) == tuple) and (type(event2) == int):     #Tablero X Atril:
+            if (Lista_Atril[event2] != ''):                         #Intercambio FichaTablero X FichaAtril:
+                Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window)
+            else:                                                   #Retirar Ficha:
+                Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window)
+
+        elif (type(event1) == tuple) and (type(event2) == tuple):   #Intercambio FichasTablero:
+            Intercambio_FichasTablero(LCOPR,Dicc,event1,event2,window)
+
+        elif (type(event1) == int) and (type(event2) == int):       #Intercambio FichasAtril:
+            Intercambio_FichasAtril(Lista_Atril,event1,event2,window)
+    else:
+        window[event1].update(button_color=('black','#FDD357'))
+        sg.popup('No puedes interactuar con las fichas ya colocadas!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
+
+def Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles,event,window):
+    if (type(event) == int):
+        if event in LPI:
+            window[event].update(button_color=('black','#FDD357'))
+        else:
+            LPI.append(event)
+            window[event].update(button_color=('white','#57C3FD'))
+
+    elif (event == "Intercambiar fichas"):
+        if Boton_Intercambiar:   #Intercambia las fichas y termina
+            if LPI != []:
+                for pos in LPI: #Agrego las fichas seleccionadas a la bolsa
+                    Dicc_Bolsa[Lista_Atril[pos]] = Dicc_Bolsa[Lista_Atril[pos]] + 1
+                for pos in LPI:  #Y de la bolsa, se le da fichas random al usuario
+                    x = random.randint(0,(len(Dicc_Bolsa.keys())-1))
+                    Letra = list(Dicc_Bolsa.keys())[x]
+                    if(Dicc_Bolsa[Letra]> 0):
+                        Lista_Atril[pos] = Letra
+                        Dicc_Bolsa[Lista_Atril[pos]] = Dicc_Bolsa[Lista_Atril[pos]] - 1
+                        window[pos].update(Lista_Atril[pos],button_color=('black','#FDD357'))
+                Turnos_Disponibles = Turnos_Disponibles - 1
+                Se_Intercambio_Ficha = True
+                CFT = Actualizar_CFT(CFT,Dicc_Bolsa)
+                window[event].update(button_color=('white','#283B5B'))
+            else:
+                sg.popup('No has intercambiado ninguna ficha! no pierdes el turno',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
+                window[event].update(button_color=('white','#283B5B'))
+            Boton_Intercambiar = False
+        else: #Recien "Clickeo" el boton intercambiar Fichas
+            if Turnos_Disponibles != 1:
+                sg.popup('Te quedan '+str(Turnos_Disponibles)+' turnos disponibles\nSelecciona las fichas del atril que quieras cambiar!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
+            else:
+                sg.popup('Este es el ultimo turno en el que puedes cambiar fichas!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
+            Boton_Intercambiar = True
+            window[event].update(button_color=('black','#57C3FD'))
+            Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window)
+    elif event != 'Reloj':
+        sg.popup('Debes seleccionar fichas del Atril!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
+    return CFT,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles
 
 #PROGRAMA PRINCIPAL
 def genero_Tablero():
@@ -469,30 +560,49 @@ def genero_Tablero():
     Dicc_Puntajes = {"A":Lista_Lotes[0],"B":Lista_Lotes[2],"C":Lista_Lotes[1],"D":Lista_Lotes[1],"E":Lista_Lotes[0],"F":Lista_Lotes[3],"G":Lista_Lotes[1],"H":Lista_Lotes[3],"I":Lista_Lotes[0],"J":Lista_Lotes[4],"K":Lista_Lotes[5],"L":Lista_Lotes[0],"LL":Lista_Lotes[5],"M":Lista_Lotes[2],"N":Lista_Lotes[0],
                       "Ñ":Lista_Lotes[5],"O":Lista_Lotes[0],"P":Lista_Lotes[2],"Q":Lista_Lotes[5],"R":Lista_Lotes[0],"RR":Lista_Lotes[5],"S":Lista_Lotes[0],"T":Lista_Lotes[0],"U":Lista_Lotes[0],"V":Lista_Lotes[3],"W":Lista_Lotes[5],"X":Lista_Lotes[5],"Y":Lista_Lotes[3],"Z":Lista_Lotes[6]}
 
+    Dicc_Bolsa={"A":11,"B":3,"C":4,"D":4,"E":11,"F":2,"G":2,"H":2,"I":6,"J":2,"K":1,"L":4,"LL":1,"M":3,"N":5,
+                      "Ñ":1,"O":8,"P":2,"Q":1,"R":4,"RR":1,"S":7,"T":4,"U":6,"V":2,"W":1,"X":1,"Y":1,"Z":1}
+
     Lista_Atril = []
     Terminar = [False]
     Dicc = Generar_Dicc()
-    diseño = [ [sg.Column((Layout_Tabla(Lista_Atril))),
+    CFT = 0
+    CFT = Actualizar_CFT(CFT,Dicc_Bolsa) #Cantidad Fichas Totales
+    diseño = [ [sg.Column((Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT))),
                 sg.Column(Layout_Columna())] ]
     window = sg.Window('Tablero',diseño ,location=(400,0),finalize=True)
     Dicc = Update_Tablero(window,Dicc)
-    window['PuntosUsuario'].update('Puntos' + Usuario)
+    window['PuntosUsuario'].update('Puntos  ' + Usuario)
     Turno_Usuario = bool(random.getrandbits(1))
-    Turno(Turno_Usuario)
     Fin = False
     fichas_CPU=""
     contador_Turnos_CPU=0
-    Puntaje_Total = 0
-    CCD=set()                #Conjunto de Coordenadas  Disponibles
+    PTU = 0                     #Puntaje Total Usuario
+    CCD=set()                   #Conjunto de Coordenadas  Disponibles
     LCO = []                    #Lista de Coordenadas Ocupadas
     Se_necesitan_dos = False
     event1 = ''
+    Tiempo,tiempo_ronda=tiempo_dificultad(Dificultad)
+    PrimerRonda = True
+    Turnos_Disponibles = 3
     while True:
-        puedo_intercambiar=True
+        LPI = []                #Lista de Posiciones de Intercambio (Para Intecambiar fichas)
         LCOPR = []              #Lista de Coordenadas Ocupadas Por Ronda
+        puedo_intercambiar=True
+        Boton_Intercambiar = False
+        Se_Intercambio_Ficha = False
+        tiempo_jugador=tiempo_ronda
+        Mensaje_Turno(Turno_Usuario)
         while (Turno_Usuario):  #Mientras sea el turno del usuario:
             Palabra = ''
-            event = window.Read()[0]
+            event = window.Read(timeout=10,timeout_key='Reloj')[0]
+            window['Tiempo'].update("{}:{}".format(((Tiempo//100)//60),((Tiempo//100)%60)))
+            Tiempo -= 1
+            tiempo_jugador = str(tiempo_jugador)
+            window['Tiempo_Ronda'].update("00:{}".format(tiempo_jugador[0:2]))
+            tiempo_jugador = int(tiempo_jugador)
+            tiempo_jugador-=1
+
             if event in (None, 'Salir'):
                 event_popup = sg.popup_yes_no('Ey! estas saliendo en mitad de una partida\n¿Quieres posponerla?',title='Aviso',keep_on_top=True)
                 #if (event_popup == 'Yes'):
@@ -503,47 +613,39 @@ def genero_Tablero():
                 puedo_intercambiar=False
                 break
 
-            if (type(event) == int) or (type(event) == tuple):
+            if (((type(event) == int) or (type(event) == tuple)) and (Boton_Intercambiar == False)):
                 if event1 == '':
                     event1 = event
-                    if not(event1 in LCO):
+                    if ((Lista_Atril[event1] != '') if type(event1) == int else Coord_Ocupada(LCOPR,event1)):
                         window[event1].update(button_color=('white','#57C3FD'))
+                    else:
+                        if (type(event1) == tuple):
+                            sg.popup('No puedes interactuar con las fichas ya colocadas!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True) if Coord_Ocupada(LCO,event) else sg.popup('Primero selecciona una letra!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
+                        event1 = ''
                 else:
-                    puedo_intercambiar=Acciones_Usuario(event1,event,Dicc,Lista_Atril,LCO,LCOPR,CCD,window,puedo_intercambiar)
+                    Acciones_Usuario(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event,window)
                     event1 = ''
 
-            if (event == 'Validar'):
-                Palabra = Validar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega)
-                puedo_intercambiar=False
+            elif (event == 'Validar') and (Boton_Intercambiar == False):
+                Palabra = Validar(LCOPR,Dicc,Dificultad,PrimerRonda,Palabra,Dificil_se_juega)
 
-            elif (event == 'Terminar turno'):
-                Palabra = TerminarTurno(Palabra,Dicc,Lista_Atril,LCOPR,LCO,CCD,window,Dificultad,Dificil_se_juega)
-                puedo_intercambiar=False
-
-                if (Palabra != ''):
-                    PPR = Calcular_Puntaje(Palabra,Dicc_Puntajes) #Puntaje por ronda
-                    Puntaje_Total = Puntaje_Total + PPR
-                    window['PuntajeUsuario'].update(str(Puntaje_Total))
-
-                Llenar_Atril(Lista_Atril,window)
+            elif (((event == 'Terminar turno') or Se_Intercambio_Ficha) and (Boton_Intercambiar == False)):
+                PTU = TerminarTurno(LCOPR,LCO,CCD,Dicc,Lista_Atril,PTU,Palabra,Dificultad,PrimerRonda,Dificil_se_juega,Dicc_Puntajes,Dicc_Bolsa,CFT,window)
+                CFT = Actualizar_CFT(CFT,Dicc_Bolsa)
                 break
-            elif((event == "Intercambiar fichas")and(puedo_intercambiar)):
-                cadena_Atril=""
-                for x in range(len(Lista_Atril)):
-                    cadena_Atril=cadena_Atril+Lista_Atril[x]
-                nuevas_fichas=intercambio_Fichas(cadena_Atril)
-                for y in range(len(Lista_Atril)):
-                    Lista_Atril[y]=nuevas_fichas[y]
-                    window[y].update(str(nuevas_fichas[y])) #Se puede hacer ilimitadas veces en el mismo turno ,solo por ahora , esta implementado para que puedan
-                                                            #probar el ingresar palabras y validarlas sin inconvenientes
+
+            elif (((event == "Intercambiar fichas") or (Boton_Intercambiar)) and (Turnos_Disponibles != 0)):
+                CFT,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles = Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles,event,window)
+
         while (Turno_Usuario == False):
-            contador_Turnos_CPU,fichas_CPU=Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega)
+            contador_Turnos_CPU,fichas_CPU=Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Dicc_Bolsa,CFT)
             break
         if Fin:
-            Fin_Tiempo(Terminar)
             break
         Update_Fichas_Colocadas(LCOPR,window)
         Turno_Usuario = not Turno_Usuario
+        Actualizar_LCO(LCOPR,LCO)
+        PrimerRonda = False
     window.close()
     return(event)
 #ProgramaPrincipal-------------
