@@ -25,15 +25,14 @@ def tiempo_dificultad(dificultad):
         secs=tiempo_ronda*jugadores*rondas_totales
     return((secs*100),(tiempo_ronda*100))
 
-def intercambio_Fichas(fichas_CPU):
-    global Cant_fichas
+def intercambio_Fichas_CPU(fichas_CPU,Bolsa_Diccionario,Cant_fichas):
     for x in range(len(fichas_CPU)):
         Bolsa_Diccionario[fichas_CPU[x]]=(Bolsa_Diccionario[fichas_CPU[x]])+1
         Cant_fichas=Cant_fichas+1
     fichas_CPU=""
     for x in range(7):
-        fichas_CPU=fichas_CPU+Letra_Bolsa(Bolsa_Diccionario)
-    return(fichas_CPU)
+        fichas_CPU=fichas_CPU+Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
+    return(fichas_CPU,Cant_fichas)
 
 def aleatorio_Dificil():
     lista_opciones=["verb","sus","adj"]
@@ -321,7 +320,7 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
         Palabra=formar_palabra(fichas_CPU,Dificultad,Dificil_se_juega)
         contador_Turnos_CPU=contador_Turnos_CPU+1
     if(((contador_Turnos_CPU % 3)==0) and (Cant_fichas > 14 )):
-        fichas_CPU=intercambio_Fichas(fichas_CPU)
+        fichas_CPU,Cant_fichas=intercambio_Fichas_CPU(fichas_CPU,Bolsa_Diccionario,Cant_fichas)
         Palabra=formar_palabra(fichas_CPU,Dificultad,Dificil_se_juega)
         contador_Turnos_CPU=contador_Turnos_CPU+1
     if Palabra != "":
@@ -369,7 +368,7 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
         fichas_CPU=fichas_CPU+Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
     if((len(fichas_CPU))<7):
         print("La CPU no tiene fichas suficientes para continuar , el juego termino")
-    return(contador_Turnos_CPU,fichas_CPU)
+    return(contador_Turnos_CPU,fichas_CPU,Cant_fichas)
 
 def Actualizar_CFT(CFT,Dicc_Bolsa):
     CFT = 0
@@ -638,7 +637,7 @@ def genero_Tablero():
                 CFT,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles = Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles,event,window)
 
         while (Turno_Usuario == False):
-            contador_Turnos_CPU,fichas_CPU=Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Dicc_Bolsa,CFT)
+            contador_Turnos_CPU,fichas_CPU,CFT=Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Dicc_Bolsa,CFT)
             break
         if Fin:
             break
