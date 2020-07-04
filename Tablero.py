@@ -289,7 +289,6 @@ def Calcular_Puntaje(Palabra,Dicc_Puntajes):
     return PPR
 
 def Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc):
-    Palabra=Palabra.upper()
     for x in range(len(Palabra)):
         window[(coordenadas_CPU[0],coordenadas_CPU[1]+x)].update(str(Palabra[x]),button_color=('black','#7D4DE4'))
         Dicc[(coordenadas_CPU[0],coordenadas_CPU[1]+x)][0] =str(Palabra[x])
@@ -298,7 +297,6 @@ def Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc):
         Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
 
 def Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc):
-    Palabra=Palabra.upper()
     for y in range(len(Palabra)):
         window[(coordenadas_CPU[0]+y,coordenadas_CPU[1])].update(str(Palabra[y]),button_color=('black','#7D4DE4'))
         Dicc[(coordenadas_CPU[0]+y,coordenadas_CPU[1])][0] =str(Palabra[y])
@@ -306,7 +304,7 @@ def Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc):
         Coord_Disponible(LCO,CCD)
         Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
 
-def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Bolsa_Diccionario,Cant_fichas):
+def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Bolsa_Diccionario,Cant_fichas,Dicc_Puntajes,PT_CPU):
     CCD_CPU=CCD
     Palabra=fichas_CPU
     intento=True
@@ -324,15 +322,18 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
         Palabra=formar_palabra(fichas_CPU,Dificultad,Dificil_se_juega)
         contador_Turnos_CPU=contador_Turnos_CPU+1
     if Palabra != "":
+        Palabra=Palabra.upper()
         fichas_CPU=elimino_fichas_Usadas(fichas_CPU,Palabra)
         if CCD_CPU == set():
             for x in range(len(Palabra)):  #En el primer case , donde CCD esta vacio y se debe empezar en el cuadro 7,7
-                Palabra=Palabra.upper()
                 window[(7,7+x)].update(str(Palabra[x]),button_color=('black','#7D4DE4'))
                 Dicc[7,7+x][0] =str(Palabra[x])
                 LCO.append((7,7+x))
                 Coord_Disponible(LCO,CCD)
                 Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
+            PPR_CPU = Calcular_Puntaje(Palabra,Dicc_Puntajes)
+            PT_CPU = PT_CPU + PPR_CPU
+            window['PuntajeCPU'].update(str(PT_CPU))
         else:
             for x in range(len(CCD)) :
                 if(intento):
@@ -348,6 +349,9 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
                                     puede_Colocarse=True
                             if(puede_Colocarse):
                                 Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc)
+                                PPR_CPU = Calcular_Puntaje(Palabra,Dicc_Puntajes)
+                                PT_CPU = PT_CPU + PPR_CPU
+                                window['PuntajeCPU'].update(str(PT_CPU))
                                 intento=False
                         elif(((len(Palabra)+coordenadas_CPU[0])<15)and((len(Palabra)+coordenadas_CPU[0])>-1)):#si se va a pasar del tablero al poner la palabra horizontalmente
                             for x in range(len(Palabra)):
@@ -359,6 +363,9 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
                                     puede_Colocarse=True
                             if(puede_Colocarse):
                                 Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc)
+                                PPR_CPU = Calcular_Puntaje(Palabra,Dicc_Puntajes)
+                                PT_CPU = PT_CPU + PPR_CPU
+                                window['PuntajeCPU'].update(str(PT_CPU))
                                 intento=False
             if((intento)and(len(CCD_CPU)>1)):
                 print("El robot no tiene una posicion valida para colocar su palabra") #Implementar que se vuelva a buscar uan palabra pero mas corta
@@ -368,7 +375,7 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
         fichas_CPU=fichas_CPU+Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
     if((len(fichas_CPU))<7):
         print("La CPU no tiene fichas suficientes para continuar , el juego termino")
-    return(contador_Turnos_CPU,fichas_CPU,Cant_fichas)
+    return(contador_Turnos_CPU,fichas_CPU,Cant_fichas,PT_CPU)
 
 def Actualizar_CFT(CFT,Dicc_Bolsa):
     CFT = 0
@@ -576,6 +583,7 @@ def genero_Tablero():
     Fin = False
     fichas_CPU=""
     contador_Turnos_CPU=0
+    PT_CPU=0                    #Puntaje Total CPU
     PTU = 0                     #Puntaje Total Usuario
     CCD=set()                   #Conjunto de Coordenadas  Disponibles
     LCO = []                    #Lista de Coordenadas Ocupadas
@@ -637,7 +645,7 @@ def genero_Tablero():
                 CFT,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles = Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles,event,window)
 
         while (Turno_Usuario == False):
-            contador_Turnos_CPU,fichas_CPU,CFT=Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Dicc_Bolsa,CFT)
+            contador_Turnos_CPU,fichas_CPU,CFT,PT_CPU=Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Dicc_Bolsa,CFT,Dicc_Puntajes,PT_CPU)
             break
         if Fin:
             break
