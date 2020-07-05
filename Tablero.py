@@ -518,6 +518,7 @@ def Acciones_Usuario(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window):
 def Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles,event,window):
     if (type(event) == int):
         if event in LPI:
+            LPI.remove(event)
             window[event].update(button_color=('black','#FDD357'))
         else:
             LPI.append(event)
@@ -525,16 +526,18 @@ def Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,
 
     elif (event == "Intercambiar fichas"):
         if Boton_Intercambiar:   #Intercambia las fichas y termina
-            if LPI != []:
+            if (LPI != []) and CFT >= len(LPI):
                 for pos in LPI: #Agrego las fichas seleccionadas a la bolsa
                     Dicc_Bolsa[Lista_Atril[pos]] = Dicc_Bolsa[Lista_Atril[pos]] + 1
                 for pos in LPI:  #Y de la bolsa, se le da fichas random al usuario
                     x = random.randint(0,(len(Dicc_Bolsa.keys())-1))
                     Letra = list(Dicc_Bolsa.keys())[x]
-                    if(Dicc_Bolsa[Letra]> 0):
-                        Lista_Atril[pos] = Letra
-                        Dicc_Bolsa[Lista_Atril[pos]] = Dicc_Bolsa[Lista_Atril[pos]] - 1
-                        window[pos].update(Lista_Atril[pos],button_color=('black','#FDD357'))
+                    while (Dicc_Bolsa[Letra] <= 0):
+                        x = random.randint(0,(len(Dicc_Bolsa.keys())-1))
+                        Letra = list(Dicc_Bolsa.keys())[x]
+                    Lista_Atril[pos] = Letra
+                    Dicc_Bolsa[Lista_Atril[pos]] = Dicc_Bolsa[Lista_Atril[pos]] - 1
+                    window[pos].update(Lista_Atril[pos],button_color=('black','#FDD357'))
                 Turnos_Disponibles = Turnos_Disponibles - 1
                 Se_Intercambio_Ficha = True
                 CFT = Actualizar_CFT(CFT,Dicc_Bolsa)
