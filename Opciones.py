@@ -2,7 +2,7 @@ import PySimpleGUI as sg
 import csv
 
 def Cargar(values,window,Dicc_Bolsa,letra_Seleccionada):
-    arch = open(r'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Archivo_Opciones.csv','r')
+    arch = open('Archivo_Opciones.csv','r')
     reader = csv.reader(arch)
     for row in reader:
         if (len(row) > 0):
@@ -39,13 +39,13 @@ def Cargar(values,window,Dicc_Bolsa,letra_Seleccionada):
     return values
 
 def AgregarDatos(values):
-    arch = open(r'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Archivo_Opciones.csv','a')
+    arch = open('Archivo_Opciones.csv','a')
     writer = csv.writer(arch)
     writer.writerow([True,values['Usuario'].strip(),values['Facil'],values['Normal'],values['Dificil'],int(values['Lote1']),int(values['Lote2']),int(values['Lote3']),int(values['Lote4']),int(values['Lote5']),int(values['Lote6']),int(values['Lote7']),values['A'],values['B'],values['C'],values['D'],values['E'],values['F'],values['G'],values['H'],values['I'],values['J'],values['K'],values['L'],values['M'],values['N'],values['Enie'],values['O'],values['P'],values['Q'],values['R'],values['R'],values['S'],values['T'],values['U'],values['V'],values['W'],values['X'],values['Y'],values['Z']])
     arch.close()
 
 def GuardarDatos(lista):
-    arch = open(r'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Archivo_Opciones.csv','w')
+    arch = open('Archivo_Opciones.csv','w')
     writer = csv.writer(arch)
     writer.writerow(['Actual','Usuario','Facil','Normal','Dificil','Lote1','Lote2','Lote3','Lote4','Lote5','Lote6','Lote7','A','B','C','D','E','F','G','H','I','J','K','L','M','N','Enie','O','P','Q','R','S','T','U','V','W','X','Y','Z'])
     print(lista)
@@ -54,7 +54,7 @@ def GuardarDatos(lista):
     arch.close()
 
 def LeerDatos():
-    arch = open(r'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Archivo_Opciones.csv','r')
+    arch = open('Archivo_Opciones.csv','r')
     reader = csv.reader(arch)
     datos = []
     index = 0
@@ -122,7 +122,7 @@ def Layout_Main():
     return layout
 
 def Poner_Todos_En_Falso(lista):
-    arch = open(r'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Archivo_Opciones.csv','w')
+    arch = open('Archivo_Opciones.csv','w')
     writer = csv.writer(arch)
     writer.writerow(['Actual','Usuario','Facil','Normal','Dificil','Lote1','Lote2','Lote3','Lote4','Lote5','Lote6','Lote7','A','B','C','D','E','F','G','H','I','J','K','L','M','N','Enie','O','P','Q','R','S','T','U','V','W','X','Y','Z'])
     i = 0

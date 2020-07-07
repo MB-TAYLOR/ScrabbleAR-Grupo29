@@ -146,7 +146,7 @@ def Layout_Columna():
 
 def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas):
     MAX_ROWS = MAX_COL = 15 #ACA????
-    formato_fichas_cpu={'filename':r'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Ficha.png','size':(40,40),'pad':(7,3)  }
+    formato_fichas_cpu={'filename':'Ficha.png','size':(40,40),'pad':(7,3)  }
 
     #formato_fichas_jugador={'font':('',25),'button_color':(None,'black'),'image_filename':'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Ficha.png','image_size':(40,40),'pad':(7,3)  }
     #Para luego reemplazar los colores dados por el boton con imagenes
@@ -172,7 +172,7 @@ def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas):
                                                     (sg.Image(**formato_fichas_cpu,key='fichasbot5')),
                                                     (sg.Image(**formato_fichas_cpu,key='fichasbot6')),
                                                     (sg.Image(**formato_fichas_cpu,key='fichasbot7'))],
-                [(sg.Image(filename=r'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Atril_back.png',key='atril',pad=(20,3)))]]
+                [(sg.Image(filename='Atril_back.png',key='atril',pad=(20,3)))]]
 
     layout.extend([[sg.Button('', size=(4, 2),key=(i,j),pad=(0,0))for j in range(MAX_COL)] for i in range(MAX_ROWS)])
 
@@ -184,7 +184,7 @@ def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas):
                     (sg.Button(button_text=Letra_5,key=4,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'))),
                     (sg.Button(button_text=Letra_6,key=5,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'))),
                     (sg.Button(button_text=Letra_7,key=6,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357')))],
-                    [(sg.Image(filename=r'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Atril.png',key='texto'))]])
+                    [(sg.Image(filename='Atril.png',key='texto'))]])
 
     return layout
 
@@ -263,7 +263,7 @@ def elimino_fichas_Usadas(fichas_CPU,Palabra):
     return(fichas_CPU)
 
 def Importar_Datos():
-    arch = open(r'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Archivo_Opciones.csv','r',encoding="utf8")
+    arch = open('Archivo_Opciones.csv','r',encoding="utf8")
     reader = csv.reader(arch)
     index = 0
     for row in reader:
