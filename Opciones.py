@@ -95,7 +95,7 @@ def RestablecerPredeterminado(values,window,Dicc_Bolsa,letra_Seleccionada):
                       "Enie":1,"O":8,"P":2,"Q":1,"R":4,"S":7,"T":4,"U":6,"V":2,"W":1,"X":1,"Y":1,"Z":1}
 
     window['Cantidad'].update(Dicc_Bolsa[letra_Seleccionada])
-    return values
+    return values,Dicc_Bolsa
 
 def Layout_Columna():
     layout = [[sg.Text('Cantidad de fichas por letra:',pad=(50,92))],
@@ -187,7 +187,7 @@ def Ventana_Opciones ():
             Dicc_Bolsa[letra_Seleccionada] = int(Cant_Letra_Actual)
 
         if (event == 'Restablecer predeterminado'):
-            values = RestablecerPredeterminado(values,window,Dicc_Bolsa,letra_Seleccionada)
+            values,Dicc_Bolsa = RestablecerPredeterminado(values,window,Dicc_Bolsa,letra_Seleccionada)
 
         elif (event == 'Guardar') or (event == 'Cargar'):
             Lista = LeerDatos()
