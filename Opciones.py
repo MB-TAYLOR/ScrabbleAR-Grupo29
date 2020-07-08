@@ -1,6 +1,45 @@
 import PySimpleGUI as sg
 import csv
 
+
+def Primer_Cargar(values,window,Dicc_Bolsa,letra_Seleccionada):
+    arch = open('Archivo_Opciones.csv','r')
+    reader = csv.reader(arch)
+    for row in reader:
+        if (len(row) > 0):
+            if (row[0] == 'True'):
+                values[2] = row[2]
+                values[3] = row[3]
+                values[4] = row[4]
+                if (values[2] == 'True'):
+                    window['Facil'].update(values[0])
+                elif(values[3] == 'True'):
+                    window['Normal'].update(values[3])
+                else:
+                    window['Dificil'].update(values[4])
+                values[5] = row[5]
+                window['Lote1'].update(values[5])
+                values[6] = row[6]
+                window['Lote2'].update(values[6])
+                values[7] = row[7]
+                window['Lote3'].update(values[7])
+                values[8] = row[8]
+                window['Lote4'].update(values[8])
+                values[9] = row[9]
+                window['Lote5'].update(values[9])
+                values[10] = row[10]
+                window['Lote6'].update(values[10])
+                values[11] = row[11]
+                window['Lote7'].update(values[11])
+                a = 12
+                for key in Dicc_Bolsa.keys():
+                    Dicc_Bolsa[key] = int(row[a])
+                    a = a + 1
+                window['Cantidad'].update(Dicc_Bolsa[letra_Seleccionada])
+                window['Usuario'].update(values[1])
+    arch.close()
+    return values,Dicc_Bolsa
+
 def Cargar(values,window,Dicc_Bolsa,letra_Seleccionada):
     arch = open('Archivo_Opciones.csv','r')
     reader = csv.reader(arch)
@@ -48,7 +87,6 @@ def GuardarDatos(lista):
     arch = open('Archivo_Opciones.csv','w')
     writer = csv.writer(arch)
     writer.writerow(['Actual','Usuario','Facil','Normal','Dificil','Lote1','Lote2','Lote3','Lote4','Lote5','Lote6','Lote7','A','B','C','D','E','F','G','H','I','J','K','L','M','N','Enie','O','P','Q','R','S','T','U','V','W','X','Y','Z'])
-    print(lista)
     for row in lista:
         writer.writerow([row['Actual'],row['Usuario'].strip(),row['Facil'],row['Normal'],row['Dificil'],int(row['Lote1']),int(row['Lote2']),int(row['Lote3']),int(row['Lote4']),int(row['Lote5']),int(row['Lote6']),int(row['Lote7']),row['A'],row['B'],row['C'],row['D'],row['E'],row['F'],row['G'],row['H'],row['I'],row['J'],row['K'],row['L'],row['M'],row['N'],row['Enie'],row['O'],row['P'],row['Q'],row['R'],row['R'],row['S'],row['T'],row['U'],row['V'],row['W'],row['X'],row['Y'],row['Z']])
     arch.close()
@@ -158,12 +196,9 @@ def Ventana_Opciones ():
                 sg.Column(Layout_Columna())] ]
     window = sg.Window('Opciones', Diseño)
     window.Read(timeout=1)[1]
-    #values = Cargar(Importar_Datos(),window)
-    #Dicc_Bolsa={"A":values['A'],"B":values['B'],"C":values['C'],"D":values['D'],"E":values['E'],"F":values['F'],"G":values['G'],"H":values['H'],"I":values['I'],"J":values['J'],"K":values['K'],"L":values['L'],"M":values['M'],"N":values['N'],
-    #                  "Ñ":values['Ñ'],"O":values['O'],"P":values['P'],"Q":values['Q'],"R":values['R'],"S":values['S'],"T":values['T'],"U":values['U'],"V":values['V'],"W":values['W'],"X":values['X'],"Y":values['Y'],"Z":values['Z']}
-    #Values Seria un dicc con todos los elementos, onda A B C con sus cantidad.
     Dicc_Bolsa={"A":11,"B":3,"C":4,"D":4,"E":11,"F":2,"G":2,"H":2,"I":6,"J":2,"K":1,"L":4,"M":3,"N":5,
                       "Enie":1,"O":8,"P":2,"Q":1,"R":4,"S":7,"T":4,"U":6,"V":2,"W":1,"X":1,"Y":1,"Z":1}
+    values,Dicc_Bolsa = Primer_Cargar(Importar_Datos(),window,Dicc_Bolsa,'A')
     letra_Seleccionada = 'A'
     Cant_Letra_Actual = Dicc_Bolsa['A']
     window['Cantidad'].update(Dicc_Bolsa['A'])
@@ -201,8 +236,6 @@ def Ventana_Opciones ():
                         GuardarDatos(Lista)
                         sg.popup('El perfil se modifico exitosamente!',title='Aviso',keep_on_top=True)
                     else: #Simplemente lo agrego
-                        #print('Lista:',Lista)
-                        #print('Values:',values)
                         Poner_Todos_En_Falso(Lista)
                         AgregarDatos(values)
                         sg.popup('El perfil se guardo exitosamente!',title='Aviso',keep_on_top=True)
