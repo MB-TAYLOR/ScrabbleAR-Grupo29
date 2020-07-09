@@ -137,7 +137,7 @@ def rutas_letras(Dicc_letra_puntajes):
     Dicc_Actual_Punto_Ficha['Vacio']=r'ScrabbleAR_Imagenes_png\modelo_ficha.png'
     return(Dicc_Actual_Punto_Ficha)
 def Update_Tablero2(window,Dicc):
-    inicio=r'ScrabbleAR_Imagenes_png\icono_ inicio.png'
+    inicio=r'ScrabbleAR_Imagenes_png\icono_inicio.png'
     yellow=r'ScrabbleAR_Imagenes_png\icono_-2.png'
     red=r'ScrabbleAR_Imagenes_png\icono_-3.png'
     green=r'ScrabbleAR_Imagenes_png\icono_x3.png'
