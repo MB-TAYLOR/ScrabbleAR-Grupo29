@@ -117,18 +117,18 @@ def Update_Tablero(window,Dicc):
             #window[coord].update(button_color=('Black',str(tablero_random[Pos_Dicc])))
     return Dicc
 def rutas_letras(Dicc_letra_puntajes):
-    Dicc_letras_rutas={'A1':r'ScrabbleAR_Imagenes_png\ficha_A1.png','A2':r'ScrabbleAR_Imagenes_png\ficha_A2.png','B2':r'ScrabbleAR_Imagenes_png\ficha_B2.png','B3':r'ScrabbleAR_Imagenes_png\ficha_B3.png','B4':r'ScrabbleAR_Imagenes_png\ficha_B4.png',
-    'C1':r'ScrabbleAR_Imagenes_png\ficha_C1.png','C2':r'ScrabbleAR_Imagenes_png\ficha_C2.png','C3':r'ScrabbleAR_Imagenes_png\ficha_C3.png','D1':r'ScrabbleAR_Imagenes_png\ficha_D1.png','D2':r'ScrabbleAR_Imagenes_png\ficha_D2.png','D3':r'ScrabbleAR_Imagenes_png\ficha_D3.png',
-    'E1':r'ScrabbleAR_Imagenes_png\ficha_E1.png','E2':r'ScrabbleAR_Imagenes_png\ficha_E2.png','F3':r'ScrabbleAR_Imagenes_png\ficha_F3.png','F4':r'ScrabbleAR_Imagenes_png\ficha_F4.png','F5':r'ScrabbleAR_Imagenes_png\ficha_F5.png','G1':r'ScrabbleAR_Imagenes_png\ficha_G1.png',
-    'G2':r'ScrabbleAR_Imagenes_png\ficha_G2.png','G3':r'ScrabbleAR_Imagenes_png\ficha_G3.png','H3':r'ScrabbleAR_Imagenes_png\ficha_H3.png','H4':r'ScrabbleAR_Imagenes_png\ficha_H4.png','H5':r'ScrabbleAR_Imagenes_png\ficha_H5.png','I1':r'ScrabbleAR_Imagenes_png\ficha_I1.png',
-    'I2':r'ScrabbleAR_Imagenes_png\ficha_I2.png','J5':r'ScrabbleAR_Imagenes_png\ficha_J5.png','J6':r'ScrabbleAR_Imagenes_png\ficha_J6.png','J7':r'ScrabbleAR_Imagenes_png\ficha_J7.png','K7':r'ScrabbleAR_Imagenes_png\ficha_K7.png','K8':r'ScrabbleAR_Imagenes_png\ficha_K8.png',
-    'K9':r'ScrabbleAR_Imagenes_png\ficha_K9.png','L1':r'ScrabbleAR_Imagenes_png\ficha_L1.png','L2':r'ScrabbleAR_Imagenes_png\ficha_L2.png','M2':r'ScrabbleAR_Imagenes_png\ficha_M2.png','M3':r'ScrabbleAR_Imagenes_png\ficha_M3.png','M4':r'ScrabbleAR_Imagenes_png\ficha_M4.png',
-    'N1':r'ScrabbleAR_Imagenes_png\ficha_N1.png','N2':r'ScrabbleAR_Imagenes_png\ficha_N2.png','Ñ7':r'ScrabbleAR_Imagenes_png\ficha_Ñ7.png','Ñ8':r'ScrabbleAR_Imagenes_png\ficha_Ñ8.png','Ñ9':r'ScrabbleAR_Imagenes_png\ficha_Ñ9.png','O1':r'ScrabbleAR_Imagenes_png\ficha_O1.png',
-    'O2':r'ScrabbleAR_Imagenes_png\ficha_O2.png','P2':r'ScrabbleAR_Imagenes_png\ficha_P2.png','P3':r'ScrabbleAR_Imagenes_png\ficha_P3.png','P4':r'ScrabbleAR_Imagenes_png\ficha_P4.png','Q7':r'ScrabbleAR_Imagenes_png\ficha_Q7.png','Q8':r'ScrabbleAR_Imagenes_png\ficha_Q8.png',
-    'Q9':r'ScrabbleAR_Imagenes_png\ficha_Q9.png','R1':r'ScrabbleAR_Imagenes_png\ficha_R1.png','R2':r'ScrabbleAR_Imagenes_png\ficha_R2.png','S1':r'ScrabbleAR_Imagenes_png\ficha_S1.png','S2':r'ScrabbleAR_Imagenes_png\ficha_S2.png','T1':r'ScrabbleAR_Imagenes_png\ficha_T1.png',
-    'T2':r'ScrabbleAR_Imagenes_png\ficha_T2.png','U1':r'ScrabbleAR_Imagenes_png\ficha_U1.png','U2':r'ScrabbleAR_Imagenes_png\ficha_U2.png','V3':r'ScrabbleAR_Imagenes_png\ficha_V3.png','V4':r'ScrabbleAR_Imagenes_png\ficha_V4.png','V5':r'ScrabbleAR_Imagenes_png\ficha_V5.png',
-    'W7':r'ScrabbleAR_Imagenes_png\ficha_W7.png','W8':r'ScrabbleAR_Imagenes_png\ficha_W8.png','W9':r'ScrabbleAR_Imagenes_png\ficha_W9.png','X7':r'ScrabbleAR_Imagenes_png\ficha_X7.png','X8':r'ScrabbleAR_Imagenes_png\ficha_X8.png','X9':r'ScrabbleAR_Imagenes_png\ficha_X9.png',
-    'Y3':r'ScrabbleAR_Imagenes_png\ficha_Y3.png','Y4':r'ScrabbleAR_Imagenes_png\ficha_Y4.png','Y5':r'ScrabbleAR_Imagenes_png\ficha_Y5.png','Z9':r'ScrabbleAR_Imagenes_png\ficha_Z9.png','Z10':r'ScrabbleAR_Imagenes_png\ficha_Z10.png','Z11':r'ScrabbleAR_Imagenes_png\ficha_Z11.png'}
+    Dicc_letras_rutas={'A1':r'ScrabbleAR_Imagenes_png\Letrablanca.png','A2':r'ScrabbleAR_Imagenes_png\Letrablanca.png','B2':r'ScrabbleAR_Imagenes_png\Letrablanca.png','B3':r'ScrabbleAR_Imagenes_png\Letrablanca.png','B4':r'ScrabbleAR_Imagenes_png\Letrablanca.png',
+    'C1':r'ScrabbleAR_Imagenes_png\Letrablanca.png','C2':r'ScrabbleAR_Imagenes_png\Letrablanca.png','C3':r'ScrabbleAR_Imagenes_png\Letrablanca.png','D1':r'ScrabbleAR_Imagenes_png\Letrablanca.png','D2':r'ScrabbleAR_Imagenes_png\Letrablanca.png','D3':r'ScrabbleAR_Imagenes_png\Letrablanca.png',
+    'E1':r'ScrabbleAR_Imagenes_png\Letrablanca.png','E2':r'ScrabbleAR_Imagenes_png\Letrablanca.png','F3':r'ScrabbleAR_Imagenes_png\Letrablanca.png','F4':r'ScrabbleAR_Imagenes_png\Letrablanca.png','F5':r'ScrabbleAR_Imagenes_png\Letrablanca.png','G1':r'ScrabbleAR_Imagenes_png\Letrablanca.png',
+    'G2':r'ScrabbleAR_Imagenes_png\Letrablanca.png','G3':r'ScrabbleAR_Imagenes_png\Letrablanca.png','H3':r'ScrabbleAR_Imagenes_png\Letrablanca.png','H4':r'ScrabbleAR_Imagenes_png\Letrablanca.png','H5':r'ScrabbleAR_Imagenes_png\Letrablanca.png','I1':r'ScrabbleAR_Imagenes_png\Letrablanca.png',
+    'I2':r'ScrabbleAR_Imagenes_png\Letrablanca.png','J5':r'ScrabbleAR_Imagenes_png\Letrablanca.png','J6':r'ScrabbleAR_Imagenes_png\Letrablanca.png','J7':r'ScrabbleAR_Imagenes_png\Letrablanca.png','K7':r'ScrabbleAR_Imagenes_png\Letrablanca.png','K8':r'ScrabbleAR_Imagenes_png\Letrablanca.png',
+    'K9':r'ScrabbleAR_Imagenes_png\Letrablanca.png','L1':r'ScrabbleAR_Imagenes_png\Letrablanca.png','L2':r'ScrabbleAR_Imagenes_png\Letrablanca.png','M2':r'ScrabbleAR_Imagenes_png\Letrablanca.png','M3':r'ScrabbleAR_Imagenes_png\Letrablanca.png','M4':r'ScrabbleAR_Imagenes_png\Letrablanca.png',
+    'N1':r'ScrabbleAR_Imagenes_png\Letrablanca.png','N2':r'ScrabbleAR_Imagenes_png\Letrablanca.png','Ñ7':r'ScrabbleAR_Imagenes_png\Letrablanca.png','Ñ8':r'ScrabbleAR_Imagenes_png\Letrablanca.png','Ñ9':r'ScrabbleAR_Imagenes_png\Letrablanca.png','O1':r'ScrabbleAR_Imagenes_png\Letrablanca.png',
+    'O2':r'ScrabbleAR_Imagenes_png\Letrablanca.png','P2':r'ScrabbleAR_Imagenes_png\Letrablanca.png','P3':r'ScrabbleAR_Imagenes_png\Letrablanca.png','P4':r'ScrabbleAR_Imagenes_png\Letrablanca.png','Q7':r'ScrabbleAR_Imagenes_png\Letrablanca.png','Q8':r'ScrabbleAR_Imagenes_png\Letrablanca.png',
+    'Q9':r'ScrabbleAR_Imagenes_png\Letranegra.png','R1':r'ScrabbleAR_Imagenes_png\Letranegra.png','R2':r'ScrabbleAR_Imagenes_png\Letranegra.png','S1':r'ScrabbleAR_Imagenes_png\Letranegra.png','S2':r'ScrabbleAR_Imagenes_png\Letranegra.png','T1':r'ScrabbleAR_Imagenes_png\Letranegra.png',
+    'T2':r'ScrabbleAR_Imagenes_png\Letranegra.png','U1':r'ScrabbleAR_Imagenes_png\Letranegra.png','U2':r'ScrabbleAR_Imagenes_png\Letranegra.png','V3':r'ScrabbleAR_Imagenes_png\Letranegra.png','V4':r'ScrabbleAR_Imagenes_png\Letranegra.png','V5':r'ScrabbleAR_Imagenes_png\Letranegra.png',
+    'W7':r'ScrabbleAR_Imagenes_png\Letranegra.png','W8':r'ScrabbleAR_Imagenes_png\Letranegra.png','W9':r'ScrabbleAR_Imagenes_png\Letranegra.png','X7':r'ScrabbleAR_Imagenes_png\Letranegra.png','X8':r'ScrabbleAR_Imagenes_png\Letranegra.png','X9':r'ScrabbleAR_Imagenes_png\Letranegra.png',
+    'Y3':r'ScrabbleAR_Imagenes_png\Letranegra.png','Y4':r'ScrabbleAR_Imagenes_png\Letranegra.png','Y5':r'ScrabbleAR_Imagenes_png\Letranegra.png','Z9':r'ScrabbleAR_Imagenes_png\Letranegra.png','Z10':r'ScrabbleAR_Imagenes_png\Letranegra.png','Z11':r'ScrabbleAR_Imagenes_png\Letranegra.png'}
 
     Dicc_Actual_Punto_Ficha={}
     for x in Dicc_letra_puntajes:
@@ -137,7 +137,7 @@ def rutas_letras(Dicc_letra_puntajes):
     Dicc_Actual_Punto_Ficha['Vacio']=r'ScrabbleAR_Imagenes_png\modelo_ficha.png'
     return(Dicc_Actual_Punto_Ficha)
 def Update_Tablero2(window,Dicc):
-    inicio=r'ScrabbleAR_Imagenes_png\icono_ inicio.png'
+    inicio=r'ScrabbleAR_Imagenes_png\icono_inicio.png'
     yellow=r'ScrabbleAR_Imagenes_png\icono_-2.png'
     red=r'ScrabbleAR_Imagenes_png\icono_-3.png'
     green=r'ScrabbleAR_Imagenes_png\icono_x3.png'
@@ -149,24 +149,22 @@ def Update_Tablero2(window,Dicc):
             coord=(x,y)
             if(Dicc[coord][1]=="yellow"):
                 Dicc[coord].append(yellow)
-                window[coord].update(image_filename=yellow,image_size=(45,45),image_subsample=3)
+                window[coord].update(image_filename=yellow,image_size=(40,40),image_subsample=3)
             elif(Dicc[coord][1]=="red"):
                 Dicc[coord].append(red)
-                window[coord].update(image_filename=red,image_size=(45,45),image_subsample=3)
+                window[coord].update(image_filename=red,image_size=(40,40),image_subsample=3)
             elif(Dicc[coord][1]=="green"):
                 Dicc[coord].append(green)
-                window[coord].update(image_filename=green,image_size=(45,45),image_subsample=3)
+                window[coord].update(image_filename=green,image_size=(40,40),image_subsample=4)
             elif(Dicc[coord][1]=="blue"):
                 Dicc[coord].append(blue)
-                window[coord].update(image_filename=blue,image_size=(45,45),image_subsample=3)
+                window[coord].update(image_filename=blue,image_size=(40,40),image_subsample=3)
             elif(coord==(7,7)):
                 Dicc[coord].append(blue)
-                window[coord].update(image_filename=inicio,image_size=(45,45),image_subsample=3)
+                window[coord].update(image_filename=inicio,image_size=(40,40),image_subsample=3)
             else:
                 Dicc[coord].append(white)
-                window[coord].update(image_filename=white,image_size=(45,45),image_subsample=3)
-
-
+                window[coord].update(image_filename=white,image_size=(40,40),image_subsample=3)
     return Dicc
 
 def Generar_Dicc():
@@ -216,14 +214,9 @@ def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_pun
     Lista_Atril.append(Letra_6)
     Letra_7=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
     Lista_Atril.append(Letra_7)
-    layout = [[sg.Text('',key='texto1',pad=(45,3)),(sg.Image(**formato_fichas_cpu,key='fichasbot1')),
-                                                    (sg.Image(**formato_fichas_cpu,key='fichasbot2')),
-                                                    (sg.Image(**formato_fichas_cpu,key='fichasbot3')),
-                                                    (sg.Image(**formato_fichas_cpu,key='fichasbot4')),
-                                                    (sg.Image(**formato_fichas_cpu,key='fichasbot5')),
-                                                    (sg.Image(**formato_fichas_cpu,key='fichasbot6')),
-                                                    (sg.Image(**formato_fichas_cpu,key='fichasbot7'))],
-                [(sg.Image(filename='Atril_back.png',key='atril',pad=(20,3)))]]
+    layout = [[sg.Text('',key='texto1',pad=(45,3))]
+                #[(sg.Image(filename='Atril_back.png',key='atril',pad=(20,3)))]]
+                ]
 
     layout.extend([[sg.Button('', size=(4, 2),key=(i,j),pad=(0,0))for j in range(MAX_COL)] for i in range(MAX_ROWS)])
 
