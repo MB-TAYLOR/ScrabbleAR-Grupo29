@@ -668,7 +668,7 @@ def genero_Tablero():
     CFT = Actualizar_CFT(CFT,Dicc_Bolsa) #Cantidad Fichas Totales
     diseño = [ [sg.Column((Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP))),
                 sg.Column(Layout_Columna())] ]
-    window = sg.Window('Tablero',diseño ,location=(400,0),finalize=True)
+    window = sg.Window('Tablero',diseño ,location=(400,0),finalize=True,resizable=True)
     Dicc = Update_Tablero(window,Dicc)
     Dicc=  Update_Tablero2(window,Dicc)
 
