@@ -232,9 +232,14 @@ def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_pun
     Lista_Atril.append(Letra_6)
     Letra_7=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
     Lista_Atril.append(Letra_7)
-    layout = [[sg.Text('',key='texto1',pad=(45,3))]
-                #[(sg.Image(filename='Atril_back.png',key='atril',pad=(20,3)))]]
-                ]
+    layout = [[sg.Text('',key='texto1',pad=(45,3)),(sg.Image(**formato_fichas_cpu,key='fichasbot1')),
+                                                    (sg.Image(**formato_fichas_cpu,key='fichasbot2')),
+                                                    (sg.Image(**formato_fichas_cpu,key='fichasbot3')),
+                                                    (sg.Image(**formato_fichas_cpu,key='fichasbot4')),
+                                                    (sg.Image(**formato_fichas_cpu,key='fichasbot5')),
+                                                    (sg.Image(**formato_fichas_cpu,key='fichasbot6')),
+                                                    (sg.Image(**formato_fichas_cpu,key='fichasbot7'))],
+                [(sg.Image(filename='Atril_back.png',key='atril',pad=(20,3)))]]
 
     layout.extend([[sg.Button('', size=(4, 2),key=(i,j),pad=(0,0))for j in range(MAX_COL)] for i in range(MAX_ROWS)])
 
