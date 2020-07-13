@@ -686,6 +686,8 @@ def genero_Tablero():
     Tiempo,tiempo_ronda=tiempo_dificultad(Dificultad)
     PrimerRonda = True
     Turnos_Disponibles = 3
+    window.Refresh()
+    tamaño_actual=window.Size
     while True:
         LPI = []                #Lista de Posiciones de Intercambio (Para Intecambiar fichas)
         LCOPR = []              #Lista de Coordenadas Ocupadas Por Ronda
@@ -695,6 +697,9 @@ def genero_Tablero():
         tiempo_jugador=tiempo_ronda
         Mensaje_Turno(Turno_Usuario)
         while (Turno_Usuario):  #Mientras sea el turno del usuario:
+            if (tamaño_actual != window.Size):
+                tamaño_actual=window.Size
+                #Aca deberian estar los cambios a la ventana que centrarian todo el contenido de esta
             Palabra = ''
             event = window.Read(timeout=10,timeout_key='Reloj')[0]
             window['Tiempo'].update("{}:{}".format(((Tiempo//100)//60),((Tiempo//100)%60)))
