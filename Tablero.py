@@ -561,6 +561,8 @@ def Colocar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,Letra1,event1,event2,window,Dic
     Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
     Eliminar_Elementos_Ocupados_CDD(LCOPR,CCD)
     window[event1].update(button_color=('black','#FDD357'))
+    window[event1].update(image_filename=r'ScrabbleAR_Imagenes_png\Transparente.png',image_size=(40,40),image_subsample=5)
+
     #Faltan fichas que sean las "Seleccionadas para agregar al cliquear , aca iria la "Des-seleccionada", pero al no existir la otra por ahora lo dejo asi
 
 
