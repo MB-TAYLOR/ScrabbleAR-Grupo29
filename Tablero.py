@@ -668,7 +668,7 @@ def genero_Tablero():
     CFT = Actualizar_CFT(CFT,Dicc_Bolsa) #Cantidad Fichas Totales
     diseño = [ [sg.Column((Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP))),
                 sg.Column(Layout_Columna())] ]
-    window = sg.Window('Tablero',diseño ,location=(400,0),finalize=True,resizable=True)
+    window = sg.Window('Tablero',diseño ,location=(400,0),finalize=True,resizable=True,element_justification="center")
     Dicc = Update_Tablero(window,Dicc)
     Dicc=  Update_Tablero2(window,Dicc)
 
@@ -700,6 +700,7 @@ def genero_Tablero():
             if (tamaño_actual != window.Size):
                 tamaño_actual=window.Size
                 #Aca deberian estar los cambios a la ventana que centrarian todo el contenido de esta
+                
             Palabra = ''
             event = window.Read(timeout=10,timeout_key='Reloj')[0]
             window['Tiempo'].update("{}:{}".format(((Tiempo//100)//60),((Tiempo//100)%60)))
