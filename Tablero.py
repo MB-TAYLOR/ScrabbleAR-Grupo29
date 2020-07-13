@@ -117,18 +117,18 @@ def Update_Tablero(window,Dicc):
             #window[coord].update(button_color=('Black',str(tablero_random[Pos_Dicc])))
     return Dicc
 def rutas_letras(Dicc_letra_puntajes):
-    Dicc_letras_rutas={'A1':r'ScrabbleAR_Imagenes_png\Letrablanca.png','A2':r'ScrabbleAR_Imagenes_png\Letrablanca.png','B2':r'ScrabbleAR_Imagenes_png\Letrablanca.png','B3':r'ScrabbleAR_Imagenes_png\Letrablanca.png','B4':r'ScrabbleAR_Imagenes_png\Letrablanca.png',
-    'C1':r'ScrabbleAR_Imagenes_png\Letrablanca.png','C2':r'ScrabbleAR_Imagenes_png\Letrablanca.png','C3':r'ScrabbleAR_Imagenes_png\Letrablanca.png','D1':r'ScrabbleAR_Imagenes_png\Letrablanca.png','D2':r'ScrabbleAR_Imagenes_png\Letrablanca.png','D3':r'ScrabbleAR_Imagenes_png\Letrablanca.png',
-    'E1':r'ScrabbleAR_Imagenes_png\Letrablanca.png','E2':r'ScrabbleAR_Imagenes_png\Letrablanca.png','F3':r'ScrabbleAR_Imagenes_png\Letrablanca.png','F4':r'ScrabbleAR_Imagenes_png\Letrablanca.png','F5':r'ScrabbleAR_Imagenes_png\Letrablanca.png','G1':r'ScrabbleAR_Imagenes_png\Letrablanca.png',
-    'G2':r'ScrabbleAR_Imagenes_png\Letrablanca.png','G3':r'ScrabbleAR_Imagenes_png\Letrablanca.png','H3':r'ScrabbleAR_Imagenes_png\Letrablanca.png','H4':r'ScrabbleAR_Imagenes_png\Letrablanca.png','H5':r'ScrabbleAR_Imagenes_png\Letrablanca.png','I1':r'ScrabbleAR_Imagenes_png\Letrablanca.png',
-    'I2':r'ScrabbleAR_Imagenes_png\Letrablanca.png','J5':r'ScrabbleAR_Imagenes_png\Letrablanca.png','J6':r'ScrabbleAR_Imagenes_png\Letrablanca.png','J7':r'ScrabbleAR_Imagenes_png\Letrablanca.png','K7':r'ScrabbleAR_Imagenes_png\Letrablanca.png','K8':r'ScrabbleAR_Imagenes_png\Letrablanca.png',
-    'K9':r'ScrabbleAR_Imagenes_png\Letrablanca.png','L1':r'ScrabbleAR_Imagenes_png\Letrablanca.png','L2':r'ScrabbleAR_Imagenes_png\Letrablanca.png','M2':r'ScrabbleAR_Imagenes_png\Letrablanca.png','M3':r'ScrabbleAR_Imagenes_png\Letrablanca.png','M4':r'ScrabbleAR_Imagenes_png\Letrablanca.png',
-    'N1':r'ScrabbleAR_Imagenes_png\Letrablanca.png','N2':r'ScrabbleAR_Imagenes_png\Letrablanca.png','Ñ7':r'ScrabbleAR_Imagenes_png\Letrablanca.png','Ñ8':r'ScrabbleAR_Imagenes_png\Letrablanca.png','Ñ9':r'ScrabbleAR_Imagenes_png\Letrablanca.png','O1':r'ScrabbleAR_Imagenes_png\Letrablanca.png',
-    'O2':r'ScrabbleAR_Imagenes_png\Letrablanca.png','P2':r'ScrabbleAR_Imagenes_png\Letrablanca.png','P3':r'ScrabbleAR_Imagenes_png\Letrablanca.png','P4':r'ScrabbleAR_Imagenes_png\Letrablanca.png','Q7':r'ScrabbleAR_Imagenes_png\Letrablanca.png','Q8':r'ScrabbleAR_Imagenes_png\Letrablanca.png',
-    'Q9':r'ScrabbleAR_Imagenes_png\Letranegra.png','R1':r'ScrabbleAR_Imagenes_png\Letranegra.png','R2':r'ScrabbleAR_Imagenes_png\Letranegra.png','S1':r'ScrabbleAR_Imagenes_png\Letranegra.png','S2':r'ScrabbleAR_Imagenes_png\Letranegra.png','T1':r'ScrabbleAR_Imagenes_png\Letranegra.png',
-    'T2':r'ScrabbleAR_Imagenes_png\Letranegra.png','U1':r'ScrabbleAR_Imagenes_png\Letranegra.png','U2':r'ScrabbleAR_Imagenes_png\Letranegra.png','V3':r'ScrabbleAR_Imagenes_png\Letranegra.png','V4':r'ScrabbleAR_Imagenes_png\Letranegra.png','V5':r'ScrabbleAR_Imagenes_png\Letranegra.png',
-    'W7':r'ScrabbleAR_Imagenes_png\Letranegra.png','W8':r'ScrabbleAR_Imagenes_png\Letranegra.png','W9':r'ScrabbleAR_Imagenes_png\Letranegra.png','X7':r'ScrabbleAR_Imagenes_png\Letranegra.png','X8':r'ScrabbleAR_Imagenes_png\Letranegra.png','X9':r'ScrabbleAR_Imagenes_png\Letranegra.png',
-    'Y3':r'ScrabbleAR_Imagenes_png\Letranegra.png','Y4':r'ScrabbleAR_Imagenes_png\Letranegra.png','Y5':r'ScrabbleAR_Imagenes_png\Letranegra.png','Z9':r'ScrabbleAR_Imagenes_png\Letranegra.png','Z10':r'ScrabbleAR_Imagenes_png\Letranegra.png','Z11':r'ScrabbleAR_Imagenes_png\Letranegra.png'}
+    Dicc_letras_rutas={'A1':r'ScrabbleAR_Imagenes_png\ficha_A1_B.png','A2':r'ScrabbleAR_Imagenes_png\ficha_A2_B.png','B2':r'ScrabbleAR_Imagenes_png\ficha_B2_B.png','B3':r'ScrabbleAR_Imagenes_png\ficha_B3_B.png','B4':r'ScrabbleAR_Imagenes_png\ficha_B4_B.png',
+        'C1':r'ScrabbleAR_Imagenes_png\ficha_C1_B.png','C2':r'ScrabbleAR_Imagenes_png\ficha_C2_B.png','C3':r'ScrabbleAR_Imagenes_png\ficha_C3_B.png','D1':r'ScrabbleAR_Imagenes_png\ficha_D1_B.png','D2':r'ScrabbleAR_Imagenes_png\ficha_D2_B.png','D3':r'ScrabbleAR_Imagenes_png\ficha_D3_B.png',
+        'E1':r'ScrabbleAR_Imagenes_png\ficha_E1_B.png','E2':r'ScrabbleAR_Imagenes_png\ficha_E2_B.png','F3':r'ScrabbleAR_Imagenes_png\ficha_F3_B.png','F4':r'ScrabbleAR_Imagenes_png\ficha_F4_B.png','F5':r'ScrabbleAR_Imagenes_png\ficha_F5_B.png','G1':r'ScrabbleAR_Imagenes_png\ficha_G1_B.png',
+        'G2':r'ScrabbleAR_Imagenes_png\ficha_G2_B.png','G3':r'ScrabbleAR_Imagenes_png\ficha_G3_B.png','H3':r'ScrabbleAR_Imagenes_png\ficha_H3_B.png','H4':r'ScrabbleAR_Imagenes_png\ficha_H4_B.png','H5':r'ScrabbleAR_Imagenes_png\ficha_H5_B.png','I1':r'ScrabbleAR_Imagenes_png\ficha_I1_B.png',
+        'I2':r'ScrabbleAR_Imagenes_png\ficha_I2_B.png','J5':r'ScrabbleAR_Imagenes_png\ficha_J5_B.png','J6':r'ScrabbleAR_Imagenes_png\ficha_J6_B.png','J7':r'ScrabbleAR_Imagenes_png\ficha_J7_B.png','K7':r'ScrabbleAR_Imagenes_png\ficha_K7_B.png','K8':r'ScrabbleAR_Imagenes_png\ficha_K8_B.png',
+        'K9':r'ScrabbleAR_Imagenes_png\ficha_K9_B.png','L1':r'ScrabbleAR_Imagenes_png\ficha_L1_B.png','L2':r'ScrabbleAR_Imagenes_png\ficha_L2_B.png','M2':r'ScrabbleAR_Imagenes_png\ficha_M2_B.png','M3':r'ScrabbleAR_Imagenes_png\ficha_M3_B.png','M4':r'ScrabbleAR_Imagenes_png\ficha_M4_B.png',
+        'N1':r'ScrabbleAR_Imagenes_png\ficha_N1_B.png','N2':r'ScrabbleAR_Imagenes_png\ficha_N2_B.png','Ñ7':r'ScrabbleAR_Imagenes_png\ficha_Ñ7_B.png','Ñ8':r'ScrabbleAR_Imagenes_png\ficha_Ñ8_B.png','Ñ9':r'ScrabbleAR_Imagenes_png\ficha_Ñ9_B.png','O1':r'ScrabbleAR_Imagenes_png\ficha_O1_B.png',
+        'O2':r'ScrabbleAR_Imagenes_png\ficha_O2_B.png','P2':r'ScrabbleAR_Imagenes_png\ficha_P2_B.png','P3':r'ScrabbleAR_Imagenes_png\ficha_P3_B.png','P4':r'ScrabbleAR_Imagenes_png\ficha_P4_B.png','Q7':r'ScrabbleAR_Imagenes_png\ficha_Q7_B.png','Q8':r'ScrabbleAR_Imagenes_png\ficha_Q8_B.png',
+        'Q9':r'ScrabbleAR_Imagenes_png\ficha_Q9_B.png','R1':r'ScrabbleAR_Imagenes_png\ficha_R1_B.png','R2':r'ScrabbleAR_Imagenes_png\ficha_R2_B.png','S1':r'ScrabbleAR_Imagenes_png\ficha_S1_B.png','S2':r'ScrabbleAR_Imagenes_png\ficha_S2_B.png','T1':r'ScrabbleAR_Imagenes_png\ficha_T1_B.png',
+        'T2':r'ScrabbleAR_Imagenes_png\ficha_T2_B.png','U1':r'ScrabbleAR_Imagenes_png\ficha_U1_B.png','U2':r'ScrabbleAR_Imagenes_png\ficha_U2_B.png','V3':r'ScrabbleAR_Imagenes_png\ficha_V3_B.png','V4':r'ScrabbleAR_Imagenes_png\ficha_V4_B.png','V5':r'ScrabbleAR_Imagenes_png\ficha_V5_B.png',
+        'W7':r'ScrabbleAR_Imagenes_png\ficha_W7_B.png','W8':r'ScrabbleAR_Imagenes_png\ficha_W8_B.png','W9':r'ScrabbleAR_Imagenes_png\ficha_W9_B.png','X7':r'ScrabbleAR_Imagenes_png\ficha_X7_B.png','X8':r'ScrabbleAR_Imagenes_png\ficha_X8_B.png','X9':r'ScrabbleAR_Imagenes_png\ficha_X9_B.png',
+        'Y3':r'ScrabbleAR_Imagenes_png\ficha_Y3_B.png','Y4':r'ScrabbleAR_Imagenes_png\ficha_Y4_B.png','Y5':r'ScrabbleAR_Imagenes_png\ficha_Y5_B.png','Z9':r'ScrabbleAR_Imagenes_png\ficha_Z9_B.png','Z10':r'ScrabbleAR_Imagenes_png\ficha_Z10_B.png','Z11':r'ScrabbleAR_Imagenes_png\ficha_Z11_B.png'}
 
     Dicc_Actual_Punto_Ficha={}
     for x in Dicc_letra_puntajes:
@@ -149,24 +149,42 @@ def Update_Tablero2(window,Dicc):
             coord=(x,y)
             if(Dicc[coord][1]=="yellow"):
                 Dicc[coord].append(yellow)
-                window[coord].update(image_filename=yellow,image_size=(40,40),image_subsample=3)
+                window[coord].update(image_filename=yellow,image_size=(40,40),image_subsample=5)
             elif(Dicc[coord][1]=="red"):
                 Dicc[coord].append(red)
-                window[coord].update(image_filename=red,image_size=(40,40),image_subsample=3)
+                window[coord].update(image_filename=red,image_size=(40,40),image_subsample=5)
             elif(Dicc[coord][1]=="green"):
                 Dicc[coord].append(green)
-                window[coord].update(image_filename=green,image_size=(40,40),image_subsample=4)
+                window[coord].update(image_filename=green,image_size=(40,40),image_subsample=5)
             elif(Dicc[coord][1]=="blue"):
                 Dicc[coord].append(blue)
-                window[coord].update(image_filename=blue,image_size=(40,40),image_subsample=3)
+                window[coord].update(image_filename=blue,image_size=(40,40),image_subsample=5)
             elif(coord==(7,7)):
                 Dicc[coord].append(blue)
-                window[coord].update(image_filename=inicio,image_size=(40,40),image_subsample=3)
+                window[coord].update(image_filename=inicio,image_size=(40,40),image_subsample=5)
             else:
                 Dicc[coord].append(white)
-                window[coord].update(image_filename=white,image_size=(40,40),image_subsample=3)
+                window[coord].update(image_filename=white,image_size=(40,40),image_subsample=5)
     return Dicc
+def rutas_letras_CPU(Dicc_letra_puntajes):
+    Dicc_letras_rutas_CPU={'A1':r'ScrabbleAR_Imagenes_png\ficha_A1_N.png','A2':r'ScrabbleAR_Imagenes_png\ficha_A2_N.png','B2':r'ScrabbleAR_Imagenes_png\ficha_B2_N.png','B3':r'ScrabbleAR_Imagenes_png\ficha_B3_N.png','B4':r'ScrabbleAR_Imagenes_png\ficha_B4_N.png',
+        'C1':r'ScrabbleAR_Imagenes_png\ficha_C1_N.png','C2':r'ScrabbleAR_Imagenes_png\ficha_C2_N.png','C3':r'ScrabbleAR_Imagenes_png\ficha_C3_N.png','D1':r'ScrabbleAR_Imagenes_png\ficha_D1_N.png','D2':r'ScrabbleAR_Imagenes_png\ficha_D2_N.png','D3':r'ScrabbleAR_Imagenes_png\ficha_D3_N.png',
+        'E1':r'ScrabbleAR_Imagenes_png\ficha_E1_N.png','E2':r'ScrabbleAR_Imagenes_png\ficha_E2_N.png','F3':r'ScrabbleAR_Imagenes_png\ficha_F3_N.png','F4':r'ScrabbleAR_Imagenes_png\ficha_F4_N.png','F5':r'ScrabbleAR_Imagenes_png\ficha_F5_N.png','G1':r'ScrabbleAR_Imagenes_png\ficha_G1_N.png',
+        'G2':r'ScrabbleAR_Imagenes_png\ficha_G2_N.png','G3':r'ScrabbleAR_Imagenes_png\ficha_G3_N.png','H3':r'ScrabbleAR_Imagenes_png\ficha_H3_N.png','H4':r'ScrabbleAR_Imagenes_png\ficha_H4_N.png','H5':r'ScrabbleAR_Imagenes_png\ficha_H5_N.png','I1':r'ScrabbleAR_Imagenes_png\ficha_I1_N.png',
+        'I2':r'ScrabbleAR_Imagenes_png\ficha_I2_N.png','J5':r'ScrabbleAR_Imagenes_png\ficha_J5_N.png','J6':r'ScrabbleAR_Imagenes_png\ficha_J6_N.png','J7':r'ScrabbleAR_Imagenes_png\ficha_J7_N.png','K7':r'ScrabbleAR_Imagenes_png\ficha_K7_N.png','K8':r'ScrabbleAR_Imagenes_png\ficha_K8_N.png',
+        'K9':r'ScrabbleAR_Imagenes_png\ficha_K9_N.png','L1':r'ScrabbleAR_Imagenes_png\ficha_L1_N.png','L2':r'ScrabbleAR_Imagenes_png\ficha_L2_N.png','M2':r'ScrabbleAR_Imagenes_png\ficha_M2_N.png','M3':r'ScrabbleAR_Imagenes_png\ficha_M3_N.png','M4':r'ScrabbleAR_Imagenes_png\ficha_M4_N.png',
+        'N1':r'ScrabbleAR_Imagenes_png\ficha_N1_N.png','N2':r'ScrabbleAR_Imagenes_png\ficha_N2_N.png','Ñ7':r'ScrabbleAR_Imagenes_png\ficha_Ñ7_N.png','Ñ8':r'ScrabbleAR_Imagenes_png\ficha_Ñ8_N.png','Ñ9':r'ScrabbleAR_Imagenes_png\ficha_Ñ9_N.png','O1':r'ScrabbleAR_Imagenes_png\ficha_O1_N.png',
+        'O2':r'ScrabbleAR_Imagenes_png\ficha_O2_N.png','P2':r'ScrabbleAR_Imagenes_png\ficha_P2_N.png','P3':r'ScrabbleAR_Imagenes_png\ficha_P3_N.png','P4':r'ScrabbleAR_Imagenes_png\ficha_P4_N.png','Q7':r'ScrabbleAR_Imagenes_png\ficha_Q7_N.png','Q8':r'ScrabbleAR_Imagenes_png\ficha_Q8_N.png',
+        'Q9':r'ScrabbleAR_Imagenes_png\ficha_Q9_N.png','R1':r'ScrabbleAR_Imagenes_png\ficha_R1_N.png','R2':r'ScrabbleAR_Imagenes_png\ficha_R2_N.png','S1':r'ScrabbleAR_Imagenes_png\ficha_S1_N.png','S2':r'ScrabbleAR_Imagenes_png\ficha_S2_N.png','T1':r'ScrabbleAR_Imagenes_png\ficha_T1_N.png',
+        'T2':r'ScrabbleAR_Imagenes_png\ficha_T2_N.png','U1':r'ScrabbleAR_Imagenes_png\ficha_U1_N.png','U2':r'ScrabbleAR_Imagenes_png\ficha_U2_N.png','V3':r'ScrabbleAR_Imagenes_png\ficha_V3_N.png','V4':r'ScrabbleAR_Imagenes_png\ficha_V4_N.png','V5':r'ScrabbleAR_Imagenes_png\ficha_V5_N.png',
+        'W7':r'ScrabbleAR_Imagenes_png\ficha_W7_N.png','W8':r'ScrabbleAR_Imagenes_png\ficha_W8_N.png','W9':r'ScrabbleAR_Imagenes_png\ficha_W9_N.png','X7':r'ScrabbleAR_Imagenes_png\ficha_X7_N.png','X8':r'ScrabbleAR_Imagenes_png\ficha_X8_N.png','X9':r'ScrabbleAR_Imagenes_png\ficha_X9_N.png',
+        'Y3':r'ScrabbleAR_Imagenes_png\ficha_Y3_N.png','Y4':r'ScrabbleAR_Imagenes_png\ficha_Y4_N.png','Y5':r'ScrabbleAR_Imagenes_png\ficha_Y5_N.png','Z9':r'ScrabbleAR_Imagenes_png\ficha_Z9_N.png','Z10':r'ScrabbleAR_Imagenes_png\ficha_Z10_N.png','Z11':r'ScrabbleAR_Imagenes_png\ficha_Z11_N.png'}
 
+    Dicc_Actual_Punto_Ficha_CPU={}
+    for x in Dicc_letra_puntajes:
+        clave_Dicc_letras_rutas_CPU=x+str(Dicc_letra_puntajes[x])
+        Dicc_Actual_Punto_Ficha_CPU[x]=Dicc_letras_rutas_CPU[clave_Dicc_letras_rutas_CPU]
+    return(Dicc_Actual_Punto_Ficha_CPU)
 def Generar_Dicc():
     Dicc = {}
     for j in range(MAX_COL):
@@ -221,13 +239,13 @@ def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_pun
     layout.extend([[sg.Button('', size=(4, 2),key=(i,j),pad=(0,0))for j in range(MAX_COL)] for i in range(MAX_ROWS)])
 
     layout.extend([[sg.Text('',key='texto2',pad=(28,3)),
-                    (sg.Button(key=0,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_1],image_size=(45,45),image_subsample=3)),
-                    (sg.Button(key=1,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_2],image_size=(45,45),image_subsample=3)),
-                    (sg.Button(key=2,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_3],image_size=(45,45),image_subsample=3)),
-                    (sg.Button(key=3,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_4],image_size=(45,45),image_subsample=3)),
-                    (sg.Button(key=4,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_5],image_size=(45,45),image_subsample=3)),
-                    (sg.Button(key=5,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_6],image_size=(45,45),image_subsample=3)),
-                    (sg.Button(key=6,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_7],image_size=(45,45),image_subsample=3))],
+                    (sg.Button(key=0,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_1],image_size=(40,40),image_subsample=5)),
+                    (sg.Button(key=1,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_2],image_size=(40,40),image_subsample=5)),
+                    (sg.Button(key=2,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_3],image_size=(40,40),image_subsample=5)),
+                    (sg.Button(key=3,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_4],image_size=(40,40),image_subsample=5)),
+                    (sg.Button(key=4,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_5],image_size=(40,40),image_subsample=5)),
+                    (sg.Button(key=5,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_6],image_size=(40,40),image_subsample=5)),
+                    (sg.Button(key=6,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_7],image_size=(40,40),image_subsample=5))],
                     [(sg.Image(filename='Atril.png',key='texto'))]])
 
     return layout
@@ -237,7 +255,7 @@ def Llenar_Atril(Lista_Atril,window,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_let
         if (Lista_Atril[pos] == ''):
             Lista_Atril[pos] = Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
             window[pos].update(Lista_Atril[pos])
-            window[pos].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[pos]],image_size=(45,45),image_subsample=3)
+            window[pos].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[pos]],image_size=(40,40),image_subsample=3)
 
 def Coord_Ocupada(LCO,event):
     if (event in LCO):
@@ -340,23 +358,25 @@ def Calcular_Puntaje(Palabra,Dicc_Puntajes):
         PPR = PPR + Dicc_Puntajes[letra]
     return PPR
 
-def Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc):
+def Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU):
     for x in range(len(Palabra)):
-        window[(coordenadas_CPU[0],coordenadas_CPU[1]+x)].update(str(Palabra[x]),button_color=('black','#7D4DE4'))
+        #window[(coordenadas_CPU[0],coordenadas_CPU[1]+x)].update(str(Palabra[x]),button_color=('black','#7D4DE4'))
+        window[(coordenadas_CPU[0],coordenadas_CPU[1]+x)].update(image_filename=Dicc_rutas_letras_puntaje_partida_CPU[str(Palabra[x])],image_size=(40,40),image_subsample=5)
         Dicc[(coordenadas_CPU[0],coordenadas_CPU[1]+x)][0] =str(Palabra[x])
         LCO.append((coordenadas_CPU[0],coordenadas_CPU[1]+x))
         Coord_Disponible(LCO,CCD)
         Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
 
-def Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc):
+def Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU):
     for y in range(len(Palabra)):
         window[(coordenadas_CPU[0]+y,coordenadas_CPU[1])].update(str(Palabra[y]),button_color=('black','#7D4DE4'))
+        window[(coordenadas_CPU[0]+y,coordenadas_CPU[1])].update(image_filename=Dicc_rutas_letras_puntaje_partida_CPU[str(Palabra[y])],image_size=(40,40),image_subsample=5)
         Dicc[(coordenadas_CPU[0]+y,coordenadas_CPU[1])][0] =str(Palabra[y])
         LCO.append((coordenadas_CPU[0]+y,coordenadas_CPU[1]))
         Coord_Disponible(LCO,CCD)
         Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
 
-def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Bolsa_Diccionario,Cant_fichas,Dicc_Puntajes,PT_CPU):
+def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Bolsa_Diccionario,Cant_fichas,Dicc_Puntajes,PT_CPU,Dicc_rutas_letras_puntaje_partida_CPU):
     CCD_CPU=CCD
     Palabra=fichas_CPU
     intento=True
@@ -378,7 +398,8 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
         fichas_CPU=elimino_fichas_Usadas(fichas_CPU,Palabra)
         if CCD_CPU == set():
             for x in range(len(Palabra)):  #En el primer case , donde CCD esta vacio y se debe empezar en el cuadro 7,7
-                window[(7,7+x)].update(str(Palabra[x]),button_color=('black','#7D4DE4'))
+                #window[(7,7+x)].update(str(Palabra[x]),button_color=('black','#7D4DE4'))
+                window[(7,7+x)].update(image_filename=Dicc_rutas_letras_puntaje_partida_CPU[str(Palabra[x])],image_size=(40,40),image_subsample=5)
                 Dicc[7,7+x][0] =str(Palabra[x])
                 LCO.append((7,7+x))
                 Coord_Disponible(LCO,CCD)
@@ -400,7 +421,7 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
                                 else:
                                     puede_Colocarse=True
                             if(puede_Colocarse):
-                                Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc)
+                                Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU)
                                 PPR_CPU = Calcular_Puntaje(Palabra,Dicc_Puntajes)
                                 PT_CPU = PT_CPU + PPR_CPU
                                 window['PuntajeCPU'].update(str(PT_CPU))
@@ -414,7 +435,7 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
                                 else:
                                     puede_Colocarse=True
                             if(puede_Colocarse):
-                                Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc)
+                                Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU)
                                 PPR_CPU = Calcular_Puntaje(Palabra,Dicc_Puntajes)
                                 PT_CPU = PT_CPU + PPR_CPU
                                 window['PuntajeCPU'].update(str(PT_CPU))
@@ -500,18 +521,18 @@ def Intercambio_FichasTablero(LCOPR,Dicc,event1,event2,window,Dicc_rutas_letras_
         Dicc[event2][0] = Dicc[event1][0]
         Dicc[event1][0] = aux
         #window[event2].update(Dicc[event2][0])
-        window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event2][0]],image_size=(45,45),image_subsample=3)
+        window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event2][0]],image_size=(40,40),image_subsample=5)
         #window[event1].update(aux)
-        window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[aux],image_size=(45,45),image_subsample=3)
+        window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[aux],image_size=(40,40),image_subsample=5)
     window[event1].update(button_color=('black','#FDD357'))
     #Faltan fichas que sean las "Seleccionadas para agregar al cliquear , aca iria la "Des-seleccionada", pero al no existir la otra por ahora lo dejo asi
 
 def Intercambio_FichasAtril(Lista_Atril,Pos_letra1,Pos_letra2,window,Dicc_rutas_letras_puntaje_partida):
     if (Pos_letra1 != Pos_letra2):
         #window[Pos_letra1].update(Lista_Atril[Pos_letra2])
-        window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra2]],image_size=(45,45),image_subsample=3)
+        window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra2]],image_size=(40,40),image_subsample=5)
         #window[Pos_letra2].update(Lista_Atril[Pos_letra1])
-        window[Pos_letra2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra1]],image_size=(45,45),image_subsample=3)
+        window[Pos_letra2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra1]],image_size=(40,40),image_subsample=5)
         aux = Lista_Atril[Pos_letra2]
         Lista_Atril[Pos_letra2] = Lista_Atril[Pos_letra1]
         Lista_Atril[Pos_letra1] = aux
@@ -523,17 +544,17 @@ def Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_p
     Dicc[event1][0] = Lista_Atril[event2]
     Lista_Atril[event2] = aux
     #window[event1].update(Dicc[event1][0],button_color=('black','#FDD357'))
-    window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]],image_size=(45,45),image_subsample=3)
+    window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]],image_size=(40,40),image_subsample=5)
     #window[event2].update(Lista_Atril[event2],button_color=('black','#FDD357'))
-    window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event2]],image_size=(45,45),image_subsample=3)
+    window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event2]],image_size=(40,40),image_subsample=5)
 
 def Colocar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,Letra1,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
     Dicc[event2][0] = Letra1
     #window[event2].update(Letra1,button_color=('black','#FDD357'))
-    window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Letra1],image_size=(45,45),image_subsample=3)
+    window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Letra1],image_size=(40,40),image_subsample=5)
     Lista_Atril[event1] = ''
     #window[event1].update('')
-    window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida["Vacio"],image_size=(45,45),image_subsample=3)
+    window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida["Vacio"],image_size=(40,40),image_subsample=5)
     LCOPR.append(event2)
     Coord_Disponible(LCOPR,CCD) #Ya que LCOPR contiene unicamente las fichas actuales se tiene
     Coord_Disponible(LCO,CCD)   #que usar LCO para completar la actualizacion/eliminacion de elementos en CCD
@@ -546,9 +567,9 @@ def Colocar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,Letra1,event1,event2,window,Dic
 def Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
     Lista_Atril[event2] = Dicc[event1][0]
     #window[event1].update('',button_color=('white',Dicc[event1][1]))
-    window[event1].update(image_filename=Dicc[event1][2],image_size=(45,45),image_subsample=3)
+    window[event1].update(image_filename=Dicc[event1][2],image_size=(40,40),image_subsample=5)
     #window[event2].update(Dicc[event1][0])
-    window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]],image_size=(45,45),image_subsample=3)
+    window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]],image_size=(40,40),image_subsample=5)
     Dicc[event1][0] = ''
     LCOPR.remove(event1)
     Eliminar_Coords(CCD,event1) #Ya que LCOPR contiene unicamente las fichas actuales se tiene
@@ -628,7 +649,7 @@ def Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,
 def genero_Tablero():
     Usuario,Dificultad,Dicc_Puntajes,Dicc_Bolsa = Importar_Datos()
     DiccRLPP=rutas_letras(Dicc_Puntajes)  #Dicc Dicc_rutas_letras_puntaje_partida
-    print(DiccRLPP)
+    DiccRLPP_CPU=rutas_letras_CPU(Dicc_Puntajes)
     if(Dificultad=="Dificil"):
         Dificil_se_juega=aleatorio_Dificil()
     else:
@@ -711,7 +732,7 @@ def genero_Tablero():
                 CFT,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles = Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles,event,window,DiccRLPP)
 
         while (Turno_Usuario == False):
-            contador_Turnos_CPU,fichas_CPU,CFT,PT_CPU=Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Dicc_Bolsa,CFT,Dicc_Puntajes,PT_CPU)
+            contador_Turnos_CPU,fichas_CPU,CFT,PT_CPU=Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Dicc_Bolsa,CFT,Dicc_Puntajes,PT_CPU,DiccRLPP_CPU)
             break
         if Fin:
             break
