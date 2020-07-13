@@ -214,7 +214,7 @@ def Layout_Columna():
 
 def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_puntaje_partida):
     MAX_ROWS = MAX_COL = 15 #ACA????
-    formato_fichas_cpu={'filename':'Ficha.png','size':(40,40),'pad':(7,3)  }
+    formato_fichas_cpu={'filename':r'ScrabbleAR_Imagenes_png\imagen_CPU.png','size':(40,40),'pad':(7,3)  }
 
     #formato_fichas_jugador={'font':('',25),'button_color':(None,'black'),'image_filename':'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Ficha.png','image_size':(40,40),'pad':(7,3)  }
     #Para luego reemplazar los colores dados por el boton con imagenes
