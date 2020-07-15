@@ -10,6 +10,89 @@ import csv
 
 
 MAX_ROWS = MAX_COL = 15
+temp = 5
+Infobox_Activa = False
+HistorialUsuario = []
+PrimerRonda = True
+
+def rutas_letras(Dicc_letra_puntajes):
+    Dicc_letras_rutas={'A1':r'ScrabbleAR_Imagenes_png\ficha_A1_B.png','A2':r'ScrabbleAR_Imagenes_png\ficha_A2_B.png','B2':r'ScrabbleAR_Imagenes_png\ficha_B2_B.png','B3':r'ScrabbleAR_Imagenes_png\ficha_B3_B.png','B4':r'ScrabbleAR_Imagenes_png\ficha_B4_B.png',
+        'C1':r'ScrabbleAR_Imagenes_png\ficha_C1_B.png','C2':r'ScrabbleAR_Imagenes_png\ficha_C2_B.png','C3':r'ScrabbleAR_Imagenes_png\ficha_C3_B.png','D1':r'ScrabbleAR_Imagenes_png\ficha_D1_B.png','D2':r'ScrabbleAR_Imagenes_png\ficha_D2_B.png','D3':r'ScrabbleAR_Imagenes_png\ficha_D3_B.png',
+        'E1':r'ScrabbleAR_Imagenes_png\ficha_E1_B.png','E2':r'ScrabbleAR_Imagenes_png\ficha_E2_B.png','F3':r'ScrabbleAR_Imagenes_png\ficha_F3_B.png','F4':r'ScrabbleAR_Imagenes_png\ficha_F4_B.png','F5':r'ScrabbleAR_Imagenes_png\ficha_F5_B.png','G1':r'ScrabbleAR_Imagenes_png\ficha_G1_B.png',
+        'G2':r'ScrabbleAR_Imagenes_png\ficha_G2_B.png','G3':r'ScrabbleAR_Imagenes_png\ficha_G3_B.png','H3':r'ScrabbleAR_Imagenes_png\ficha_H3_B.png','H4':r'ScrabbleAR_Imagenes_png\ficha_H4_B.png','H5':r'ScrabbleAR_Imagenes_png\ficha_H5_B.png','I1':r'ScrabbleAR_Imagenes_png\ficha_I1_B.png',
+        'I2':r'ScrabbleAR_Imagenes_png\ficha_I2_B.png','J5':r'ScrabbleAR_Imagenes_png\ficha_J5_B.png','J6':r'ScrabbleAR_Imagenes_png\ficha_J6_B.png','J7':r'ScrabbleAR_Imagenes_png\ficha_J7_B.png','K7':r'ScrabbleAR_Imagenes_png\ficha_K7_B.png','K8':r'ScrabbleAR_Imagenes_png\ficha_K8_B.png',
+        'K9':r'ScrabbleAR_Imagenes_png\ficha_K9_B.png','L1':r'ScrabbleAR_Imagenes_png\ficha_L1_B.png','L2':r'ScrabbleAR_Imagenes_png\ficha_L2_B.png','M2':r'ScrabbleAR_Imagenes_png\ficha_M2_B.png','M3':r'ScrabbleAR_Imagenes_png\ficha_M3_B.png','M4':r'ScrabbleAR_Imagenes_png\ficha_M4_B.png',
+        'N1':r'ScrabbleAR_Imagenes_png\ficha_N1_B.png','N2':r'ScrabbleAR_Imagenes_png\ficha_N2_B.png','Ñ7':r'ScrabbleAR_Imagenes_png\ficha_Ñ7_B.png','Ñ8':r'ScrabbleAR_Imagenes_png\ficha_Ñ8_B.png','Ñ9':r'ScrabbleAR_Imagenes_png\ficha_Ñ9_B.png','O1':r'ScrabbleAR_Imagenes_png\ficha_O1_B.png',
+        'O2':r'ScrabbleAR_Imagenes_png\ficha_O2_B.png','P2':r'ScrabbleAR_Imagenes_png\ficha_P2_B.png','P3':r'ScrabbleAR_Imagenes_png\ficha_P3_B.png','P4':r'ScrabbleAR_Imagenes_png\ficha_P4_B.png','Q7':r'ScrabbleAR_Imagenes_png\ficha_Q7_B.png','Q8':r'ScrabbleAR_Imagenes_png\ficha_Q8_B.png',
+        'Q9':r'ScrabbleAR_Imagenes_png\ficha_Q9_B.png','R1':r'ScrabbleAR_Imagenes_png\ficha_R1_B.png','R2':r'ScrabbleAR_Imagenes_png\ficha_R2_B.png','S1':r'ScrabbleAR_Imagenes_png\ficha_S1_B.png','S2':r'ScrabbleAR_Imagenes_png\ficha_S2_B.png','T1':r'ScrabbleAR_Imagenes_png\ficha_T1_B.png',
+        'T2':r'ScrabbleAR_Imagenes_png\ficha_T2_B.png','U1':r'ScrabbleAR_Imagenes_png\ficha_U1_B.png','U2':r'ScrabbleAR_Imagenes_png\ficha_U2_B.png','V3':r'ScrabbleAR_Imagenes_png\ficha_V3_B.png','V4':r'ScrabbleAR_Imagenes_png\ficha_V4_B.png','V5':r'ScrabbleAR_Imagenes_png\ficha_V5_B.png',
+        'W7':r'ScrabbleAR_Imagenes_png\ficha_W7_B.png','W8':r'ScrabbleAR_Imagenes_png\ficha_W8_B.png','W9':r'ScrabbleAR_Imagenes_png\ficha_W9_B.png','X7':r'ScrabbleAR_Imagenes_png\ficha_X7_B.png','X8':r'ScrabbleAR_Imagenes_png\ficha_X8_B.png','X9':r'ScrabbleAR_Imagenes_png\ficha_X9_B.png',
+        'Y3':r'ScrabbleAR_Imagenes_png\ficha_Y3_B.png','Y4':r'ScrabbleAR_Imagenes_png\ficha_Y4_B.png','Y5':r'ScrabbleAR_Imagenes_png\ficha_Y5_B.png','Z9':r'ScrabbleAR_Imagenes_png\ficha_Z9_B.png','Z10':r'ScrabbleAR_Imagenes_png\ficha_Z10_B.png','Z11':r'ScrabbleAR_Imagenes_png\ficha_Z11_B.png'}
+
+    Dicc_Actual_Punto_Ficha={}
+    for x in Dicc_letra_puntajes:
+        clave_Dicc_letras_rutas=x+str(Dicc_letra_puntajes[x])
+        Dicc_Actual_Punto_Ficha[x]=Dicc_letras_rutas[clave_Dicc_letras_rutas]
+    Dicc_Actual_Punto_Ficha['white']=r'ScrabbleAR_Imagenes_png\Transparente.png'
+    return(Dicc_Actual_Punto_Ficha)
+
+def Update_Tablero2(window,Dicc):
+    inicio=r'ScrabbleAR_Imagenes_png\icono_inicio.png'
+    yellow=r'ScrabbleAR_Imagenes_png\icono_-2.png'
+    red=r'ScrabbleAR_Imagenes_png\icono_-3.png'
+    green=r'ScrabbleAR_Imagenes_png\icono_x3.png'
+    blue=r'ScrabbleAR_Imagenes_png\icono_x2.png'
+    white=r'ScrabbleAR_Imagenes_png\modelo_ficha.png'#r'ScrabbleAR_Imagenes_png\icono_blanco.png'
+
+    for x in range(15):
+        for y in range(15):
+            coord=(x,y)
+            if(Dicc[coord][1]=="yellow"):
+                Dicc[coord].append(yellow)
+                window[coord].update(image_filename=yellow,image_size=(40,40),image_subsample=5)
+            elif(Dicc[coord][1]=="red"):
+                Dicc[coord].append(red)
+                window[coord].update(image_filename=red,image_size=(40,40),image_subsample=5)
+            elif(Dicc[coord][1]=="green"):
+                Dicc[coord].append(green)
+                window[coord].update(image_filename=green,image_size=(40,40),image_subsample=5)
+            elif(Dicc[coord][1]=="blue"):
+                Dicc[coord].append(blue)
+                window[coord].update(image_filename=blue,image_size=(40,40),image_subsample=5)
+            elif(coord==(7,7)):
+                Dicc[coord].append(inicio)
+                window[coord].update(image_filename=inicio,image_size=(40,40),image_subsample=5)
+            else:
+                Dicc[coord].append(white)
+                window[coord].update(image_filename=white,image_size=(40,40),image_subsample=5)
+    return Dicc
+
+def rutas_letras_CPU(Dicc_letra_puntajes):
+    Dicc_letras_rutas_CPU={'A1':r'ScrabbleAR_Imagenes_png\ficha_A1_N.png','A2':r'ScrabbleAR_Imagenes_png\ficha_A2_N.png','B2':r'ScrabbleAR_Imagenes_png\ficha_B2_N.png','B3':r'ScrabbleAR_Imagenes_png\ficha_B3_N.png','B4':r'ScrabbleAR_Imagenes_png\ficha_B4_N.png',
+        'C1':r'ScrabbleAR_Imagenes_png\ficha_C1_N.png','C2':r'ScrabbleAR_Imagenes_png\ficha_C2_N.png','C3':r'ScrabbleAR_Imagenes_png\ficha_C3_N.png','D1':r'ScrabbleAR_Imagenes_png\ficha_D1_N.png','D2':r'ScrabbleAR_Imagenes_png\ficha_D2_N.png','D3':r'ScrabbleAR_Imagenes_png\ficha_D3_N.png',
+        'E1':r'ScrabbleAR_Imagenes_png\ficha_E1_N.png','E2':r'ScrabbleAR_Imagenes_png\ficha_E2_N.png','F3':r'ScrabbleAR_Imagenes_png\ficha_F3_N.png','F4':r'ScrabbleAR_Imagenes_png\ficha_F4_N.png','F5':r'ScrabbleAR_Imagenes_png\ficha_F5_N.png','G1':r'ScrabbleAR_Imagenes_png\ficha_G1_N.png',
+        'G2':r'ScrabbleAR_Imagenes_png\ficha_G2_N.png','G3':r'ScrabbleAR_Imagenes_png\ficha_G3_N.png','H3':r'ScrabbleAR_Imagenes_png\ficha_H3_N.png','H4':r'ScrabbleAR_Imagenes_png\ficha_H4_N.png','H5':r'ScrabbleAR_Imagenes_png\ficha_H5_N.png','I1':r'ScrabbleAR_Imagenes_png\ficha_I1_N.png',
+        'I2':r'ScrabbleAR_Imagenes_png\ficha_I2_N.png','J5':r'ScrabbleAR_Imagenes_png\ficha_J5_N.png','J6':r'ScrabbleAR_Imagenes_png\ficha_J6_N.png','J7':r'ScrabbleAR_Imagenes_png\ficha_J7_N.png','K7':r'ScrabbleAR_Imagenes_png\ficha_K7_N.png','K8':r'ScrabbleAR_Imagenes_png\ficha_K8_N.png',
+        'K9':r'ScrabbleAR_Imagenes_png\ficha_K9_N.png','L1':r'ScrabbleAR_Imagenes_png\ficha_L1_N.png','L2':r'ScrabbleAR_Imagenes_png\ficha_L2_N.png','M2':r'ScrabbleAR_Imagenes_png\ficha_M2_N.png','M3':r'ScrabbleAR_Imagenes_png\ficha_M3_N.png','M4':r'ScrabbleAR_Imagenes_png\ficha_M4_N.png',
+        'N1':r'ScrabbleAR_Imagenes_png\ficha_N1_N.png','N2':r'ScrabbleAR_Imagenes_png\ficha_N2_N.png','Ñ7':r'ScrabbleAR_Imagenes_png\ficha_Ñ7_N.png','Ñ8':r'ScrabbleAR_Imagenes_png\ficha_Ñ8_N.png','Ñ9':r'ScrabbleAR_Imagenes_png\ficha_Ñ9_N.png','O1':r'ScrabbleAR_Imagenes_png\ficha_O1_N.png',
+        'O2':r'ScrabbleAR_Imagenes_png\ficha_O2_N.png','P2':r'ScrabbleAR_Imagenes_png\ficha_P2_N.png','P3':r'ScrabbleAR_Imagenes_png\ficha_P3_N.png','P4':r'ScrabbleAR_Imagenes_png\ficha_P4_N.png','Q7':r'ScrabbleAR_Imagenes_png\ficha_Q7_N.png','Q8':r'ScrabbleAR_Imagenes_png\ficha_Q8_N.png',
+        'Q9':r'ScrabbleAR_Imagenes_png\ficha_Q9_N.png','R1':r'ScrabbleAR_Imagenes_png\ficha_R1_N.png','R2':r'ScrabbleAR_Imagenes_png\ficha_R2_N.png','S1':r'ScrabbleAR_Imagenes_png\ficha_S1_N.png','S2':r'ScrabbleAR_Imagenes_png\ficha_S2_N.png','T1':r'ScrabbleAR_Imagenes_png\ficha_T1_N.png',
+        'T2':r'ScrabbleAR_Imagenes_png\ficha_T2_N.png','U1':r'ScrabbleAR_Imagenes_png\ficha_U1_N.png','U2':r'ScrabbleAR_Imagenes_png\ficha_U2_N.png','V3':r'ScrabbleAR_Imagenes_png\ficha_V3_N.png','V4':r'ScrabbleAR_Imagenes_png\ficha_V4_N.png','V5':r'ScrabbleAR_Imagenes_png\ficha_V5_N.png',
+        'W7':r'ScrabbleAR_Imagenes_png\ficha_W7_N.png','W8':r'ScrabbleAR_Imagenes_png\ficha_W8_N.png','W9':r'ScrabbleAR_Imagenes_png\ficha_W9_N.png','X7':r'ScrabbleAR_Imagenes_png\ficha_X7_N.png','X8':r'ScrabbleAR_Imagenes_png\ficha_X8_N.png','X9':r'ScrabbleAR_Imagenes_png\ficha_X9_N.png',
+        'Y3':r'ScrabbleAR_Imagenes_png\ficha_Y3_N.png','Y4':r'ScrabbleAR_Imagenes_png\ficha_Y4_N.png','Y5':r'ScrabbleAR_Imagenes_png\ficha_Y5_N.png','Z9':r'ScrabbleAR_Imagenes_png\ficha_Z9_N.png','Z10':r'ScrabbleAR_Imagenes_png\ficha_Z10_N.png','Z11':r'ScrabbleAR_Imagenes_png\ficha_Z11_N.png'}
+
+    Dicc_Actual_Punto_Ficha_CPU={}
+    for x in Dicc_letra_puntajes:
+        clave_Dicc_letras_rutas_CPU=x+str(Dicc_letra_puntajes[x])
+        Dicc_Actual_Punto_Ficha_CPU[x]=Dicc_letras_rutas_CPU[clave_Dicc_letras_rutas_CPU]
+    return(Dicc_Actual_Punto_Ficha_CPU)
+
+def Update_Infobox(Texto,Color,window):
+    global Infobox_Activa
+    global temp
+    window['Infobox'].update(Texto,text_color='Black',background_color=Color)
+    Infobox_Activa = True
+    temp = 5
 
 def tiempo_dificultad(dificultad):
     tiempo_ronda=0
@@ -114,77 +197,9 @@ def Update_Tablero(window,Dicc):
             coord = (x,y)
             Pos_Dicc = str(x) + ',' + str(y)
             Dicc[coord][1] = tablero_random[Pos_Dicc]
-            #window[coord].update(button_color=('Black',str(tablero_random[Pos_Dicc])))
+            window[coord].update(button_color=('Black',str(tablero_random[Pos_Dicc])))
     return Dicc
-def rutas_letras(Dicc_letra_puntajes):
-    Dicc_letras_rutas={'A1':r'ScrabbleAR_Imagenes_png\ficha_A1_B.png','A2':r'ScrabbleAR_Imagenes_png\ficha_A2_B.png','B2':r'ScrabbleAR_Imagenes_png\ficha_B2_B.png','B3':r'ScrabbleAR_Imagenes_png\ficha_B3_B.png','B4':r'ScrabbleAR_Imagenes_png\ficha_B4_B.png',
-        'C1':r'ScrabbleAR_Imagenes_png\ficha_C1_B.png','C2':r'ScrabbleAR_Imagenes_png\ficha_C2_B.png','C3':r'ScrabbleAR_Imagenes_png\ficha_C3_B.png','D1':r'ScrabbleAR_Imagenes_png\ficha_D1_B.png','D2':r'ScrabbleAR_Imagenes_png\ficha_D2_B.png','D3':r'ScrabbleAR_Imagenes_png\ficha_D3_B.png',
-        'E1':r'ScrabbleAR_Imagenes_png\ficha_E1_B.png','E2':r'ScrabbleAR_Imagenes_png\ficha_E2_B.png','F3':r'ScrabbleAR_Imagenes_png\ficha_F3_B.png','F4':r'ScrabbleAR_Imagenes_png\ficha_F4_B.png','F5':r'ScrabbleAR_Imagenes_png\ficha_F5_B.png','G1':r'ScrabbleAR_Imagenes_png\ficha_G1_B.png',
-        'G2':r'ScrabbleAR_Imagenes_png\ficha_G2_B.png','G3':r'ScrabbleAR_Imagenes_png\ficha_G3_B.png','H3':r'ScrabbleAR_Imagenes_png\ficha_H3_B.png','H4':r'ScrabbleAR_Imagenes_png\ficha_H4_B.png','H5':r'ScrabbleAR_Imagenes_png\ficha_H5_B.png','I1':r'ScrabbleAR_Imagenes_png\ficha_I1_B.png',
-        'I2':r'ScrabbleAR_Imagenes_png\ficha_I2_B.png','J5':r'ScrabbleAR_Imagenes_png\ficha_J5_B.png','J6':r'ScrabbleAR_Imagenes_png\ficha_J6_B.png','J7':r'ScrabbleAR_Imagenes_png\ficha_J7_B.png','K7':r'ScrabbleAR_Imagenes_png\ficha_K7_B.png','K8':r'ScrabbleAR_Imagenes_png\ficha_K8_B.png',
-        'K9':r'ScrabbleAR_Imagenes_png\ficha_K9_B.png','L1':r'ScrabbleAR_Imagenes_png\ficha_L1_B.png','L2':r'ScrabbleAR_Imagenes_png\ficha_L2_B.png','M2':r'ScrabbleAR_Imagenes_png\ficha_M2_B.png','M3':r'ScrabbleAR_Imagenes_png\ficha_M3_B.png','M4':r'ScrabbleAR_Imagenes_png\ficha_M4_B.png',
-        'N1':r'ScrabbleAR_Imagenes_png\ficha_N1_B.png','N2':r'ScrabbleAR_Imagenes_png\ficha_N2_B.png','Ñ7':r'ScrabbleAR_Imagenes_png\ficha_Ñ7_B.png','Ñ8':r'ScrabbleAR_Imagenes_png\ficha_Ñ8_B.png','Ñ9':r'ScrabbleAR_Imagenes_png\ficha_Ñ9_B.png','O1':r'ScrabbleAR_Imagenes_png\ficha_O1_B.png',
-        'O2':r'ScrabbleAR_Imagenes_png\ficha_O2_B.png','P2':r'ScrabbleAR_Imagenes_png\ficha_P2_B.png','P3':r'ScrabbleAR_Imagenes_png\ficha_P3_B.png','P4':r'ScrabbleAR_Imagenes_png\ficha_P4_B.png','Q7':r'ScrabbleAR_Imagenes_png\ficha_Q7_B.png','Q8':r'ScrabbleAR_Imagenes_png\ficha_Q8_B.png',
-        'Q9':r'ScrabbleAR_Imagenes_png\ficha_Q9_B.png','R1':r'ScrabbleAR_Imagenes_png\ficha_R1_B.png','R2':r'ScrabbleAR_Imagenes_png\ficha_R2_B.png','S1':r'ScrabbleAR_Imagenes_png\ficha_S1_B.png','S2':r'ScrabbleAR_Imagenes_png\ficha_S2_B.png','T1':r'ScrabbleAR_Imagenes_png\ficha_T1_B.png',
-        'T2':r'ScrabbleAR_Imagenes_png\ficha_T2_B.png','U1':r'ScrabbleAR_Imagenes_png\ficha_U1_B.png','U2':r'ScrabbleAR_Imagenes_png\ficha_U2_B.png','V3':r'ScrabbleAR_Imagenes_png\ficha_V3_B.png','V4':r'ScrabbleAR_Imagenes_png\ficha_V4_B.png','V5':r'ScrabbleAR_Imagenes_png\ficha_V5_B.png',
-        'W7':r'ScrabbleAR_Imagenes_png\ficha_W7_B.png','W8':r'ScrabbleAR_Imagenes_png\ficha_W8_B.png','W9':r'ScrabbleAR_Imagenes_png\ficha_W9_B.png','X7':r'ScrabbleAR_Imagenes_png\ficha_X7_B.png','X8':r'ScrabbleAR_Imagenes_png\ficha_X8_B.png','X9':r'ScrabbleAR_Imagenes_png\ficha_X9_B.png',
-        'Y3':r'ScrabbleAR_Imagenes_png\ficha_Y3_B.png','Y4':r'ScrabbleAR_Imagenes_png\ficha_Y4_B.png','Y5':r'ScrabbleAR_Imagenes_png\ficha_Y5_B.png','Z9':r'ScrabbleAR_Imagenes_png\ficha_Z9_B.png','Z10':r'ScrabbleAR_Imagenes_png\ficha_Z10_B.png','Z11':r'ScrabbleAR_Imagenes_png\ficha_Z11_B.png'}
 
-    Dicc_Actual_Punto_Ficha={}
-    for x in Dicc_letra_puntajes:
-        clave_Dicc_letras_rutas=x+str(Dicc_letra_puntajes[x])
-        Dicc_Actual_Punto_Ficha[x]=Dicc_letras_rutas[clave_Dicc_letras_rutas]
-    Dicc_Actual_Punto_Ficha['Vacio']=r'ScrabbleAR_Imagenes_png\modelo_ficha.png'
-    return(Dicc_Actual_Punto_Ficha)
-def Update_Tablero2(window,Dicc):
-    inicio=r'ScrabbleAR_Imagenes_png\icono_inicio.png'
-    yellow=r'ScrabbleAR_Imagenes_png\icono_-2.png'
-    red=r'ScrabbleAR_Imagenes_png\icono_-3.png'
-    green=r'ScrabbleAR_Imagenes_png\icono_x3.png'
-    blue=r'ScrabbleAR_Imagenes_png\icono_x2.png'
-    white=r'ScrabbleAR_Imagenes_png\modelo_ficha.png'#r'ScrabbleAR_Imagenes_png\icono_blanco.png'
-
-    for x in range(15):
-        for y in range(15):
-            coord=(x,y)
-            if(Dicc[coord][1]=="yellow"):
-                Dicc[coord].append(yellow)
-                window[coord].update(image_filename=yellow,image_size=(40,40),image_subsample=5)
-            elif(Dicc[coord][1]=="red"):
-                Dicc[coord].append(red)
-                window[coord].update(image_filename=red,image_size=(40,40),image_subsample=5)
-            elif(Dicc[coord][1]=="green"):
-                Dicc[coord].append(green)
-                window[coord].update(image_filename=green,image_size=(40,40),image_subsample=5)
-            elif(Dicc[coord][1]=="blue"):
-                Dicc[coord].append(blue)
-                window[coord].update(image_filename=blue,image_size=(40,40),image_subsample=5)
-            elif(coord==(7,7)):
-                Dicc[coord].append(blue)
-                window[coord].update(image_filename=inicio,image_size=(40,40),image_subsample=5)
-            else:
-                Dicc[coord].append(white)
-                window[coord].update(image_filename=white,image_size=(40,40),image_subsample=5)
-    return Dicc
-def rutas_letras_CPU(Dicc_letra_puntajes):
-    Dicc_letras_rutas_CPU={'A1':r'ScrabbleAR_Imagenes_png\ficha_A1_N.png','A2':r'ScrabbleAR_Imagenes_png\ficha_A2_N.png','B2':r'ScrabbleAR_Imagenes_png\ficha_B2_N.png','B3':r'ScrabbleAR_Imagenes_png\ficha_B3_N.png','B4':r'ScrabbleAR_Imagenes_png\ficha_B4_N.png',
-        'C1':r'ScrabbleAR_Imagenes_png\ficha_C1_N.png','C2':r'ScrabbleAR_Imagenes_png\ficha_C2_N.png','C3':r'ScrabbleAR_Imagenes_png\ficha_C3_N.png','D1':r'ScrabbleAR_Imagenes_png\ficha_D1_N.png','D2':r'ScrabbleAR_Imagenes_png\ficha_D2_N.png','D3':r'ScrabbleAR_Imagenes_png\ficha_D3_N.png',
-        'E1':r'ScrabbleAR_Imagenes_png\ficha_E1_N.png','E2':r'ScrabbleAR_Imagenes_png\ficha_E2_N.png','F3':r'ScrabbleAR_Imagenes_png\ficha_F3_N.png','F4':r'ScrabbleAR_Imagenes_png\ficha_F4_N.png','F5':r'ScrabbleAR_Imagenes_png\ficha_F5_N.png','G1':r'ScrabbleAR_Imagenes_png\ficha_G1_N.png',
-        'G2':r'ScrabbleAR_Imagenes_png\ficha_G2_N.png','G3':r'ScrabbleAR_Imagenes_png\ficha_G3_N.png','H3':r'ScrabbleAR_Imagenes_png\ficha_H3_N.png','H4':r'ScrabbleAR_Imagenes_png\ficha_H4_N.png','H5':r'ScrabbleAR_Imagenes_png\ficha_H5_N.png','I1':r'ScrabbleAR_Imagenes_png\ficha_I1_N.png',
-        'I2':r'ScrabbleAR_Imagenes_png\ficha_I2_N.png','J5':r'ScrabbleAR_Imagenes_png\ficha_J5_N.png','J6':r'ScrabbleAR_Imagenes_png\ficha_J6_N.png','J7':r'ScrabbleAR_Imagenes_png\ficha_J7_N.png','K7':r'ScrabbleAR_Imagenes_png\ficha_K7_N.png','K8':r'ScrabbleAR_Imagenes_png\ficha_K8_N.png',
-        'K9':r'ScrabbleAR_Imagenes_png\ficha_K9_N.png','L1':r'ScrabbleAR_Imagenes_png\ficha_L1_N.png','L2':r'ScrabbleAR_Imagenes_png\ficha_L2_N.png','M2':r'ScrabbleAR_Imagenes_png\ficha_M2_N.png','M3':r'ScrabbleAR_Imagenes_png\ficha_M3_N.png','M4':r'ScrabbleAR_Imagenes_png\ficha_M4_N.png',
-        'N1':r'ScrabbleAR_Imagenes_png\ficha_N1_N.png','N2':r'ScrabbleAR_Imagenes_png\ficha_N2_N.png','Ñ7':r'ScrabbleAR_Imagenes_png\ficha_Ñ7_N.png','Ñ8':r'ScrabbleAR_Imagenes_png\ficha_Ñ8_N.png','Ñ9':r'ScrabbleAR_Imagenes_png\ficha_Ñ9_N.png','O1':r'ScrabbleAR_Imagenes_png\ficha_O1_N.png',
-        'O2':r'ScrabbleAR_Imagenes_png\ficha_O2_N.png','P2':r'ScrabbleAR_Imagenes_png\ficha_P2_N.png','P3':r'ScrabbleAR_Imagenes_png\ficha_P3_N.png','P4':r'ScrabbleAR_Imagenes_png\ficha_P4_N.png','Q7':r'ScrabbleAR_Imagenes_png\ficha_Q7_N.png','Q8':r'ScrabbleAR_Imagenes_png\ficha_Q8_N.png',
-        'Q9':r'ScrabbleAR_Imagenes_png\ficha_Q9_N.png','R1':r'ScrabbleAR_Imagenes_png\ficha_R1_N.png','R2':r'ScrabbleAR_Imagenes_png\ficha_R2_N.png','S1':r'ScrabbleAR_Imagenes_png\ficha_S1_N.png','S2':r'ScrabbleAR_Imagenes_png\ficha_S2_N.png','T1':r'ScrabbleAR_Imagenes_png\ficha_T1_N.png',
-        'T2':r'ScrabbleAR_Imagenes_png\ficha_T2_N.png','U1':r'ScrabbleAR_Imagenes_png\ficha_U1_N.png','U2':r'ScrabbleAR_Imagenes_png\ficha_U2_N.png','V3':r'ScrabbleAR_Imagenes_png\ficha_V3_N.png','V4':r'ScrabbleAR_Imagenes_png\ficha_V4_N.png','V5':r'ScrabbleAR_Imagenes_png\ficha_V5_N.png',
-        'W7':r'ScrabbleAR_Imagenes_png\ficha_W7_N.png','W8':r'ScrabbleAR_Imagenes_png\ficha_W8_N.png','W9':r'ScrabbleAR_Imagenes_png\ficha_W9_N.png','X7':r'ScrabbleAR_Imagenes_png\ficha_X7_N.png','X8':r'ScrabbleAR_Imagenes_png\ficha_X8_N.png','X9':r'ScrabbleAR_Imagenes_png\ficha_X9_N.png',
-        'Y3':r'ScrabbleAR_Imagenes_png\ficha_Y3_N.png','Y4':r'ScrabbleAR_Imagenes_png\ficha_Y4_N.png','Y5':r'ScrabbleAR_Imagenes_png\ficha_Y5_N.png','Z9':r'ScrabbleAR_Imagenes_png\ficha_Z9_N.png','Z10':r'ScrabbleAR_Imagenes_png\ficha_Z10_N.png','Z11':r'ScrabbleAR_Imagenes_png\ficha_Z11_N.png'}
-
-    Dicc_Actual_Punto_Ficha_CPU={}
-    for x in Dicc_letra_puntajes:
-        clave_Dicc_letras_rutas_CPU=x+str(Dicc_letra_puntajes[x])
-        Dicc_Actual_Punto_Ficha_CPU[x]=Dicc_letras_rutas_CPU[clave_Dicc_letras_rutas_CPU]
-    return(Dicc_Actual_Punto_Ficha_CPU)
 def Generar_Dicc():
     Dicc = {}
     for j in range(MAX_COL):
@@ -192,10 +207,51 @@ def Generar_Dicc():
             Dicc[(j,i)] = ['','White']
     return Dicc
 
+def Layout_MostrarMas_Der(Usuario):
+    layout = [[sg.Text('Historial CPU',size=(20, 1),text_color='black',font=("IMPACT", 18),justification='center',background_color='#FDFA57',relief=sg.RELIEF_RAISED)],
+              [sg.Listbox([''],disabled=True,font=("Segoe print", 11),size=(20, 12),key=('Historial_CPU'),text_color='black',background_color='#F5DAC1')],
+              [sg.Button('<',border_width=0,key='MostrarMenos_Der')],
+              [sg.Text('Historial '+Usuario,size=(20, 1),text_color='black',font=("IMPACT", 18),justification='center',background_color='#E52C46',relief=sg.RELIEF_RAISED)],
+              [sg.Listbox([''],size=(20, 12),font=("Segoe print", 11),key=('Historial_Usuario'),text_color='black',background_color='#F0DCDF')]]
+    return layout
+
+def Layout_MostrarMas_Izq(Dicc_Puntajes,Dificultad,CFT):
+    layout = [[sg.Text('Dificultad: '+Dificultad,pad =(50,0),font=("impact",16))],
+              [sg.Text('Cantidad de fichas: '+str(CFT),key='CantFichas',pad =(50,0),font=("impact",16))],
+              [sg.Text('Fichas | Puntos',pad =(50,0),font=("impact",13))],
+              [sg.Text('A      |      '+str(Dicc_Puntajes['A']),pad =(72,0),font=("impact",13))],
+              [sg.Text('B      |      '+str(Dicc_Puntajes['B']),pad =(72,0),font=("impact",13))],
+              [sg.Text('C      |      '+str(Dicc_Puntajes['C']),pad =(72,0),font=("impact",13))],
+              [sg.Text('D      |      '+str(Dicc_Puntajes['D']),pad =(72,0),font=("impact",13))],
+              [sg.Text('E      |      '+str(Dicc_Puntajes['E']),pad =(74,0),font=("impact",13))],
+              [sg.Text('F      |      '+str(Dicc_Puntajes['F']),pad =(74,0),font=("impact",13))],
+              [sg.Text('G      |      '+str(Dicc_Puntajes['G']),pad =(72,0),font=("impact",13))],
+              [sg.Text('H      |      '+str(Dicc_Puntajes['H']),pad =(72,0),font=("impact",13))],
+              [sg.Text('I      |      '+str(Dicc_Puntajes['I']),pad =(76,0),font=("impact",13))],
+              [sg.Text('J      |      '+str(Dicc_Puntajes['J']),pad =(75,0),font=("impact",13))],
+              [sg.Text('K      |      '+str(Dicc_Puntajes['K']),pad =(72,0),font=("impact",13))],
+              [sg.Text('L      |      '+str(Dicc_Puntajes['L']),pad =(75,0),font=("impact",13))],
+              [sg.Text('M      |      '+str(Dicc_Puntajes['M']),pad =(69,0),font=("impact",13))],
+              [sg.Button('<',border_width=0,key='MostrarMenos_Izq'),sg.Text('N      |      '+str(Dicc_Puntajes['N']),pad =(48,0),font=("impact",13))],
+              [sg.Text('Ñ      |      '+str(Dicc_Puntajes['Ñ']),pad =(72,0),font=("impact",13))],
+              [sg.Text('O      |      '+str(Dicc_Puntajes['O']),pad =(72,0),font=("impact",13))],
+              [sg.Text('P      |      '+str(Dicc_Puntajes['P']),pad =(72,0),font=("impact",13))],
+              [sg.Text('Q      |      '+str(Dicc_Puntajes['Q']),pad =(72,0),font=("impact",13))],
+              [sg.Text('R      |      '+str(Dicc_Puntajes['R']),pad =(72,0),font=("impact",13))],
+              [sg.Text('S      |      '+str(Dicc_Puntajes['S']),pad =(72,0),font=("impact",13))],
+              [sg.Text('T      |      '+str(Dicc_Puntajes['T']),pad =(73,0),font=("impact",13))],
+              [sg.Text('U      |      '+str(Dicc_Puntajes['U']),pad =(72,0),font=("impact",13))],
+              [sg.Text('V      |      '+str(Dicc_Puntajes['V']),pad =(72,0),font=("impact",13))],
+              [sg.Text('W      |      '+str(Dicc_Puntajes['W']),pad =(68,0),font=("impact",13))],
+              [sg.Text('X      |      '+str(Dicc_Puntajes['X']),pad =(74,0),font=("impact",13))],
+              [sg.Text('Y      |      '+str(Dicc_Puntajes['Y']),pad =(73,0),font=("impact",13))],
+              [sg.Text('Z      |      '+str(Dicc_Puntajes['Z']),pad =(74,0),font=("impact",13))]]
+    return layout
+
 def Layout_Columna():
 
-    layout = [ [sg.Text('Tiempo Disponible',font=("impact",20),pad=((15,3),(5,3)))],
-               [sg.Text("00:00",font=("Bahnschrift",20),key=('Tiempo_Ronda'),pad=((35,3),(5,3))),sg.Text('|',font=("Bahnschrift",20)),sg.Text("00:00",font=("Bahnschrift",20),key=('Tiempo'))],
+    layout = [ [sg.Text('Tiempo Disponible',font=("impact",20))],
+               [sg.Text("00:00",font=("Bahnschrift",20),key=('Tiempo_Ronda')),sg.Text('|',font=("Bahnschrift",20)),sg.Text("00:00",font=("Bahnschrift",20),key=('Tiempo'))],
                [sg.Text('__________________________________')],
                [sg.Text('Puntos  CPU',key='PuntosCPU',font=("impact",20))],
                [sg.Text('0000',key='PuntajeCPU',font=("impact",20))],
@@ -203,13 +259,14 @@ def Layout_Columna():
                [sg.Text('Puntos Usuario',key='PuntosUsuario',font=("impact",20))],
                [sg.Text('0000',key='PuntajeUsuario',font=("impact",20))],
                [sg.Text('__________________________________')],
-               [sg.Button(button_text='Terminar turno',size=(15,0),font=("Unispace",20),pad=((5,0),(158,2)))],
+               [sg.Button('(>)',border_width=0,key='Rotar',pad=((222,0),(29,29)))],
+               [sg.Text(pad=((6,0),(5,2)),size=(20, 3),key='Infobox',font=("Consolas", 16),background_color='#A4A4A4',justification='center',relief=sg.RELIEF_SOLID)], #Entran 60 caracteres
+               [sg.Button(button_text='Terminar turno',size=(15,0),font=("Unispace",20),pad=((5,0),(5,3)))],
                [sg.Button(button_text='Validar',size=(15,0),font=("Unispace",20),pad=((5,0),(5,3)))],
                [sg.Button(button_text='Intercambiar fichas',size=(15,0),font=("Unispace",20))],
                [sg.Button(button_text='Pausar',key='Pausar',font=("default",16),pad=((5,0),(3,0)) ), #font=("default",19),pad=((5,43),(5,3))
                 sg.Button(button_text='Rendirse',key='Rendirse',font=("default",16),pad=((5,0),(2,0)) ),#font=("default",19),pad=((5,43),(5,3))
                 sg.Button(button_text='Salir',key='Salir',font=("default",16))] ]#font=("default",19)
-
     return layout
 
 def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_puntaje_partida):
@@ -262,6 +319,7 @@ def Llenar_Atril(Lista_Atril,window,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_let
             window[pos].update(Lista_Atril[pos])
             window[pos].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[pos]],image_size=(40,40),image_subsample=3)
 
+
 def Coord_Ocupada(LCO,event):
     if (event in LCO):
         return True
@@ -309,7 +367,7 @@ def Eliminar_Elementos_Ocupados_CDD(LCO,CCD):
     for L in LCO:
         CCD.discard(L)
 
-def Verificar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega):
+def Verificar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega,window):
     if (LCOPR[0][0] == LCOPR[1][0]): #Si entra la palabra formada esta en Horizontal
         LCOPR = sorted(LCOPR, key=lambda tup: tup[1])
         for coord in LCOPR:
@@ -319,9 +377,11 @@ def Verificar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega):
         for coord in LCOPR:
             Palabra = Palabra + Dicc[coord][0]
     if verificar_Palabra(Palabra,Dificultad,Dificil_se_juega):
-        sg.popup(Palabra+' es una palabra valida :D',text_color='black',title='Ayuda',background_color='#57FD57',button_color=('black','white'),keep_on_top=True,non_blocking=True)
+        Texto = '"'+Palabra+'"\n'+'Es una palabra valida'
+        Update_Infobox(Texto,'#57FD57',window)
     else:
-        sg.popup(Palabra+' no es una palabra valida D:',text_color='black',title='Ayuda',background_color='#FD5757',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
+        Texto = '"'+Palabra+'"\n'+'No es una palabra valida'
+        Update_Infobox(Texto,'#FD5757',window)
         Palabra = ''
     return Palabra
 
@@ -374,7 +434,7 @@ def Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letr
 
 def Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU):
     for y in range(len(Palabra)):
-        window[(coordenadas_CPU[0]+y,coordenadas_CPU[1])].update(str(Palabra[y]),button_color=('black','#7D4DE4'))
+        #window[(coordenadas_CPU[0]+y,coordenadas_CPU[1])].update(str(Palabra[y]),button_color=('black','#7D4DE4'))
         window[(coordenadas_CPU[0]+y,coordenadas_CPU[1])].update(image_filename=Dicc_rutas_letras_puntaje_partida_CPU[str(Palabra[y])],image_size=(40,40),image_subsample=5)
         Dicc[(coordenadas_CPU[0]+y,coordenadas_CPU[1])][0] =str(Palabra[y])
         LCO.append((coordenadas_CPU[0]+y,coordenadas_CPU[1]))
@@ -382,6 +442,7 @@ def Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras
         Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
 
 def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Bolsa_Diccionario,Cant_fichas,Dicc_Puntajes,PT_CPU,Dicc_rutas_letras_puntaje_partida_CPU):
+    global PrimerRonda
     CCD_CPU=CCD
     Palabra=fichas_CPU
     intento=True
@@ -412,6 +473,7 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
             PPR_CPU = Calcular_Puntaje(Palabra,Dicc_Puntajes)
             PT_CPU = PT_CPU + PPR_CPU
             window['PuntajeCPU'].update(str(PT_CPU))
+            PrimerRonda = False
         else:
             for x in range(len(CCD)) :
                 if(intento):
@@ -460,23 +522,32 @@ def Actualizar_CFT(CFT,Dicc_Bolsa):
     for cant in Dicc_Bolsa.values():
         CFT = CFT + cant
     return CFT
+
 def Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,Dicc_rutas_letras_puntaje_partida):
     for Pos in range(len(Lista_Atril)):
         if (Lista_Atril[Pos] == ''): # Si esta posicion esta vacia:
             Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,LCOPR[0],Pos,window,Dicc_rutas_letras_puntaje_partida)
 
-def Validar(LCOPR,Dicc,Dificultad,PrimerRonda,Palabra,Dificil_se_juega):
-    if Palabra_bien_colocada(LCOPR):
+def Validar(LCOPR,CCD,Dicc,Dificultad,PrimerRonda,Palabra,Dificil_se_juega,window):
+    if Palabra_bien_colocada(LCOPR,window):
         if PrimerRonda:
             if ((7,7) in LCOPR):
-                Palabra = Verificar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega)
+                Palabra = Verificar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega,window)
             else:
-                sg.popup('Debes colocar una letra en la casilla "Inicio"!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
+                Update_Infobox('Debes colocar una letra en la casilla "Inicio"!','#5798FD',window)
         else:
-            Palabra = Verificar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega)
+            bool = False
+            for i in LCOPR:
+                if i in CCD:
+                    bool = True
+                    break
+            if bool:
+                Palabra = Verificar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega,window)
+            else:
+                Update_Infobox('Coloca la palabra en una casilla valida!','#5798FD',window)
     return Palabra
 
-def Palabra_bien_colocada(LCOPR):
+def Palabra_bien_colocada(LCOPR,window):
     if len(LCOPR) > 1:
         Vertical = True
         Horizontal = True
@@ -496,62 +567,78 @@ def Palabra_bien_colocada(LCOPR):
         if Horizontal or Vertical:
             return True
         else:
-            sg.popup('Esta palabra esta mal colocada!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
+            Update_Infobox('Esta palabra esta mal colocada!','#5798FD',window)
             return False
     else:
-        sg.popup('Debes formar palabras de por lo menos 2 fichas!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
+        Update_Infobox('Debes formar palabras de por lo menos 2 fichas!','#5798FD',window)
         return False
 
-def TerminarTurno(LCOPR,LCO,CCD,Dicc,Lista_Atril,PTU,Palabra,Dificultad,PrimerRonda,Dificil_se_juega,Dicc_Puntajes,Dicc_Bolsa,CFT,window,Dicc_rutas_letras_puntaje_partida):
+def TerminarTurno(LCOPR,LCO,CCD,Dicc,Lista_Atril,PTU,Palabra,Dificultad,Dificil_se_juega,Dicc_Puntajes,Dicc_Bolsa,CFT,Bonus,window,Dicc_rutas_letras_puntaje_partida):
+    global PrimerRonda
+    global HistorialUsuario
     if (Palabra == '') and (LCOPR != []): #Si no se valido antes Y en el tablero hay fichas:
-        Palabra = Validar(LCOPR,Dicc,Dificultad,PrimerRonda,Palabra,Dificil_se_juega)
+        Palabra = Validar(LCOPR,CCD,Dicc,Dificultad,PrimerRonda,Palabra,Dificil_se_juega,window)
 
     if (Palabra != ''):
         PPR = Calcular_Puntaje(Palabra,Dicc_Puntajes) #Puntaje por ronda
-        PTU = PTU + PPR
+        PTU = (PTU + PPR) + Bonus
         window['PuntajeUsuario'].update(str(PTU))
+        HistorialUsuario.append([Palabra +' = '+str(PPR)+' + '+str(Bonus) +' = '+ str((PPR+Bonus))])
+        print(HistorialUsuario)
+        window['Historial_Usuario'].update(HistorialUsuario)
         Llenar_Atril(Lista_Atril,window,Dicc_Bolsa,CFT,Dicc_rutas_letras_puntaje_partida)
+        PrimerRonda = False
     else:
         Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,Dicc_rutas_letras_puntaje_partida)
     return PTU
-
 
 def Actualizar_LCO(LCOPR,LCO):
     for coord in LCOPR:
         LCO.append(coord)
 
 def Intercambio_FichasTablero(LCOPR,Dicc,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
-    if Coord_Ocupada(LCOPR,event2):
+    if event1 != event2:
         aux = Dicc[event2][0]
         Dicc[event2][0] = Dicc[event1][0]
         Dicc[event1][0] = aux
-        #window[event2].update(Dicc[event2][0])
-        window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event2][0]],image_size=(40,40),image_subsample=5)
-        #window[event1].update(aux)
-        window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[aux],image_size=(40,40),image_subsample=5)
-    window[event1].update(button_color=('black','#FDD357'))
-    #Faltan fichas que sean las "Seleccionadas para agregar al cliquear , aca iria la "Des-seleccionada", pero al no existir la otra por ahora lo dejo asi
+        print('dicc:',Dicc_rutas_letras_puntaje_partida[Dicc[event2][0]])
+        if Coord_Ocupada(LCOPR,event2):
+            window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event2][0]],image_size=(40,40),image_subsample=5)
+            window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]],image_size=(40,40),image_subsample=5)
+            #window[event2].update(Dicc[event2][0],button_color=('black','#FDD357'))
+            #window[event1].update(Dicc[event1][0],button_color=('black','#FDD357'))
+        else:
+            #window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event2][1]],image_size=(40,40),image_subsample=5)
+            #window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]],image_size=(40,40),image_subsample=5)
+            window[event1].update(image_filename=Dicc[event1][2],image_size=(40,40),image_subsample=5)
+            window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event2][0]],image_size=(40,40),image_subsample=5)
+            LCOPR.remove(event1)
+            LCOPR.append(event2)
+    else:
+        window[event1].update(button_color=('black','#FDD357')) #Faltan fichas que sean las "Seleccionadas para agregar al cliquear , aca iria la "Des-seleccionada", pero al no existir la otra por ahora lo dejo asi
 
 def Intercambio_FichasAtril(Lista_Atril,Pos_letra1,Pos_letra2,window,Dicc_rutas_letras_puntaje_partida):
     if (Pos_letra1 != Pos_letra2):
         #window[Pos_letra1].update(Lista_Atril[Pos_letra2])
-        window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra2]],image_size=(40,40),image_subsample=5)
         #window[Pos_letra2].update(Lista_Atril[Pos_letra1])
+        if ("" ==(Lista_Atril[Pos_letra2])):
+            window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida["white"],image_size=(40,40),image_subsample=5)
+        else:
+            window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra2]],image_size=(40,40),image_subsample=5)
         window[Pos_letra2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra1]],image_size=(40,40),image_subsample=5)
         aux = Lista_Atril[Pos_letra2]
         Lista_Atril[Pos_letra2] = Lista_Atril[Pos_letra1]
         Lista_Atril[Pos_letra1] = aux
-    window[Pos_letra1].update(button_color=('black','#FDD357'))
-    #Faltan fichas que sean las "Seleccionadas para agregar al cliquear , aca iria la "Des-seleccionada", pero al no existir la otra por ahora lo dejo asi
+    window[Pos_letra1].update(button_color=('black','#FDD357')) #Faltan fichas que sean las "Seleccionadas para agregar al cliquear , aca iria la "Des-seleccionada", pero al no existir la otra por ahora lo dejo asi
 
 def Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
     aux = Dicc[event1][0]
     Dicc[event1][0] = Lista_Atril[event2]
     Lista_Atril[event2] = aux
-    #window[event1].update(Dicc[event1][0],button_color=('black','#FDD357'))
     window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]],image_size=(40,40),image_subsample=5)
-    #window[event2].update(Lista_Atril[event2],button_color=('black','#FDD357'))
     window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event2]],image_size=(40,40),image_subsample=5)
+    #window[event1].update(Dicc[event1][0],button_color=('black','#FDD357'))
+    #window[event2].update(Lista_Atril[event2],button_color=('black','#FDD357'))
 
 def Colocar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,Letra1,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
     Dicc[event2][0] = Letra1
@@ -559,31 +646,23 @@ def Colocar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,Letra1,event1,event2,window,Dic
     window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Letra1],image_size=(40,40),image_subsample=5)
     Lista_Atril[event1] = ''
     #window[event1].update('')
-    window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida["Vacio"],image_size=(40,40),image_subsample=5)
+    window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida["white"],image_size=(40,40),image_subsample=5)
     LCOPR.append(event2)
-    Coord_Disponible(LCOPR,CCD) #Ya que LCOPR contiene unicamente las fichas actuales se tiene
-    Coord_Disponible(LCO,CCD)   #que usar LCO para completar la actualizacion/eliminacion de elementos en CCD
-    Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
-    Eliminar_Elementos_Ocupados_CDD(LCOPR,CCD)
-    window[event1].update(button_color=('black','#FDD357'))
+    #Coord_Disponible(LCOPR,CCD) #Ya que LCOPR contiene unicamente las fichas actuales se tiene
+    #Coord_Disponible(LCO,CCD)   #que usar LCO para completar la actualizacion/eliminacion de elementos en CCD
+    #Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
+    #Eliminar_Elementos_Ocupados_CDD(LCOPR,CCD)
+    #window[event1].update(button_color=('black','#FDD357'))
     window[event1].update(image_filename=r'ScrabbleAR_Imagenes_png\Transparente.png',image_size=(40,40),image_subsample=5)
-
-    #Faltan fichas que sean las "Seleccionadas para agregar al cliquear , aca iria la "Des-seleccionada", pero al no existir la otra por ahora lo dejo asi
-
 
 def Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
     Lista_Atril[event2] = Dicc[event1][0]
-    #window[event1].update('',button_color=('white',Dicc[event1][1]))
     window[event1].update(image_filename=Dicc[event1][2],image_size=(40,40),image_subsample=5)
-    #window[event2].update(Dicc[event1][0])
     window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]],image_size=(40,40),image_subsample=5)
+    #window[event1].update('',button_color=('white',Dicc[event1][1]))
+    #window[event2].update(Dicc[event1][0])
     Dicc[event1][0] = ''
     LCOPR.remove(event1)
-    Eliminar_Coords(CCD,event1) #Ya que LCOPR contiene unicamente las fichas actuales se tiene
-    Coord_Disponible(LCOPR,CCD) #que usar LCO para completar la actualizacion/eliminacion de elementos en CCD
-    Coord_Disponible(LCO,CCD)
-    Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
-    Eliminar_Elementos_Ocupados_CDD(LCOPR,CCD)
 
 def Acciones_Usuario(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
     if (not (event2 in LCO)): #Esto es para saber si por ejemplo, Se quiere intercambiar una (fichaAtril o FichaTablero) con una ficha ya colocada
@@ -607,7 +686,7 @@ def Acciones_Usuario(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_ru
             Intercambio_FichasAtril(Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida)
     else:
         window[event1].update(button_color=('black','#FDD357'))
-        sg.popup('No puedes interactuar con las fichas ya colocadas!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
+        Update_Infobox('No puedes interactuar con las fichas ya colocadas!','#5798FD',window)
 
 def Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles,event,window,Dicc_rutas_letras_puntaje_partida):
     if (type(event) == int):
@@ -652,26 +731,57 @@ def Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,
         sg.popup('Debes seleccionar fichas del Atril!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
     return CFT,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles
 
+def Calcular_Bonus(LCOPR,Dicc_Puntajes,Dicc):
+    Bonus=0
+    operacion=0
+    for x in range(len(LCOPR)):
+        if Dicc[LCOPR[x]][1] != 'white':
+            if Dicc[LCOPR[x]][1] == 'red':
+                operacion = Dicc_Puntajes[Dicc[LCOPR[x]][0]]     #se suma el valor la letra con bonus para obtener el * 2
+            elif Dicc[LCOPR[x]][1] == 'yellow':
+                operacion = Dicc_Puntajes[Dicc[LCOPR[x]][0]] * 2 #se suma el valor la letra con bonus 2 veces para obtener el * 3
+            elif Dicc[LCOPR[x]][1] == 'blue':
+                operacion = -2
+            elif Dicc[LCOPR[x]][1] == 'green':
+                operacion = -3
+            Bonus = Bonus + operacion
+    return Bonus
+
+def Actualizar_CCD(CCD,LCO):
+    Coord_Disponible(LCO,CCD)
+    Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
+
+
 #PROGRAMA PRINCIPAL
 def genero_Tablero():
+    global Infobox_Activa
+    global temp
+    global PrimerRonda
+    global HistorialUsuario
     Usuario,Dificultad,Dicc_Puntajes,Dicc_Bolsa = Importar_Datos()
-    DiccRLPP=rutas_letras(Dicc_Puntajes)  #Dicc Dicc_rutas_letras_puntaje_partida
-    DiccRLPP_CPU=rutas_letras_CPU(Dicc_Puntajes)
     if(Dificultad=="Dificil"):
         Dificil_se_juega=aleatorio_Dificil()
     else:
         Dificil_se_juega="Default"
+
+    DiccRLPP=rutas_letras(Dicc_Puntajes)  #Dicc Dicc_rutas_letras_puntaje_partida
+    DiccRLPP_CPU=rutas_letras_CPU(Dicc_Puntajes)
     Lista_Atril = []
     Terminar = [False]
     Dicc = Generar_Dicc()
     CFT = 0
     CFT = Actualizar_CFT(CFT,Dicc_Bolsa) #Cantidad Fichas Totales
-    diseño = [ [sg.Column((Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP))),
-                sg.Column(Layout_Columna())] ]
-    window = sg.Window('Tablero',diseño ,location=(400,0),finalize=True,resizable=True,element_justification="center")
+    diseño = [ [sg.Column(Layout_MostrarMas_Izq(Dicc_Puntajes,Dificultad,CFT),key='Columna_Izq'),
+                sg.Column((Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP))),
+                sg.Column(Layout_Columna()),
+                sg.Column(Layout_MostrarMas_Der(Usuario),key='Columna_Der')] ]
+    window = sg.Window('Tablero',diseño ,location=(400,0),finalize=True)
+    #window.extend_layout(window['AmpliarIzq'],Layout_MostrarMas_Izq(Dicc_Puntajes,Dificultad,CFT))
+    #window.extend_layout(window['AmpliarDer'],Layout_MostrarMas_Der(Usuario))
+    window['Columna_Izq'].update(visible=False)
+    window['Columna_Der'].update(visible=False)
     Dicc = Update_Tablero(window,Dicc)
-    Dicc=  Update_Tablero2(window,Dicc)
-
+    Dicc = Update_Tablero2(window,Dicc)
     window['PuntosUsuario'].update('Puntos  ' + Usuario)
     Turno_Usuario = bool(random.getrandbits(1))
     Fin = False
@@ -682,24 +792,24 @@ def genero_Tablero():
     CCD=set()                   #Conjunto de Coordenadas  Disponibles
     LCO = []                    #Lista de Coordenadas Ocupadas
     Se_necesitan_dos = False
+    HistorialCPU = ''
     event1 = ''
+    tiemp_ant = ''
     Tiempo,tiempo_ronda=tiempo_dificultad(Dificultad)
-    PrimerRonda = True
     Turnos_Disponibles = 3
     window.Refresh()
     tamaño_actual=window.Size
+    Columna_Historial = True
     while True:
         LPI = []                #Lista de Posiciones de Intercambio (Para Intecambiar fichas)
         LCOPR = []              #Lista de Coordenadas Ocupadas Por Ronda
+        coords_Bonus = []
         puedo_intercambiar=True
         Boton_Intercambiar = False
         Se_Intercambio_Ficha = False
         tiempo_jugador=tiempo_ronda
         Mensaje_Turno(Turno_Usuario)
         while (Turno_Usuario):  #Mientras sea el turno del usuario:
-            if (tamaño_actual != window.Size):
-                tamaño_actual=window.Size
-                #Aca deberian estar los cambios a la ventana que centrarian todo el contenido de esta        
             Palabra = ''
             event = window.Read(timeout=10,timeout_key='Reloj')[0]
             window['Tiempo'].update("{}:{}".format(((Tiempo//100)//60),((Tiempo//100)%60)))
@@ -708,6 +818,10 @@ def genero_Tablero():
             window['Tiempo_Ronda'].update("00:{}".format(tiempo_jugador[0:2]))
             tiempo_jugador = int(tiempo_jugador)
             tiempo_jugador-=1
+
+            #if (tamaño_actual != window.Size):
+            #    tamaño_actual=window.Size
+                #Aca deberian estar los cambios a la ventana que centrarian todo el contenido de esta
 
             if event in (None, 'Salir'):
                 event_popup = sg.popup_yes_no('Ey! estas saliendo en mitad de una partida\n¿Quieres posponerla?',title='Aviso',keep_on_top=True)
@@ -726,32 +840,69 @@ def genero_Tablero():
                         window[event1].update(button_color=('white','#57C3FD'))
                     else:
                         if (type(event1) == tuple):
-                            sg.popup('No puedes interactuar con las fichas ya colocadas!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True) if Coord_Ocupada(LCO,event) else sg.popup('Primero selecciona una letra!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
+                            Update_Infobox('No puedes interactuar con las fichas ya colocadas!','#5798FD',window) if Coord_Ocupada(LCO,event) else Update_Infobox('Primero selecciona una letra!','#5798FD',window)
                         event1 = ''
                 else:
                     Acciones_Usuario(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event,window,DiccRLPP)
                     event1 = ''
 
             elif (event == 'Validar') and (Boton_Intercambiar == False):
-                Palabra = Validar(LCOPR,Dicc,Dificultad,PrimerRonda,Palabra,Dificil_se_juega)
+                Palabra = Validar(LCOPR,CCD,Dicc,Dificultad,PrimerRonda,Palabra,Dificil_se_juega,window)
 
             elif (((event == 'Terminar turno') or Se_Intercambio_Ficha) and (Boton_Intercambiar == False)):
-                PTU = TerminarTurno(LCOPR,LCO,CCD,Dicc,Lista_Atril,PTU,Palabra,Dificultad,PrimerRonda,Dificil_se_juega,Dicc_Puntajes,Dicc_Bolsa,CFT,window,DiccRLPP)
+                Bonus = Calcular_Bonus(LCOPR,Dicc_Puntajes,Dicc)
+                print(Bonus)
+                PTU = TerminarTurno(LCOPR,LCO,CCD,Dicc,Lista_Atril,PTU,Palabra,Dificultad,Dificil_se_juega,Dicc_Puntajes,Dicc_Bolsa,CFT,Bonus,window,DiccRLPP)
                 CFT = Actualizar_CFT(CFT,Dicc_Bolsa)
+                Actualizar_LCO(LCOPR,LCO)
+                Actualizar_CCD(CCD,LCO)
                 break
 
             elif (((event == "Intercambiar fichas") or (Boton_Intercambiar)) and (Turnos_Disponibles != 0)):
                 CFT,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles = Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles,event,window,DiccRLPP)
+
+            elif (event == 'Rotar'):
+                if (Columna_Historial):
+                    window['Columna_Der'].update(visible=False)
+                    window['Columna_Izq'].update(visible=True)
+
+                else:
+                    window['Columna_Izq'].update(visible=False)
+                    window['Columna_Der'].update(visible=True)
+                Columna_Historial = not Columna_Historial
+
+            elif (event == 'MostrarMas_Der'):
+                window[event].update(button_color=('#64778D','#64778D'),disabled=True)
+                window['Columna_Der'].update(visible=True)
+
+            elif (event == 'MostrarMas_Izq'):
+                window[event].update(button_color=('#64778D','#64778D'),disabled=True)
+                window['Columna_Izq'].update(visible=True)
+
+            elif (event == 'MostrarMenos_Der'):
+                window['Columna_Der'].update(visible=False)
+                window['MostrarMas_Der'].update(button_color=('white','#283B5B'),disabled=False)
+
+            elif (event == 'MostrarMenos_Izq'):
+                window['Columna_Izq'].update(visible=False)
+                window['MostrarMas_Izq'].update(button_color=('white','#283B5B'),disabled=False)
+
+            if Infobox_Activa and (tiemp_ant != str(Tiempo)[3]):
+                tiemp_ant = str(Tiempo)[3]
+                if temp  == 0:
+                    window['Infobox'].update('',text_color='Black',background_color='#A4A4A4')
+                else:
+                    temp = temp -1
+
 
         while (Turno_Usuario == False):
             contador_Turnos_CPU,fichas_CPU,CFT,PT_CPU=Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Dicc_Bolsa,CFT,Dicc_Puntajes,PT_CPU,DiccRLPP_CPU)
             break
         if Fin:
             break
-        Update_Fichas_Colocadas(LCOPR,window)
+        #Update_Fichas_Colocadas(LCOPR,window)
         Turno_Usuario = not Turno_Usuario
-        Actualizar_LCO(LCOPR,LCO)
-        PrimerRonda = False
+        window['CantFichas'].update('Cantidad de fichas: '+str(CFT))
     window.close()
     return(event)
 #ProgramaPrincipal-------------
