@@ -13,6 +13,7 @@ MAX_ROWS = MAX_COL = 15
 temp = 5
 Infobox_Activa = False
 HistorialUsuario = []
+HistorialCPU = []
 PrimerRonda = True
 
 def rutas_letras(Dicc_letra_puntajes):
@@ -266,15 +267,14 @@ def Generar_Dicc():
             Dicc[(j,i)] = ['','White']
     return Dicc
 
-def Layout_MostrarMas_Der(Usuario):
+def Layout_Columna_Historial(Usuario):
     layout = [[sg.Text('Historial CPU',size=(20, 1),text_color='black',font=("IMPACT", 18),justification='center',background_color='#FDFA57',relief=sg.RELIEF_RAISED)],
-              [sg.Listbox([''],disabled=True,font=("Segoe print", 11),size=(20, 12),key=('Historial_CPU'),text_color='black',background_color='#F5DAC1')],
-              [sg.Button('<',border_width=0,key='MostrarMenos_Der')],
+              [sg.Listbox([''],font=("Segoe print", 11),size=(20, 12),key=('Historial_CPU'),text_color='black',background_color='#F5DAC1')],
               [sg.Text('Historial '+Usuario,size=(20, 1),text_color='black',font=("IMPACT", 18),justification='center',background_color='#E52C46',relief=sg.RELIEF_RAISED)],
               [sg.Listbox([''],size=(20, 12),font=("Segoe print", 11),key=('Historial_Usuario'),text_color='black',background_color='#F0DCDF')]]
     return layout
 
-def Layout_MostrarMas_Izq(Dicc_Puntajes,Dificultad,CFT):
+def Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT):
     layout = [[sg.Text('Dificultad: '+Dificultad,pad =(50,0),font=("impact",16))],
               [sg.Text('Cantidad de fichas: '+str(CFT),key='CantFichas',pad =(50,0),font=("impact",16))],
               [sg.Text('Fichas | Puntos',pad =(50,0),font=("impact",13))],
@@ -291,7 +291,7 @@ def Layout_MostrarMas_Izq(Dicc_Puntajes,Dificultad,CFT):
               [sg.Text('K      |      '+str(Dicc_Puntajes['K']),pad =(72,0),font=("impact",13))],
               [sg.Text('L      |      '+str(Dicc_Puntajes['L']),pad =(75,0),font=("impact",13))],
               [sg.Text('M      |      '+str(Dicc_Puntajes['M']),pad =(69,0),font=("impact",13))],
-              [sg.Button('<',border_width=0,key='MostrarMenos_Izq'),sg.Text('N      |      '+str(Dicc_Puntajes['N']),pad =(48,0),font=("impact",13))],
+              [sg.Text('N      |      '+str(Dicc_Puntajes['N']),pad =(72,0),font=("impact",13))],
               [sg.Text('Ñ      |      '+str(Dicc_Puntajes['Ñ']),pad =(72,0),font=("impact",13))],
               [sg.Text('O      |      '+str(Dicc_Puntajes['O']),pad =(72,0),font=("impact",13))],
               [sg.Text('P      |      '+str(Dicc_Puntajes['P']),pad =(72,0),font=("impact",13))],
@@ -318,7 +318,8 @@ def Layout_Columna():
                [sg.Text('Puntos Usuario',key='PuntosUsuario',font=("impact",20))],
                [sg.Text('0000',key='PuntajeUsuario',font=("impact",20))],
                [sg.Text('__________________________________')],
-               [sg.Button('(>)',border_width=0,key='Rotar',pad=((222,0),(29,29)))],
+               [sg.Button('<',key='Mostrar',pad=((222,0),(29,2)))],
+               [sg.Button('()',key='Rotar',pad=((222,0),(2,29)))],
                [sg.Text(pad=((6,0),(5,2)),size=(20, 3),key='Infobox',font=("Consolas", 16),background_color='#A4A4A4',justification='center',relief=sg.RELIEF_SOLID)], #Entran 60 caracteres
                [sg.Button(button_text='Terminar turno',size=(15,0),font=("Unispace",20),pad=((5,0),(5,3)))],
                [sg.Button(button_text='Validar',size=(15,0),font=("Unispace",20),pad=((5,0),(5,3)))],
@@ -375,7 +376,7 @@ def Llenar_Atril(Lista_Atril,window,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_let
     for pos in range(len(Lista_Atril)):
         if (Lista_Atril[pos] == ''):
             Lista_Atril[pos] = Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
-            window[pos].update(Lista_Atril[pos])
+            #window[pos].update(Lista_Atril[pos])
             window[pos].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[pos]][0],image_size=(40,40),image_subsample=5)
 
 
@@ -482,26 +483,30 @@ def Calcular_Puntaje(Palabra,Dicc_Puntajes):
         PPR = PPR + Dicc_Puntajes[letra]
     return PPR
 
-def Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU):
+def Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU,LCDPR_CPU):
     for x in range(len(Palabra)):
         #window[(coordenadas_CPU[0],coordenadas_CPU[1]+x)].update(str(Palabra[x]),button_color=('black','#7D4DE4'))
         window[(coordenadas_CPU[0],coordenadas_CPU[1]+x)].update(image_filename=Dicc_rutas_letras_puntaje_partida_CPU[str(Palabra[x])],image_size=(40,40),image_subsample=5)
         Dicc[(coordenadas_CPU[0],coordenadas_CPU[1]+x)][0] =str(Palabra[x])
         LCO.append((coordenadas_CPU[0],coordenadas_CPU[1]+x))
+        LCDPR_CPU.append((coordenadas_CPU[0],coordenadas_CPU[1]+x))
         Coord_Disponible(LCO,CCD)
         Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
 
-def Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU):
+def Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU,LCDPR_CPU):
     for y in range(len(Palabra)):
         #window[(coordenadas_CPU[0]+y,coordenadas_CPU[1])].update(str(Palabra[y]),button_color=('black','#7D4DE4'))
         window[(coordenadas_CPU[0]+y,coordenadas_CPU[1])].update(image_filename=Dicc_rutas_letras_puntaje_partida_CPU[str(Palabra[y])],image_size=(40,40),image_subsample=5)
         Dicc[(coordenadas_CPU[0]+y,coordenadas_CPU[1])][0] =str(Palabra[y])
         LCO.append((coordenadas_CPU[0]+y,coordenadas_CPU[1]))
+        LCDPR_CPU.append((coordenadas_CPU[0]+y,coordenadas_CPU[1]))
         Coord_Disponible(LCO,CCD)
         Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
 
 def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Bolsa_Diccionario,Cant_fichas,Dicc_Puntajes,PT_CPU,Dicc_rutas_letras_puntaje_partida_CPU):
     global PrimerRonda
+    global HistorialCPU
+    LCDPR_CPU = []
     CCD_CPU=CCD
     Palabra=fichas_CPU
     intento=True
@@ -529,9 +534,6 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
                 LCO.append((7,7+x))
                 Coord_Disponible(LCO,CCD)
                 Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
-            PPR_CPU = Calcular_Puntaje(Palabra,Dicc_Puntajes)
-            PT_CPU = PT_CPU + PPR_CPU
-            window['PuntajeCPU'].update(str(PT_CPU))
             PrimerRonda = False
         else:
             for x in range(len(CCD)) :
@@ -547,10 +549,7 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
                                 else:
                                     puede_Colocarse=True
                             if(puede_Colocarse):
-                                Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU)
-                                PPR_CPU = Calcular_Puntaje(Palabra,Dicc_Puntajes)
-                                PT_CPU = PT_CPU + PPR_CPU
-                                window['PuntajeCPU'].update(str(PT_CPU))
+                                Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU,LCDPR_CPU)
                                 intento=False
                         elif(((len(Palabra)+coordenadas_CPU[0])<15)and((len(Palabra)+coordenadas_CPU[0])>-1)):#si se va a pasar del tablero al poner la palabra horizontalmente
                             for x in range(len(Palabra)):
@@ -561,13 +560,16 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
                                 else:
                                     puede_Colocarse=True
                             if(puede_Colocarse):
-                                Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU)
-                                PPR_CPU = Calcular_Puntaje(Palabra,Dicc_Puntajes)
-                                PT_CPU = PT_CPU + PPR_CPU
-                                window['PuntajeCPU'].update(str(PT_CPU))
+                                Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU,LCDPR_CPU)
                                 intento=False
             if((intento)and(len(CCD_CPU)>1)):
                 print("El robot no tiene una posicion valida para colocar su palabra") #Implementar que se vuelva a buscar uan palabra pero mas corta
+        Bonus = Calcular_Bonus(LCDPR_CPU,Dicc_Puntajes,Dicc)
+        PPR_CPU = Calcular_Puntaje(Palabra,Dicc_Puntajes)
+        PT_CPU = (PT_CPU + PPR_CPU) + Bonus
+        HistorialCPU.append(Palabra +' = '+str(PPR_CPU)+' + '+str(Bonus) +' = '+ str((PPR_CPU+Bonus)))
+        window['Historial_CPU'].update(HistorialCPU)
+        window['PuntajeCPU'].update(str(PT_CPU))
     else:
         print("No hay palabra valida en este momento para la CPU ,la CPU pasa el turno")
     while(((len(fichas_CPU))<7)and(Cant_fichas >= 14)):          #Añado fichas de la bolsa para compeltar 7 al finalizar el turno
@@ -642,8 +644,7 @@ def TerminarTurno(LCOPR,LCO,CCD,Dicc,Lista_Atril,PTU,Palabra,Dificultad,Dificil_
         PPR = Calcular_Puntaje(Palabra,Dicc_Puntajes) #Puntaje por ronda
         PTU = (PTU + PPR) + Bonus
         window['PuntajeUsuario'].update(str(PTU))
-        HistorialUsuario.append([Palabra +' = '+str(PPR)+' + '+str(Bonus) +' = '+ str((PPR+Bonus))])
-        print(HistorialUsuario)
+        HistorialUsuario.append(Palabra +' = '+str(PPR)+' + '+str(Bonus) +' = '+ str((PPR+Bonus)))
         window['Historial_Usuario'].update(HistorialUsuario)
         Llenar_Atril(Lista_Atril,window,Dicc_Bolsa,CFT,Dicc_rutas_letras_puntaje_partida)
         PrimerRonda = False
@@ -660,7 +661,6 @@ def Intercambio_FichasTablero(LCOPR,Dicc,event1,event2,window,Dicc_rutas_letras_
         aux = Dicc[event2][0]
         Dicc[event2][0] = Dicc[event1][0]
         Dicc[event1][0] = aux
-        print('dicc:',Dicc_rutas_letras_puntaje_partida[Dicc[event2][0]])
         if Coord_Ocupada(LCOPR,event2):
             window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event2][0]][0],image_size=(40,40),image_subsample=5)
             window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(40,40),image_subsample=5)
@@ -674,7 +674,7 @@ def Intercambio_FichasTablero(LCOPR,Dicc,event1,event2,window,Dicc_rutas_letras_
             LCOPR.remove(event1)
             LCOPR.append(event2)
     else:
-        window[event1].update(button_color=('black','#FDD357')) #Faltan fichas que sean las "Seleccionadas para agregar al cliquear , aca iria la "Des-seleccionada", pero al no existir la otra por ahora lo dejo asi
+        window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(40,40),image_subsample=5)
 
 def Intercambio_FichasAtril(Lista_Atril,Pos_letra1,Pos_letra2,window,Dicc_rutas_letras_puntaje_partida):
     if (Pos_letra1 != Pos_letra2):
@@ -688,7 +688,7 @@ def Intercambio_FichasAtril(Lista_Atril,Pos_letra1,Pos_letra2,window,Dicc_rutas_
         aux = Lista_Atril[Pos_letra2]
         Lista_Atril[Pos_letra2] = Lista_Atril[Pos_letra1]
         Lista_Atril[Pos_letra1] = aux
-    window[Pos_letra1].update(button_color=('black','#FDD357')) #Faltan fichas que sean las "Seleccionadas para agregar al cliquear , aca iria la "Des-seleccionada", pero al no existir la otra por ahora lo dejo asi
+    window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra1]][0],image_size=(40,40),image_subsample=5)
 
 def Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
     aux = Dicc[event1][0]
@@ -814,6 +814,13 @@ def Actualizar_CCD(CCD,LCO):
     Coord_Disponible(LCO,CCD)
     Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
 
+def Update_Columna_Extra(Columna_Historial,window):
+    if (Columna_Historial):
+        window['Columna_Historial'].update(visible=False)
+        window['Columna_Conf'].update(visible=True)
+    else:
+        window['Columna_Conf'].update(visible=False)
+        window['Columna_Historial'].update(visible=True)
 
 #PROGRAMA PRINCIPAL
 def genero_Tablero():
@@ -830,19 +837,15 @@ def genero_Tablero():
     DiccRLPP=rutas_letras(Dicc_Puntajes)  #Dicc Dicc_rutas_letras_puntaje_partida
     DiccRLPP_CPU=rutas_letras_CPU(Dicc_Puntajes)
     Lista_Atril = []
-    Terminar = [False]
     Dicc = Generar_Dicc()
     CFT = 0
     CFT = Actualizar_CFT(CFT,Dicc_Bolsa) #Cantidad Fichas Totales
-    diseño = [ [sg.Column(Layout_MostrarMas_Izq(Dicc_Puntajes,Dificultad,CFT),key='Columna_Izq'),
-                sg.Column((Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP))),
+    diseño = [ [sg.Column((Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP))),
                 sg.Column(Layout_Columna()),
-                sg.Column(Layout_MostrarMas_Der(Usuario),key='Columna_Der')] ]
+                sg.Column(Layout_Columna_Historial(Usuario),key='Columna_Historial'),
+                sg.Column(Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT),key='Columna_Conf')] ]
     window = sg.Window('Tablero',diseño ,location=(400,0),finalize=True)
-    #window.extend_layout(window['AmpliarIzq'],Layout_MostrarMas_Izq(Dicc_Puntajes,Dificultad,CFT))
-    #window.extend_layout(window['AmpliarDer'],Layout_MostrarMas_Der(Usuario))
-    window['Columna_Izq'].update(visible=False)
-    window['Columna_Der'].update(visible=False)
+    window['Columna_Conf'].update(visible=False)
     Dicc = Update_Tablero(window,Dicc)
     Dicc = Update_Tablero2(window,Dicc)
     window['PuntosUsuario'].update('Puntos  ' + Usuario)
@@ -863,6 +866,7 @@ def genero_Tablero():
     window.Refresh()
     tamaño_actual=window.Size
     Columna_Historial = True
+    Desplegado = True
     while True:
         LPI = []                #Lista de Posiciones de Intercambio (Para Intecambiar fichas)
         LCOPR = []              #Lista de Coordenadas Ocupadas Por Ronda
@@ -899,7 +903,6 @@ def genero_Tablero():
             if (((type(event) == int) or (type(event) == tuple)) and (Boton_Intercambiar == False)):
                 if event1 == '':
                     event1 = event
-                    print(event1)
                     if (type(event1) == int):
                         if ((Lista_Atril[event1] != '')):
                             #window[event1].update(button_color=('white','#57C3FD'))
@@ -919,7 +922,6 @@ def genero_Tablero():
 
             elif (((event == 'Terminar turno') or Se_Intercambio_Ficha) and (Boton_Intercambiar == False)):
                 Bonus = Calcular_Bonus(LCOPR,Dicc_Puntajes,Dicc)
-                print(Bonus)
                 PTU = TerminarTurno(LCOPR,LCO,CCD,Dicc,Lista_Atril,PTU,Palabra,Dificultad,Dificil_se_juega,Dicc_Puntajes,Dicc_Bolsa,CFT,Bonus,window,DiccRLPP)
                 CFT = Actualizar_CFT(CFT,Dicc_Bolsa)
                 Actualizar_LCO(LCOPR,LCO)
@@ -929,31 +931,19 @@ def genero_Tablero():
             elif (((event == "Intercambiar fichas") or (Boton_Intercambiar)) and (Turnos_Disponibles != 0)):
                 CFT,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles = Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles,event,window,DiccRLPP)
 
-            elif (event == 'Rotar'):
-                if (Columna_Historial):
-                    window['Columna_Der'].update(visible=False)
-                    window['Columna_Izq'].update(visible=True)
-
-                else:
-                    window['Columna_Izq'].update(visible=False)
-                    window['Columna_Der'].update(visible=True)
+            elif (event == 'Rotar') and (Desplegado):
+                Update_Columna_Extra(Columna_Historial,window)
                 Columna_Historial = not Columna_Historial
 
-            elif (event == 'MostrarMas_Der'):
-                window[event].update(button_color=('#64778D','#64778D'),disabled=True)
-                window['Columna_Der'].update(visible=True)
-
-            elif (event == 'MostrarMas_Izq'):
-                window[event].update(button_color=('#64778D','#64778D'),disabled=True)
-                window['Columna_Izq'].update(visible=True)
-
-            elif (event == 'MostrarMenos_Der'):
-                window['Columna_Der'].update(visible=False)
-                window['MostrarMas_Der'].update(button_color=('white','#283B5B'),disabled=False)
-
-            elif (event == 'MostrarMenos_Izq'):
-                window['Columna_Izq'].update(visible=False)
-                window['MostrarMas_Izq'].update(button_color=('white','#283B5B'),disabled=False)
+            elif (event == 'Mostrar'):
+                if (Desplegado):
+                    window['Columna_Historial'].update(visible=False)
+                    window['Columna_Conf'].update(visible=False)
+                    window['Mostrar'].update('>')
+                else:
+                    Update_Columna_Extra(not(Columna_Historial),window)
+                    window['Mostrar'].update('<')
+                Desplegado = not Desplegado
 
             if Infobox_Activa and (tiemp_ant != str(Tiempo)[3]):
                 tiemp_ant = str(Tiempo)[3]
