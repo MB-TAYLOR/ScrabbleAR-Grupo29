@@ -16,18 +16,77 @@ HistorialUsuario = []
 PrimerRonda = True
 
 def rutas_letras(Dicc_letra_puntajes):
-    Dicc_letras_rutas={'A1':r'ScrabbleAR_Imagenes_png\ficha_A1_B.png','A2':r'ScrabbleAR_Imagenes_png\ficha_A2_B.png','B2':r'ScrabbleAR_Imagenes_png\ficha_B2_B.png','B3':r'ScrabbleAR_Imagenes_png\ficha_B3_B.png','B4':r'ScrabbleAR_Imagenes_png\ficha_B4_B.png',
-        'C1':r'ScrabbleAR_Imagenes_png\ficha_C1_B.png','C2':r'ScrabbleAR_Imagenes_png\ficha_C2_B.png','C3':r'ScrabbleAR_Imagenes_png\ficha_C3_B.png','D1':r'ScrabbleAR_Imagenes_png\ficha_D1_B.png','D2':r'ScrabbleAR_Imagenes_png\ficha_D2_B.png','D3':r'ScrabbleAR_Imagenes_png\ficha_D3_B.png',
-        'E1':r'ScrabbleAR_Imagenes_png\ficha_E1_B.png','E2':r'ScrabbleAR_Imagenes_png\ficha_E2_B.png','F3':r'ScrabbleAR_Imagenes_png\ficha_F3_B.png','F4':r'ScrabbleAR_Imagenes_png\ficha_F4_B.png','F5':r'ScrabbleAR_Imagenes_png\ficha_F5_B.png','G1':r'ScrabbleAR_Imagenes_png\ficha_G1_B.png',
-        'G2':r'ScrabbleAR_Imagenes_png\ficha_G2_B.png','G3':r'ScrabbleAR_Imagenes_png\ficha_G3_B.png','H3':r'ScrabbleAR_Imagenes_png\ficha_H3_B.png','H4':r'ScrabbleAR_Imagenes_png\ficha_H4_B.png','H5':r'ScrabbleAR_Imagenes_png\ficha_H5_B.png','I1':r'ScrabbleAR_Imagenes_png\ficha_I1_B.png',
-        'I2':r'ScrabbleAR_Imagenes_png\ficha_I2_B.png','J5':r'ScrabbleAR_Imagenes_png\ficha_J5_B.png','J6':r'ScrabbleAR_Imagenes_png\ficha_J6_B.png','J7':r'ScrabbleAR_Imagenes_png\ficha_J7_B.png','K7':r'ScrabbleAR_Imagenes_png\ficha_K7_B.png','K8':r'ScrabbleAR_Imagenes_png\ficha_K8_B.png',
-        'K9':r'ScrabbleAR_Imagenes_png\ficha_K9_B.png','L1':r'ScrabbleAR_Imagenes_png\ficha_L1_B.png','L2':r'ScrabbleAR_Imagenes_png\ficha_L2_B.png','M2':r'ScrabbleAR_Imagenes_png\ficha_M2_B.png','M3':r'ScrabbleAR_Imagenes_png\ficha_M3_B.png','M4':r'ScrabbleAR_Imagenes_png\ficha_M4_B.png',
-        'N1':r'ScrabbleAR_Imagenes_png\ficha_N1_B.png','N2':r'ScrabbleAR_Imagenes_png\ficha_N2_B.png','Ñ7':r'ScrabbleAR_Imagenes_png\ficha_Ñ7_B.png','Ñ8':r'ScrabbleAR_Imagenes_png\ficha_Ñ8_B.png','Ñ9':r'ScrabbleAR_Imagenes_png\ficha_Ñ9_B.png','O1':r'ScrabbleAR_Imagenes_png\ficha_O1_B.png',
-        'O2':r'ScrabbleAR_Imagenes_png\ficha_O2_B.png','P2':r'ScrabbleAR_Imagenes_png\ficha_P2_B.png','P3':r'ScrabbleAR_Imagenes_png\ficha_P3_B.png','P4':r'ScrabbleAR_Imagenes_png\ficha_P4_B.png','Q7':r'ScrabbleAR_Imagenes_png\ficha_Q7_B.png','Q8':r'ScrabbleAR_Imagenes_png\ficha_Q8_B.png',
-        'Q9':r'ScrabbleAR_Imagenes_png\ficha_Q9_B.png','R1':r'ScrabbleAR_Imagenes_png\ficha_R1_B.png','R2':r'ScrabbleAR_Imagenes_png\ficha_R2_B.png','S1':r'ScrabbleAR_Imagenes_png\ficha_S1_B.png','S2':r'ScrabbleAR_Imagenes_png\ficha_S2_B.png','T1':r'ScrabbleAR_Imagenes_png\ficha_T1_B.png',
-        'T2':r'ScrabbleAR_Imagenes_png\ficha_T2_B.png','U1':r'ScrabbleAR_Imagenes_png\ficha_U1_B.png','U2':r'ScrabbleAR_Imagenes_png\ficha_U2_B.png','V3':r'ScrabbleAR_Imagenes_png\ficha_V3_B.png','V4':r'ScrabbleAR_Imagenes_png\ficha_V4_B.png','V5':r'ScrabbleAR_Imagenes_png\ficha_V5_B.png',
-        'W7':r'ScrabbleAR_Imagenes_png\ficha_W7_B.png','W8':r'ScrabbleAR_Imagenes_png\ficha_W8_B.png','W9':r'ScrabbleAR_Imagenes_png\ficha_W9_B.png','X7':r'ScrabbleAR_Imagenes_png\ficha_X7_B.png','X8':r'ScrabbleAR_Imagenes_png\ficha_X8_B.png','X9':r'ScrabbleAR_Imagenes_png\ficha_X9_B.png',
-        'Y3':r'ScrabbleAR_Imagenes_png\ficha_Y3_B.png','Y4':r'ScrabbleAR_Imagenes_png\ficha_Y4_B.png','Y5':r'ScrabbleAR_Imagenes_png\ficha_Y5_B.png','Z9':r'ScrabbleAR_Imagenes_png\ficha_Z9_B.png','Z10':r'ScrabbleAR_Imagenes_png\ficha_Z10_B.png','Z11':r'ScrabbleAR_Imagenes_png\ficha_Z11_B.png'}
+    Dicc_letras_rutas={'A1':[r'ScrabbleAR_Imagenes_png\ficha_A1_B.png',r'ScrabbleAR_Imagenes_png\ficha_A1_S.png',r'ScrabbleAR_Imagenes_png\ficha_A1_T.png'],
+                       'A2':[r'ScrabbleAR_Imagenes_png\ficha_A2_B.png',r'ScrabbleAR_Imagenes_png\ficha_A2_S.png',r'ScrabbleAR_Imagenes_png\ficha_A2_T.png'],
+                       'B2':[r'ScrabbleAR_Imagenes_png\ficha_B2_B.png',r'ScrabbleAR_Imagenes_png\ficha_B2_S.png',r'ScrabbleAR_Imagenes_png\ficha_B2_T.png'],
+                       'B3':[r'ScrabbleAR_Imagenes_png\ficha_B3_B.png',r'ScrabbleAR_Imagenes_png\ficha_B3_S.png',r'ScrabbleAR_Imagenes_png\ficha_B3_T.png'],
+                       'B4':[r'ScrabbleAR_Imagenes_png\ficha_B4_B.png',r'ScrabbleAR_Imagenes_png\ficha_B4_S.png',r'ScrabbleAR_Imagenes_png\ficha_B4_T.png'],
+                       'C1':[r'ScrabbleAR_Imagenes_png\ficha_C1_B.png',r'ScrabbleAR_Imagenes_png\ficha_C1_S.png',r'ScrabbleAR_Imagenes_png\ficha_C1_T.png'],
+                       'C2':[r'ScrabbleAR_Imagenes_png\ficha_C2_B.png',r'ScrabbleAR_Imagenes_png\ficha_C2_S.png',r'ScrabbleAR_Imagenes_png\ficha_C2_T.png'],
+                       'C3':[r'ScrabbleAR_Imagenes_png\ficha_C3_B.png',r'ScrabbleAR_Imagenes_png\ficha_C3_S.png',r'ScrabbleAR_Imagenes_png\ficha_C3_T.png'],
+                       'D1':[r'ScrabbleAR_Imagenes_png\ficha_D1_B.png',r'ScrabbleAR_Imagenes_png\ficha_D1_S.png',r'ScrabbleAR_Imagenes_png\ficha_D1_T.png'],
+                       'D2':[r'ScrabbleAR_Imagenes_png\ficha_D2_B.png',r'ScrabbleAR_Imagenes_png\ficha_D2_S.png',r'ScrabbleAR_Imagenes_png\ficha_D2_T.png'],
+                       'D3':[r'ScrabbleAR_Imagenes_png\ficha_D3_B.png',r'ScrabbleAR_Imagenes_png\ficha_D3_S.png',r'ScrabbleAR_Imagenes_png\ficha_D3_T.png'],
+                       'E1':[r'ScrabbleAR_Imagenes_png\ficha_E1_B.png',r'ScrabbleAR_Imagenes_png\ficha_E1_S.png',r'ScrabbleAR_Imagenes_png\ficha_E1_T.png'],
+                       'E2':[r'ScrabbleAR_Imagenes_png\ficha_E2_B.png',r'ScrabbleAR_Imagenes_png\ficha_E2_S.png',r'ScrabbleAR_Imagenes_png\ficha_E2_T.png'],
+                       'F3':[r'ScrabbleAR_Imagenes_png\ficha_F3_B.png',r'ScrabbleAR_Imagenes_png\ficha_F3_S.png',r'ScrabbleAR_Imagenes_png\ficha_F3_T.png'],
+                       'F4':[r'ScrabbleAR_Imagenes_png\ficha_F4_B.png',r'ScrabbleAR_Imagenes_png\ficha_F4_S.png',r'ScrabbleAR_Imagenes_png\ficha_F4_T.png'],
+                       'F5':[r'ScrabbleAR_Imagenes_png\ficha_F5_B.png',r'ScrabbleAR_Imagenes_png\ficha_F5_S.png',r'ScrabbleAR_Imagenes_png\ficha_F5_T.png'],
+                       'G1':[r'ScrabbleAR_Imagenes_png\ficha_G1_B.png',r'ScrabbleAR_Imagenes_png\ficha_G1_S.png',r'ScrabbleAR_Imagenes_png\ficha_G1_T.png'],
+                       'G2':[r'ScrabbleAR_Imagenes_png\ficha_G2_B.png',r'ScrabbleAR_Imagenes_png\ficha_G2_S.png',r'ScrabbleAR_Imagenes_png\ficha_G2_T.png'],
+                       'G3':[r'ScrabbleAR_Imagenes_png\ficha_G3_B.png',r'ScrabbleAR_Imagenes_png\ficha_G3_S.png',r'ScrabbleAR_Imagenes_png\ficha_G3_T.png'],
+                       'H3':[r'ScrabbleAR_Imagenes_png\ficha_H3_B.png',r'ScrabbleAR_Imagenes_png\ficha_H3_S.png',r'ScrabbleAR_Imagenes_png\ficha_H3_T.png'],
+                       'H4':[r'ScrabbleAR_Imagenes_png\ficha_H4_B.png',r'ScrabbleAR_Imagenes_png\ficha_H4_S.png',r'ScrabbleAR_Imagenes_png\ficha_H4_T.png'],
+                       'H5':[r'ScrabbleAR_Imagenes_png\ficha_H5_B.png',r'ScrabbleAR_Imagenes_png\ficha_H5_S.png',r'ScrabbleAR_Imagenes_png\ficha_H5_T.png'],
+                       'I1':[r'ScrabbleAR_Imagenes_png\ficha_I1_B.png',r'ScrabbleAR_Imagenes_png\ficha_I1_S.png',r'ScrabbleAR_Imagenes_png\ficha_I1_T.png'],
+                       'I2':[r'ScrabbleAR_Imagenes_png\ficha_I2_B.png',r'ScrabbleAR_Imagenes_png\ficha_I2_S.png',r'ScrabbleAR_Imagenes_png\ficha_I2_T.png'],
+                       'J5':[r'ScrabbleAR_Imagenes_png\ficha_J5_B.png',r'ScrabbleAR_Imagenes_png\ficha_J5_S.png',r'ScrabbleAR_Imagenes_png\ficha_J5_T.png'],
+                       'J6':[r'ScrabbleAR_Imagenes_png\ficha_J6_B.png',r'ScrabbleAR_Imagenes_png\ficha_J6_S.png',r'ScrabbleAR_Imagenes_png\ficha_J6_T.png'],
+                       'J7':[r'ScrabbleAR_Imagenes_png\ficha_J7_B.png',r'ScrabbleAR_Imagenes_png\ficha_J7_S.png',r'ScrabbleAR_Imagenes_png\ficha_J7_T.png'],
+                       'K7':[r'ScrabbleAR_Imagenes_png\ficha_K7_B.png',r'ScrabbleAR_Imagenes_png\ficha_K7_S.png',r'ScrabbleAR_Imagenes_png\ficha_K7_T.png'],
+                       'K8':[r'ScrabbleAR_Imagenes_png\ficha_K8_B.png',r'ScrabbleAR_Imagenes_png\ficha_K8_S.png',r'ScrabbleAR_Imagenes_png\ficha_K8_T.png'],
+                       'K9':[r'ScrabbleAR_Imagenes_png\ficha_K9_B.png',r'ScrabbleAR_Imagenes_png\ficha_K9_S.png',r'ScrabbleAR_Imagenes_png\ficha_K9_T.png'],
+                       'L1':[r'ScrabbleAR_Imagenes_png\ficha_L1_B.png',r'ScrabbleAR_Imagenes_png\ficha_L1_S.png',r'ScrabbleAR_Imagenes_png\ficha_L1_T.png'],
+                       'L2':[r'ScrabbleAR_Imagenes_png\ficha_L2_B.png',r'ScrabbleAR_Imagenes_png\ficha_L2_S.png',r'ScrabbleAR_Imagenes_png\ficha_L2_T.png'],
+                       'M2':[r'ScrabbleAR_Imagenes_png\ficha_M2_B.png',r'ScrabbleAR_Imagenes_png\ficha_M2_S.png',r'ScrabbleAR_Imagenes_png\ficha_M2_T.png'],
+                       'M3':[r'ScrabbleAR_Imagenes_png\ficha_M3_B.png',r'ScrabbleAR_Imagenes_png\ficha_M3_S.png',r'ScrabbleAR_Imagenes_png\ficha_M3_T.png'],
+                       'M4':[r'ScrabbleAR_Imagenes_png\ficha_M4_B.png',r'ScrabbleAR_Imagenes_png\ficha_M4_S.png',r'ScrabbleAR_Imagenes_png\ficha_M4_T.png'],
+                       'N1':[r'ScrabbleAR_Imagenes_png\ficha_N1_B.png',r'ScrabbleAR_Imagenes_png\ficha_N1_S.png',r'ScrabbleAR_Imagenes_png\ficha_N1_T.png'],
+                       'N2':[r'ScrabbleAR_Imagenes_png\ficha_N2_B.png',r'ScrabbleAR_Imagenes_png\ficha_N2_S.png',r'ScrabbleAR_Imagenes_png\ficha_N2_T.png'],
+                       'Ñ7':[r'ScrabbleAR_Imagenes_png\ficha_Ñ7_B.png',r'ScrabbleAR_Imagenes_png\ficha_Ñ7_S.png',r'ScrabbleAR_Imagenes_png\ficha_Ñ7_T.png'],
+                       'Ñ8':[r'ScrabbleAR_Imagenes_png\ficha_Ñ8_B.png',r'ScrabbleAR_Imagenes_png\ficha_Ñ8_S.png',r'ScrabbleAR_Imagenes_png\ficha_Ñ8_T.png'],
+                       'Ñ9':[r'ScrabbleAR_Imagenes_png\ficha_Ñ9_B.png',r'ScrabbleAR_Imagenes_png\ficha_Ñ9_S.png',r'ScrabbleAR_Imagenes_png\ficha_Ñ9_T.png'],
+                       'O1':[r'ScrabbleAR_Imagenes_png\ficha_O1_B.png',r'ScrabbleAR_Imagenes_png\ficha_O1_S.png',r'ScrabbleAR_Imagenes_png\ficha_O1_T.png'],
+                       'O2':[r'ScrabbleAR_Imagenes_png\ficha_O2_B.png',r'ScrabbleAR_Imagenes_png\ficha_O2_S.png',r'ScrabbleAR_Imagenes_png\ficha_O2_T.png'],
+                       'P2':[r'ScrabbleAR_Imagenes_png\ficha_P2_B.png',r'ScrabbleAR_Imagenes_png\ficha_P2_S.png',r'ScrabbleAR_Imagenes_png\ficha_P2_T.png'],
+                       'P3':[r'ScrabbleAR_Imagenes_png\ficha_P3_B.png',r'ScrabbleAR_Imagenes_png\ficha_P3_S.png',r'ScrabbleAR_Imagenes_png\ficha_P3_T.png'],
+                       'P4':[r'ScrabbleAR_Imagenes_png\ficha_P4_B.png',r'ScrabbleAR_Imagenes_png\ficha_P4_S.png',r'ScrabbleAR_Imagenes_png\ficha_P4_T.png'],
+                       'Q7':[r'ScrabbleAR_Imagenes_png\ficha_Q7_B.png',r'ScrabbleAR_Imagenes_png\ficha_Q7_S.png',r'ScrabbleAR_Imagenes_png\ficha_Q7_T.png'],
+                       'Q8':[r'ScrabbleAR_Imagenes_png\ficha_Q8_B.png',r'ScrabbleAR_Imagenes_png\ficha_Q8_S.png',r'ScrabbleAR_Imagenes_png\ficha_Q8_T.png'],
+                       'Q9':[r'ScrabbleAR_Imagenes_png\ficha_Q9_B.png',r'ScrabbleAR_Imagenes_png\ficha_Q9_S.png',r'ScrabbleAR_Imagenes_png\ficha_Q9_T.png'],
+                       'R1':[r'ScrabbleAR_Imagenes_png\ficha_R1_B.png',r'ScrabbleAR_Imagenes_png\ficha_R1_S.png',r'ScrabbleAR_Imagenes_png\ficha_R1_T.png'],
+                       'R2':[r'ScrabbleAR_Imagenes_png\ficha_R2_B.png',r'ScrabbleAR_Imagenes_png\ficha_R2_S.png',r'ScrabbleAR_Imagenes_png\ficha_R2_T.png'],
+                       'S1':[r'ScrabbleAR_Imagenes_png\ficha_S1_B.png',r'ScrabbleAR_Imagenes_png\ficha_S1_S.png',r'ScrabbleAR_Imagenes_png\ficha_S1_T.png'],
+                       'S2':[r'ScrabbleAR_Imagenes_png\ficha_S2_B.png',r'ScrabbleAR_Imagenes_png\ficha_S2_S.png',r'ScrabbleAR_Imagenes_png\ficha_S2_T.png'],
+                       'T1':[r'ScrabbleAR_Imagenes_png\ficha_T1_B.png',r'ScrabbleAR_Imagenes_png\ficha_T1_S.png',r'ScrabbleAR_Imagenes_png\ficha_T1_T.png'],
+                       'T2':[r'ScrabbleAR_Imagenes_png\ficha_T2_B.png',r'ScrabbleAR_Imagenes_png\ficha_T2_S.png',r'ScrabbleAR_Imagenes_png\ficha_T2_T.png'],
+                       'U1':[r'ScrabbleAR_Imagenes_png\ficha_U1_B.png',r'ScrabbleAR_Imagenes_png\ficha_U1_S.png',r'ScrabbleAR_Imagenes_png\ficha_U1_T.png'],
+                       'U2':[r'ScrabbleAR_Imagenes_png\ficha_U2_B.png',r'ScrabbleAR_Imagenes_png\ficha_U2_S.png',r'ScrabbleAR_Imagenes_png\ficha_U2_T.png'],
+                       'V3':[r'ScrabbleAR_Imagenes_png\ficha_V3_B.png',r'ScrabbleAR_Imagenes_png\ficha_V3_S.png',r'ScrabbleAR_Imagenes_png\ficha_V3_T.png'],
+                       'V4':[r'ScrabbleAR_Imagenes_png\ficha_V4_B.png',r'ScrabbleAR_Imagenes_png\ficha_V4_S.png',r'ScrabbleAR_Imagenes_png\ficha_V4_T.png'],
+                       'V5':[r'ScrabbleAR_Imagenes_png\ficha_V5_B.png',r'ScrabbleAR_Imagenes_png\ficha_V5_S.png',r'ScrabbleAR_Imagenes_png\ficha_V5_T.png'],
+                       'W7':[r'ScrabbleAR_Imagenes_png\ficha_W7_B.png',r'ScrabbleAR_Imagenes_png\ficha_W7_S.png',r'ScrabbleAR_Imagenes_png\ficha_W7_T.png'],
+                       'W8':[r'ScrabbleAR_Imagenes_png\ficha_W8_B.png',r'ScrabbleAR_Imagenes_png\ficha_W8_S.png',r'ScrabbleAR_Imagenes_png\ficha_W8_T.png'],
+                       'W9':[r'ScrabbleAR_Imagenes_png\ficha_W9_B.png',r'ScrabbleAR_Imagenes_png\ficha_W9_S.png',r'ScrabbleAR_Imagenes_png\ficha_W9_T.png'],
+                       'X7':[r'ScrabbleAR_Imagenes_png\ficha_X7_B.png',r'ScrabbleAR_Imagenes_png\ficha_X7_S.png',r'ScrabbleAR_Imagenes_png\ficha_X7_T.png'],
+                       'X8':[r'ScrabbleAR_Imagenes_png\ficha_X8_B.png',r'ScrabbleAR_Imagenes_png\ficha_X8_S.png',r'ScrabbleAR_Imagenes_png\ficha_X8_T.png'],
+                       'X9':[r'ScrabbleAR_Imagenes_png\ficha_X9_B.png',r'ScrabbleAR_Imagenes_png\ficha_X9_S.png',r'ScrabbleAR_Imagenes_png\ficha_X9_T.png'],
+                       'Y3':[r'ScrabbleAR_Imagenes_png\ficha_Y3_B.png',r'ScrabbleAR_Imagenes_png\ficha_Y3_S.png',r'ScrabbleAR_Imagenes_png\ficha_Y3_T.png'],
+                       'Y4':[r'ScrabbleAR_Imagenes_png\ficha_Y4_B.png',r'ScrabbleAR_Imagenes_png\ficha_Y4_S.png',r'ScrabbleAR_Imagenes_png\ficha_Y4_T.png'],
+                       'Y5':[r'ScrabbleAR_Imagenes_png\ficha_Y5_B.png',r'ScrabbleAR_Imagenes_png\ficha_Y5_S.png',r'ScrabbleAR_Imagenes_png\ficha_Y5_T.png'],
+                       'Z9':[r'ScrabbleAR_Imagenes_png\ficha_Z9_B.png',r'ScrabbleAR_Imagenes_png\ficha_Z9_S.png',r'ScrabbleAR_Imagenes_png\ficha_Z9_T.png'],
+                       'Z10':[r'ScrabbleAR_Imagenes_png\ficha_Z10_B.png',r'ScrabbleAR_Imagenes_png\ficha_Z10_S.png',r'ScrabbleAR_Imagenes_png\ficha_Z10_T.png'],
+                       'Z11':[r'ScrabbleAR_Imagenes_png\ficha_Z11_B.png',r'ScrabbleAR_Imagenes_png\ficha_Z11_S.png',r'ScrabbleAR_Imagenes_png\ficha_Z11_T.png']}
 
     Dicc_Actual_Punto_Ficha={}
     for x in Dicc_letra_puntajes:
@@ -301,13 +360,13 @@ def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_pun
     layout.extend([[sg.Button('', size=(4, 2),key=(i,j),pad=(0,0))for j in range(MAX_COL)] for i in range(MAX_ROWS)])
 
     layout.extend([[sg.Text('',key='texto2',pad=(28,3)),
-                    (sg.Button(key=0,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_1],image_size=(40,40),image_subsample=5)),
-                    (sg.Button(key=1,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_2],image_size=(40,40),image_subsample=5)),
-                    (sg.Button(key=2,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_3],image_size=(40,40),image_subsample=5)),
-                    (sg.Button(key=3,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_4],image_size=(40,40),image_subsample=5)),
-                    (sg.Button(key=4,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_5],image_size=(40,40),image_subsample=5)),
-                    (sg.Button(key=5,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_6],image_size=(40,40),image_subsample=5)),
-                    (sg.Button(key=6,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_7],image_size=(40,40),image_subsample=5))],
+                    (sg.Button(key=0,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_1][0],image_size=(40,40),image_subsample=5)),
+                    (sg.Button(key=1,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_2][0],image_size=(40,40),image_subsample=5)),
+                    (sg.Button(key=2,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_3][0],image_size=(40,40),image_subsample=5)),
+                    (sg.Button(key=3,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_4][0],image_size=(40,40),image_subsample=5)),
+                    (sg.Button(key=4,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_5][0],image_size=(40,40),image_subsample=5)),
+                    (sg.Button(key=5,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_6][0],image_size=(40,40),image_subsample=5)),
+                    (sg.Button(key=6,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_7][0],image_size=(40,40),image_subsample=5))],
                     [(sg.Image(filename='Atril.png',key='texto'))]])
 
     return layout
@@ -317,7 +376,7 @@ def Llenar_Atril(Lista_Atril,window,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_let
         if (Lista_Atril[pos] == ''):
             Lista_Atril[pos] = Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
             window[pos].update(Lista_Atril[pos])
-            window[pos].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[pos]],image_size=(40,40),image_subsample=3)
+            window[pos].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[pos]][0],image_size=(40,40),image_subsample=3)
 
 
 def Coord_Ocupada(LCO,event):
@@ -603,15 +662,15 @@ def Intercambio_FichasTablero(LCOPR,Dicc,event1,event2,window,Dicc_rutas_letras_
         Dicc[event1][0] = aux
         print('dicc:',Dicc_rutas_letras_puntaje_partida[Dicc[event2][0]])
         if Coord_Ocupada(LCOPR,event2):
-            window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event2][0]],image_size=(40,40),image_subsample=5)
-            window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]],image_size=(40,40),image_subsample=5)
+            window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event2][0]][0],image_size=(40,40),image_subsample=5)
+            window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(40,40),image_subsample=5)
             #window[event2].update(Dicc[event2][0],button_color=('black','#FDD357'))
             #window[event1].update(Dicc[event1][0],button_color=('black','#FDD357'))
         else:
             #window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event2][1]],image_size=(40,40),image_subsample=5)
             #window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]],image_size=(40,40),image_subsample=5)
             window[event1].update(image_filename=Dicc[event1][2],image_size=(40,40),image_subsample=5)
-            window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event2][0]],image_size=(40,40),image_subsample=5)
+            window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event2][0]][0],image_size=(40,40),image_subsample=5)
             LCOPR.remove(event1)
             LCOPR.append(event2)
     else:
@@ -624,8 +683,8 @@ def Intercambio_FichasAtril(Lista_Atril,Pos_letra1,Pos_letra2,window,Dicc_rutas_
         if ("" ==(Lista_Atril[Pos_letra2])):
             window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida["white"],image_size=(40,40),image_subsample=5)
         else:
-            window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra2]],image_size=(40,40),image_subsample=5)
-        window[Pos_letra2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra1]],image_size=(40,40),image_subsample=5)
+            window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra2]][0],image_size=(40,40),image_subsample=5)
+        window[Pos_letra2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra1]][0],image_size=(40,40),image_subsample=5)
         aux = Lista_Atril[Pos_letra2]
         Lista_Atril[Pos_letra2] = Lista_Atril[Pos_letra1]
         Lista_Atril[Pos_letra1] = aux
@@ -635,15 +694,15 @@ def Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_p
     aux = Dicc[event1][0]
     Dicc[event1][0] = Lista_Atril[event2]
     Lista_Atril[event2] = aux
-    window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]],image_size=(40,40),image_subsample=5)
-    window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event2]],image_size=(40,40),image_subsample=5)
+    window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(40,40),image_subsample=5)
+    window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event2]][0],image_size=(40,40),image_subsample=5)
     #window[event1].update(Dicc[event1][0],button_color=('black','#FDD357'))
     #window[event2].update(Lista_Atril[event2],button_color=('black','#FDD357'))
 
 def Colocar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,Letra1,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
     Dicc[event2][0] = Letra1
     #window[event2].update(Letra1,button_color=('black','#FDD357'))
-    window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Letra1],image_size=(40,40),image_subsample=5)
+    window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Letra1][0],image_size=(40,40),image_subsample=5)
     Lista_Atril[event1] = ''
     #window[event1].update('')
     window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida["white"],image_size=(40,40),image_subsample=5)
@@ -658,7 +717,7 @@ def Colocar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,Letra1,event1,event2,window,Dic
 def Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
     Lista_Atril[event2] = Dicc[event1][0]
     window[event1].update(image_filename=Dicc[event1][2],image_size=(40,40),image_subsample=5)
-    window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]],image_size=(40,40),image_subsample=5)
+    window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(40,40),image_subsample=5)
     #window[event1].update('',button_color=('white',Dicc[event1][1]))
     #window[event2].update(Dicc[event1][0])
     Dicc[event1][0] = ''
@@ -766,6 +825,7 @@ def genero_Tablero():
 
     DiccRLPP=rutas_letras(Dicc_Puntajes)  #Dicc Dicc_rutas_letras_puntaje_partida
     DiccRLPP_CPU=rutas_letras_CPU(Dicc_Puntajes)
+    print(DiccRLPP)
     Lista_Atril = []
     Terminar = [False]
     Dicc = Generar_Dicc()
