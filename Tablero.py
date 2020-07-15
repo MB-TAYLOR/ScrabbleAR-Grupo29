@@ -376,7 +376,7 @@ def Llenar_Atril(Lista_Atril,window,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_let
         if (Lista_Atril[pos] == ''):
             Lista_Atril[pos] = Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
             window[pos].update(Lista_Atril[pos])
-            window[pos].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[pos]][0],image_size=(40,40),image_subsample=3)
+            window[pos].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[pos]][0],image_size=(40,40),image_subsample=5)
 
 
 def Coord_Ocupada(LCO,event):
@@ -412,9 +412,9 @@ def Eliminar_Coords(CCD,coord):
     CCD.discard(((coord[0]+1),coord[1]))     #Abajo
     CCD.discard((coord[0],(coord[1]-1)))     #Izquierda
 
-def Update_Fichas_Colocadas(LCOPR,window):
+def Update_Fichas_Colocadas(LCOPR,window,Dicc,Dicc_rutas_letras_puntaje_partida):
     for coord in LCOPR:
-        window[coord].update(button_color=('black','#E4BE4D'))
+        window[coord].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[coord][0]][2],image_size=(40,40),image_subsample=5)
 
 def Mensaje_Turno(Turno_Usuario):
     if Turno_Usuario:
@@ -960,7 +960,7 @@ def genero_Tablero():
             break
         if Fin:
             break
-        #Update_Fichas_Colocadas(LCOPR,window)
+        Update_Fichas_Colocadas(LCOPR,window,Dicc,DiccRLPP)
         Turno_Usuario = not Turno_Usuario
         window['CantFichas'].update('Cantidad de fichas: '+str(CFT))
     window.close()
