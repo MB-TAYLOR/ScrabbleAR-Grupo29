@@ -751,10 +751,12 @@ def Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,
     if (type(event) == int):
         if event in LPI:
             LPI.remove(event)
-            window[event].update(button_color=('black','#FDD357'))
+            #window[event].update(button_color=('black','#FDD357'))
+            window[event].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event]][0],image_size=(40,40),image_subsample=5)
         else:
             LPI.append(event)
-            window[event].update(button_color=('white','#57C3FD'))
+            #window[event].update(button_color=('white','#57C3FD'))
+            window[event].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event]][1],image_size=(40,40),image_subsample=5)
 
     elif (event == "Intercambiar fichas"):
         if Boton_Intercambiar:   #Intercambia las fichas y termina
@@ -769,7 +771,9 @@ def Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,
                         Letra = list(Dicc_Bolsa.keys())[x]
                     Lista_Atril[pos] = Letra
                     Dicc_Bolsa[Lista_Atril[pos]] = Dicc_Bolsa[Lista_Atril[pos]] - 1
-                    window[pos].update(Lista_Atril[pos],button_color=('black','#FDD357'))
+                    #window[pos].update(Lista_Atril[pos],button_color=('black','#FDD357'))
+                    window[pos].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[pos]][0],image_size=(40,40),image_subsample=5)
+
                 Turnos_Disponibles = Turnos_Disponibles - 1
                 Se_Intercambio_Ficha = True
                 CFT = Actualizar_CFT(CFT,Dicc_Bolsa)
@@ -825,7 +829,6 @@ def genero_Tablero():
 
     DiccRLPP=rutas_letras(Dicc_Puntajes)  #Dicc Dicc_rutas_letras_puntaje_partida
     DiccRLPP_CPU=rutas_letras_CPU(Dicc_Puntajes)
-    print(DiccRLPP)
     Lista_Atril = []
     Terminar = [False]
     Dicc = Generar_Dicc()
@@ -896,11 +899,16 @@ def genero_Tablero():
             if (((type(event) == int) or (type(event) == tuple)) and (Boton_Intercambiar == False)):
                 if event1 == '':
                     event1 = event
-                    if ((Lista_Atril[event1] != '') if type(event1) == int else Coord_Ocupada(LCOPR,event1)):
-                        window[event1].update(button_color=('white','#57C3FD'))
-                    else:
-                        if (type(event1) == tuple):
-                            Update_Infobox('No puedes interactuar con las fichas ya colocadas!','#5798FD',window) if Coord_Ocupada(LCO,event) else Update_Infobox('Primero selecciona una letra!','#5798FD',window)
+                    print(event1)
+                    if (type(event1) == int):
+                        if ((Lista_Atril[event1] != '')):
+                            #window[event1].update(button_color=('white','#57C3FD'))
+
+                            window[event1].update(image_filename=DiccRLPP[Lista_Atril[event1]][1],image_size=(40,40),image_subsample=5)
+                    elif Coord_Ocupada(LCOPR,event1):
+                            window[event1].update(image_filename=DiccRLPP[Dicc[event1][0]][1],image_size=(40,40),image_subsample=5)
+                    else :
+                        Update_Infobox('No puedes interactuar con las fichas ya colocadas!','#5798FD',window) if Coord_Ocupada(LCO,event) else Update_Infobox('Primero selecciona una letra!','#5798FD',window)
                         event1 = ''
                 else:
                     Acciones_Usuario(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event,window,DiccRLPP)
