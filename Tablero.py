@@ -821,7 +821,7 @@ def genero_Tablero():
 
             #if (tamaño_actual != window.Size):
             #    tamaño_actual=window.Size
-                #Aca deberian estar los cambios a la ventana que centrarian todo el contenido de esta
+                #Aca deberian estar los cambios a la ventana que centrarian todo el contenido de esta.
 
             if event in (None, 'Salir'):
                 event_popup = sg.popup_yes_no('Ey! estas saliendo en mitad de una partida\n¿Quieres posponerla?',title='Aviso',keep_on_top=True)
