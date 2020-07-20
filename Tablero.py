@@ -840,12 +840,12 @@ def Update_Columna_Extra(Columna_Historial,window):
     else:
         window['Columna_Conf'].update(visible=False)
         window['Columna_Historial'].update(visible=True)
-def GuardoPartida(Dificultad,DiccRLPP,Dicc,CFT,Usuario,Turnos_Disponibles,PTU,HistorialUsuario,LCO,Tiempo,DiccRLPP_CPU,PT_CPU,fichas_CPU,contador_Turnos_CPU,HistorialCPU,PrimerRonda,Lista_Atril,Dicc_Bolsa,Dicc_Puntajes,tiempo_ronda,CCD,LCO_Usuario,LCO_CPU):
+def GuardoPartida(Dificultad,DiccRLPP,Dicc,CFT,Usuario,Turnos_Disponibles,PTU,HistorialUsuario,LCO,Tiempo,DiccRLPP_CPU,PT_CPU,fichas_CPU,contador_Turnos_CPU,HistorialCPU,PrimerRonda,Lista_Atril,Dicc_Bolsa,Dicc_Puntajes,tiempo_ronda,CCD,LCO_Usuario,LCO_CPU,tiempo_jugador):
     #Hago una copia de Dicc con keys string para poder guardarlas en json
     Dicc_str={}
     for key in Dicc:
         Dicc_str[str(key)]=Dicc[key]
-    info_Usuario={"HistorialUsuario":HistorialUsuario,"DiccRLPP":DiccRLPP,"Usuario":Usuario,"Turnos_Disponibles":Turnos_Disponibles,"PTU":PTU,"Lista_Atril":Lista_Atril,"tiempo_ronda":tiempo_ronda,"LCO_Usuario":LCO_Usuario}
+    info_Usuario={"HistorialUsuario":HistorialUsuario,"DiccRLPP":DiccRLPP,"Usuario":Usuario,"Turnos_Disponibles":Turnos_Disponibles,"PTU":PTU,"Lista_Atril":Lista_Atril,"tiempo_ronda":tiempo_ronda,"LCO_Usuario":LCO_Usuario,"tiempo_jugador":tiempo_jugador}
     info_CPU={"HistorialCPU":HistorialCPU,"DiccRLPP_CPU":DiccRLPP_CPU,"PT_CPU":PT_CPU,"fichas_CPU":fichas_CPU,"contador_Turnos_CPU":contador_Turnos_CPU,"LCO_CPU":LCO_CPU}
     info_Tablero={"Dificultad":Dificultad,"Dicc":Dicc_str,"CFT":CFT,"LCO":LCO,"CCD":CCD,"Tiempo":Tiempo,"PrimerRonda":PrimerRonda,"Dicc_Bolsa":Dicc_Bolsa,"Dicc_Puntajes":Dicc_Puntajes}
     DiccPartida={"info_Usuario":{**info_Usuario},"info_CPU":{**info_CPU},"info_Tablero":{**info_Tablero}      }
@@ -883,8 +883,10 @@ def genero_Tablero():
     global PrimerRonda
     global HistorialUsuario
     global HistorialCPU
+
     event_popup = sg.popup_yes_no('¿Deseas cargar la partida guardada?',title='Aviso',keep_on_top=True)
     if (event_popup == 'Yes'):
+        partida_carga=True
         CCD=set()
         datos=cargoPartida()
         HistorialUsuario=datos["info_Usuario"]["HistorialUsuario"]
@@ -895,6 +897,7 @@ def genero_Tablero():
         Turnos_Disponibles=datos["info_Usuario"]["Turnos_Disponibles"]
         PTU=datos["info_Usuario"]["PTU"]
         LCO_Usuario=datos["info_Usuario"]["LCO_Usuario"]
+        tiempo_jugador=datos["info_Usuario"]["tiempo_jugador"]
         HistorialCPU=datos["info_CPU"]["HistorialCPU"]
         DiccRLPP_CPU=datos["info_CPU"]["DiccRLPP_CPU"]
         PT_CPU=datos["info_CPU"]["PT_CPU"]
@@ -929,6 +932,7 @@ def genero_Tablero():
         window['PuntajeUsuario'].update(str(PTU))
         window['Historial_Usuario'].update(HistorialUsuario)
     else:
+        partida_carga=False
         Usuario,Dificultad,Dicc_Puntajes,Dicc_Bolsa = Importar_Datos()
         Turno_Usuario = bool(random.getrandbits(1))
         LCO_Usuario=[] #Lista cordenadas ocuupadas usuario
@@ -968,7 +972,8 @@ def genero_Tablero():
         Dificil_se_juega="Default"
     window.Refresh()
     tamaño_actual=window.Size
-
+    print(tiempo_jugador)
+    print(tiempo_ronda)
     while True:
         LPI = []                #Lista de Posiciones de Intercambio (Para Intecambiar fichas)
         LCOPR = []              #Lista de Coordenadas Ocupadas Por Ronda
@@ -976,7 +981,11 @@ def genero_Tablero():
         puedo_intercambiar=True
         Boton_Intercambiar = False
         Se_Intercambio_Ficha = False
-        tiempo_jugador=tiempo_ronda
+        if partida_carga==True:
+            partida_carga=False
+        else:
+            tiempo_jugador=tiempo_ronda
+
         Mensaje_Turno(Turno_Usuario)
         while (Turno_Usuario):  #Mientras sea el turno del usuario:
             Palabra = ''
@@ -996,7 +1005,7 @@ def genero_Tablero():
                 if (event_popup == 'Yes'):
                     print("Pospone la partida")
 
-                    GuardoPartida(Dificultad,DiccRLPP,Dicc,CFT,Usuario,Turnos_Disponibles,PTU,HistorialUsuario,LCO,Tiempo,DiccRLPP_CPU,PT_CPU,fichas_CPU,contador_Turnos_CPU,HistorialCPU,PrimerRonda,Lista_Atril,Dicc_Bolsa,Dicc_Puntajes,tiempo_ronda,list(CCD),LCO_Usuario,LCO_CPU)
+                    GuardoPartida(Dificultad,DiccRLPP,Dicc,CFT,Usuario,Turnos_Disponibles,PTU,HistorialUsuario,LCO,Tiempo,DiccRLPP_CPU,PT_CPU,fichas_CPU,contador_Turnos_CPU,HistorialCPU,PrimerRonda,Lista_Atril,Dicc_Bolsa,Dicc_Puntajes,tiempo_ronda,list(CCD),LCO_Usuario,LCO_CPU,tiempo_jugador)
                 else:
                     print("No la pospone y sale sin guardar")
                 Fin = True
