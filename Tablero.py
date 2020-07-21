@@ -948,6 +948,7 @@ def genero_Tablero():
         window['PuntajeCPU'].update(str(PT_CPU))
         window['PuntajeUsuario'].update(str(PTU))
         window['Historial_Usuario'].update(HistorialUsuario)
+        
     else:
         partida_carga=False
         UUsuario,Dificultad,Dicc_Puntajes,Dicc_Bolsa,Tiempo_Ronda,Tiempo,Lista_TP = Importar_Datos()
