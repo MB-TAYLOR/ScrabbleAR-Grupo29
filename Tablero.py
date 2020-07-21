@@ -1,4 +1,5 @@
 from palabra_Existe import verificar_Palabra
+import json
 from Generadores import Selector_de_coordenadas_disponibles
 from AiMaquina import formar_palabra
 from threading import Thread
@@ -93,15 +94,15 @@ def rutas_letras(Dicc_letra_puntajes):
     for x in Dicc_letra_puntajes:
         clave_Dicc_letras_rutas=x+str(Dicc_letra_puntajes[x])
         Dicc_Actual_Punto_Ficha[x]=Dicc_letras_rutas[clave_Dicc_letras_rutas]
-    Dicc_Actual_Punto_Ficha['white']=r'ScrabbleAR_Imagenes_png\Transparente.png'
+    Dicc_Actual_Punto_Ficha['white']=r'ScrabbleAR_Imagenes_png\modelo_ficha.png'#r'ScrabbleAR_Imagenes_png\Transparente.png'
     return(Dicc_Actual_Punto_Ficha)
 
 def Update_Tablero2(window,Dicc):
     inicio=r'ScrabbleAR_Imagenes_png\icono_inicio.png'
-    yellow=r'ScrabbleAR_Imagenes_png\icono_-2.png'
-    red=r'ScrabbleAR_Imagenes_png\icono_-3.png'
-    green=r'ScrabbleAR_Imagenes_png\icono_x3.png'
-    blue=r'ScrabbleAR_Imagenes_png\icono_x2.png'
+    yellow=r'ScrabbleAR_Imagenes_png\icono_x3.png'
+    red=r'ScrabbleAR_Imagenes_png\icono_x2.png'
+    green=r'ScrabbleAR_Imagenes_png\icono_-3.png'
+    blue=r'ScrabbleAR_Imagenes_png\icono_-2.png'
     white=r'ScrabbleAR_Imagenes_png\modelo_ficha.png'#r'ScrabbleAR_Imagenes_png\icono_blanco.png'
 
     for x in range(15):
@@ -335,20 +336,21 @@ def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_pun
 
     #formato_fichas_jugador={'font':('',25),'button_color':(None,'black'),'image_filename':'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Ficha.png','image_size':(40,40),'pad':(7,3)  }
     #Para luego reemplazar los colores dados por el boton con imagenes
-    Letra_1=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
-    Lista_Atril.append(Letra_1)
-    Letra_2=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
-    Lista_Atril.append(Letra_2)
-    Letra_3=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
-    Lista_Atril.append(Letra_3)
-    Letra_4=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
-    Lista_Atril.append(Letra_4)
-    Letra_5=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
-    Lista_Atril.append(Letra_5)
-    Letra_6=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
-    Lista_Atril.append(Letra_6)
-    Letra_7=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
-    Lista_Atril.append(Letra_7)
+    if len(Lista_Atril) < 7 :
+        Letra_1=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
+        Lista_Atril.append(Letra_1)
+        Letra_2=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
+        Lista_Atril.append(Letra_2)
+        Letra_3=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
+        Lista_Atril.append(Letra_3)
+        Letra_4=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
+        Lista_Atril.append(Letra_4)
+        Letra_5=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
+        Lista_Atril.append(Letra_5)
+        Letra_6=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
+        Lista_Atril.append(Letra_6)
+        Letra_7=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
+        Lista_Atril.append(Letra_7)
     layout = [[sg.Text('',key='texto1',pad=(45,3)),(sg.Image(**formato_fichas_cpu,key='fichasbot1')),
                                                     (sg.Image(**formato_fichas_cpu,key='fichasbot2')),
                                                     (sg.Image(**formato_fichas_cpu,key='fichasbot3')),
@@ -361,13 +363,13 @@ def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_pun
     layout.extend([[sg.Button('', size=(4, 2),key=(i,j),pad=(0,0))for j in range(MAX_COL)] for i in range(MAX_ROWS)])
 
     layout.extend([[sg.Text('',key='texto2',pad=(28,3)),
-                    (sg.Button(key=0,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_1][0],image_size=(40,40),image_subsample=5)),
-                    (sg.Button(key=1,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_2][0],image_size=(40,40),image_subsample=5)),
-                    (sg.Button(key=2,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_3][0],image_size=(40,40),image_subsample=5)),
-                    (sg.Button(key=3,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_4][0],image_size=(40,40),image_subsample=5)),
-                    (sg.Button(key=4,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_5][0],image_size=(40,40),image_subsample=5)),
-                    (sg.Button(key=5,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_6][0],image_size=(40,40),image_subsample=5)),
-                    (sg.Button(key=6,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Letra_7][0],image_size=(40,40),image_subsample=5))],
+                    (sg.Button(key=0,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[0]][0],image_size=(40,40),image_subsample=5)),
+                    (sg.Button(key=1,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[1]][0],image_size=(40,40),image_subsample=5)),
+                    (sg.Button(key=2,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[2]][0],image_size=(40,40),image_subsample=5)),
+                    (sg.Button(key=3,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[3]][0],image_size=(40,40),image_subsample=5)),
+                    (sg.Button(key=4,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[4]][0],image_size=(40,40),image_subsample=5)),
+                    (sg.Button(key=5,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[5]][0],image_size=(40,40),image_subsample=5)),
+                    (sg.Button(key=6,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[6]][0],image_size=(40,40),image_subsample=5))],
                     [(sg.Image(filename='Atril.png',key='texto'))]])
 
     return layout
@@ -425,7 +427,7 @@ def Mensaje_Turno(Turno_Usuario):
 
 def Eliminar_Elementos_Ocupados_CDD(LCO,CCD):
     for L in LCO:
-        CCD.discard(L)
+        CCD.discard(tuple(L))
 
 def Verificar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega,window):
     if (LCOPR[0][0] == LCOPR[1][0]): #Si entra la palabra formada esta en Horizontal
@@ -483,27 +485,29 @@ def Calcular_Puntaje(Palabra,Dicc_Puntajes):
         PPR = PPR + Dicc_Puntajes[letra]
     return PPR
 
-def Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU,LCDPR_CPU):
+def Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU,LCDPR_CPU,LCO_CPU):
     for x in range(len(Palabra)):
         #window[(coordenadas_CPU[0],coordenadas_CPU[1]+x)].update(str(Palabra[x]),button_color=('black','#7D4DE4'))
         window[(coordenadas_CPU[0],coordenadas_CPU[1]+x)].update(image_filename=Dicc_rutas_letras_puntaje_partida_CPU[str(Palabra[x])],image_size=(40,40),image_subsample=5)
         Dicc[(coordenadas_CPU[0],coordenadas_CPU[1]+x)][0] =str(Palabra[x])
         LCO.append((coordenadas_CPU[0],coordenadas_CPU[1]+x))
+        LCO_CPU.append((coordenadas_CPU[0],coordenadas_CPU[1]+x))
         LCDPR_CPU.append((coordenadas_CPU[0],coordenadas_CPU[1]+x))
         Coord_Disponible(LCO,CCD)
         Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
 
-def Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU,LCDPR_CPU):
+def Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU,LCDPR_CPU,LCO_CPU):
     for y in range(len(Palabra)):
         #window[(coordenadas_CPU[0]+y,coordenadas_CPU[1])].update(str(Palabra[y]),button_color=('black','#7D4DE4'))
         window[(coordenadas_CPU[0]+y,coordenadas_CPU[1])].update(image_filename=Dicc_rutas_letras_puntaje_partida_CPU[str(Palabra[y])],image_size=(40,40),image_subsample=5)
         Dicc[(coordenadas_CPU[0]+y,coordenadas_CPU[1])][0] =str(Palabra[y])
         LCO.append((coordenadas_CPU[0]+y,coordenadas_CPU[1]))
+        LCO_CPU.append((coordenadas_CPU[0]+y,coordenadas_CPU[1]))
         LCDPR_CPU.append((coordenadas_CPU[0]+y,coordenadas_CPU[1]))
         Coord_Disponible(LCO,CCD)
         Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
 
-def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Bolsa_Diccionario,Cant_fichas,Dicc_Puntajes,PT_CPU,Dicc_rutas_letras_puntaje_partida_CPU):
+def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Bolsa_Diccionario,Cant_fichas,Dicc_Puntajes,PT_CPU,Dicc_rutas_letras_puntaje_partida_CPU,LCO_CPU):
     global PrimerRonda
     global HistorialCPU
     LCDPR_CPU = []
@@ -532,6 +536,7 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
                 window[(7,7+x)].update(image_filename=Dicc_rutas_letras_puntaje_partida_CPU[str(Palabra[x])],image_size=(40,40),image_subsample=5)
                 Dicc[7,7+x][0] =str(Palabra[x])
                 LCO.append((7,7+x))
+                LCO_CPU.append((7,7+x))
                 Coord_Disponible(LCO,CCD)
                 Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
             PrimerRonda = False
@@ -549,7 +554,7 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
                                 else:
                                     puede_Colocarse=True
                             if(puede_Colocarse):
-                                Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU,LCDPR_CPU)
+                                Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU,LCDPR_CPU,LCO_CPU)
                                 intento=False
                         elif(((len(Palabra)+coordenadas_CPU[0])<15)and((len(Palabra)+coordenadas_CPU[0])>-1)):#si se va a pasar del tablero al poner la palabra horizontalmente
                             for x in range(len(Palabra)):
@@ -560,7 +565,7 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
                                 else:
                                     puede_Colocarse=True
                             if(puede_Colocarse):
-                                Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU,LCDPR_CPU)
+                                Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU,LCDPR_CPU,LCO_CPU)
                                 intento=False
             if((intento)and(len(CCD_CPU)>1)):
                 print("El robot no tiene una posicion valida para colocar su palabra") #Implementar que se vuelva a buscar uan palabra pero mas corta
@@ -652,9 +657,10 @@ def TerminarTurno(LCOPR,LCO,CCD,Dicc,Lista_Atril,PTU,Palabra,Dificultad,Dificil_
         Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,Dicc_rutas_letras_puntaje_partida)
     return PTU
 
-def Actualizar_LCO(LCOPR,LCO):
+def Actualizar_LCO(LCOPR,LCO,LCO_Usuario):
     for coord in LCOPR:
         LCO.append(coord)
+        LCO_Usuario.append(coord)
 
 def Intercambio_FichasTablero(LCOPR,Dicc,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
     if event1 != event2:
@@ -677,8 +683,6 @@ def Intercambio_FichasTablero(LCOPR,Dicc,event1,event2,window,Dicc_rutas_letras_
         window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(40,40),image_subsample=5)
 
 def Intercambio_FichasAtril(Lista_Atril,Pos_letra1,Pos_letra2,window,Dicc_rutas_letras_puntaje_partida):
-    print((Lista_Atril[Pos_letra1]))
-    print((Lista_Atril[Pos_letra2]))
     if (Pos_letra1 != Pos_letra2):
         #window[Pos_letra1].update(Lista_Atril[Pos_letra2])
         #window[Pos_letra2].update(Lista_Atril[Pos_letra1])
@@ -701,8 +705,16 @@ def Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_p
     aux = Dicc[event1][0]
     Dicc[event1][0] = Lista_Atril[event2]
     Lista_Atril[event2] = aux
-    window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(40,40),image_subsample=5)
-    window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event2]][0],image_size=(40,40),image_subsample=5)
+    if Dicc[event1][0] == "" :
+        window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida["white"],image_size=(40,40),image_subsample=5)
+        window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event2]][0],image_size=(40,40),image_subsample=5)
+    elif(Lista_Atril[event2] == ""):
+        window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(40,40),image_subsample=5)
+        window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida["white"],image_size=(40,40),image_subsample=5)
+    else:
+        window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(40,40),image_subsample=5)
+        window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event2]][0],image_size=(40,40),image_subsample=5)
+
     #window[event1].update(Dicc[event1][0],button_color=('black','#FDD357'))
     #window[event2].update(Lista_Atril[event2],button_color=('black','#FDD357'))
 
@@ -719,7 +731,7 @@ def Colocar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,Letra1,event1,event2,window,Dic
     #Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
     #Eliminar_Elementos_Ocupados_CDD(LCOPR,CCD)
     #window[event1].update(button_color=('black','#FDD357'))
-    window[event1].update(image_filename=r'ScrabbleAR_Imagenes_png\Transparente.png',image_size=(40,40),image_subsample=5)
+    window[event1].update(image_filename=r'ScrabbleAR_Imagenes_png\modelo_ficha.png',image_size=(40,40),image_subsample=5)
 
 def Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
     Lista_Atril[event2] = Dicc[event1][0]
@@ -828,6 +840,41 @@ def Update_Columna_Extra(Columna_Historial,window):
     else:
         window['Columna_Conf'].update(visible=False)
         window['Columna_Historial'].update(visible=True)
+def GuardoPartida(Dificultad,DiccRLPP,Dicc,CFT,Usuario,Turnos_Disponibles,PTU,HistorialUsuario,LCO,Tiempo,DiccRLPP_CPU,PT_CPU,fichas_CPU,contador_Turnos_CPU,HistorialCPU,PrimerRonda,Lista_Atril,Dicc_Bolsa,Dicc_Puntajes,tiempo_ronda,CCD,LCO_Usuario,LCO_CPU,tiempo_jugador):
+    #Hago una copia de Dicc con keys string para poder guardarlas en json
+    Dicc_str={}
+    for key in Dicc:
+        Dicc_str[str(key)]=Dicc[key]
+    info_Usuario={"HistorialUsuario":HistorialUsuario,"DiccRLPP":DiccRLPP,"Usuario":Usuario,"Turnos_Disponibles":Turnos_Disponibles,"PTU":PTU,"Lista_Atril":Lista_Atril,"tiempo_ronda":tiempo_ronda,"LCO_Usuario":LCO_Usuario,"tiempo_jugador":tiempo_jugador}
+    info_CPU={"HistorialCPU":HistorialCPU,"DiccRLPP_CPU":DiccRLPP_CPU,"PT_CPU":PT_CPU,"fichas_CPU":fichas_CPU,"contador_Turnos_CPU":contador_Turnos_CPU,"LCO_CPU":LCO_CPU}
+    info_Tablero={"Dificultad":Dificultad,"Dicc":Dicc_str,"CFT":CFT,"LCO":LCO,"CCD":CCD,"Tiempo":Tiempo,"PrimerRonda":PrimerRonda,"Dicc_Bolsa":Dicc_Bolsa,"Dicc_Puntajes":Dicc_Puntajes}
+    DiccPartida={"info_Usuario":{**info_Usuario},"info_CPU":{**info_CPU},"info_Tablero":{**info_Tablero}      }
+    archivo=open("Partida_Guardada.json","w")
+    Guardar=json.dump(DiccPartida,archivo)
+    archivo.close()
+def cargoPartida():
+    archivo=open("Partida_Guardada.json","r")
+    datos=json.load(archivo)
+    archivo.close()
+    Dicc={}
+
+    for x in range(len(datos["info_Tablero"]["CCD"])):
+        datos["info_Tablero"]["CCD"][x]=tuple(datos["info_Tablero"]["CCD"][x])
+    for x in range(len(datos["info_Tablero"]["LCO"])):
+        datos["info_Tablero"]["LCO"][x]=tuple(datos["info_Tablero"]["LCO"][x])
+    for x in range(len(datos["info_Usuario"]["LCO_Usuario"])):
+        datos["info_Usuario"]["LCO_Usuario"][x]=tuple(datos["info_Usuario"]["LCO_Usuario"][x])
+    for x in range(len(datos["info_CPU"]["LCO_CPU"])):
+        datos["info_CPU"]["LCO_CPU"][x]=tuple(datos["info_CPU"]["LCO_CPU"][x])
+
+    for key in datos["info_Tablero"]["Dicc"]:
+        key_dicc=key.strip("()")
+        key_dicc=key_dicc.replace(",","")
+        x,y=key_dicc.split(" ")
+        key_dicc=tuple((int(x),int(y)))
+        Dicc[key_dicc]=datos["info_Tablero"]["Dicc"][key]
+    datos["info_Tablero"]["Dicc"]=Dicc
+    return(datos)
 
 #PROGRAMA PRINCIPAL
 def genero_Tablero():
@@ -835,45 +882,98 @@ def genero_Tablero():
     global temp
     global PrimerRonda
     global HistorialUsuario
-    Usuario,Dificultad,Dicc_Puntajes,Dicc_Bolsa = Importar_Datos()
+    global HistorialCPU
+
+    event_popup = sg.popup_yes_no('¿Deseas cargar la partida guardada?',title='Aviso',keep_on_top=True)
+    if (event_popup == 'Yes'):
+        partida_carga=True
+        CCD=set()
+        datos=cargoPartida()
+        HistorialUsuario=datos["info_Usuario"]["HistorialUsuario"]
+        tiempo_ronda=datos["info_Usuario"]["tiempo_ronda"]
+        DiccRLPP=datos["info_Usuario"]["DiccRLPP"]
+        Lista_Atril=datos["info_Usuario"]["Lista_Atril"]
+        Usuario=datos["info_Usuario"]["Usuario"]
+        Turnos_Disponibles=datos["info_Usuario"]["Turnos_Disponibles"]
+        PTU=datos["info_Usuario"]["PTU"]
+        LCO_Usuario=datos["info_Usuario"]["LCO_Usuario"]
+        tiempo_jugador=datos["info_Usuario"]["tiempo_jugador"]
+        HistorialCPU=datos["info_CPU"]["HistorialCPU"]
+        DiccRLPP_CPU=datos["info_CPU"]["DiccRLPP_CPU"]
+        PT_CPU=datos["info_CPU"]["PT_CPU"]
+        fichas_CPU=datos["info_CPU"]["fichas_CPU"]
+        contador_Turnos_CPU=datos["info_CPU"]["contador_Turnos_CPU"]
+        LCO_CPU=datos["info_CPU"]["LCO_CPU"]
+        Dificultad=datos["info_Tablero"]["Dificultad"]
+        Dicc=datos["info_Tablero"]["Dicc"]
+        CFT=datos["info_Tablero"]["CFT"]
+        LCO=datos["info_Tablero"]["LCO"]
+        Tiempo=datos["info_Tablero"]["Tiempo"]
+        PrimerRonda=datos["info_Tablero"]["PrimerRonda"]
+        Dicc_Bolsa=datos["info_Tablero"]["Dicc_Bolsa"]
+        Dicc_Puntajes=datos["info_Tablero"]["Dicc_Puntajes"]
+        aux_CCD=datos["info_Tablero"]["CCD"]
+        Turno_Usuario=True
+        for x in aux_CCD:
+            CCD.add(tuple(x))
+        diseño = [ [sg.Column((Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP))),
+                    sg.Column(Layout_Columna()),
+                    sg.Column(Layout_Columna_Historial(Usuario),key='Columna_Historial'),
+                    sg.Column(Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT),key='Columna_Conf')] ]
+        window = sg.Window('Tablero',diseño ,location=(400,0),finalize=True)
+        Update_Tablero2(window,Dicc)
+        for coord in LCO:
+            if coord in LCO_Usuario:
+                window[coord].update(image_filename=DiccRLPP[Dicc[coord][0]][2],image_size=(40,40),image_subsample=5)
+            elif coord in LCO_CPU:
+                window[coord].update(image_filename=DiccRLPP_CPU[Dicc[coord][0]],image_size=(40,40),image_subsample=5)
+        window['Historial_CPU'].update(HistorialCPU)
+        window['PuntajeCPU'].update(str(PT_CPU))
+        window['PuntajeUsuario'].update(str(PTU))
+        window['Historial_Usuario'].update(HistorialUsuario)
+    else:
+        partida_carga=False
+        Usuario,Dificultad,Dicc_Puntajes,Dicc_Bolsa = Importar_Datos()
+        Turno_Usuario = bool(random.getrandbits(1))
+        LCO_Usuario=[] #Lista cordenadas ocuupadas usuario
+        LCO_CPU=[]      #Lista cordenadas ocuupadas CPU
+        DiccRLPP=rutas_letras(Dicc_Puntajes)  #Dicc Dicc_rutas_letras_puntaje_partida
+        DiccRLPP_CPU=rutas_letras_CPU(Dicc_Puntajes)
+        Lista_Atril = []
+        Dicc = Generar_Dicc()
+        CFT = 0
+        CFT = Actualizar_CFT(CFT,Dicc_Bolsa) #Cantidad Fichas Totales
+        fichas_CPU=""
+        contador_Turnos_CPU=0
+        PT_CPU=0                    #Puntaje Total CPU
+        PTU = 0                     #Puntaje Total Usuario
+        CCD=set()                   #Conjunto de Coordenadas  Disponibles
+        LCO = []                    #Lista de Coordenadas Ocupadas
+        Se_necesitan_dos = False
+        Tiempo,tiempo_ronda=tiempo_dificultad(Dificultad)
+        Turnos_Disponibles = 3
+        Columna_Historial = True
+        Desplegado = True
+        diseño = [ [sg.Column((Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP))),
+                    sg.Column(Layout_Columna()),
+                    sg.Column(Layout_Columna_Historial(Usuario),key='Columna_Historial'),
+                    sg.Column(Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT),key='Columna_Conf')] ]
+        window = sg.Window('Tablero',diseño ,location=(400,0),finalize=True)
+        Dicc = Update_Tablero(window,Dicc)
+        Dicc = Update_Tablero2(window,Dicc)
+    tiemp_ant = ''
+    Fin = False
+    event1 = ''
+    window['Columna_Conf'].update(visible=False)
+    window['PuntosUsuario'].update('Puntos  ' + Usuario)
     if(Dificultad=="Dificil"):
         Dificil_se_juega=aleatorio_Dificil()
     else:
         Dificil_se_juega="Default"
-
-    DiccRLPP=rutas_letras(Dicc_Puntajes)  #Dicc Dicc_rutas_letras_puntaje_partida
-    DiccRLPP_CPU=rutas_letras_CPU(Dicc_Puntajes)
-    Lista_Atril = []
-    Dicc = Generar_Dicc()
-    CFT = 0
-    CFT = Actualizar_CFT(CFT,Dicc_Bolsa) #Cantidad Fichas Totales
-    diseño = [ [sg.Column((Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP))),
-                sg.Column(Layout_Columna()),
-                sg.Column(Layout_Columna_Historial(Usuario),key='Columna_Historial'),
-                sg.Column(Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT),key='Columna_Conf')] ]
-    window = sg.Window('Tablero',diseño ,location=(400,0),finalize=True)
-    window['Columna_Conf'].update(visible=False)
-    Dicc = Update_Tablero(window,Dicc)
-    Dicc = Update_Tablero2(window,Dicc)
-    window['PuntosUsuario'].update('Puntos  ' + Usuario)
-    Turno_Usuario = bool(random.getrandbits(1))
-    Fin = False
-    fichas_CPU=""
-    contador_Turnos_CPU=0
-    PT_CPU=0                    #Puntaje Total CPU
-    PTU = 0                     #Puntaje Total Usuario
-    CCD=set()                   #Conjunto de Coordenadas  Disponibles
-    LCO = []                    #Lista de Coordenadas Ocupadas
-    Se_necesitan_dos = False
-    HistorialCPU = ''
-    event1 = ''
-    tiemp_ant = ''
-    Tiempo,tiempo_ronda=tiempo_dificultad(Dificultad)
-    Turnos_Disponibles = 3
     window.Refresh()
     tamaño_actual=window.Size
-    Columna_Historial = True
-    Desplegado = True
+    print(tiempo_jugador)
+    print(tiempo_ronda)
     while True:
         LPI = []                #Lista de Posiciones de Intercambio (Para Intecambiar fichas)
         LCOPR = []              #Lista de Coordenadas Ocupadas Por Ronda
@@ -881,7 +981,11 @@ def genero_Tablero():
         puedo_intercambiar=True
         Boton_Intercambiar = False
         Se_Intercambio_Ficha = False
-        tiempo_jugador=tiempo_ronda
+        if partida_carga==True:
+            partida_carga=False
+        else:
+            tiempo_jugador=tiempo_ronda
+
         Mensaje_Turno(Turno_Usuario)
         while (Turno_Usuario):  #Mientras sea el turno del usuario:
             Palabra = ''
@@ -896,13 +1000,14 @@ def genero_Tablero():
             #if (tamaño_actual != window.Size):
             #    tamaño_actual=window.Size
                 #Aca deberian estar los cambios a la ventana que centrarian todo el contenido de esta.
-
             if event in (None, 'Salir'):
                 event_popup = sg.popup_yes_no('Ey! estas saliendo en mitad de una partida\n¿Quieres posponerla?',title='Aviso',keep_on_top=True)
-                #if (event_popup == 'Yes'):
-                    #Pospone la partida
-                #else:
-                    #No la pospone y sale sin guardar
+                if (event_popup == 'Yes'):
+                    print("Pospone la partida")
+
+                    GuardoPartida(Dificultad,DiccRLPP,Dicc,CFT,Usuario,Turnos_Disponibles,PTU,HistorialUsuario,LCO,Tiempo,DiccRLPP_CPU,PT_CPU,fichas_CPU,contador_Turnos_CPU,HistorialCPU,PrimerRonda,Lista_Atril,Dicc_Bolsa,Dicc_Puntajes,tiempo_ronda,list(CCD),LCO_Usuario,LCO_CPU,tiempo_jugador)
+                else:
+                    print("No la pospone y sale sin guardar")
                 Fin = True
                 puedo_intercambiar=False
                 break
@@ -931,7 +1036,7 @@ def genero_Tablero():
                 Bonus = Calcular_Bonus(LCOPR,Dicc_Puntajes,Dicc)
                 PTU = TerminarTurno(LCOPR,LCO,CCD,Dicc,Lista_Atril,PTU,Palabra,Dificultad,Dificil_se_juega,Dicc_Puntajes,Dicc_Bolsa,CFT,Bonus,window,DiccRLPP)
                 CFT = Actualizar_CFT(CFT,Dicc_Bolsa)
-                Actualizar_LCO(LCOPR,LCO)
+                Actualizar_LCO(LCOPR,LCO,LCO_Usuario)
                 Actualizar_CCD(CCD,LCO)
                 break
 
@@ -961,7 +1066,7 @@ def genero_Tablero():
 
 
         while (Turno_Usuario == False):
-            contador_Turnos_CPU,fichas_CPU,CFT,PT_CPU=Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Dicc_Bolsa,CFT,Dicc_Puntajes,PT_CPU,DiccRLPP_CPU)
+            contador_Turnos_CPU,fichas_CPU,CFT,PT_CPU=Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Dicc_Bolsa,CFT,Dicc_Puntajes,PT_CPU,DiccRLPP_CPU,LCO_CPU)
             break
         if Fin:
             break
