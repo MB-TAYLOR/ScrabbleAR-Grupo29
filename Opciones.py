@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+import random
 import csv
 
 
@@ -15,23 +16,35 @@ def Primer_Cargar(values,window,Dicc_Bolsa,letra_Seleccionada):
                     window['Facil'].update(values[0])
                 elif(values[3] == 'True'):
                     window['Normal'].update(values[3])
-                else:
+                elif(values[4] == 'True'):
                     window['Dificil'].update(values[4])
-                values[5] = row[5]
-                window['Lote1'].update(values[5])
+                else:
+                    window['Personalizado'].update(values[5])
                 values[6] = row[6]
-                window['Lote2'].update(values[6])
+                window['Lote1'].update(values[6])
                 values[7] = row[7]
-                window['Lote3'].update(values[7])
+                window['Lote2'].update(values[7])
                 values[8] = row[8]
-                window['Lote4'].update(values[8])
+                window['Lote3'].update(values[8])
                 values[9] = row[9]
-                window['Lote5'].update(values[9])
+                window['Lote4'].update(values[9])
                 values[10] = row[10]
-                window['Lote6'].update(values[10])
+                window['Lote5'].update(values[10])
                 values[11] = row[11]
-                window['Lote7'].update(values[11])
-                a = 12
+                window['Lote6'].update(values[11])
+                values[12] = row[12]
+                window['Lote7'].update(values[12])
+                values[13] = row[13]
+                window['TT'].update(values[13])
+                values[14] = row[14]
+                window['TPR'].update(values[14])
+                values[15] = row[15]
+                window['Adjetivos'].update(True if values[15] != 'False' else False)
+                values[16] = row[16]
+                window['Sustantivos'].update(True if values[16] != 'False' else False)
+                values[17] = row[17]
+                window['Verbos'].update(True if values[17] != 'False' else False)
+                a = 18
                 for key in Dicc_Bolsa.keys():
                     Dicc_Bolsa[key] = int(row[a])
                     a = a + 1
@@ -53,23 +66,35 @@ def Cargar(values,window,Dicc_Bolsa,letra_Seleccionada):
                     window['Facil'].update(values['Facil'])
                 elif(values['Normal'] == 'True'):
                     window['Normal'].update(values['Normal'])
-                else:
+                elif(values['Dificil'] == 'True'):
                     window['Dificil'].update(values['Dificil'])
-                values['Lote1'] = row[5]
+                else:
+                    window['Personalizado'].update(values['Personalizado'])
+                values['Lote1'] = row[6]
                 window['Lote1'].update(values['Lote1'])
-                values['Lote2'] = row[6]
+                values['Lote2'] = row[7]
                 window['Lote2'].update(values['Lote2'])
-                values['Lote3'] = row[7]
+                values['Lote3'] = row[8]
                 window['Lote3'].update(values['Lote3'])
-                values['Lote4'] = row[8]
+                values['Lote4'] = row[9]
                 window['Lote4'].update(values['Lote4'])
-                values['Lote5'] = row[9]
+                values['Lote5'] = row[10]
                 window['Lote5'].update(values['Lote5'])
-                values['Lote6'] = row[10]
+                values['Lote6'] = row[11]
                 window['Lote6'].update(values['Lote6'])
-                values['Lote7'] = row[11]
+                values['Lote7'] = row[12]
                 window['Lote7'].update(values['Lote7'])
-                a = 12
+                values['TT'] = row[13]
+                window['TT'].update(values['TT'])
+                values['TPR'] = row[14]
+                window['TPR'].update(values['TPR'])
+                values['Adjetivos'] = row[15]
+                window['Adjetivos'].update(True if values['Adjetivos'] != 'False' else False)
+                values['Sustantivos'] = row[16]
+                window['Sustantivos'].update(True if values['Sustantivos'] != 'False' else False)
+                values['Verbos'] = row[17]
+                window['Verbos'].update(True if values['Verbos'] != 'False' else False)
+                a = 18
                 for key in Dicc_Bolsa.keys():
                     Dicc_Bolsa[key] = int(row[a])
                     a = a + 1
@@ -80,15 +105,15 @@ def Cargar(values,window,Dicc_Bolsa,letra_Seleccionada):
 def AgregarDatos(values):
     arch = open('Archivo_Opciones.csv','a')
     writer = csv.writer(arch)
-    writer.writerow([True,values['Usuario'].strip(),values['Facil'],values['Normal'],values['Dificil'],int(values['Lote1']),int(values['Lote2']),int(values['Lote3']),int(values['Lote4']),int(values['Lote5']),int(values['Lote6']),int(values['Lote7']),values['A'],values['B'],values['C'],values['D'],values['E'],values['F'],values['G'],values['H'],values['I'],values['J'],values['K'],values['L'],values['M'],values['N'],values['Enie'],values['O'],values['P'],values['Q'],values['R'],values['R'],values['S'],values['T'],values['U'],values['V'],values['W'],values['X'],values['Y'],values['Z']])
+    writer.writerow([True,values['Usuario'].strip(),values['Facil'],values['Normal'],values['Dificil'],values['Personalizado'],int(values['Lote1']),int(values['Lote2']),int(values['Lote3']),int(values['Lote4']),int(values['Lote5']),int(values['Lote6']),int(values['Lote7']),values['TT'],values['TPR'],values['Adjetivos'],values['Sustantivos'],values['Verbos'],values['A'],values['B'],values['C'],values['D'],values['E'],values['F'],values['G'],values['H'],values['I'],values['J'],values['K'],values['L'],values['M'],values['N'],values['Enie'],values['O'],values['P'],values['Q'],values['R'],values['R'],values['S'],values['T'],values['U'],values['V'],values['W'],values['X'],values['Y'],values['Z']])
     arch.close()
 
 def GuardarDatos(lista):
     arch = open('Archivo_Opciones.csv','w')
     writer = csv.writer(arch)
-    writer.writerow(['Actual','Usuario','Facil','Normal','Dificil','Lote1','Lote2','Lote3','Lote4','Lote5','Lote6','Lote7','A','B','C','D','E','F','G','H','I','J','K','L','M','N','Enie','O','P','Q','R','S','T','U','V','W','X','Y','Z'])
+    writer.writerow(['Actual','Usuario','Facil','Normal','Dificil','Personalizado','Lote1','Lote2','Lote3','Lote4','Lote5','Lote6','Lote7','TT','TPR','Adjetivos','Sustantivos','Verbos','A','B','C','D','E','F','G','H','I','J','K','L','M','N','Enie','O','P','Q','R','S','T','U','V','W','X','Y','Z'])
     for row in lista:
-        writer.writerow([row['Actual'],row['Usuario'].strip(),row['Facil'],row['Normal'],row['Dificil'],int(row['Lote1']),int(row['Lote2']),int(row['Lote3']),int(row['Lote4']),int(row['Lote5']),int(row['Lote6']),int(row['Lote7']),row['A'],row['B'],row['C'],row['D'],row['E'],row['F'],row['G'],row['H'],row['I'],row['J'],row['K'],row['L'],row['M'],row['N'],row['Enie'],row['O'],row['P'],row['Q'],row['R'],row['R'],row['S'],row['T'],row['U'],row['V'],row['W'],row['X'],row['Y'],row['Z']])
+        writer.writerow([row['Actual'],row['Usuario'].strip(),row['Facil'],row['Normal'],row['Dificil'],row['Personalizado'],int(row['Lote1']),int(row['Lote2']),int(row['Lote3']),int(row['Lote4']),int(row['Lote5']),int(row['Lote6']),int(row['Lote7']),row['TT'],row['TPR'],row['Adjetivos'],row['Sustantivos'],row['Verbos'],row['A'],row['B'],row['C'],row['D'],row['E'],row['F'],row['G'],row['H'],row['I'],row['J'],row['K'],row['L'],row['M'],row['N'],row['Enie'],row['O'],row['P'],row['Q'],row['R'],row['R'],row['S'],row['T'],row['U'],row['V'],row['W'],row['X'],row['Y'],row['Z']])
     arch.close()
 
 def LeerDatos():
@@ -115,6 +140,8 @@ def RestablecerPredeterminado(values,window,Dicc_Bolsa,letra_Seleccionada):
     window['Normal'].update(values['Normal'])
     values['Dificil'] = False
     window['Dificil'].update(values['Dificil'])
+    values['Personalizado'] = False
+    window['Personalizado'].update(values['Personalizado'])
     values['Lote1'] = 1
     window['Lote1'].update(values['Lote1'])
     values['Lote2'] = 2
@@ -129,6 +156,16 @@ def RestablecerPredeterminado(values,window,Dicc_Bolsa,letra_Seleccionada):
     window['Lote6'].update(values['Lote6'])
     values['Lote7'] = 10
     window['Lote7'].update(values['Lote7'])
+    values['TT'] = 60
+    window['TT'].update(values['TT'])
+    values['TPR'] = 60
+    window['TPR'].update(values['TPR'])
+    values['Adjetivos'] = True
+    window['Adjetivos'].update(values['Adjetivos'])
+    values['Sustantivos'] = True
+    window['Sustantivos'].update(values['Sustantivos'])
+    values['Verbos'] = True
+    window['Verbos'].update(values['Verbos'])
     Dicc_Bolsa={"A":11,"B":3,"C":4,"D":4,"E":11,"F":2,"G":2,"H":2,"I":6,"J":2,"K":1,"L":4,"M":3,"N":5,
                       "Enie":1,"O":8,"P":2,"Q":1,"R":4,"S":7,"T":4,"U":6,"V":2,"W":1,"X":1,"Y":1,"Z":1}
 
@@ -136,37 +173,50 @@ def RestablecerPredeterminado(values,window,Dicc_Bolsa,letra_Seleccionada):
     return values,Dicc_Bolsa
 
 def Layout_Columna():
-    layout = [[sg.Text('Cantidad de fichas por letra:',pad=(50,92))],
-              [sg.Text('LETRAS',key='Texto_Letra'),sg.Slider(range=(0,26),orientation="v",pad=((5,3),(5,0)),size=(6,10),disable_number_display=True,enable_events=True,key='Letras'),sg.Text('A',key='Letra_Pantalla',font=('Default',80),pad=(20,3))],
-              [sg.Slider(range=(1,15),orientation="h",pad=((90,3),(0,3)),key='Cantidad',enable_events=True,size=(12,10))],
-              [sg.Text('CANTIDAD',key='Texto_Cantidad',pad=((110,3),(5,3)))]]
+
+    frame1 = [[sg.Text('Tiempo total:',key='Texto_TT'),sg.Input(pad=((55,0),(5,2)),size=(6,6),key='TT'),sg.Text('Minutos',key='Texto_Minutos')],
+              [sg.Text('Tiempo por ronda:',key='Texto_TPR'),sg.Input(pad=((10,0),(2,5)),size=(6,6),key='TPR'),sg.Text('Segundos',key='Texto_Segundos')]]
+
+    frame2 = [[sg.Text('LETRAS',key='Texto_Letra'),sg.Slider(range=(0,26),orientation="v",pad=((5,3),(5,0)),size=(6,10),disable_number_display=True,enable_events=True,key='Letras'),sg.Text('A',key='Letra_Pantalla',font=('Default',80),pad=(20,3))],
+    [sg.Slider(range=(1,15),orientation="h",pad=((90,3),(0,3)),key='Cantidad',enable_events=True,size=(12,10))],
+    [sg.Text('CANTIDAD',key='Texto_Cantidad',pad=((110,3),(5,12)))],
+    [sg.Text('Fichas totales:0000',key='FichasTotales')]]
+
+    frame3 = [[sg.Checkbox('Adjetivos',key='Adjetivos'),sg.Checkbox('Sustantivos',key='Sustantivos'),sg.Checkbox('Verbos',key='Verbos')]]
+
+    layout = [[sg.Frame('Tiempo',frame1,pad=((5,5),(54,12)))],
+              [sg.Frame('Tipos de palabra',frame3)],
+              [sg.Frame('Cantidad de fichas por letra',frame2,pad=((60,0),(15,0)))],
+              [sg.Exit('Salir',pad=((320,0),(80,0)))]]
     return layout
 
 def Layout_Main():
+    frame = [[sg.Text('A E O S I U N L R T:'),sg.Slider(range=(1,2),orientation="h",size=(6,10),pad=((5,3),(0,22)),default_value=1,key='Lote1')],
+            [sg.Text('C D G :'),sg.Slider(range=(1,3),orientation="h",size=(6,10),pad=((108,3),(0,22)),default_value=2,key='Lote2')],
+            [sg.Text('M B P:'),sg.Slider(range=(2,4),orientation="h",size=(6,10),pad=((109,3),(0,22)),default_value=3,key='Lote3')],
+            [sg.Text('F H V Y:'),sg.Slider(range=(3,5),orientation="h",size=(6,10),pad=((96,3),(0,22)),default_value=4,key='Lote4')],
+            [sg.Text('J:'),sg.Slider(range=(5,7),orientation="h",size=(6,10),pad=((150,3),(0,22)),default_value=6,key='Lote5')],
+            [sg.Text('K Ñ Q W X:'),sg.Slider(range=(7,9),orientation="h",size=(6,10),pad=((70,3),(0,22)),default_value=8,key='Lote6')],
+            [sg.Text('Z:'),sg.Slider(range=(9,11),orientation="h",size=(6,10),pad=((146,3),(0,22)),default_value=10,key='Lote7')]]
+
+    frame_Dificultad = [[sg.Radio('Facil','Dificultad',key='Facil',enable_events=True,tooltip='En "Facil" se aplicaran los siguientes cambios:\n_____________\nSe aceptaran: Adjetivos, Sustantivos y Verbos\nTiempo por ronda: 60sg \nTiempo Total: 60Min',pad=(8,3)),
+    sg.Radio('Normal','Dificultad', default='1',key='Normal',enable_events=True,tooltip='En "Normal" se aplicaran los siguientes cambios:\n_____________\nSe aceptaran: Sustantivos y Verbos\nTiempo por ronda: 45sg \nTiempo Total: 45Min',pad=(8,3))],
+    [sg.Radio('Dificil','Dificultad',key='Dificil',enable_events=True,tooltip='En "Dificil" se aplicaran los siguientes cambios:\n_____________\nSe aceptaran: Adjetivos,Sustantivos y Verbos(De forma Aleatoria)\nTiempo por ronda: 30sg \nTiempo Total: 30Min',pad=(8,3)),sg.Radio('Personalizado','Dificultad',key='Personalizado',enable_events=True,tooltip='Puedes cambiar la configuracion a tu antojo',pad=(8,3))]]
+
     layout = [[sg.Text('Usuario:'),sg.Input(size=(15, 6),key='Usuario',default_text='Default'),sg.OK('Cargar perfil',key='Cargar')],
-            [sg.Text('Dificultad:',pad=(5,20)),
-            sg.Radio('Facil','Dificultad',key='Facil',tooltip='En "Facil" se aplicaran los siguientes cambios:\n_____________\nSe aceptaran: Adjetivos, Sustantivos y Verbos\nTiempo por ronda: 60sg \nTiempo Total: 60Min'),
-            sg.Radio('Normal','Dificultad', default='1',key='Normal',tooltip='En "Normal" se aplicaran los siguientes cambios:\n_____________\nSe aceptaran: Sustantivos y Verbos\nTiempo por ronda: 45sg \nTiempo Total: 45Min'),
-            sg.Radio('Dificil','Dificultad',key='Dificil',tooltip='En "Dificil" se aplicaran los siguientes cambios:\n_____________\nSe aceptaran: Adjetivos,Sustantivos y Verbos(De forma Aleatoria)\nTiempo por ronda: 30sg \nTiempo Total: 30Min')],
-            [sg.Text('Cantidad de puntos por ficha:')],
-            [sg.Text('A E O S I U N L R T:'),sg.Slider(range=(1,2),orientation="h",size=(6,10),pad=((5,3),(0,15)),default_value=1,key='Lote1')],
-            [sg.Text('C D G :'),sg.Slider(range=(1,3),orientation="h",size=(6,10),pad=((82,3),(0,15)),default_value=2,key='Lote2')],
-            [sg.Text('M B P:'),sg.Slider(range=(2,4),orientation="h",size=(6,10),pad=((85,3),(0,15)),default_value=3,key='Lote3')],
-            [sg.Text('F H V Y:'),sg.Slider(range=(3,5),orientation="h",size=(6,10),pad=((75,3),(0,15)),default_value=4,key='Lote4')],
-            [sg.Text('J:'),sg.Slider(range=(5,7),orientation="h",size=(6,10),pad=((116,3),(0,15)),default_value=6,key='Lote5')],
-            [sg.Text('K Ñ Q W X:'),sg.Slider(range=(7,9),orientation="h",size=(6,10),pad=((58,3),(0,15)),default_value=8,key='Lote6')],
-            [sg.Text('Z:'),sg.Slider(range=(9,11),orientation="h",size=(6,10),pad=((115,3),(0,15)),default_value=10,key='Lote7')],
-            [sg.Save('Guardar'),sg.OK('Restablecer predeterminado'),sg.Exit('Salir')]]
+            [sg.Frame('Dificultad:',frame_Dificultad,pad=(5,10))],
+            [sg.Frame('Cantidad de puntos por ficha',frame)],
+            [sg.Save('Guardar'),sg.OK('Restablecer predeterminado')]]
     return layout
 
 def Poner_Todos_En_Falso(lista):
     arch = open('Archivo_Opciones.csv','w')
     writer = csv.writer(arch)
-    writer.writerow(['Actual','Usuario','Facil','Normal','Dificil','Lote1','Lote2','Lote3','Lote4','Lote5','Lote6','Lote7','A','B','C','D','E','F','G','H','I','J','K','L','M','N','Enie','O','P','Q','R','S','T','U','V','W','X','Y','Z'])
+    writer.writerow(['Actual','Usuario','Facil','Normal','Dificil','Personalizado','Lote1','Lote2','Lote3','Lote4','Lote5','Lote6','Lote7','TT','TPR','Adjetivos','Sustantivos','Verbos','A','B','C','D','E','F','G','H','I','J','K','L','M','N','Enie','O','P','Q','R','S','T','U','V','W','X','Y','Z'])
     i = 0
     for row in lista:
         lista[i]['Actual'] = False
-        writer.writerow([False,row['Usuario'].strip(),row['Facil'],row['Normal'],row['Dificil'],int(row['Lote1']),int(row['Lote2']),int(row['Lote3']),int(row['Lote4']),int(row['Lote5']),int(row['Lote6']),int(row['Lote7']),row['A'],row['B'],row['C'],row['D'],row['E'],row['F'],row['G'],row['H'],row['I'],row['J'],row['K'],row['L'],row['M'],row['N'],row['Enie'],row['O'],row['P'],row['Q'],row['R'],row['R'],row['S'],row['T'],row['U'],row['V'],row['W'],row['X'],row['Y'],row['Z']])
+        writer.writerow([False,row['Usuario'].strip(),row['Facil'],row['Normal'],row['Dificil'],row['Personalizado'],int(row['Lote1']),int(row['Lote2']),int(row['Lote3']),int(row['Lote4']),int(row['Lote5']),int(row['Lote6']),int(row['Lote7']),row['TT'],row['TPR'],row['Adjetivos'],row['Sustantivos'],row['Verbos'],row['A'],row['B'],row['C'],row['D'],row['E'],row['F'],row['G'],row['H'],row['I'],row['J'],row['K'],row['L'],row['M'],row['N'],row['Enie'],row['O'],row['P'],row['Q'],row['R'],row['R'],row['S'],row['T'],row['U'],row['V'],row['W'],row['X'],row['Y'],row['Z']])
         i = i + 1
     arch.close()
 
@@ -189,22 +239,138 @@ def Transformar_Values(values,Dicc_Bolsa):
     for key,elem in Dicc_Bolsa.items():
         values[key] = elem
 
+def Comprobaciones(values,Cant_Fichas_Total,window):
+    TodoOk = True
+    if values['Usuario'] != '':
+        for L in values['Usuario']:
+            if ((ord(L) < 48) or (ord(L) > 57) and (ord(L) < 65) or (ord(L) > 90) and (ord(L) < 97) or (ord(L) > 122)):
+                window['Usuario'].update(background_color='red')
+                sg.popup('Prueba con un usuario que tenga letras y/o numeros!',title='Aviso',keep_on_top=True)
+                window['Usuario'].update(background_color='#F1D6AB')
+                TodoOk = False
+                break
+    else:
+        window['Usuario'].update(background_color='red')
+        sg.popup('No puedes guardar un usuario vacio!',title='Aviso',keep_on_top=True)
+        window['Usuario'].update(background_color='#F1D6AB')
+        TodoOk = False
+
+    for T in ['TT','TPR']:
+        Es_numero = True
+        if values[T] != '':
+            for c in values[T]:
+                if not(ord(c) >= 48 and ord(c) <= 57):
+                    window[T].update(background_color='red')
+                    sg.popup('Prueba ingresar un numero valido!',title='Aviso',keep_on_top=True)
+                    window[T].update(background_color='#F1D6AB')
+                    TodoOk = False
+                    break
+        else:
+            window[T].update(background_color='red')
+            sg.popup('Prueba ingresar un numero!',title='Aviso',keep_on_top=True)
+            window[T].update(background_color='#F1D6AB')
+
+    if values['Adjetivos'] == False and values['Sustantivos'] == False and values['Verbos'] == False:
+        window['Adjetivos'].update(background_color='red')
+        window['Sustantivos'].update(background_color='red')
+        window['Verbos'].update(background_color='red')
+        sg.popup('No puedes dejar las casillas vacias!',title='Aviso',keep_on_top=True)
+        window['Adjetivos'].update(background_color='#2B2B28')
+        window['Sustantivos'].update(background_color='#2B2B28')
+        window['Verbos'].update(background_color='#2B2B28')
+        TodoOk = False
+
+    if Cant_Fichas_Total < 99 or Cant_Fichas_Total > 200:
+        window['FichasTotales'].update(background_color='red')
+        sg.popup('Intenta que las fichas totales sean mayores a 99 y menor a 200!',title='Aviso',keep_on_top=True)
+        window['FichasTotales'].update(background_color='#2B2B28')
+        TodoOk = False
+
+    return TodoOk
+
+def Deshabilitar(Dificultad_Actual,window):
+    if Dificultad_Actual == 'Facil' or Dificultad_Actual == 'Normal' or Dificultad_Actual == 'Dificil':
+        window['Texto_TT'].update(text_color='grey') #ADADAD = 'gris'
+        window['Texto_TPR'].update(text_color='grey')
+        window['TT'].update(text_color='grey')
+        window['TPR'].update(text_color='grey')
+        window['Texto_Minutos'].update(text_color='grey')
+        window['Texto_Segundos'].update(text_color='grey')
+        if Dificultad_Actual == 'Facil':
+            window['TT'].update('60',disabled=True)
+            window['TPR'].update('60',disabled=True)
+            window['Adjetivos'].update(True,disabled=True)
+            window['Sustantivos'].update(True,disabled=True)
+            window['Verbos'].update(True,disabled=True)
+        elif Dificultad_Actual == 'Normal':
+            window['TT'].update('45',disabled=True)
+            window['TPR'].update('45',disabled=True)
+            window['Adjetivos'].update(False,disabled=True)
+            window['Sustantivos'].update(True,disabled=True)
+            window['Verbos'].update(True,disabled=True)
+        else:
+            window['TT'].update('30',disabled=True)
+            window['TPR'].update('30',disabled=True)
+            Lista_random = ['Adjetivos','Sustantivos','Verbos']
+            random.shuffle(Lista_random)
+            window[Lista_random[0]].update(True,disabled=True)
+            window[Lista_random[1]].update(False,disabled=True)
+            window[Lista_random[2]].update(False,disabled=True)
+    else:
+        window['TT'].update(disabled=False)
+        window['TPR'].update(disabled=False)
+        window['Adjetivos'].update(disabled=False)
+        window['Sustantivos'].update(disabled=False)
+        window['Verbos'].update(disabled=False)
+        window['Texto_TT'].update(text_color='white')
+        window['Texto_TPR'].update(text_color='white')
+        window['TT'].update(text_color='black')
+        window['TPR'].update(text_color='black')
+        window['Texto_Minutos'].update(text_color='white')
+        window['Texto_Segundos'].update(text_color='white')
+
+
+def Cual_Dificultad(Facil,Normal,Dificil,window):
+    if Facil == 'True':
+            dificultad = 'Facil'
+    elif Normal == 'True':
+            dificultad = 'Normal'
+    elif Dificil == 'True':
+            dificultad = 'Dificil'
+    else:
+        dificultad = 'Personalizado'
+    return dificultad
+
+def Contabilizar_Fichas(Dicc_Bolsa):
+    Cant_Total = 0
+    for Cant in Dicc_Bolsa.values():
+        Cant_Total = Cant_Total + Cant
+    return Cant_Total
+
 
 def Ventana_Opciones ():
+    sg.theme('DarkGrey2')
     Lista_Letras = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','Enie','O','P','Q','R','S','T','U','V','W','X','Y','Z']
     Diseño = [ [sg.Column((Layout_Main())),
                 sg.Column(Layout_Columna())] ]
-    window = sg.Window('Opciones', Diseño)
+    window = sg.Window('Opciones', Diseño,font='Cambria')
     window.Read(timeout=1)[1]
     Dicc_Bolsa={"A":11,"B":3,"C":4,"D":4,"E":11,"F":2,"G":2,"H":2,"I":6,"J":2,"K":1,"L":4,"M":3,"N":5,
                       "Enie":1,"O":8,"P":2,"Q":1,"R":4,"S":7,"T":4,"U":6,"V":2,"W":1,"X":1,"Y":1,"Z":1}
     values,Dicc_Bolsa = Primer_Cargar(Importar_Datos(),window,Dicc_Bolsa,'A')
     letra_Seleccionada = 'A'
+    Dificultad_Actual = Cual_Dificultad(values[2],values[3],values[4],window)
+    Ultima_Dificultad = 'Personalizado'
     Cant_Letra_Actual = Dicc_Bolsa['A']
     window['Cantidad'].update(Dicc_Bolsa['A'])
     while True:
+        Cant_Fichas_Total = Contabilizar_Fichas(Dicc_Bolsa)
+        window['FichasTotales'].update('Fichas totales:'+str(Cant_Fichas_Total))
+
+        if (Ultima_Dificultad != Dificultad_Actual):
+            Deshabilitar(Dificultad_Actual,window)
+
         event, values = window.read()
-        #A partir de aca values es un dicc sin las A B C, etc
 
         if event in (None, 'Salir'):
             break
@@ -217,19 +383,19 @@ def Ventana_Opciones ():
                 window['Letra_Pantalla'].update('Ñ')
             letra_Seleccionada = Lista_Letras[int(values['Letras'])]
 
-        if event == 'Cantidad':
+        elif event == 'Cantidad':
             Cant_Letra_Actual = values['Cantidad']
             Dicc_Bolsa[letra_Seleccionada] = int(Cant_Letra_Actual)
 
-        if (event == 'Restablecer predeterminado'):
+        elif (event == 'Restablecer predeterminado'):
             values,Dicc_Bolsa = RestablecerPredeterminado(values,window,Dicc_Bolsa,letra_Seleccionada)
 
         elif (event == 'Guardar') or (event == 'Cargar'):
             Lista = LeerDatos()
             Transformar_Values(values,Dicc_Bolsa)
-            existe = list(filter(lambda jug:values['Usuario'].strip() == jug['Usuario'],Lista))
             if (event == 'Guardar'):
-                if values['Usuario'] != '':
+                if Comprobaciones(values,Cant_Fichas_Total,window):
+                    existe = list(filter(lambda jug:values['Usuario'].strip() == jug['Usuario'],Lista))
                     if existe != []: #Reemplazo la configuracion del usuario existente
                         Lista.pop(Lista.index(existe[0]))
                         Lista.append(values)
@@ -239,18 +405,43 @@ def Ventana_Opciones ():
                         Poner_Todos_En_Falso(Lista)
                         AgregarDatos(values)
                         sg.popup('El perfil se guardo exitosamente!',title='Aviso',keep_on_top=True)
-                else:
-                    sg.popup('No puedes guardar un usuario vacio!',title='Aviso',keep_on_top=True)
+
             else:           #Cargar
-                if existe != []:
-                    Lista.pop(Lista.index(existe[0]))
-                    existe[0]['Actual'] = True
-                    Poner_Todos_En_Falso(Lista)
-                    Lista.append(existe[0])
-                    GuardarDatos(Lista)
-                    values = Cargar(values,window,Dicc_Bolsa,letra_Seleccionada)
-                else:
-                    sg.popup('No se encontro ningun usuario con ese nombre',title='Aviso',keep_on_top=True)
+                Lista_Usuarios = []
+                for i in Lista:
+                    if (i['Actual'] != 'True'):
+                        Lista_Usuarios.append(i['Usuario'])
+                    else:
+                        Lista_Usuarios.append('*'+i['Usuario'])
+                window_cargar = sg.Window('Cargar',[[sg.Listbox(Lista_Usuarios,size=(20, 10))],[sg.Button('Cargar'),sg.Button('Eliminar'),sg.Exit('Salir')]])
+                event_cargar,values_cargar = window_cargar.read()
+                if not(event_cargar in (None, 'Salir')):
+                    values_cargar[0][0] = values_cargar[0][0].strip('*')
+                    Jugador_Seleccionado = list(filter(lambda jug:values_cargar[0][0].strip() == jug['Usuario'],Lista))
+
+                    if (event_cargar == 'Cargar'):
+                        Lista.pop(Lista.index(Jugador_Seleccionado[0]))
+                        Jugador_Seleccionado[0]['Actual'] = True
+                        Poner_Todos_En_Falso(Lista)
+                        Lista.append(Jugador_Seleccionado[0])
+                        GuardarDatos(Lista)
+                        values = Cargar(Jugador_Seleccionado[0],window,Dicc_Bolsa,letra_Seleccionada)
+                    #Eliminar:
+                    else:
+                        if (len(Lista) > 1):
+                            if Jugador_Seleccionado[0]['Actual'] == 'True':
+                                Lista[0]['Actual'] = True
+                            Lista.pop(Lista.index(Jugador_Seleccionado[0]))
+                            GuardarDatos(Lista)
+                            sg.popup('El perfil se ha eliminado con exito!',title='Aviso',keep_on_top=True)
+                        else:
+                            sg.popup('No puedes eliminar el ultimo perfil!',title='Aviso',keep_on_top=True)
+                window_cargar.close()
+
+
+
+        Ultima_Dificultad = Dificultad_Actual
+        Dificultad_Actual = Cual_Dificultad(str(values['Facil']),str(values['Normal']),str(values['Dificil']),window)
 
     window.close()
     return event
