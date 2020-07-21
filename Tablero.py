@@ -462,20 +462,37 @@ def Importar_Datos():
                 if (row[0] == 'True'):
                     if (row[2] == 'True'):
                         dificultad =  'Facil'
+                        Tiempo_Ronda = row[14]
+                        Tiempo = row[13]
                     elif (row[3] == 'True'):
                         dificultad =  'Medio'
+                        Tiempo_Ronda = row[14]
+                        Tiempo = row[13]
                     elif (row[4] == 'True'):
                         dificultad =  'Dificil'
+                        Tiempo_Ronda = row[14]
+                        Tiempo = row[13]
+                    else:
+                        dificultad =  'Personalizado'
+                        Tiempo_Ronda = row[14]
+                        Tiempo = row[13]
+                        Lista_TP = []
+                        if row[15] == 'True':
+                            Lista_TP.append('adj')
+                        if row[16] == 'True':
+                            Lista_TP.append('sus')
+                        if row[17] == 'True':
+                            Lista_TP.append('verb')
                     Usuario = row[1]
-                    Lista_Lotes = [int(float(row[5])),int(float(row[6])),int(float(row[7])),int(float(row[8])),int(float(row[9])),int(float(row[10])),int(float(row[11]))]
+                    Lista_Lotes = [int(float(row[6])),int(float(row[7])),int(float(row[8])),int(float(row[9])),int(float(row[10])),int(float(row[11])),int(float(row[12]))]
                     arch.close()
                     Dicc_Puntajes = {"A":int(Lista_Lotes[0]),"B":int(Lista_Lotes[2]),"C":int(Lista_Lotes[1]),"D":int(Lista_Lotes[1]),"E":int(Lista_Lotes[0]),"F":int(Lista_Lotes[3]),"G":int(Lista_Lotes[1]),"H":int(Lista_Lotes[3]),"I":int(Lista_Lotes[0]),"J":int(Lista_Lotes[4]),"K":int(Lista_Lotes[5]),"L":int(Lista_Lotes[0]),"M":int(Lista_Lotes[2]),"N":int(Lista_Lotes[0]),
                                       u"Ñ":int(Lista_Lotes[5]),"O":int(Lista_Lotes[0]),"P":int(Lista_Lotes[2]),"Q":int(Lista_Lotes[5]),"R":int(Lista_Lotes[0]),"S":int(Lista_Lotes[0]),"T":int(Lista_Lotes[0]),"U":int(Lista_Lotes[0]),"V":int(Lista_Lotes[3]),"W":int(Lista_Lotes[5]),"X":int(Lista_Lotes[5]),"Y":int(Lista_Lotes[3]),"Z":int(Lista_Lotes[6])}
 
-                    Dicc_Bolsa={"A":int(row[12]),"B":int(row[13]),"C":int(row[14]),"D":int(row[15]),"E":int(row[16]),"F":int(row[17]),"G":int(row[18]),"H":int(row[19]),"I":int(row[20]),"J":int(row[21]),"K":int(row[22]),"L":int(row[23]),"M":int(row[24]),"N":int(row[25]),
-                                      u"Ñ":int(row[26]),"O":int(row[27]),"P":int(row[28]),"Q":int(row[29]),"R":int(row[30]),"S":int(row[31]),"T":int(row[32]),"U":int(row[33]),"V":int(row[34]),"W":int(row[35]),"X":int(row[36]),"Y":int(row[37]),"Z":int(row[38])}
+                    Dicc_Bolsa={"A":int(row[18]),"B":int(row[19]),"C":int(row[20]),"D":int(row[21]),"E":int(row[22]),"F":int(row[23]),"G":int(row[24]),"H":int(row[25]),"I":int(row[26]),"J":int(row[27]),"K":int(row[28]),"L":int(row[29]),"M":int(row[30]),"N":int(row[31]),
+                                      u"Ñ":int(row[32]),"O":int(row[33]),"P":int(row[34]),"Q":int(row[35]),"R":int(row[36]),"S":int(row[37]),"T":int(row[38]),"U":int(row[39]),"V":int(row[40]),"W":int(row[41]),"X":int(row[42]),"Y":int(row[43]),"Z":int(row[44])}
 
-                    return Usuario,dificultad,Dicc_Puntajes,Dicc_Bolsa
+                    return Usuario,dificultad,Dicc_Puntajes,Dicc_Bolsa,Tiempo_Ronda,Tiempo,Lista_TP
             else:
                 index = index + 1
 
@@ -933,7 +950,7 @@ def genero_Tablero():
         window['Historial_Usuario'].update(HistorialUsuario)
     else:
         partida_carga=False
-        Usuario,Dificultad,Dicc_Puntajes,Dicc_Bolsa = Importar_Datos()
+        UUsuario,Dificultad,Dicc_Puntajes,Dicc_Bolsa,Tiempo_Ronda,Tiempo,Lista_TP = Importar_Datos()
         Turno_Usuario = bool(random.getrandbits(1))
         LCO_Usuario=[] #Lista cordenadas ocuupadas usuario
         LCO_CPU=[]      #Lista cordenadas ocuupadas CPU
@@ -972,8 +989,6 @@ def genero_Tablero():
         Dificil_se_juega="Default"
     window.Refresh()
     tamaño_actual=window.Size
-    print(tiempo_jugador)
-    print(tiempo_ronda)
     while True:
         LPI = []                #Lista de Posiciones de Intercambio (Para Intecambiar fichas)
         LCOPR = []              #Lista de Coordenadas Ocupadas Por Ronda
@@ -996,7 +1011,6 @@ def genero_Tablero():
             window['Tiempo_Ronda'].update("00:{}".format(tiempo_jugador[0:2]))
             tiempo_jugador = int(tiempo_jugador)
             tiempo_jugador-=1
-
             #if (tamaño_actual != window.Size):
             #    tamaño_actual=window.Size
                 #Aca deberian estar los cambios a la ventana que centrarian todo el contenido de esta.
@@ -1077,4 +1091,5 @@ def genero_Tablero():
     return(event)
 #ProgramaPrincipal-------------
 if __name__ == "__main__":
+    sg.theme('DarkGrey2')
     genero_Tablero()

@@ -5,12 +5,12 @@ Tipo= {'adj':["AO", "JJ","AQ","DI","DT"],
 'verb':[ "VAG", "VBG", "VAI","VAN", "MD", "VAS" , "VMG" , "VMI", "VB", "VMM" ,"VMN" , "VMP", "VBN","VMS","VSG", "VSI","VSN", "VSP","VSS" ]
 }
 def verificar_Facil(palabra,existe):
-    if (i in spelling.keys() or i in lexicon.keys()):
-        if(parse(i).split("/")[1] in Tipo['sus']):
+    if (palabra in spelling.keys() or palabra in lexicon.keys()):
+        if(parse(palabra).split("/")[1] in Tipo['sus']):
             existe=True
-        elif(parse(i).split("/")[1] in Tipo['adj']):
+        elif(parse(palabra).split("/")[1] in Tipo['adj']):
             existe=True
-        elif(parse(i).split("/")[1] in Tipo['verb']):
+        elif(parse(palabra).split("/")[1] in Tipo['verb']):
             existe=True
         else:
             existe=False
@@ -51,10 +51,7 @@ def verificar_Palabra(palabra,dificultad,Dificil_elegido):
     palabra=palabra.lower()
     if(len(palabra)>=2):
         if (dificultad=="Facil"):
-            if(parse(palabra).split("/")[1] in Tipo['sus']):
-                existe=True
-            elif (palabra in spelling.keys() or palabra in lexicon.keys()):
-                existe=True
+            existe=verificar_Facil(palabra,existe)
         elif(dificultad=="Medio"):
             existe=verificar_Medio(palabra,existe)
         elif(dificultad=="Dificil"):
@@ -62,4 +59,4 @@ def verificar_Palabra(palabra,dificultad,Dificil_elegido):
     return(existe)
  #---------Porgrama Principal---
 if __name__ == '__main__':
-    print(verificar_Palabra("feo","Dificil","adj"))
+    print(verificar_Palabra("feo","Facil","Default"))
