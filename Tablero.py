@@ -970,8 +970,6 @@ def genero_Tablero():
         Se_necesitan_dos = False
         Tiempo,tiempo_ronda=tiempo_dificultad(Dificultad)
         Turnos_Disponibles = 3
-        Columna_Historial = True
-        Desplegado = True
         diseño = [ [sg.Column((Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP))),
                     sg.Column(Layout_Columna()),
                     sg.Column(Layout_Columna_Historial(Usuario),key='Columna_Historial'),
@@ -979,6 +977,8 @@ def genero_Tablero():
         window = sg.Window('Tablero',diseño ,location=(400,0),finalize=True)
         Dicc = Update_Tablero(window,Dicc)
         Dicc = Update_Tablero2(window,Dicc)
+    Columna_Historial = True
+    Desplegado = True
     tiemp_ant = ''
     Fin = False
     event1 = ''
