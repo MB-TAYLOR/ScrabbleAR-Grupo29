@@ -31,16 +31,10 @@ def Medio(i,palabras_existentes):
             palabras_existentes.append(i)
         elif(parse(i).split("/")[1] in Tipo['sus']):
             palabras_existentes.append(i)
-def Dificil(i,palabras_existentes,Dificil_elegido):
+def Dificil_Personalizado(i,palabras_existentes,Dificil_elegido):
     if i in spelling.keys() and i in lexicon.keys(): #Dificultad -> Medio(Sea adjetivo o verbo)
-            if(Dificil_elegido=="adj"):
-                if(parse(i).split("/")[1] in Tipo['adj']):
-                    palabras_existentes.append(i)
-            elif(Dificil_elegido =="verb"):
-                if(parse(i).split("/")[1] in Tipo['verb']):
-                    palabras_existentes.append(i)
-            elif(Dificil_elegido=="sus"):
-                if(parse(i).split("/")[1] in Tipo['sus']):
+        for x in range(len(Dificil_elegido)):
+                if(parse(i).split("/")[1] in Tipo[Dificil_elegido[x]]):
                     palabras_existentes.append(i)
 def formar_palabra(letras,dificultad,Dificil_elegido):
     letras=letras.lower()
@@ -53,11 +47,11 @@ def formar_palabra(letras,dificultad,Dificil_elegido):
             Facil(i,palabras_existentes)
         elif(dificultad=="Medio"):
             Medio(i,palabras_existentes)
-        elif(dificultad=="Dificil"):
-            Dificil(i,palabras_existentes,Dificil_elegido)
+        elif((dificultad=="Dificil") or (dificultad=="Personalizado")):
+            Dificil_Personalizado(i,palabras_existentes,Dificil_elegido)
     return(palabra_larga(palabras_existentes))
 
 
   #---------Porgrama Principal---
 if __name__ == '__main__':
-    print(formar_palabra("oef","Dificil","adj"))
+    print(formar_palabra("elfsas","Dificil",["adj","sus","verb"]))

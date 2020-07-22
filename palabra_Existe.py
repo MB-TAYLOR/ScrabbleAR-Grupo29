@@ -19,7 +19,6 @@ def verificar_Facil(palabra,existe):
     return(existe)
 def verificar_Medio(palabra,existe):
     if palabra in spelling.keys() and palabra in lexicon.keys(): #Dificultad -> Medio(Sea adjetivo o verbo)
-        print("Pase")
         if(parse(palabra).split("/")[1] in Tipo['verb']):
             existe=True
         elif(parse(palabra).split("/")[1] in Tipo['sus']):
@@ -29,19 +28,11 @@ def verificar_Medio(palabra,existe):
     else:
         existe=False
     return(existe)
-def verificar_Dificil(palabra,existe,Dificil_elegido):
-    if palabra in spelling.keys() and palabra in lexicon.keys(): #Dificultad -> Medio(Sea adjetivo o verbo)
-        if(Dificil_elegido=="adj"):
-            if(parse(palabra).split("/")[1] in Tipo['adj']):
+def verificar_Dificil_Personalizado(palabra,existe,Dificil_elegido):
+    if palabra in spelling.keys() and palabra in lexicon.keys():
+        for x in range(len(Dificil_elegido)):
+            if(parse(palabra).split("/")[1] in Tipo[Dificil_elegido[x]]):
                 existe=True
-        elif(Dificil_elegido =="verb"):
-            if(parse(palabra).split("/")[1] in Tipo['verb']):
-                existe=True
-        elif(Dificil_elegido=="sus"):
-            if(parse(palabra).split("/")[1] in Tipo['sus']):
-                existe=True
-        else:
-            existe=False
     else:
         existe=False
     return(existe)
@@ -54,9 +45,9 @@ def verificar_Palabra(palabra,dificultad,Dificil_elegido):
             existe=verificar_Facil(palabra,existe)
         elif(dificultad=="Medio"):
             existe=verificar_Medio(palabra,existe)
-        elif(dificultad=="Dificil"):
-            existe=verificar_Dificil(palabra,existe,Dificil_elegido)
+        elif((dificultad=="Dificil") or (dificultad=="Personalizado")):
+            existe=verificar_Dificil_Personalizado(palabra,existe,Dificil_elegido)
     return(existe)
  #---------Porgrama Principal---
 if __name__ == '__main__':
-    print(verificar_Palabra("feo","Facil","Default"))
+    print(verificar_Palabra("feo","Dificil",["sus","adj"]))

@@ -154,11 +154,12 @@ def Update_Infobox(Texto,Color,window):
     window['Infobox'].update(Texto,text_color='Black',background_color=Color)
     Infobox_Activa = True
     temp = 5
-
+'''
 def tiempo_dificultad(dificultad):
     tiempo_ronda=0
     jugadores=2
     rondas_totales=30
+    secs=0
     if(dificultad=="Facil"):
         tiempo_ronda=60
         secs =tiempo_ronda*jugadores*rondas_totales
@@ -169,7 +170,7 @@ def tiempo_dificultad(dificultad):
         tiempo_ronda=30
         secs=tiempo_ronda*jugadores*rondas_totales
     return((secs*100),(tiempo_ronda*100))
-
+'''
 def intercambio_Fichas_CPU(fichas_CPU,Bolsa_Diccionario,Cant_fichas):
     for x in range(len(fichas_CPU)):
         Bolsa_Diccionario[fichas_CPU[x]]=(Bolsa_Diccionario[fichas_CPU[x]])+1
@@ -451,11 +452,19 @@ def elimino_fichas_Usadas(fichas_CPU,Palabra):
     for x in range(len(Palabra)):
         fichas_CPU=fichas_CPU.replace(Palabra[x].upper(),"") #Elimino las fichas usadas
     return(fichas_CPU)
-
+def verRows(row,Lista_TP):
+    if row[15] == 'True':
+        Lista_TP.append('adj')
+    if row[16] == 'True':
+        Lista_TP.append('sus')
+    if row[17] == 'True':
+        Lista_TP.append('verb')
+    return(Lista_TP)
 def Importar_Datos():
     arch = open('Archivo_Opciones.csv','r',encoding="utf8")
     reader = csv.reader(arch)
     index = 0
+    Lista_TP = []
     for row in reader:
         if (len(row) > 0):
             if (index != 0):
@@ -468,6 +477,7 @@ def Importar_Datos():
                         dificultad =  'Medio'
                         Tiempo_Ronda = row[14]
                         Tiempo = row[13]
+                        Lista_TP=verRows(row,Lista_TP)
                     elif (row[4] == 'True'):
                         dificultad =  'Dificil'
                         Tiempo_Ronda = row[14]
@@ -476,13 +486,7 @@ def Importar_Datos():
                         dificultad =  'Personalizado'
                         Tiempo_Ronda = row[14]
                         Tiempo = row[13]
-                        Lista_TP = []
-                        if row[15] == 'True':
-                            Lista_TP.append('adj')
-                        if row[16] == 'True':
-                            Lista_TP.append('sus')
-                        if row[17] == 'True':
-                            Lista_TP.append('verb')
+                        Lista_TP=verRows(row,Lista_TP)
                     Usuario = row[1]
                     Lista_Lotes = [int(float(row[6])),int(float(row[7])),int(float(row[8])),int(float(row[9])),int(float(row[10])),int(float(row[11])),int(float(row[12]))]
                     arch.close()
@@ -857,14 +861,14 @@ def Update_Columna_Extra(Columna_Historial,window):
     else:
         window['Columna_Conf'].update(visible=False)
         window['Columna_Historial'].update(visible=True)
-def GuardoPartida(Dificultad,DiccRLPP,Dicc,CFT,Usuario,Turnos_Disponibles,PTU,HistorialUsuario,LCO,Tiempo,DiccRLPP_CPU,PT_CPU,fichas_CPU,contador_Turnos_CPU,HistorialCPU,PrimerRonda,Lista_Atril,Dicc_Bolsa,Dicc_Puntajes,tiempo_ronda,CCD,LCO_Usuario,LCO_CPU,tiempo_jugador):
+def GuardoPartida(Dificultad,DiccRLPP,Dicc,CFT,Usuario,Turnos_Disponibles,PTU,HistorialUsuario,LCO,Tiempo,DiccRLPP_CPU,PT_CPU,fichas_CPU,contador_Turnos_CPU,HistorialCPU,PrimerRonda,Lista_Atril,Dicc_Bolsa,Dicc_Puntajes,tiempo_ronda,CCD,LCO_Usuario,LCO_CPU,tiempo_jugador,Lista_TP):
     #Hago una copia de Dicc con keys string para poder guardarlas en json
     Dicc_str={}
     for key in Dicc:
         Dicc_str[str(key)]=Dicc[key]
     info_Usuario={"HistorialUsuario":HistorialUsuario,"DiccRLPP":DiccRLPP,"Usuario":Usuario,"Turnos_Disponibles":Turnos_Disponibles,"PTU":PTU,"Lista_Atril":Lista_Atril,"tiempo_ronda":tiempo_ronda,"LCO_Usuario":LCO_Usuario,"tiempo_jugador":tiempo_jugador}
     info_CPU={"HistorialCPU":HistorialCPU,"DiccRLPP_CPU":DiccRLPP_CPU,"PT_CPU":PT_CPU,"fichas_CPU":fichas_CPU,"contador_Turnos_CPU":contador_Turnos_CPU,"LCO_CPU":LCO_CPU}
-    info_Tablero={"Dificultad":Dificultad,"Dicc":Dicc_str,"CFT":CFT,"LCO":LCO,"CCD":CCD,"Tiempo":Tiempo,"PrimerRonda":PrimerRonda,"Dicc_Bolsa":Dicc_Bolsa,"Dicc_Puntajes":Dicc_Puntajes}
+    info_Tablero={"Dificultad":Dificultad,"Dicc":Dicc_str,"CFT":CFT,"LCO":LCO,"CCD":CCD,"Tiempo":Tiempo,"PrimerRonda":PrimerRonda,"Dicc_Bolsa":Dicc_Bolsa,"Dicc_Puntajes":Dicc_Puntajes,"Lista_TP":Lista_TP}
     DiccPartida={"info_Usuario":{**info_Usuario},"info_CPU":{**info_CPU},"info_Tablero":{**info_Tablero}      }
     archivo=open("Partida_Guardada.json","w")
     Guardar=json.dump(DiccPartida,archivo)
@@ -930,6 +934,7 @@ def genero_Tablero():
         Dicc_Bolsa=datos["info_Tablero"]["Dicc_Bolsa"]
         Dicc_Puntajes=datos["info_Tablero"]["Dicc_Puntajes"]
         aux_CCD=datos["info_Tablero"]["CCD"]
+        Lista_TP=datos["info_Tablero"]["Lista_TP"]
         Turno_Usuario=True
         for x in aux_CCD:
             CCD.add(tuple(x))
@@ -951,7 +956,10 @@ def genero_Tablero():
 
     else:
         partida_carga=False
-        Usuario,Dificultad,Dicc_Puntajes,Dicc_Bolsa,Tiempo_Ronda,Tiempo,Lista_TP = Importar_Datos()
+        Usuario,Dificultad,Dicc_Puntajes,Dicc_Bolsa,tiempo_ronda,Tiempo,Lista_TP = Importar_Datos()
+
+        tiempo_ronda=int(tiempo_ronda)*100
+        Tiempo=int(Tiempo)*100*60
         Turno_Usuario = bool(random.getrandbits(1))
         LCO_Usuario=[] #Lista cordenadas ocuupadas usuario
         LCO_CPU=[]      #Lista cordenadas ocuupadas CPU
@@ -968,7 +976,8 @@ def genero_Tablero():
         CCD=set()                   #Conjunto de Coordenadas  Disponibles
         LCO = []                    #Lista de Coordenadas Ocupadas
         Se_necesitan_dos = False
-        Tiempo,tiempo_ronda=tiempo_dificultad(Dificultad)
+        #Tiempo,tiempo_ronda=tiempo_dificultad(Dificultad)
+
         Turnos_Disponibles = 3
         diseño = [ [sg.Column((Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP))),
                     sg.Column(Layout_Columna()),
@@ -984,10 +993,13 @@ def genero_Tablero():
     event1 = ''
     window['Columna_Conf'].update(visible=False)
     window['PuntosUsuario'].update('Puntos  ' + Usuario)
+    '''
     if(Dificultad=="Dificil"):
         Dificil_se_juega=aleatorio_Dificil()
     else:
         Dificil_se_juega="Default"
+        '''
+    Dificil_se_juega=Lista_TP
     window.Refresh()
     tamaño_actual=window.Size
     while True:
@@ -1020,7 +1032,7 @@ def genero_Tablero():
                 if (event_popup == 'Yes'):
                     print("Pospone la partida")
 
-                    GuardoPartida(Dificultad,DiccRLPP,Dicc,CFT,Usuario,Turnos_Disponibles,PTU,HistorialUsuario,LCO,Tiempo,DiccRLPP_CPU,PT_CPU,fichas_CPU,contador_Turnos_CPU,HistorialCPU,PrimerRonda,Lista_Atril,Dicc_Bolsa,Dicc_Puntajes,tiempo_ronda,list(CCD),LCO_Usuario,LCO_CPU,tiempo_jugador)
+                    GuardoPartida(Dificultad,DiccRLPP,Dicc,CFT,Usuario,Turnos_Disponibles,PTU,HistorialUsuario,LCO,Tiempo,DiccRLPP_CPU,PT_CPU,fichas_CPU,contador_Turnos_CPU,HistorialCPU,PrimerRonda,Lista_Atril,Dicc_Bolsa,Dicc_Puntajes,tiempo_ronda,list(CCD),LCO_Usuario,LCO_CPU,tiempo_jugador,Lista_TP)
                 else:
                     print("No la pospone y sale sin guardar")
                 Fin = True
