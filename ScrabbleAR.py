@@ -3,6 +3,7 @@ import PySimpleGUI as sg
 from Opciones import Ventana_Opciones
 from TabladePosiciones import genero_Top
 from Tablero import genero_Tablero
+from ventana_Ayuda import Ayuda
 import csv
 
 #Aca Arranca La Pantalla Principal----------------------------------------------------------------------------------------------------------------------------------------------
@@ -21,7 +22,8 @@ def establezco_PP(nombre):
     columna_izquierda=[     [sg.Text("USUARIO:"+nombre)],  #Tomar el nombre del usuario del archivo que se deberia generar desde el menu opciones
                             [sg.Button(button_text="JUGAR",size=(40,4),pad=(0,20))],
                             [sg.Button(button_text="OPCIONES",size=(40,4),pad=(0,20))],
-                            [sg.Button(button_text="VER TOP 10",size=(40,4),pad=(0,20))],            ]
+                            [sg.Button(button_text="VER TOP 10",size=(40,4),pad=(0,20))],
+                            [sg.Button(button_text="",key="AYUDA",image_filename=r'ScrabbleAR_Imagenes_png\icono_ayuda.png',image_size=(45,45),image_subsample=6,pad=((0,0),(210,0)))]            ]
 
     columna_derecha=[       [sg.Text("SCRABBLE-AR",font=("default",40),pad=(130,0))],
                             [sg.Button(button_text="SALIR",size=(10,3),pad=((550,0),(510,0)))]       ]
@@ -54,6 +56,9 @@ def establezco_PP(nombre):
             if(Ventana_Opciones()in(None,'Salir')):
                 establezco_PP(obtengo_Perfil())
             break
+        elif boton_cliqueado=="AYUDA":
+            Ayuda()
+
     return()
 
 #Programa Principal-----------------------------------------------------------------------------------------------
