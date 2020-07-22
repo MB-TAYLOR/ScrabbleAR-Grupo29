@@ -57,7 +57,12 @@ def establezco_PP(nombre):
                 establezco_PP(obtengo_Perfil())
             break
         elif boton_cliqueado=="AYUDA":
-            Ayuda()
+            window.close()
+            if(Ayuda()in(None,'Salir')):
+                establezco_PP(obtengo_Perfil())
+            break
+
+
 
     return()
 

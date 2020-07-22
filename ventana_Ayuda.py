@@ -31,6 +31,8 @@ def Ayuda():
             window["Info"].update(Dicc_Informacion["Botones_Tablero"])
         elif(boton_cliqueado in (None,"Salir")):
             break
+    window.close()
+    return(boton_cliqueado)
 
 if __name__ == "__main__":
     Ayuda()
