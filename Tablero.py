@@ -482,6 +482,7 @@ def Importar_Datos():
                         dificultad =  'Dificil'
                         Tiempo_Ronda = row[14]
                         Tiempo = row[13]
+                        Lista_TP=verRows(row,Lista_TP)
                     else:
                         dificultad =  'Personalizado'
                         Tiempo_Ronda = row[14]
