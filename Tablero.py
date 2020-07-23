@@ -709,20 +709,16 @@ def Intercambio_FichasTablero(LCOPR,Dicc,event1,event2,window,Dicc_rutas_letras_
         window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(38,38),image_subsample=5)
 
 def Intercambio_FichasAtril(Lista_Atril,Pos_letra1,Pos_letra2,window,Dicc_rutas_letras_puntaje_partida):
-    if ((Pos_letra1 != Pos_letra2)):
-        if(((Lista_Atril[Pos_letra2])!="")and((Lista_Atril[Pos_letra1])!="" )):
+    if (((Pos_letra1 != Pos_letra2))and(((Lista_Atril[Pos_letra2])!="")and((Lista_Atril[Pos_letra1])!="" ))):
             window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra2]][0],image_size=(38,38),image_subsample=5)
             window[Pos_letra2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra1]][0],image_size=(38,38),image_subsample=5)
             aux = Lista_Atril[Pos_letra2]
             Lista_Atril[Pos_letra2] = Lista_Atril[Pos_letra1]
             Lista_Atril[Pos_letra1] = aux
-        elif((Lista_Atril[Pos_letra1])!="" ):
-            window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra1]][0],image_size=(38,38),image_subsample=5)
-    else:
+    elif((Lista_Atril[Pos_letra1])!="" ):
         window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra1]][0],image_size=(38,38),image_subsample=5)
 
 def Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
-    print("entre")
     aux = Dicc[event1][0]
     Dicc[event1][0] = Lista_Atril[event2]
     Lista_Atril[event2] = aux
