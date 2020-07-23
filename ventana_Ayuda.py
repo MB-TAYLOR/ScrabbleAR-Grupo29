@@ -1,38 +1,64 @@
 import PySimpleGUI as sg
 
+def Comprobaciones(Boton_actual,pagina,window):
+    if (Boton_actual=='Como_Se_Juega') or (Boton_actual=='Opciones'):
+        if (pagina > 0) and (pagina < 3):
+            window['>'].update(disabled=False)
+            window['<'].update(disabled=False)
+        elif (pagina == 3):
+            window['>'].update(disabled=True)
+        elif (pagina == 0):
+            window['<'].update(disabled=True)
+
+
 def Ayuda():
-    Dicc_Informacion={"Sobre_El_Juego":"ScrabbleAR es un juego basado en el popular juego Scrabble, en el que se intenta ganar puntos mediante la construcción de palabras sobre un tablero.En ScrabbleAR se juega contra la computadora y se re-definen algunas de las reglas del juego original. En particular, respecto a las palabras a construir,sólo se podrán utilizar palabras clasificadas como adjetivos, sustantivos y verbos,de acuerdo a cómo se configure el juego.",
-    "Opciones":"En el menu de opciones podras guardar tu perfil con alguna de las 3 dificultades , podiendo modificar tanto la cantidad de fichas como el valor en puntos de estas, para luego,  en un futuro, cargar los valores guardados con aterioridad.",
-    "Como_Se_Juega":"En esta version de SCRABBLE , ganaras la partida cuando , en el momento de su finalizacion(Se acabo el tiempo o se terminaron las fichas) tengas mas puntos que el CPU.\nPara ganar puntos debes formar palabras que , leidas de : derecha a izquierda/arriba a bajo , sean validas , las palabras solo se podran validar , si estan formadas horizontal o verticalmente\nPara saber si una palabra bien colocada es valida debes precionar el boton 'Validar'\nPara dejar en el tablero la palabra que formaste debes precionar el boton 'Terminar Turno' , si la palabra era valida , las fichas se quedaran en el tablero , ganaras puntos y tomaras de la bolsa la misma cantidad de fichas que usaste para formar la palabra , de lo contrario se te devolveran las fichas y tu turno terminara.",
-    "Botones_Tablero":"Los botones en el tablero son :\nTerminar Turno :Verificara si las fichas colocadas en el tablero estan puestas de forma correcta y si la palabra formada es validad , luego terminara tu turno.\n\nValidar:Verificara si las fichas estan correctamente colocadas y si lo estan verificara si la palabra es valida.\nIntercambiar Fichas : Podras intercambiar 3 veces tus fichas por partida , al hacer click en el boton podras seleccionar las fichas del atril que deceas intercambiar , para confirmar vuelve a pulsar el boton Intercambiar Fichas.\n\nPausa:Pausa el juego.\n\nRendirse:Termina la partida y no guarda ningun dato de esta.\n\nSalir:Sales de la partida a la pantalla principal , la partida se guardara y podras reanudarla la proxima vez que inices una partida. "}
+    Dicc_Informacion={'Sobre_El_Juego':[r'ScrabbleAR_Imagenes_png\SobreElJuego.png'],
+                      'Como_Se_Juega':[r'ScrabbleAR_Imagenes_png\ComoSeJuega1.png',r'ScrabbleAR_Imagenes_png\ComoSeJuega2.png',r'ScrabbleAR_Imagenes_png\ComoSeJuega3.png',r'ScrabbleAR_Imagenes_png\ComoSeJuega4.png'],
+                      'Opciones':[r'ScrabbleAR_Imagenes_png\Opciones1.png',r'ScrabbleAR_Imagenes_png\Opciones2.png',r'ScrabbleAR_Imagenes_png\Opciones3.png',r'ScrabbleAR_Imagenes_png\Opciones4.png'],
+                      'Tablero':[]}
 
-    #Diseño
-    Ventana=[     [sg.Text("Explicacion del juego : ")],
-                  [sg.Button(button_text="Sobre El Juego",size=(12,2),key="Sobre_El_Juego"),sg.Button(button_text="Opciones",size=(12,2),key="Opciones"),sg.Button(button_text="Como se juega",size=(12,2),key="Como_Se_Juega"),sg.Button(button_text="Botones en el Tablero",size=(12,2),key="Botones_Tablero")],
-                  [sg.Text("Este es el menu de Ayuda , haz click en un boton para saber mas sobre el\ntema elegido\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n ",key="Info",auto_size_text=True)],
-                  [sg.Button(button_text="Salir",size=(10,2),key="Salir")]
+    botones = [[sg.Button(button_text="Sobre el juego",size=(12,2),key="Sobre_El_Juego"),sg.Button(button_text="Como se juega",size=(12,2),key="Como_Se_Juega"),sg.Button(button_text="Opciones",size=(12,2),key="Opciones"),sg.Button(button_text="Tablero",size=(12,2),key="Botones_Tablero")]]
 
-                 ]
-
-
-    #Aplico y muestro
-
+    Ventana=[     [sg.Text("Este es el menu de Ayuda , haz click en un boton para saber mas sobre el tema elegido")],
+                  [sg.Frame('',botones,relief='raised')],
+                  [sg.Image(r'ScrabbleAR_Imagenes_png\Instrucciones.png',key='Info')],
+                  [sg.Button(button_text="Salir",size=(10,2),key="Salir"),sg.Button('<',disabled=True,pad=((320,5),(3,3))),sg.Button('>',disabled=True)] ]
 
     window = sg.Window('Ayuda',Ventana,location=(540,100),size=(500,650),finalize=True)
     while True:
-        boton_cliqueado,datos_ingresados=window.Read()
-        if(boton_cliqueado=="Sobre_El_Juego"):
-            window["Info"].update(Dicc_Informacion["Sobre_El_Juego"])
-        elif(boton_cliqueado=="Opciones"):
-            window["Info"].update(Dicc_Informacion["Opciones"])
-        elif(boton_cliqueado=="Como_Se_Juega"):
-            window["Info"].update(Dicc_Informacion["Como_Se_Juega"])
-        elif(boton_cliqueado=="Botones_Tablero"):
-            window["Info"].update(Dicc_Informacion["Botones_Tablero"])
-        elif(boton_cliqueado in (None,"Salir")):
+        event,values=window.Read()
+
+        if(event in (None,"Salir")):
             break
+
+        elif (event != '>') and (event != '<'):
+            Boton_actual = event
+            pagina = 0
+            if(event=="Sobre_El_Juego"):
+                window["Info"].update(Dicc_Informacion["Sobre_El_Juego"][0])
+                window['>'].update(disabled=True)
+                window['<'].update(disabled=True)
+            elif(event=="Como_Se_Juega"):
+                window["Info"].update(Dicc_Informacion["Como_Se_Juega"][0])
+                window['>'].update(disabled=False)
+                window['<'].update(disabled=False)
+            elif(event=="Opciones"):
+                window["Info"].update(Dicc_Informacion["Opciones"][0])
+                window['>'].update(disabled=False)
+                window['<'].update(disabled=False)
+            elif(event=="Tablero"):
+                window["Info"].update(Dicc_Informacion["Botones_Tablero"][0])
+
+        elif(event=='>'):
+            pagina = pagina + 1
+            window["Info"].update(Dicc_Informacion[Boton_actual][pagina])
+        elif(event=='<'):
+            pagina = pagina - 1
+            window["Info"].update(Dicc_Informacion[Boton_actual][pagina])
+        Comprobaciones(Boton_actual,pagina,window)
     window.close()
-    return(boton_cliqueado)
+    return(event)
 
 if __name__ == "__main__":
+    sg.theme('DarkGrey2')
     Ayuda()
