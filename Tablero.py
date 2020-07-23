@@ -705,34 +705,26 @@ def Intercambio_FichasTablero(LCOPR,Dicc,event1,event2,window,Dicc_rutas_letras_
         window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(40,40),image_subsample=5)
 
 def Intercambio_FichasAtril(Lista_Atril,Pos_letra1,Pos_letra2,window,Dicc_rutas_letras_puntaje_partida):
-    if (Pos_letra1 != Pos_letra2):
-        #window[Pos_letra1].update(Lista_Atril[Pos_letra2])
-        #window[Pos_letra2].update(Lista_Atril[Pos_letra1])
-        if ("" ==(Lista_Atril[Pos_letra1])):
-            window[Pos_letra2].update(image_filename=Dicc_rutas_letras_puntaje_partida["white"],image_size=(40,40),image_subsample=5)
-            window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra2]][0],image_size=(40,40),image_subsample=5)
-        elif ("" ==(Lista_Atril[Pos_letra2])):
-            window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida["white"],image_size=(40,40),image_subsample=5)
-            window[Pos_letra2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra1]][0],image_size=(40,40),image_subsample=5)
-        else:
+    if ((Pos_letra1 != Pos_letra2)):
+        if(((Lista_Atril[Pos_letra2])!="")and((Lista_Atril[Pos_letra1])!="" )):
             window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra2]][0],image_size=(40,40),image_subsample=5)
             window[Pos_letra2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra1]][0],image_size=(40,40),image_subsample=5)
-        aux = Lista_Atril[Pos_letra2]
-        Lista_Atril[Pos_letra2] = Lista_Atril[Pos_letra1]
-        Lista_Atril[Pos_letra1] = aux
+            aux = Lista_Atril[Pos_letra2]
+            Lista_Atril[Pos_letra2] = Lista_Atril[Pos_letra1]
+            Lista_Atril[Pos_letra1] = aux
+        elif((Lista_Atril[Pos_letra1])!="" ):
+            window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra1]][0],image_size=(40,40),image_subsample=5)
     else:
         window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra1]][0],image_size=(40,40),image_subsample=5)
 
 def Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
+    print("entre")
     aux = Dicc[event1][0]
     Dicc[event1][0] = Lista_Atril[event2]
     Lista_Atril[event2] = aux
     if Dicc[event1][0] == "" :
         window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida["white"],image_size=(40,40),image_subsample=5)
         window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event2]][0],image_size=(40,40),image_subsample=5)
-    elif(Lista_Atril[event2] == ""):
-        window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(40,40),image_subsample=5)
-        window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida["white"],image_size=(40,40),image_subsample=5)
     else:
         window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(40,40),image_subsample=5)
         window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event2]][0],image_size=(40,40),image_subsample=5)
@@ -741,19 +733,20 @@ def Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_p
     #window[event2].update(Lista_Atril[event2],button_color=('black','#FDD357'))
 
 def Colocar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,Letra1,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
-    Dicc[event2][0] = Letra1
-    #window[event2].update(Letra1,button_color=('black','#FDD357'))
-    window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Letra1][0],image_size=(40,40),image_subsample=5)
-    Lista_Atril[event1] = ''
-    #window[event1].update('')
-    window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida["white"],image_size=(40,40),image_subsample=5)
-    LCOPR.append(event2)
-    #Coord_Disponible(LCOPR,CCD) #Ya que LCOPR contiene unicamente las fichas actuales se tiene
-    #Coord_Disponible(LCO,CCD)   #que usar LCO para completar la actualizacion/eliminacion de elementos en CCD
-    #Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
-    #Eliminar_Elementos_Ocupados_CDD(LCOPR,CCD)
-    #window[event1].update(button_color=('black','#FDD357'))
-    window[event1].update(image_filename=r'ScrabbleAR_Imagenes_png\modelo_ficha.png',image_size=(40,40),image_subsample=5)
+    if Letra1!="":
+        Dicc[event2][0] = Letra1
+        #window[event2].update(Letra1,button_color=('black','#FDD357'))
+        window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Letra1][0],image_size=(40,40),image_subsample=5)
+        Lista_Atril[event1] = ''
+        #window[event1].update('')
+        window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida["white"],image_size=(40,40),image_subsample=5)
+        LCOPR.append(event2)
+        #Coord_Disponible(LCOPR,CCD) #Ya que LCOPR contiene unicamente las fichas actuales se tiene
+        #Coord_Disponible(LCO,CCD)   #que usar LCO para completar la actualizacion/eliminacion de elementos en CCD
+        #Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
+        #Eliminar_Elementos_Ocupados_CDD(LCOPR,CCD)
+        #window[event1].update(button_color=('black','#FDD357'))
+        window[event1].update(image_filename=r'ScrabbleAR_Imagenes_png\modelo_ficha.png',image_size=(40,40),image_subsample=5)
 
 def Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
     Lista_Atril[event2] = Dicc[event1][0]
