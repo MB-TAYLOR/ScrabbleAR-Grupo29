@@ -874,7 +874,24 @@ def cargoPartida():
         Dicc[key_dicc]=datos["info_Tablero"]["Dicc"][key]
     datos["info_Tablero"]["Dicc"]=Dicc
     return(datos)
-
+def reloj_Partida(Tiempo,window):
+    if(Tiempo>(600*100)): #si es mayor a 10 min (600 segs multiplicados por la cantidad de veces que el timeout entra por segundo)
+        window['Tiempo'].update("{}:{}".format(((Tiempo//100)//60),((Tiempo//100)%60)))
+    elif(Tiempo<(600*100)and(Tiempo>(10*100))):#si es menor a 10 min y mayor a 10 segs
+        window['Tiempo'].update("0{}:{}".format(((Tiempo//100)//60),((Tiempo//100)%60)))
+    else:#si es menor a 10 segs(10 segs multiplicados por la cantidad de veces que el timeout entra por segundo)
+        window['Tiempo'].update("00:0{}".format((((Tiempo//100)%60))))
+    Tiempo -= 1
+    return(Tiempo)
+def reloj_Ronda(tiempo_jugador,window):
+    if(tiempo_jugador>(600*100)): #si es mayor a 10 min (600 segs multiplicados por la cantidad de veces que el timeout entra por segundo)
+        window['Tiempo_Ronda'].update("{}:{}".format(((tiempo_jugador//100)//60),((tiempo_jugador//100)%60)))
+    elif(tiempo_jugador<(600*100)and(tiempo_jugador>(10*100))):#si es menor a 10 min y mayor a 10 segs
+        window['Tiempo_Ronda'].update("0{}:{}".format(((tiempo_jugador//100)//60),((tiempo_jugador//100)%60)))
+    else:#si es menor a 10 segs(10 segs multiplicados por la cantidad de veces que el timeout entra por segundo)
+        window['Tiempo_Ronda'].update("00:0{}".format((((tiempo_jugador//100)%60))))
+    tiempo_jugador-=1
+    return(tiempo_jugador)
 #PROGRAMA PRINCIPAL
 def genero_Tablero():
     global Infobox_Activa
@@ -974,7 +991,7 @@ def genero_Tablero():
     Dificil_se_juega=Lista_TP
     window.Refresh()
     tamaño_actual=window.Size
-    while True:
+    while True and (tiempo_ronda>0):
         LPI = []                #Lista de Posiciones de Intercambio (Para Intecambiar fichas)
         LCOPR = []              #Lista de Coordenadas Ocupadas Por Ronda
         coords_Bonus = []
@@ -984,17 +1001,13 @@ def genero_Tablero():
             partida_carga=False
         else:
             tiempo_jugador=tiempo_ronda
-
         Mensaje_Turno(Turno_Usuario)
-        while (Turno_Usuario):  #Mientras sea el turno del usuario:
+        while (Turno_Usuario and (tiempo_jugador>0)):  #Mientras sea el turno del usuario:
             Palabra = ''
-            event = window.Read(timeout=10,timeout_key='Reloj')[0]
-            window['Tiempo'].update("{}:{}".format(((Tiempo//100)//60),((Tiempo//100)%60)))
-            Tiempo -= 1
-            tiempo_jugador = str(tiempo_jugador)
-            window['Tiempo_Ronda'].update("00:{}".format(tiempo_jugador[0:2]))
-            tiempo_jugador = int(tiempo_jugador)
-            tiempo_jugador-=1
+            event = window.Read(timeout=7,timeout_key='Reloj')[0] # timeout=10 no igualaba la velocidad de los segundos reales , por eso reemplaze por "7" que si lo iguala
+            Tiempo=reloj_Partida(Tiempo,window)
+            tiempo_jugador=reloj_Ronda(tiempo_jugador,window)
+
             #if (tamaño_actual != window.Size):
             #    tamaño_actual=window.Size
                 #Aca deberian estar los cambios a la ventana que centrarian todo el contenido de esta.
