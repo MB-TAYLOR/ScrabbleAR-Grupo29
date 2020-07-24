@@ -811,10 +811,10 @@ def Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,
                 Turnos_Disponibles = Turnos_Disponibles - 1
                 Se_Intercambio_Ficha = True
                 CFT = Actualizar_CFT(CFT,Dicc_Bolsa)
-                window[event].update(button_color=('white','#283B5B'))
+                window[event].update(button_color=('#2B2B28','#E3B04B'))
             else:
                 sg.popup('No has intercambiado ninguna ficha! no pierdes el turno',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
-                window[event].update(button_color=('white','#283B5B'))
+                window[event].update(button_color=('#2B2B28','#E3B04B'))
             Boton_Intercambiar = False
         else: #Recien "Clickeo" el boton intercambiar Fichas
             if Turnos_Disponibles != 1:
@@ -822,7 +822,7 @@ def Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,
             else:
                 sg.popup('Este es el ultimo turno en el que puedes cambiar fichas!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
             Boton_Intercambiar = True
-            window[event].update(button_color=('black','#57C3FD'))
+            window[event].update(button_color=('#2B2B28','#57C3FD'))
             Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,Dicc_rutas_letras_puntaje_partida)
     elif event != 'Reloj':
         sg.popup('Debes seleccionar fichas del Atril!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
@@ -1000,7 +1000,6 @@ def genero_Tablero():
         LPI = []                #Lista de Posiciones de Intercambio (Para Intecambiar fichas)
         LCOPR = []              #Lista de Coordenadas Ocupadas Por Ronda
         coords_Bonus = []
-        puedo_intercambiar=True
         Boton_Intercambiar = False
         Se_Intercambio_Ficha = False
         if partida_carga==True:
@@ -1022,17 +1021,13 @@ def genero_Tablero():
             #    tamaño_actual=window.Size
                 #Aca deberian estar los cambios a la ventana que centrarian todo el contenido de esta.
             if event in (None, 'Salir'):
-                event_popup = sg.popup_yes_no('Ey! estas saliendo en mitad de una partida\n¿Quieres posponerla?',title='Aviso',keep_on_top=True)
-                if (event_popup == 'Yes'):
-                    print("Pospone la partida")
-
-                    GuardoPartida(Dificultad,DiccRLPP,Dicc,CFT,Usuario,Turnos_Disponibles,PTU,HistorialUsuario,LCO,Tiempo,DiccRLPP_CPU,PT_CPU,fichas_CPU,contador_Turnos_CPU,HistorialCPU,PrimerRonda,Lista_Atril,Dicc_Bolsa,Dicc_Puntajes,tiempo_ronda,list(CCD),LCO_Usuario,LCO_CPU,tiempo_jugador,Lista_TP)
-                else:
-                    print("No la pospone y sale sin guardar")
-                Fin = True
-                puedo_intercambiar=False
-                break
-
+                event_popup1 = sg.popup_yes_no('Seguro que desea salir de la partida?',title='Aviso',keep_on_top=True)
+                if (event_popup1 == 'Yes'):
+                    event_popup2 = sg.popup_yes_no('¿Quieres posponerla?',title='Aviso',keep_on_top=True)
+                    if (event_popup2 == 'Yes'):
+                        GuardoPartida(Dificultad,DiccRLPP,Dicc,CFT,Usuario,Turnos_Disponibles,PTU,HistorialUsuario,LCO,Tiempo,DiccRLPP_CPU,PT_CPU,fichas_CPU,contador_Turnos_CPU,HistorialCPU,PrimerRonda,Lista_Atril,Dicc_Bolsa,Dicc_Puntajes,tiempo_ronda,list(CCD),LCO_Usuario,LCO_CPU,tiempo_jugador,Lista_TP)
+                    Fin = True
+                    break
             if (((type(event) == int) or (type(event) == tuple)) and (Boton_Intercambiar == False)):
                 if event1 == '':
                     event1 = event
@@ -1083,7 +1078,11 @@ def genero_Tablero():
                 sg.popup('Presione "OK"para continuar',keep_on_top=True)
                 for x in range(len(Lista_Atril)):
                     window[x].update(image_filename=DiccRLPP[Lista_Atril[x]][0],image_size=(38,38),image_subsample=5)
-
+            elif (event=="Rendirse"):
+                se_Rinde = sg.popup_yes_no("Si se rinde no se guardaran datos de esta partida , esta seguro?",title='Aviso',keep_on_top=True)
+                if (se_Rinde=="Yes"):
+                    Fin=True
+                    break
             if Infobox_Activa and (tiemp_ant != str(Tiempo)[3]):
                 tiemp_ant = str(Tiempo)[3]
                 if temp  == 0:
