@@ -4,6 +4,7 @@ import csv
 
 
 def Primer_Cargar(values,window,Dicc_Bolsa,letra_Seleccionada):
+    '''Carga por primera vez los datos de el Archivo_Opciones, devuelve values y Dicc_Bolsa'''
     arch = open('Archivo_Opciones.csv','r')
     reader = csv.reader(arch)
     for row in reader:
@@ -54,6 +55,7 @@ def Primer_Cargar(values,window,Dicc_Bolsa,letra_Seleccionada):
     return values,Dicc_Bolsa
 
 def Cargar(values,window,Dicc_Bolsa,letra_Seleccionada):
+    '''Carga los datos de el Archivo_Opciones, devuelve values'''
     arch = open('Archivo_Opciones.csv','r')
     reader = csv.reader(arch)
     for row in reader:
@@ -103,12 +105,14 @@ def Cargar(values,window,Dicc_Bolsa,letra_Seleccionada):
     return values
 
 def AgregarDatos(values):
+    '''Agrega los datos de un usuario nuevo ingresado a Archivo_Opciones'''
     arch = open('Archivo_Opciones.csv','a')
     writer = csv.writer(arch)
     writer.writerow([True,values['Usuario'].strip(),values['Facil'],values['Normal'],values['Dificil'],values['Personalizado'],int(values['Lote1']),int(values['Lote2']),int(values['Lote3']),int(values['Lote4']),int(values['Lote5']),int(values['Lote6']),int(values['Lote7']),values['TT'],values['TPR'],values['Adjetivos'],values['Sustantivos'],values['Verbos'],values['A'],values['B'],values['C'],values['D'],values['E'],values['F'],values['G'],values['H'],values['I'],values['J'],values['K'],values['L'],values['M'],values['N'],values['Enie'],values['O'],values['P'],values['Q'],values['R'],values['R'],values['S'],values['T'],values['U'],values['V'],values['W'],values['X'],values['Y'],values['Z']])
     arch.close()
 
 def GuardarDatos(lista):
+    '''Guarda los datos de un usuario'''
     arch = open('Archivo_Opciones.csv','w')
     writer = csv.writer(arch)
     writer.writerow(['Actual','Usuario','Facil','Normal','Dificil','Personalizado','Lote1','Lote2','Lote3','Lote4','Lote5','Lote6','Lote7','TT','TPR','Adjetivos','Sustantivos','Verbos','A','B','C','D','E','F','G','H','I','J','K','L','M','N','Enie','O','P','Q','R','S','T','U','V','W','X','Y','Z'])
@@ -117,6 +121,7 @@ def GuardarDatos(lista):
     arch.close()
 
 def LeerDatos():
+    '''Lee los datos de el Archivo_Opciones y los retorna en forma de lista con diccionarios.'''
     arch = open('Archivo_Opciones.csv','r')
     reader = csv.reader(arch)
     datos = []
@@ -134,6 +139,7 @@ def LeerDatos():
     return datos
 
 def RestablecerPredeterminado(values,window,Dicc_Bolsa,letra_Seleccionada):
+    '''Restablece en predeterminado todos los valores de el menu opciones'''
     values['Facil'] = False
     window['Facil'].update(values['Facil'])
     values['Normal'] = True
@@ -175,6 +181,7 @@ def RestablecerPredeterminado(values,window,Dicc_Bolsa,letra_Seleccionada):
     return values,Dicc_Bolsa,Cant_Fichas_Total
 
 def Layout_Columna():
+    '''Construye y devuelve un layout'''
 
     frame1 = [[sg.Text('Tiempo total:',key='Texto_TT'),sg.Input(pad=((55,0),(5,2)),size=(6,6),key='TT'),sg.Text('Minutos',key='Texto_Minutos')],
               [sg.Text('Tiempo por ronda:',key='Texto_TPR'),sg.Input(pad=((10,0),(2,5)),size=(6,6),key='TPR'),sg.Text('Segundos',key='Texto_Segundos')]]
@@ -193,6 +200,7 @@ def Layout_Columna():
     return layout
 
 def Layout_Main():
+    '''Constuye y devuelve un layout'''
     frame = [[sg.Text('A E O S I U N L R T:'),sg.Slider(range=(1,2),orientation="h",size=(6,10),pad=((5,3),(0,22)),default_value=1,key='Lote1')],
             [sg.Text('C D G :'),sg.Slider(range=(1,3),orientation="h",size=(6,10),pad=((108,3),(0,22)),default_value=2,key='Lote2')],
             [sg.Text('M B P:'),sg.Slider(range=(2,4),orientation="h",size=(6,10),pad=((109,3),(0,22)),default_value=3,key='Lote3')],
@@ -212,6 +220,7 @@ def Layout_Main():
     return layout
 
 def Poner_Todos_En_Falso(lista):
+    '''Reemplaza el valor actual por False a todos los usuarios ingresados en el Archivo_Opciones'''
     arch = open('Archivo_Opciones.csv','w')
     writer = csv.writer(arch)
     writer.writerow(['Actual','Usuario','Facil','Normal','Dificil','Personalizado','Lote1','Lote2','Lote3','Lote4','Lote5','Lote6','Lote7','TT','TPR','Adjetivos','Sustantivos','Verbos','A','B','C','D','E','F','G','H','I','J','K','L','M','N','Enie','O','P','Q','R','S','T','U','V','W','X','Y','Z'])
@@ -223,6 +232,7 @@ def Poner_Todos_En_Falso(lista):
     arch.close()
 
 def Importar_Datos():
+    '''Importa de Archivo_Opciones los datos del usuario activo'''
     arch = open('Archivo_Opciones.csv','r')
     reader = csv.reader(arch)
     index = 0
@@ -236,12 +246,14 @@ def Importar_Datos():
                 index = index + 1
 
 def Transformar_Values(values,Dicc_Bolsa):
+    '''Tranforma values en un diccionario mas preciso para poder exportarlo luego a Archivo_Opciones'''
     values.pop('Letras')
     values.pop('Cantidad')
     for key,elem in Dicc_Bolsa.items():
         values[key] = elem
 
 def Comprobaciones(values,Cant_Fichas_Total,window):
+    '''Se comprueba que no el usuario no haya ingresado algo que no debe'''
     TodoOk = True
     if values['Usuario'] != '':
         for L in values['Usuario']:
@@ -291,6 +303,7 @@ def Comprobaciones(values,Cant_Fichas_Total,window):
     return TodoOk
 
 def Deshabilitar(Dificultad_Actual,window):
+    '''Desabilita el tiempo/Tipos de palabra si no se elige la dificultad personalizado'''
     if Dificultad_Actual == 'Facil' or Dificultad_Actual == 'Normal' or Dificultad_Actual == 'Dificil':
         window['Texto_TT'].update(text_color='grey') #ADADAD = 'gris'
         window['Texto_TPR'].update(text_color='grey')
@@ -333,6 +346,7 @@ def Deshabilitar(Dificultad_Actual,window):
 
 
 def Cual_Dificultad(Facil,Normal,Dificil,window):
+    '''Devuelve la dificultad actual que el usuario eligio'''
     if Facil == 'True':
             dificultad = 'Facil'
     elif Normal == 'True':
@@ -344,6 +358,7 @@ def Cual_Dificultad(Facil,Normal,Dificil,window):
     return dificultad
 
 def Contabilizar_Fichas(Dicc_Bolsa):
+    '''Contabiliza la cantidad de fichas que hay en total en funcion a los cambios generados en menu opciones'''
     Cant_Total = 0
     for Cant in Dicc_Bolsa.values():
         Cant_Total = Cant_Total + Cant
@@ -351,6 +366,7 @@ def Contabilizar_Fichas(Dicc_Bolsa):
 
 
 def Ventana_Opciones ():
+    '''Abre menu de opciones con todas sus funciones'''
     sg.theme('DarkGrey2')
     Lista_Letras = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','Enie','O','P','Q','R','S','T','U','V','W','X','Y','Z']
     Diseño = [ [sg.Column((Layout_Main())),
