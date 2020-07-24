@@ -156,11 +156,11 @@ def RestablecerPredeterminado(values,window,Dicc_Bolsa,letra_Seleccionada):
     window['Lote6'].update(values['Lote6'])
     values['Lote7'] = 10
     window['Lote7'].update(values['Lote7'])
-    values['TT'] = 60
+    values['TT'] = 45
     window['TT'].update(values['TT'])
-    values['TPR'] = 60
+    values['TPR'] = 45
     window['TPR'].update(values['TPR'])
-    values['Adjetivos'] = True
+    values['Adjetivos'] = False
     window['Adjetivos'].update(values['Adjetivos'])
     values['Sustantivos'] = True
     window['Sustantivos'].update(values['Sustantivos'])
@@ -170,7 +170,9 @@ def RestablecerPredeterminado(values,window,Dicc_Bolsa,letra_Seleccionada):
                       "Enie":1,"O":8,"P":2,"Q":1,"R":4,"S":7,"T":4,"U":6,"V":2,"W":1,"X":1,"Y":1,"Z":1}
 
     window['Cantidad'].update(Dicc_Bolsa[letra_Seleccionada])
-    return values,Dicc_Bolsa
+    Cant_Fichas_Total = Contabilizar_Fichas(Dicc_Bolsa)
+    window['FichasTotales'].update('Fichas totales:'+str(Cant_Fichas_Total))
+    return values,Dicc_Bolsa,Cant_Fichas_Total
 
 def Layout_Columna():
 
@@ -388,7 +390,7 @@ def Ventana_Opciones ():
             Dicc_Bolsa[letra_Seleccionada] = int(Cant_Letra_Actual)
 
         elif (event == 'Restablecer predeterminado'):
-            values,Dicc_Bolsa = RestablecerPredeterminado(values,window,Dicc_Bolsa,letra_Seleccionada)
+            values,Dicc_Bolsa,Cant_Fichas_Total = RestablecerPredeterminado(values,window,Dicc_Bolsa,letra_Seleccionada)
 
         elif (event == 'Guardar') or (event == 'Cargar'):
             Lista = LeerDatos()
@@ -398,6 +400,7 @@ def Ventana_Opciones ():
                     existe = list(filter(lambda jug:values['Usuario'].strip() == jug['Usuario'],Lista))
                     if existe != []: #Reemplazo la configuracion del usuario existente
                         Lista.pop(Lista.index(existe[0]))
+                        values['Actual'] = True
                         Lista.append(values)
                         GuardarDatos(Lista)
                         sg.popup('El perfil se modifico exitosamente!',title='Aviso',keep_on_top=True)
