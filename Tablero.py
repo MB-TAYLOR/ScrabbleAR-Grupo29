@@ -154,23 +154,7 @@ def Update_Infobox(Texto,Color,window):
     window['Infobox'].update(Texto,text_color='Black',background_color=Color)
     Infobox_Activa = True
     temp = 5
-'''
-def tiempo_dificultad(dificultad):
-    tiempo_ronda=0
-    jugadores=2
-    rondas_totales=30
-    secs=0
-    if(dificultad=="Facil"):
-        tiempo_ronda=60
-        secs =tiempo_ronda*jugadores*rondas_totales
-    elif(dificultad=="Normal"):
-        tiempo_ronda=45
-        secs=tiempo_ronda*jugadores*rondas_totales
-    elif (dificultad =="Dificil"):
-        tiempo_ronda=30
-        secs=tiempo_ronda*jugadores*rondas_totales
-    return((secs*100),(tiempo_ronda*100))
-'''
+
 def intercambio_Fichas_CPU(fichas_CPU,Bolsa_Diccionario,Cant_fichas):
     for x in range(len(fichas_CPU)):
         Bolsa_Diccionario[fichas_CPU[x]]=(Bolsa_Diccionario[fichas_CPU[x]])+1
@@ -987,12 +971,6 @@ def genero_Tablero():
     event1 = ''
     window['Columna_Conf'].update(visible=False)
     window['PuntosUsuario'].update('Puntos  ' + Usuario)
-    '''
-    if(Dificultad=="Dificil"):
-        Dificil_se_juega=aleatorio_Dificil()
-    else:
-        Dificil_se_juega="Default"
-        '''
     Dificil_se_juega=Lista_TP
     window.Refresh()
     tamaño_actual=window.Size
