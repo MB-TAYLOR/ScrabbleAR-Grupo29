@@ -160,6 +160,8 @@ def Update_Infobox(Texto,Color,window):
     temp = 5
 
 def intercambio_Fichas_CPU(fichas_CPU,Bolsa_Diccionario,Cant_fichas):
+    '''Recibe un string ,los devuelve a la "Bolsa" , saca de la "Bolsa" 7 caracteres y retorna esos 7 caracteres como un string . La bolsa es un
+    Diccionario donde estan todas las letras y la cantidad de estas'''
     for x in range(len(fichas_CPU)):
         Bolsa_Diccionario[fichas_CPU[x]]=(Bolsa_Diccionario[fichas_CPU[x]])+1
         Cant_fichas=Cant_fichas+1
@@ -174,6 +176,7 @@ def aleatorio_Dificil():
     return(lista_opciones[x])
 
 def Letra_Bolsa(Bolsa_Diccionario,Cant_fichas):
+    '''Busca en la "Bolsa" hasta encontrar una letra que exista mas de 0 veces , cuando la encuentra reduce sus existencias en 1 y retorna la ficha encontrada'''
     sigue=True
     letra=""
     while((sigue)and(Cant_fichas >= 14)):
@@ -189,6 +192,9 @@ def Letra_Bolsa(Bolsa_Diccionario,Cant_fichas):
     return(letra)
 
 def Update_Tablero(window,Dicc):
+    '''Genera un tablero usando de forma aleatoria alguno de los posibles tableros en Lista_Tableros ,Guarda en Dicc el tablero
+       seleccionado(como clave tipo tupla de las coordenadas y valor una lista , en la posicion 1 de esta se guarda el color del boton en ese lugar),
+       cambia los colores de los botones del layaut para mostrarlo y retorna Dicc'''
     Lista_Tableros=[
         {"0,0":"white","0,1":"white","0,2":"red","0,3":"white","0,4":"green","0,5":"white","0,6":"white","0,7":"white","0,8":"white","0,9":"white","0,10":"green","0,11":"white","0,12":"red","0,13":"white","0,14":"white",
          "1,0":"white","1,1":"green","1,2":"white","1,3":"white","1,4":"white","1,5":"yellow","1,6":"white","1,7":"blue","1,8":"white","1,9":"yellow","1,10":"white","1,11":"white","1,12":"white","1,13":"green","1,14":"white",
@@ -255,6 +261,8 @@ def Update_Tablero(window,Dicc):
     return Dicc
 
 def Generar_Dicc():
+    '''Genera un Diccionario con clave tipo tupla de las coordenadas y valor una lista ,en la posicion 0 inicializa todas en "",
+       en la posicion 1 las inicializa con "White" .Retorna Dicc'''
     Dicc = {}
     for j in range(MAX_COL):
         for i in range(MAX_ROWS):
@@ -369,6 +377,7 @@ def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_pun
     return layout
 
 def Llenar_Atril(Lista_Atril,window,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_puntaje_partida):
+    '''Rellena el atril del usuario al colocar una palabra valida y finalizar su turno'''
     for pos in range(len(Lista_Atril)):
         if (Lista_Atril[pos] == ''):
             Lista_Atril[pos] = Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
@@ -377,12 +386,14 @@ def Llenar_Atril(Lista_Atril,window,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_let
 
 
 def Coord_Ocupada(LCO,event):
+    '''Retorna True o False , segun si el evento recibido se encuentra en LCO'''
     if (event in LCO):
         return True
     else:
         return False
 
 def Coord_Adyacentes(coord):
+    '''Devuelve las coordenadas adyacentes de la cordenada recibida'''
     x,y=coord
     coord1=(x+1,y)
     coord2=(x,y+1)
