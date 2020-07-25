@@ -18,6 +18,8 @@ HistorialCPU = []
 PrimerRonda = True
 
 def rutas_letras(Dicc_letra_puntajes):
+    '''Recibe un diccionario con claves letra y valor puntaje (ej:"A:1") y segun eso , genera un diccionario con clave letra y valor lista de direcciones
+    correspondientes a distintos estados de la  ficha con el puntaje recibido (en el atril , al seleccionarla,al terminar turno), para el usuario '''
     Dicc_letras_rutas={'A1':[r'ScrabbleAR_Imagenes_png\ficha_A1_B.png',r'ScrabbleAR_Imagenes_png\ficha_A1_S.png',r'ScrabbleAR_Imagenes_png\ficha_A1_T.png'],
                        'A2':[r'ScrabbleAR_Imagenes_png\ficha_A2_B.png',r'ScrabbleAR_Imagenes_png\ficha_A2_S.png',r'ScrabbleAR_Imagenes_png\ficha_A2_T.png'],
                        'B2':[r'ScrabbleAR_Imagenes_png\ficha_B2_B.png',r'ScrabbleAR_Imagenes_png\ficha_B2_S.png',r'ScrabbleAR_Imagenes_png\ficha_B2_T.png'],
@@ -98,6 +100,7 @@ def rutas_letras(Dicc_letra_puntajes):
     return(Dicc_Actual_Punto_Ficha)
 
 def Update_Tablero2(window,Dicc):
+    '''Amplia la lista de cada uno de los elementos de Dicc con direcciones segun corresponde y coloca imagenes en el tablero segun corresponde '''
     inicio=r'ScrabbleAR_Imagenes_png\icono_inicio.png'
     yellow=r'ScrabbleAR_Imagenes_png\icono_x3.png'
     red=r'ScrabbleAR_Imagenes_png\icono_x2.png'
@@ -129,6 +132,7 @@ def Update_Tablero2(window,Dicc):
     return Dicc
 
 def rutas_letras_CPU(Dicc_letra_puntajes):
+    '''Recibe un diccionario con claves letra y valor puntaje (ej:"A:1") y segun eso , genera un diccionario con clave letra y valor direccion de la imagen a usar,para el CPU '''
     Dicc_letras_rutas_CPU={'A1':r'ScrabbleAR_Imagenes_png\ficha_A1_N.png','A2':r'ScrabbleAR_Imagenes_png\ficha_A2_N.png','B2':r'ScrabbleAR_Imagenes_png\ficha_B2_N.png','B3':r'ScrabbleAR_Imagenes_png\ficha_B3_N.png','B4':r'ScrabbleAR_Imagenes_png\ficha_B4_N.png',
         'C1':r'ScrabbleAR_Imagenes_png\ficha_C1_N.png','C2':r'ScrabbleAR_Imagenes_png\ficha_C2_N.png','C3':r'ScrabbleAR_Imagenes_png\ficha_C3_N.png','D1':r'ScrabbleAR_Imagenes_png\ficha_D1_N.png','D2':r'ScrabbleAR_Imagenes_png\ficha_D2_N.png','D3':r'ScrabbleAR_Imagenes_png\ficha_D3_N.png',
         'E1':r'ScrabbleAR_Imagenes_png\ficha_E1_N.png','E2':r'ScrabbleAR_Imagenes_png\ficha_E2_N.png','F3':r'ScrabbleAR_Imagenes_png\ficha_F3_N.png','F4':r'ScrabbleAR_Imagenes_png\ficha_F4_N.png','F5':r'ScrabbleAR_Imagenes_png\ficha_F5_N.png','G1':r'ScrabbleAR_Imagenes_png\ficha_G1_N.png',
@@ -1012,11 +1016,15 @@ def genero_Tablero():
             #if (tamaño_actual != window.Size):
             #    tamaño_actual=window.Size
                 #Aca deberian estar los cambios a la ventana que centrarian todo el contenido de esta.
-            if event in (None, 'Salir'):
-                event_popup1 = sg.popup_yes_no('Seguro que desea salir de la partida?',title='Aviso',keep_on_top=True)
+            if event in (None, 'Salir') and (Boton_Intercambiar == False):
+                if event==('Salir'):
+                    event_popup1 = sg.popup_yes_no('Seguro que desea salir de la partida?',title='Aviso',keep_on_top=True)
+                else:
+                    event_popup1='Yes'
                 if (event_popup1 == 'Yes'):
-                    event_popup2 = sg.popup_yes_no('¿Quieres posponerla?',title='Aviso',keep_on_top=True)
+                    event_popup2 = sg.popup_yes_no('¿Quieres posponer la partida?',title='Aviso',keep_on_top=True)
                     if (event_popup2 == 'Yes'):
+                        Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,DiccRLPP)
                         GuardoPartida(Dificultad,DiccRLPP,Dicc,CFT,Usuario,Turnos_Disponibles,PTU,HistorialUsuario,LCO,Tiempo,DiccRLPP_CPU,PT_CPU,fichas_CPU,contador_Turnos_CPU,HistorialCPU,PrimerRonda,Lista_Atril,Dicc_Bolsa,Dicc_Puntajes,tiempo_ronda,list(CCD),LCO_Usuario,LCO_CPU,tiempo_jugador,Lista_TP)
                     Fin = True
                     break
@@ -1067,7 +1075,7 @@ def genero_Tablero():
             elif(event=="Pausar"):
                 for x in range(len(Lista_Atril)):
                     window[x].update(image_filename=r'ScrabbleAR_Imagenes_png\Transparente.png',image_size=(38,38),image_subsample=5)
-                sg.popup('Presione "OK"para continuar',keep_on_top=True)
+                sg.popup('Presione "OK"para continuar',keep_on_top=True,title='Aviso')
                 for x in range(len(Lista_Atril)):
                     window[x].update(image_filename=DiccRLPP[Lista_Atril[x]][0],image_size=(38,38),image_subsample=5)
             elif (event=="Rendirse"):
