@@ -264,37 +264,38 @@ def Layout_Columna_Historial(Usuario):
               [sg.Listbox([''],size=(20, 12),font=("Segoe print", 11),key=('Historial_Usuario'),text_color='black',background_color='#F0DCDF')]]
     return layout
 
-def Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT):
-    layout = [[sg.Text('Dificultad: '+Dificultad,pad =(50,0),font=("impact",16))],
-              [sg.Text('Cantidad de fichas: '+str(CFT),key='CantFichas',pad =(50,0),font=("impact",16))],
-              [sg.Text('Fichas | Puntos',pad =(50,0),font=("impact",13))],
-              [sg.Text('A      |      '+str(Dicc_Puntajes['A']),pad =(72,0),font=("impact",13))],
-              [sg.Text('B      |      '+str(Dicc_Puntajes['B']),pad =(72,0),font=("impact",13))],
-              [sg.Text('C      |      '+str(Dicc_Puntajes['C']),pad =(72,0),font=("impact",13))],
-              [sg.Text('D      |      '+str(Dicc_Puntajes['D']),pad =(72,0),font=("impact",13))],
-              [sg.Text('E      |      '+str(Dicc_Puntajes['E']),pad =(74,0),font=("impact",13))],
-              [sg.Text('F      |      '+str(Dicc_Puntajes['F']),pad =(74,0),font=("impact",13))],
-              [sg.Text('G      |      '+str(Dicc_Puntajes['G']),pad =(72,0),font=("impact",13))],
-              [sg.Text('H      |      '+str(Dicc_Puntajes['H']),pad =(72,0),font=("impact",13))],
-              [sg.Text('I      |      '+str(Dicc_Puntajes['I']),pad =(76,0),font=("impact",13))],
-              [sg.Text('J      |      '+str(Dicc_Puntajes['J']),pad =(75,0),font=("impact",13))],
-              [sg.Text('K      |      '+str(Dicc_Puntajes['K']),pad =(72,0),font=("impact",13))],
-              [sg.Text('L      |      '+str(Dicc_Puntajes['L']),pad =(75,0),font=("impact",13))],
-              [sg.Text('M      |      '+str(Dicc_Puntajes['M']),pad =(69,0),font=("impact",13))],
-              [sg.Text('N      |      '+str(Dicc_Puntajes['N']),pad =(72,0),font=("impact",13))],
-              [sg.Text('Ñ      |      '+str(Dicc_Puntajes['Ñ']),pad =(72,0),font=("impact",13))],
-              [sg.Text('O      |      '+str(Dicc_Puntajes['O']),pad =(72,0),font=("impact",13))],
-              [sg.Text('P      |      '+str(Dicc_Puntajes['P']),pad =(72,0),font=("impact",13))],
-              [sg.Text('Q      |      '+str(Dicc_Puntajes['Q']),pad =(72,0),font=("impact",13))],
-              [sg.Text('R      |      '+str(Dicc_Puntajes['R']),pad =(72,0),font=("impact",13))],
-              [sg.Text('S      |      '+str(Dicc_Puntajes['S']),pad =(72,0),font=("impact",13))],
-              [sg.Text('T      |      '+str(Dicc_Puntajes['T']),pad =(73,0),font=("impact",13))],
-              [sg.Text('U      |      '+str(Dicc_Puntajes['U']),pad =(72,0),font=("impact",13))],
-              [sg.Text('V      |      '+str(Dicc_Puntajes['V']),pad =(72,0),font=("impact",13))],
-              [sg.Text('W      |      '+str(Dicc_Puntajes['W']),pad =(68,0),font=("impact",13))],
-              [sg.Text('X      |      '+str(Dicc_Puntajes['X']),pad =(74,0),font=("impact",13))],
-              [sg.Text('Y      |      '+str(Dicc_Puntajes['Y']),pad =(73,0),font=("impact",13))],
-              [sg.Text('Z      |      '+str(Dicc_Puntajes['Z']),pad =(74,0),font=("impact",13))]]
+def Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT,Lista_TP):
+    TDP = ''
+    for tp in Lista_TP:
+        if tp == 'sus':
+            tp = 'Sustantivos\n'
+        elif tp == 'adj':
+            tp = 'Adjetivos\n'
+        else:
+            tp = 'Verbos\n'
+        TDP = TDP + tp
+    TDP = TDP.strip('\n')
+
+    framePuntos = [[sg.Text('A  |  '+str(Dicc_Puntajes['A']),pad=((5,5),(3,3)),font='sitka'),sg.Text('Ñ  |  '+str(Dicc_Puntajes['Ñ']),pad=((30,5),(3,3)),font='sitka')],
+                   [sg.Text('B  |  '+str(Dicc_Puntajes['B']),pad=((5,5),(3,3)),font='sitka'),sg.Text('O  |  '+str(Dicc_Puntajes['O']),pad=((29,5),(3,3)),font='sitka')],
+                   [sg.Text('C  |  '+str(Dicc_Puntajes['C']),pad=((4,5),(3,3)),font='sitka'),sg.Text('P  |  '+str(Dicc_Puntajes['P']),pad=((30,5),(3,3)),font='sitka')],
+                   [sg.Text('D  |  '+str(Dicc_Puntajes['D']),pad=((4,5),(3,3)),font='sitka'),sg.Text('Q  |  '+str(Dicc_Puntajes['Q']),pad=((29,5),(3,3)),font='sitka')],
+                   [sg.Text('E  |  '+str(Dicc_Puntajes['E']),pad=((5,5),(3,3)),font='sitka'),sg.Text('R  |  '+str(Dicc_Puntajes['R']),pad=((30,5),(3,3)),font='sitka')],
+                   [sg.Text('F  |  '+str(Dicc_Puntajes['F']),pad=((6,5),(3,3)),font='sitka'),sg.Text('S  |  '+str(Dicc_Puntajes['S']),pad=((30,5),(3,3)),font='sitka')],
+                   [sg.Text('G  |  '+str(Dicc_Puntajes['G']),pad=((4,5),(3,3)),font='sitka'),sg.Text('T  |  '+str(Dicc_Puntajes['T']),pad=((32,5),(3,3)),font='sitka')],
+                   [sg.Text('H  |  '+str(Dicc_Puntajes['H']),pad=((5,5),(3,3)),font='sitka'),sg.Text('U  |  '+str(Dicc_Puntajes['U']),pad=((30,5),(3,3)),font='sitka')],
+                   [sg.Text('I  |  '+str(Dicc_Puntajes['I']),pad=((13,5),(3,3)),font='sitka'),sg.Text('V  |  '+str(Dicc_Puntajes['V']),pad=((31,5),(3,3)),font='sitka')],
+                   [sg.Text('J  |  '+str(Dicc_Puntajes['J']),pad=((8,5),(3,3)),font='sitka'),sg.Text('W  |  '+str(Dicc_Puntajes['W']),pad=((27,5),(3,3)),font='sitka')],
+                   [sg.Text('K  |  '+str(Dicc_Puntajes['K']),pad=((5,5),(3,3)),font='sitka'),sg.Text('X  |  '+str(Dicc_Puntajes['X']),pad=((30,5),(3,3)),font='sitka')],
+                   [sg.Text('L  |  '+str(Dicc_Puntajes['L']),pad=((7,5),(3,3)),font='sitka'),sg.Text('Y  |  '+str(Dicc_Puntajes['Y']),pad=((32,5),(3,3)),font='sitka')],
+                   [sg.Text('M  |  '+str(Dicc_Puntajes['M']),pad=((3,5),(3,3)),font='sitka'),sg.Text('Z  |  '+str(Dicc_Puntajes['Z']),pad=((32,5),(3,3)),font='sitka')],
+                   [sg.Text('N  |  '+str(Dicc_Puntajes['N']),pad=((5,5),(3,3)),font='sitka')] ]
+
+
+    layout = [[sg.Frame('Dificultad',[[sg.Text(Dificultad,font='sitka')]],pad =((50,0),(15,5)),font=("impact",16))],
+              [sg.Frame('Tipos de palabra',[[sg.Text(TDP,font='sitka')]],pad =((50,0),(5,5)),font=("impact",13))],
+              [sg.Frame('Fichas | Puntos',framePuntos,pad =((50,0),(5,5)),font=("impact",15))],
+              [sg.Text('Cantidad de fichas: '+str(CFT),key='CantFichas',pad =((50,0),(5,5)),font=("sitka",13),relief='groove')]]
     return layout
 
 def Layout_Columna():
@@ -936,7 +937,7 @@ def genero_Tablero():
         diseño = [ [sg.Column((Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP))),
                     sg.Column(Layout_Columna()),
                     sg.Column(Layout_Columna_Historial(Usuario),key='Columna_Historial'),
-                    sg.Column(Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT),key='Columna_Conf')] ]
+                    sg.Column(Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT,Lista_TP),key='Columna_Conf')] ]
         window = sg.Window('Tablero',diseño ,location=(400,0),finalize=True)
         Update_Tablero2(window,Dicc)
         for coord in LCO:
@@ -977,7 +978,7 @@ def genero_Tablero():
         diseño = [ [sg.Column((Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP))),
                     sg.Column(Layout_Columna()),
                     sg.Column(Layout_Columna_Historial(Usuario),key='Columna_Historial'),
-                    sg.Column(Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT),key='Columna_Conf')] ]
+                    sg.Column(Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT,Lista_TP),key='Columna_Conf')] ]
         window = sg.Window('Tablero',diseño ,location=(400,0),finalize=True)
         Dicc = Update_Tablero(window,Dicc)
         Dicc = Update_Tablero2(window,Dicc)
