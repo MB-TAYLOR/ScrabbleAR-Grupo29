@@ -1,6 +1,7 @@
 import PySimpleGUI as sg
 
 def Comprobaciones(Boton_actual,pagina,window):
+    '''Condiciones para activar o desactivar los botones "<" y ">"  '''
     if (Boton_actual=='Como_Se_Juega') or (Boton_actual=='Opciones'):
         if (pagina > 0) and (pagina < 3):
             window['>'].update(disabled=False)
@@ -12,6 +13,7 @@ def Comprobaciones(Boton_actual,pagina,window):
 
 
 def Ayuda():
+    ''' Diseño de la ventana Ayuda , se generan los botones para navegar entre la distinta informacion y la zona donde se muestra dicha informacion'''
     Dicc_Informacion={'Sobre_El_Juego':[r'ScrabbleAR_Imagenes_png\SobreElJuego.png'],
                       'Como_Se_Juega':[r'ScrabbleAR_Imagenes_png\ComoSeJuega1.png',r'ScrabbleAR_Imagenes_png\ComoSeJuega2.png',r'ScrabbleAR_Imagenes_png\ComoSeJuega3.png',r'ScrabbleAR_Imagenes_png\ComoSeJuega4.png'],
                       'Opciones':[r'ScrabbleAR_Imagenes_png\Opciones1.png',r'ScrabbleAR_Imagenes_png\Opciones2.png',r'ScrabbleAR_Imagenes_png\Opciones3.png',r'ScrabbleAR_Imagenes_png\Opciones4.png'],

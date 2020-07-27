@@ -5,6 +5,7 @@ Tipo= {'adj':["AO", "JJ","AQ","DI","DT"],
 'verb':[ "VAG", "VBG", "VAI","VAN", "MD", "VAS" , "VMG" , "VMI", "VB", "VMM" ,"VMN" , "VMP", "VBN","VMS","VSG", "VSI","VSN", "VSP","VSS" ]
 }
 def verificar_Facil(palabra,existe):
+    '''Para Facil ,Recibe una palabra , si existe(cumple con las condiciones) retorna Verdadero , sino retorna Falso'''
     if (palabra in spelling.keys() or palabra in lexicon.keys()):
         if(parse(palabra).split("/")[1] in Tipo['sus']):
             existe=True
@@ -18,6 +19,7 @@ def verificar_Facil(palabra,existe):
         existe=False
     return(existe)
 def verificar_Medio(palabra,existe):
+    '''Para medio ,Recibe una palabra , si existe(cumple con las condiciones) retorna Verdadero , sino retorna Falso'''
     if palabra in spelling.keys() and palabra in lexicon.keys(): #Dificultad -> Medio(Sea adjetivo o verbo)
         if(parse(palabra).split("/")[1] in Tipo['verb']):
             existe=True
@@ -29,6 +31,7 @@ def verificar_Medio(palabra,existe):
         existe=False
     return(existe)
 def verificar_Dificil_Personalizado(palabra,existe,Dificil_elegido):
+    '''Para Dificil y Personalizado ,Recibe una palabra , si existe(cumple con las condiciones) retorna Verdadero , sino retorna Falso'''
     if palabra in spelling.keys() and palabra in lexicon.keys():
         for x in range(len(Dificil_elegido)):
             if(parse(palabra).split("/")[1] in Tipo[Dificil_elegido[x]]):
@@ -38,6 +41,8 @@ def verificar_Dificil_Personalizado(palabra,existe,Dificil_elegido):
     return(existe)
 
 def verificar_Palabra(palabra,dificultad,Dificil_elegido):
+    '''Recibe una palabra , una dificiltad y para Dificil y Personalizado una lista de tipos de palabra y si la palabra es valida con las condiciones dadas
+       retorna Verdadero , de lo contrario retorna Falso'''
     existe=False
     palabra=palabra.lower()
     if(len(palabra)>=2):

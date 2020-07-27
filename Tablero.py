@@ -153,6 +153,7 @@ def rutas_letras_CPU(Dicc_letra_puntajes):
     return(Dicc_Actual_Punto_Ficha_CPU)
 
 def Update_Infobox(Texto,Color,window):
+    '''Segun el texto recibido y el color , lo muetra en pantalla'''
     global Infobox_Activa
     global temp
     window['Infobox'].update(Texto,text_color='Black',background_color=Color)

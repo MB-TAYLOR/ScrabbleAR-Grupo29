@@ -19,6 +19,7 @@ def palabra_larga(lista_palabras):
             palabra_max=x
     return(palabra_max)
 def Facil(i,palabras_existentes):
+    '''Para Facil ,verifica si la palabra es valida(cumple con las condiciones) y si lo es lo agrega a la lista palabras_existentes'''
     if (i in spelling.keys() or i in lexicon.keys()):
         if(parse(i).split("/")[1] in Tipo['sus']):
             palabras_existentes.append(i)
@@ -27,17 +28,21 @@ def Facil(i,palabras_existentes):
         elif(parse(i).split("/")[1] in Tipo['verb']):
             palabras_existentes.append(i)
 def Medio(i,palabras_existentes):
+    '''Para Medio ,verifica si la palabra es valida(cumple con las condiciones) y si lo es lo agrega a la lista palabras_existentes'''
     if i in spelling.keys() and i in lexicon.keys(): #Dificultad -> Medio(Sea adjetivo o verbo)
         if(parse(i).split("/")[1] in Tipo['verb']):
             palabras_existentes.append(i)
         elif(parse(i).split("/")[1] in Tipo['sus']):
             palabras_existentes.append(i)
 def Dificil_Personalizado(i,palabras_existentes,Dificil_elegido):
+    '''Para Dificil y Personalizado ,verifica si la palabra es valida(cumple con las condiciones) y si lo es lo agrega a la lista palabras_existentes'''
     if i in spelling.keys() and i in lexicon.keys(): #Dificultad -> Medio(Sea adjetivo o verbo)
         for x in range(len(Dificil_elegido)):
                 if(parse(i).split("/")[1] in Tipo[Dificil_elegido[x]]):
                     palabras_existentes.append(i)
 def formar_palabra(letras,dificultad,Dificil_elegido):
+    '''Recibe x cantidad de letras , una dificultad y para Dificil y Personalizado una lista de tipos de palabras , devuelve la palabra mas larga que
+       se pueda formar con las condiciones dadas'''
     letras=letras.lower()
     palabras = set()
     for i in range(2,len(letras)+1):
