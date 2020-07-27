@@ -170,11 +170,6 @@ def intercambio_Fichas_CPU(fichas_CPU,Bolsa_Diccionario,Cant_fichas):
         fichas_CPU=fichas_CPU+Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
     return(fichas_CPU,Cant_fichas)
 
-def aleatorio_Dificil():
-    lista_opciones=["verb","sus","adj"]
-    x=random.randint(0,2)
-    return(lista_opciones[x])
-
 def Letra_Bolsa(Bolsa_Diccionario,Cant_fichas):
     '''Busca en la "Bolsa" hasta encontrar una letra que exista mas de 0 veces , cuando la encuentra reduce sus existencias en 1 y retorna la ficha encontrada'''
     sigue=True
@@ -193,7 +188,7 @@ def Letra_Bolsa(Bolsa_Diccionario,Cant_fichas):
 
 def Update_Tablero(window,Dicc):
     '''Genera un tablero usando de forma aleatoria alguno de los posibles tableros en Lista_Tableros ,Guarda en Dicc el tablero
-       seleccionado(como clave tipo tupla de las coordenadas y valor una lista , en la posicion 1 de esta se guarda el color del boton en ese lugar),
+       seleccionado(como clave tipo tupla de las coordenadas y valor una lista , en la posicion 1 de esta se guarda el color del boton ),
        cambia los colores de los botones del layaut para mostrarlo y retorna Dicc'''
     Lista_Tableros=[
         {"0,0":"white","0,1":"white","0,2":"red","0,3":"white","0,4":"green","0,5":"white","0,6":"white","0,7":"white","0,8":"white","0,9":"white","0,10":"green","0,11":"white","0,12":"red","0,13":"white","0,14":"white",
@@ -270,6 +265,7 @@ def Generar_Dicc():
     return Dicc
 
 def Layout_Columna_Historial(Usuario):
+    ''' Diseño de la columna donde se muestra el historial de palabras Usuario y CPU'''
     layout = [[sg.Text('Historial CPU',size=(20, 1),text_color='black',font=("IMPACT", 18),justification='center',background_color='#FDFA57',relief=sg.RELIEF_RAISED)],
               [sg.Listbox([''],font=("Segoe print", 11),size=(20, 12),key=('Historial_CPU'),text_color='black',background_color='#F5DAC1')],
               [sg.Text('Historial '+Usuario,size=(20, 1),text_color='black',font=("IMPACT", 18),justification='center',background_color='#E52C46',relief=sg.RELIEF_RAISED)],
@@ -277,6 +273,7 @@ def Layout_Columna_Historial(Usuario):
     return layout
 
 def Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT,Lista_TP):
+    ''' Diseño de la columna donde se muestra las letras con sus respectivos puntajes y la dificultad actual'''
     TDP = ''
     for tp in Lista_TP:
         if tp == 'sus':
@@ -311,7 +308,8 @@ def Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT,Lista_TP):
     return layout
 
 def Layout_Columna():
-
+    ''' Diseño de la columna donde se muestran el tiempo total , tiempo por ronda , Los botones principales TerminarTurno,Validar,Intercambiar,Pausar,Rendirse,Salir
+    y los botones para desplegar/escolder/rotar informacion adicional'''
     layout = [ [sg.Text('Tiempo Disponible',font=("impact",20))],
                [sg.Text("00:00",font=("Bahnschrift",20),key=('Tiempo_Ronda')),sg.Text('|',font=("Bahnschrift",20)),sg.Text("00:00",font=("Bahnschrift",20),key=('Tiempo'))],
                [sg.Text('__________________________________')],
@@ -333,6 +331,7 @@ def Layout_Columna():
     return layout
 
 def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_puntaje_partida):
+    ''' Diseño de la columna donde se generan los 2 atriles con sus fichas (Usuario y CPU), y el tablero de juego entre ambos'''
     MAX_ROWS = MAX_COL = 15 #ACA????
     formato_fichas_cpu={'filename':r'ScrabbleAR_Imagenes_png\imagen_CPU.png','size':(38,38),'pad':(7,3)  }
 
@@ -402,39 +401,38 @@ def Coord_Adyacentes(coord):
     return coord1,coord2,coord3,coord4
 
 def Coord_Disponible(LCO,CCD):
+    '''Agrega a CCD(Conjunto de Cordenadas Disponible) las cordenadas adyacentes de los elementos de LCO(Lista de Cordenadas Ocupadas)'''
     for x in range(len(LCO)):
         for y in Coord_Adyacentes(LCO[x]):
             if(((y[0]< 15)and(y[1]< 15))and((y[0]>-1)and(y[1]>-1))):
                 CCD.add(y)
 
 def Coord_Desbloqueada(CCD,event):
+    '''Devuelve Verdadero si el evento se encuentra en CCD y Falso si no lo esta'''
     if (event in CCD):
         return True
     else:
         return False
 
-def Eliminar_Coords(CCD,coord):
-    '''Elimina Coordenadas.'''
-    CCD.discard(((coord[0]-1),coord[1]))     #Arriba
-    CCD.discard((coord[0],(coord[1]+1)))     #Derecha
-    CCD.discard(((coord[0]+1),coord[1]))     #Abajo
-    CCD.discard((coord[0],(coord[1]-1)))     #Izquierda
-
 def Update_Fichas_Colocadas(LCOPR,window,Dicc,Dicc_rutas_letras_puntaje_partida):
+    '''Cambia la imagen al terminar el turno para remarcar que ya no se puede interactuar con las fichas colocadas'''
     for coord in LCOPR:
         window[coord].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[coord][0]][2],image_size=(38,38),image_subsample=5)
 
 def Mensaje_Turno(Turno_Usuario):
+    '''Llama a un popup dependiendo de quien es el turno'''
     if Turno_Usuario:
         sg.popup('Estas Listo?\nEs tu turno',custom_text="Si,lo estoy",no_titlebar=True,keep_on_top=True)
     else:
         sg.popup('Estas Listo?\nEs el turno de la IA',custom_text="Si,lo estoy",no_titlebar=True,keep_on_top=True)
 
 def Eliminar_Elementos_Ocupados_CDD(LCO,CCD):
+    '''Elimina los elementos de LCO en CCD '''
     for L in LCO:
         CCD.discard(tuple(L))
 
 def Verificar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega,window):
+    '''Verifica si la palabra esta en horizontal o vertical , luego verifica si es una palabra valida , si lo es retorna la la palabra recibida , sino devuelve "" '''
     if (LCOPR[0][0] == LCOPR[1][0]): #Si entra la palabra formada esta en Horizontal
         LCOPR = sorted(LCOPR, key=lambda tup: tup[1])
         for coord in LCOPR:
@@ -453,10 +451,12 @@ def Verificar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega,window):
     return Palabra
 
 def elimino_fichas_Usadas(fichas_CPU,Palabra):
+    '''Elimina las fichas que se usaron para formar la palabra del altril del CPU , retorna el atril sin esas incidencias'''
     for x in range(len(Palabra)):
         fichas_CPU=fichas_CPU.replace(Palabra[x].upper(),"") #Elimino las fichas usadas
     return(fichas_CPU)
 def verRows(row,Lista_TP):
+    '''Agrega a Lista_TP los tipos de palabras que son validos para la partida segun el archivo cargado'''
     if row[15] == 'True':
         Lista_TP.append('adj')
     if row[16] == 'True':
@@ -465,6 +465,7 @@ def verRows(row,Lista_TP):
         Lista_TP.append('verb')
     return(Lista_TP)
 def Importar_Datos():
+    '''Toma los datos del archivo generado en opciones y los retorna para poder crear una partida utilizandolos '''
     arch = open('Archivo_Opciones.csv','r',encoding="utf8")
     reader = csv.reader(arch)
     index = 0
@@ -506,12 +507,15 @@ def Importar_Datos():
                 index = index + 1
 
 def Calcular_Puntaje(Palabra,Dicc_Puntajes):
+    '''Calcula el puntaje de la palabra y lo retorna'''
     PPR = 0
     for letra in Palabra:
         PPR = PPR + Dicc_Puntajes[letra]
     return PPR
 
 def Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU,LCDPR_CPU,LCO_CPU):
+    '''Recibe la palabra y las coordenadas y la ubica horizontalmente en el tablero haciendo todas las actualizaciones requeridas para su correcta
+       visualizacion en el mismo y internamente actualiza Dicc en las coordenadas respectivas en sus posiciones 0 (donde se guarda si hay alguna letra)'''
     for x in range(len(Palabra)):
         #window[(coordenadas_CPU[0],coordenadas_CPU[1]+x)].update(str(Palabra[x]),button_color=('black','#7D4DE4'))
         window[(coordenadas_CPU[0],coordenadas_CPU[1]+x)].update(image_filename=Dicc_rutas_letras_puntaje_partida_CPU[str(Palabra[x])],image_size=(38,38),image_subsample=5)
@@ -519,10 +523,11 @@ def Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letr
         LCO.append((coordenadas_CPU[0],coordenadas_CPU[1]+x))
         LCO_CPU.append((coordenadas_CPU[0],coordenadas_CPU[1]+x))
         LCDPR_CPU.append((coordenadas_CPU[0],coordenadas_CPU[1]+x))
-        Coord_Disponible(LCO,CCD)
-        Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
+        Actualizar_CCD(CCD,LCO)
 
 def Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU,LCDPR_CPU,LCO_CPU):
+    '''Recibe la palabra y las coordenadas y la ubica verticalmente en el tablero haciendo todas las actualizaciones requeridas para su correcta
+       visualizacion en el mismo y internamente actualiza Dicc en las coordenadas respectivas en sus posiciones 0 (donde se guarda si hay alguna letra)'''
     for y in range(len(Palabra)):
         #window[(coordenadas_CPU[0]+y,coordenadas_CPU[1])].update(str(Palabra[y]),button_color=('black','#7D4DE4'))
         window[(coordenadas_CPU[0]+y,coordenadas_CPU[1])].update(image_filename=Dicc_rutas_letras_puntaje_partida_CPU[str(Palabra[y])],image_size=(38,38),image_subsample=5)
@@ -530,10 +535,11 @@ def Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras
         LCO.append((coordenadas_CPU[0]+y,coordenadas_CPU[1]))
         LCO_CPU.append((coordenadas_CPU[0]+y,coordenadas_CPU[1]))
         LCDPR_CPU.append((coordenadas_CPU[0]+y,coordenadas_CPU[1]))
-        Coord_Disponible(LCO,CCD)
-        Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
+        Actualizar_CCD(CCD,LCO)
 
 def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Bolsa_Diccionario,Cant_fichas,Dicc_Puntajes,PT_CPU,Dicc_rutas_letras_puntaje_partida_CPU,LCO_CPU):
+    '''El CPU forma palabras usando 7 fichas que obtuvo de la bolsa , verifica si hay alguna posicion disponible para colocarla , si la hay toma una
+       y intenta colocarla horizontal o verticalmente , si no puede busca otra de las posiciones disponibles , si no hay mas pasa su turno '''
     global PrimerRonda
     global HistorialCPU
     LCDPR_CPU = []
@@ -563,8 +569,7 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
                 Dicc[7,7+x][0] =str(Palabra[x])
                 LCO.append((7,7+x))
                 LCO_CPU.append((7,7+x))
-                Coord_Disponible(LCO,CCD)
-                Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
+                Actualizar_CCD(CCD,LCO)
             PrimerRonda = False
         else:
             for x in range(len(CCD)) :
@@ -610,17 +615,20 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
     return(contador_Turnos_CPU,fichas_CPU,Cant_fichas,PT_CPU)
 
 def Actualizar_CFT(CFT,Dicc_Bolsa):
+    '''Retorna la cantidad de fichas totales segun la cantidad de incidencias de cada letra en Dicc_Bolsa'''
     CFT = 0
     for cant in Dicc_Bolsa.values():
         CFT = CFT + cant
     return CFT
 
 def Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,Dicc_rutas_letras_puntaje_partida):
+    '''Retira todas las fichas colocadas en el tablero'''
     for Pos in range(len(Lista_Atril)):
         if (Lista_Atril[Pos] == ''): # Si esta posicion esta vacia:
             Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,LCOPR[0],Pos,window,Dicc_rutas_letras_puntaje_partida)
 
 def Validar(LCOPR,CCD,Dicc,Dificultad,PrimerRonda,Palabra,Dificil_se_juega,window):
+    '''Retorna la palabra recibida si la validacion es exitosa, o un mensaje en caso de error al colocarla '''
     if Palabra_bien_colocada(LCOPR,window):
         if PrimerRonda:
             if ((7,7) in LCOPR):
@@ -640,6 +648,7 @@ def Validar(LCOPR,CCD,Dicc,Dificultad,PrimerRonda,Palabra,Dificil_se_juega,windo
     return Palabra
 
 def Palabra_bien_colocada(LCOPR,window):
+    '''Muestra un mensaje avisando si la palabra esta mal colocada o es muy corta'''
     if len(LCOPR) > 1:
         Vertical = True
         Horizontal = True
@@ -666,6 +675,8 @@ def Palabra_bien_colocada(LCOPR,window):
         return False
 
 def TerminarTurno(LCOPR,LCO,CCD,Dicc,Lista_Atril,PTU,Palabra,Dificultad,Dificil_se_juega,Dicc_Puntajes,Dicc_Bolsa,CFT,Bonus,window,Dicc_rutas_letras_puntaje_partida):
+    '''Finaliza el turno del usuario , comprueba si la palabra colocada es valida , si lo es actualiza el puntaje , sino , retira todas las fichas colocadas en
+       este turno , luego finaliza el turno '''
     global PrimerRonda
     global HistorialUsuario
     if (Palabra == '') and (LCOPR != []): #Si no se valido antes Y en el tablero hay fichas:
@@ -684,11 +695,13 @@ def TerminarTurno(LCOPR,LCO,CCD,Dicc,Lista_Atril,PTU,Palabra,Dificultad,Dificil_
     return PTU
 
 def Actualizar_LCO(LCOPR,LCO,LCO_Usuario):
+    '''Agrega los elementos de LCOPR a LCO y LCO_Usuario'''
     for coord in LCOPR:
         LCO.append(coord)
         LCO_Usuario.append(coord)
 
 def Intercambio_FichasTablero(LCOPR,Dicc,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
+    '''Intercambia las fichas del tablero , event1 x event2 '''
     if event1 != event2:
         aux = Dicc[event2][0]
         Dicc[event2][0] = Dicc[event1][0]
@@ -709,6 +722,7 @@ def Intercambio_FichasTablero(LCOPR,Dicc,event1,event2,window,Dicc_rutas_letras_
         window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(38,38),image_subsample=5)
 
 def Intercambio_FichasAtril(Lista_Atril,Pos_letra1,Pos_letra2,window,Dicc_rutas_letras_puntaje_partida):
+    '''Intercambia las fichas del atril , Pos_letra1 x Pos_letra2 '''
     if (((Pos_letra1 != Pos_letra2))and(((Lista_Atril[Pos_letra2])!="")and((Lista_Atril[Pos_letra1])!="" ))):
             window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra2]][0],image_size=(38,38),image_subsample=5)
             window[Pos_letra2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra1]][0],image_size=(38,38),image_subsample=5)
@@ -719,6 +733,7 @@ def Intercambio_FichasAtril(Lista_Atril,Pos_letra1,Pos_letra2,window,Dicc_rutas_
         window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra1]][0],image_size=(38,38),image_subsample=5)
 
 def Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
+    '''Intercambia las fichas entre tablero y atril , event1 x event2'''
     aux = Dicc[event1][0]
     Dicc[event1][0] = Lista_Atril[event2]
     Lista_Atril[event2] = aux
@@ -733,6 +748,7 @@ def Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_p
     #window[event2].update(Lista_Atril[event2],button_color=('black','#FDD357'))
 
 def Colocar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,Letra1,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
+    '''Coloca la ficha del atril seleccionada en la posicion deceada del tablero'''
     if Letra1!="":
         Dicc[event2][0] = Letra1
         #window[event2].update(Letra1,button_color=('black','#FDD357'))
@@ -749,6 +765,7 @@ def Colocar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,Letra1,event1,event2,window,Dic
         window[event1].update(image_filename=r'ScrabbleAR_Imagenes_png\modelo_ficha.png',image_size=(38,38),image_subsample=5)
 
 def Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
+    '''Quita una ficha del tablero y la pone en una posicion vacia del atril'''
     Lista_Atril[event2] = Dicc[event1][0]
     window[event1].update(image_filename=Dicc[event1][2],image_size=(38,38),image_subsample=5)
     window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(38,38),image_subsample=5)
@@ -758,6 +775,7 @@ def Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_rutas
     LCOPR.remove(event1)
 
 def Acciones_Usuario(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
+    '''Gestiona eventos generados por el usuario entre el atril x atril , atril x tablero , tablero x atril y tablero x tablero'''
     if (not (event2 in LCO)): #Esto es para saber si por ejemplo, Se quiere intercambiar una (fichaAtril o FichaTablero) con una ficha ya colocada
 
         if (type(event1) == int) and (type(event2) == tuple):        #Atril X Tablero:
@@ -782,6 +800,7 @@ def Acciones_Usuario(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_ru
         Update_Infobox('No puedes interactuar con las fichas ya colocadas!','#5798FD',window)
 
 def Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles,event,window,Dicc_rutas_letras_puntaje_partida):
+    '''Intercambia las fichas seleccionadas , devolviendolas a la bolsa y sacando la misma cantidad de fichas que se devolvieron'''
     if (type(event) == int):
         if event in LPI:
             LPI.remove(event)
@@ -829,6 +848,7 @@ def Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,
     return CFT,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles
 
 def Calcular_Bonus(LCOPR,Dicc_Puntajes,Dicc):
+    '''Retorna el bonus segun donde esta ubicada la palabra valida'''
     Bonus=0
     operacion=0
     for x in range(len(LCOPR)):
@@ -845,10 +865,12 @@ def Calcular_Bonus(LCOPR,Dicc_Puntajes,Dicc):
     return Bonus
 
 def Actualizar_CCD(CCD,LCO):
+    '''Se actualiza CCD'''
     Coord_Disponible(LCO,CCD)
     Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
 
 def Update_Columna_Extra(Columna_Historial,window):
+    '''Muestra o oculta una columna segun lo recibido en Columna_Historial'''
     if (Columna_Historial):
         window['Columna_Historial'].update(visible=False)
         window['Columna_Conf'].update(visible=True)
@@ -857,6 +879,8 @@ def Update_Columna_Extra(Columna_Historial,window):
         window['Columna_Historial'].update(visible=True)
 def GuardoPartida(Dificultad,DiccRLPP,Dicc,CFT,Usuario,Turnos_Disponibles,PTU,HistorialUsuario,LCO,Tiempo,DiccRLPP_CPU,PT_CPU,fichas_CPU,contador_Turnos_CPU,HistorialCPU,PrimerRonda,Lista_Atril,Dicc_Bolsa,Dicc_Puntajes,tiempo_ronda,CCD,LCO_Usuario,LCO_CPU,tiempo_jugador,Lista_TP):
     #Hago una copia de Dicc con keys string para poder guardarlas en json
+    '''Tomo los datos necesarios de la partida para poder cargar la misma en un futuro , convierto(en los casos necesarios) los archivos en el tipo requerido
+       para poder guardarlos en el formato json'''
     Dicc_str={}
     for key in Dicc:
         Dicc_str[str(key)]=Dicc[key]
@@ -868,6 +892,8 @@ def GuardoPartida(Dificultad,DiccRLPP,Dicc,CFT,Usuario,Turnos_Disponibles,PTU,Hi
     Guardar=json.dump(DiccPartida,archivo)
     archivo.close()
 def cargoPartida():
+    '''Busca el archivo en el que se guardo la ultima partida , guarda esos datos en un Diccionario y convierte (en los casos necesarios)los archivos en el tipo
+       requerido para poder trabajar con ellos sin problemas'''
     archivo=open("Partida_Guardada.json","r")
     datos=json.load(archivo)
     archivo.close()
@@ -891,6 +917,7 @@ def cargoPartida():
     datos["info_Tablero"]["Dicc"]=Dicc
     return(datos)
 def reloj_Partida(Tiempo,window):
+    '''Recibe y Actualiza el tiempo de la partida en la ventana de juego'''
     if(Tiempo>(600*100)): #si es mayor a 10 min (600 segs multiplicados por la cantidad de veces que el timeout entra por segundo)
         window['Tiempo'].update("{}:{}".format(((Tiempo//100)//60),((Tiempo//100)%60)))
     elif(Tiempo<(600*100)and(Tiempo>(10*100))):#si es menor a 10 min y mayor a 10 segs
@@ -900,6 +927,7 @@ def reloj_Partida(Tiempo,window):
     Tiempo -= 1
     return(Tiempo)
 def reloj_Ronda(tiempo_jugador,window):
+    '''Recibe y Actualiza el tiempo de la ronda en la ventana de juego'''
     if(tiempo_jugador>(600*100)): #si es mayor a 10 min (600 segs multiplicados por la cantidad de veces que el timeout entra por segundo)
         window['Tiempo_Ronda'].update("{}:{}".format(((tiempo_jugador//100)//60),((tiempo_jugador//100)%60)))
     elif(tiempo_jugador<(600*100)and(tiempo_jugador>(10*100))):#si es menor a 10 min y mayor a 10 segs
@@ -910,6 +938,7 @@ def reloj_Ronda(tiempo_jugador,window):
     return(tiempo_jugador)
 #PROGRAMA PRINCIPAL
 def genero_Tablero():
+    '''Programa Principal '''
     global Infobox_Activa
     global temp
     global PrimerRonda

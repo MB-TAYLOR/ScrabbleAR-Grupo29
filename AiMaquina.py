@@ -10,6 +10,7 @@ Tipo= {'adj':["AO", "JJ","AQ","DI","DT"],
 #if i in spelling.keys() and i in lexicon.keys(): #Dificultad -> Facil (Existe en lexicon y spelling) Hacer parse , si no es sut hacerla valida , si es sustantivo verificar si esta en spellin o lexicon si esta en alguna de las 2 es valida sino , es invalida
 
 def palabra_larga(lista_palabras):
+    '''Busca en la lista recibida la palabra que es mas larga y la retorna'''
     max=0
     palabra_max=""
     for x in lista_palabras:
