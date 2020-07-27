@@ -275,6 +275,7 @@ def Layout_Columna_Historial(Usuario):
 
 def Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT,Lista_TP):
     ''' Diseño de la columna donde se muestra las letras con sus respectivos puntajes y la dificultad actual'''
+    print(Lista_TP)
     TDP = ''
     for tp in Lista_TP:
         if tp == 'sus':
@@ -479,6 +480,7 @@ def Importar_Datos():
                         dificultad =  'Facil'
                         Tiempo_Ronda = row[14]
                         Tiempo = row[13]
+                        Lista_TP=verRows(row,Lista_TP)
                     elif (row[3] == 'True'):
                         dificultad =  'Medio'
                         Tiempo_Ronda = row[14]
@@ -1114,6 +1116,7 @@ def genero_Tablero():
                     window['Mostrar'].update('<')
                 Desplegado = not Desplegado
             elif(event=="Pausar"):
+                print(Dicc)
                 for x in range(len(Lista_Atril)):
                     window[x].update(image_filename=r'ScrabbleAR_Imagenes_png\Transparente.png',image_size=(38,38),image_subsample=5)
                 sg.popup('Presione "OK"para continuar',keep_on_top=True,title='Aviso')
