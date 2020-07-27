@@ -572,6 +572,7 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
                 Dicc[7,7+x][0] =str(Palabra[x])
                 LCO.append((7,7+x))
                 LCO_CPU.append((7,7+x))
+                LCDPR_CPU.append((7,7+x))
                 Actualizar_CCD(CCD,LCO)
             PrimerRonda = False
         else:
