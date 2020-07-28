@@ -40,11 +40,11 @@ def Tabla():
             print(Merge)
         Merge = sorted(Merge,key=lambda x:int(x[1]),reverse=True)
         for x in range(10):
-            Total.append(Merge[x])
+            Total.append(Merge[x][:])
             Total[x].insert(0, x+1)
         window['info'].Update(Total)
-        for x in range(10):
-            Total[x].remove(x+1)
+    #    for x in range(10):
+    #        Total[x].remove(x+1)
 
     def DataMod(window,Lista):
         Lista = sorted(Lista,key=lambda x:int(x[1]),reverse=True)
