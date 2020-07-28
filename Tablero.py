@@ -932,9 +932,9 @@ def cargoPartida():
 def reloj_Partida(Tiempo,window):
     '''Recibe y Actualiza el tiempo de la partida en la ventana de juego'''
     if(Tiempo>(600*100)): #si es mayor a 10 min (600 segs multiplicados por la cantidad de veces que el timeout entra por segundo)
-        window['Tiempo'].update("{}:{}".format(((Tiempo//100)//60),((Tiempo//100)%60)))
+        window['Tiempo'].update("{}:{}".format(((Tiempo//100)//60),((Tiempo//100)%60)),text_color="white")
     elif(Tiempo<(600*100)and(Tiempo>(10*100))):#si es menor a 10 min y mayor a 10 segs
-        window['Tiempo'].update("0{}:{}".format(((Tiempo//100)//60),((Tiempo//100)%60)))
+        window['Tiempo'].update("0{}:{}".format(((Tiempo//100)//60),((Tiempo//100)%60)),text_color="white")
     else:#si es menor a 10 segs(10 segs multiplicados por la cantidad de veces que el timeout entra por segundo)
         window['Tiempo'].update("00:0{}".format((((Tiempo//100)%60))),text_color="red")
     Tiempo -= 1
@@ -942,9 +942,9 @@ def reloj_Partida(Tiempo,window):
 def reloj_Ronda(tiempo_jugador,window):
     '''Recibe y Actualiza el tiempo de la ronda en la ventana de juego'''
     if(tiempo_jugador>(600*100)): #si es mayor a 10 min (600 segs multiplicados por la cantidad de veces que el timeout entra por segundo)
-        window['Tiempo_Ronda'].update("{}:{}".format(((tiempo_jugador//100)//60),((tiempo_jugador//100)%60)))
+        window['Tiempo_Ronda'].update("{}:{}".format(((tiempo_jugador//100)//60),((tiempo_jugador//100)%60)),text_color="white")
     elif(tiempo_jugador<(600*100)and(tiempo_jugador>(10*100))):#si es menor a 10 min y mayor a 10 segs
-        window['Tiempo_Ronda'].update("0{}:{}".format(((tiempo_jugador//100)//60),((tiempo_jugador//100)%60)))
+        window['Tiempo_Ronda'].update("0{}:{}".format(((tiempo_jugador//100)//60),((tiempo_jugador//100)%60)),text_color="white")
     else:#si es menor a 10 segs(10 segs multiplicados por la cantidad de veces que el timeout entra por segundo)
         window['Tiempo_Ronda'].update("00:0{}".format((((tiempo_jugador//100)%60))),text_color="red")
     tiempo_jugador-=1
@@ -1066,8 +1066,11 @@ def genero_Tablero():
         while (Turno_Usuario and (tiempo_jugador>0)):  #Mientras sea el turno del usuario:
             Palabra = ''
             event = window.Read(timeout=7,timeout_key='Reloj')[0] # timeout=10 no igualaba la velocidad de los segundos reales , por eso reemplaze por "7" que si lo iguala
-            Tiempo=reloj_Partida(Tiempo,window)
-            tiempo_jugador=reloj_Ronda(tiempo_jugador,window)
+            if event != None: #Para que no intente actualizar el tiempo algo luego de darle a X y se haya cerrado la ventana
+                Tiempo=reloj_Partida(Tiempo,window)
+                tiempo_jugador=reloj_Ronda(tiempo_jugador,window)
+            if tiempo_jugador == 0:
+                Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,DiccRLPP)
             #if (tamaño_actual != window.Size):
             #    tamaño_actual=window.Size
                 #Aca deberian estar los cambios a la ventana que centrarian todo el contenido de esta.
