@@ -55,4 +55,4 @@ def verificar_Palabra(palabra,dificultad,Dificil_elegido):
     return(existe)
  #---------Porgrama Principal---
 if __name__ == '__main__':
-    print(verificar_Palabra("feo","Dificil",["sus","adj"]))
+    print(verificar_Palabra("BBOYS","Facil",["sus","adj","verb"]))

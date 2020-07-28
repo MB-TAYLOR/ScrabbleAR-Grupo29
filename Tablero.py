@@ -168,14 +168,15 @@ def intercambio_Fichas_CPU(fichas_CPU,Bolsa_Diccionario,Cant_fichas):
         Cant_fichas=Cant_fichas+1
     fichas_CPU=""
     for x in range(7):
-        fichas_CPU=fichas_CPU+Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
+        nueva_ficha,Cant_fichas=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
+        fichas_CPU=fichas_CPU+nueva_ficha
     return(fichas_CPU,Cant_fichas)
 
 def Letra_Bolsa(Bolsa_Diccionario,Cant_fichas):
     '''Busca en la "Bolsa" hasta encontrar una letra que exista mas de 0 veces , cuando la encuentra reduce sus existencias en 1 y retorna la ficha encontrada'''
     sigue=True
     letra=""
-    while((sigue)and(Cant_fichas >= 14)):
+    while((sigue)and(Cant_fichas > 0)):
         x=random.randint(0,(len(Bolsa_Diccionario.keys())-1))
         letra=list(Bolsa_Diccionario.keys())[x]
         if(Bolsa_Diccionario[letra]> 0):
@@ -183,9 +184,7 @@ def Letra_Bolsa(Bolsa_Diccionario,Cant_fichas):
             Cant_fichas=Cant_fichas-1
             sigue=False
             break
-    if Cant_fichas < 14 :
-        print("El juego ACABA porque uno de los 2 jugadores no tiene sus 7 fichas")
-    return(letra)
+    return(letra,Cant_fichas)
 
 def Update_Tablero(window,Dicc):
     '''Genera un tablero usando de forma aleatoria alguno de los posibles tableros en Lista_Tableros ,Guarda en Dicc el tablero
@@ -340,19 +339,19 @@ def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_pun
     #formato_fichas_jugador={'font':('',25),'button_color':(None,'black'),'image_filename':'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Ficha.png','image_size':(40,40),'pad':(7,3)  }
     #Para luego reemplazar los colores dados por el boton con imagenes
     if len(Lista_Atril) < 7 :
-        Letra_1=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
+        Letra_1,Cant_fichas=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
         Lista_Atril.append(Letra_1)
-        Letra_2=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
+        Letra_2,Cant_fichas=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
         Lista_Atril.append(Letra_2)
-        Letra_3=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
+        Letra_3,Cant_fichas=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
         Lista_Atril.append(Letra_3)
-        Letra_4=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
+        Letra_4,Cant_fichas=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
         Lista_Atril.append(Letra_4)
-        Letra_5=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
+        Letra_5,Cant_fichas=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
         Lista_Atril.append(Letra_5)
-        Letra_6=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
+        Letra_6,Cant_fichas=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
         Lista_Atril.append(Letra_6)
-        Letra_7=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
+        Letra_7,Cant_fichas=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
         Lista_Atril.append(Letra_7)
     layout = [[sg.Text('',key='texto1',pad=(45,3)),(sg.Image(**formato_fichas_cpu,key='fichasbot1')),
                                                     (sg.Image(**formato_fichas_cpu,key='fichasbot2')),
@@ -375,15 +374,18 @@ def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_pun
                     (sg.Button(key=6,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[6]][0],image_size=(38,38),image_subsample=5))],
                     [(sg.Image(filename='Atril.png',key='texto'))]])
 
-    return layout
+    return layout,Cant_fichas
 
 def Llenar_Atril(Lista_Atril,window,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_puntaje_partida):
     '''Rellena el atril del usuario al colocar una palabra valida y finalizar su turno'''
     for pos in range(len(Lista_Atril)):
-        if (Lista_Atril[pos] == ''):
-            Lista_Atril[pos] = Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
+        if(Cant_fichas<0):
+            break
+        elif (Lista_Atril[pos] == ''):
+            Lista_Atril[pos],Cant_fichas= Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
             #window[pos].update(Lista_Atril[pos])
             window[pos].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[pos]][0],image_size=(38,38),image_subsample=5)
+
 
 
 def Coord_Ocupada(LCO,event):
@@ -552,8 +554,12 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
     puede_Colocarse=False
     if (contador_Turnos_CPU ==0):
         for x in range(7):
-            fichas_CPU=fichas_CPU+Letra_Bolsa(Bolsa_Diccionario,Cant_fichas) #En la primera jugada toma 7 fichas aleatorias de la bolsa
-            Palabra=formar_palabra(fichas_CPU,Dificultad,Dificil_se_juega)
+
+            nueva_ficha,Cant_fichas=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
+            fichas_CPU=fichas_CPU+nueva_ficha #En la primera jugada toma 7 fichas aleatorias de la bolsa
+
+        Palabra=formar_palabra(fichas_CPU,Dificultad,Dificil_se_juega)
+        print(fichas_CPU)
         contador_Turnos_CPU=contador_Turnos_CPU+1
     else:
         Palabra=formar_palabra(fichas_CPU,Dificultad,Dificil_se_juega)
@@ -612,10 +618,13 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
         window['PuntajeCPU'].update(str(PT_CPU))
     else:
         print("No hay palabra valida en este momento para la CPU ,la CPU pasa el turno")
-    while(((len(fichas_CPU))<7)and(Cant_fichas >= 14)):          #Añado fichas de la bolsa para compeltar 7 al finalizar el turno
-        fichas_CPU=fichas_CPU+Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
-    if((len(fichas_CPU))<7):
-        print("La CPU no tiene fichas suficientes para continuar , el juego termino")
+    print("Atril",fichas_CPU)
+    while(((len(fichas_CPU))<7)and(Cant_fichas >0)):          #Añado fichas de la bolsa para completar 7 al finalizar el turno
+        nueva_ficha,Cant_fichas=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
+        fichas_CPU=fichas_CPU+nueva_ficha
+        print("ATRIL CPU ",(fichas_CPU))
+        print("Tamaño ATRIL CPU ",len(fichas_CPU))
+        print("Cantidad Fichas",Cant_fichas)
     return(contador_Turnos_CPU,fichas_CPU,Cant_fichas,PT_CPU)
 
 def Actualizar_CFT(CFT,Dicc_Bolsa):
@@ -927,7 +936,7 @@ def reloj_Partida(Tiempo,window):
     elif(Tiempo<(600*100)and(Tiempo>(10*100))):#si es menor a 10 min y mayor a 10 segs
         window['Tiempo'].update("0{}:{}".format(((Tiempo//100)//60),((Tiempo//100)%60)))
     else:#si es menor a 10 segs(10 segs multiplicados por la cantidad de veces que el timeout entra por segundo)
-        window['Tiempo'].update("00:0{}".format((((Tiempo//100)%60))))
+        window['Tiempo'].update("00:0{}".format((((Tiempo//100)%60))),text_color="red")
     Tiempo -= 1
     return(Tiempo)
 def reloj_Ronda(tiempo_jugador,window):
@@ -937,7 +946,7 @@ def reloj_Ronda(tiempo_jugador,window):
     elif(tiempo_jugador<(600*100)and(tiempo_jugador>(10*100))):#si es menor a 10 min y mayor a 10 segs
         window['Tiempo_Ronda'].update("0{}:{}".format(((tiempo_jugador//100)//60),((tiempo_jugador//100)%60)))
     else:#si es menor a 10 segs(10 segs multiplicados por la cantidad de veces que el timeout entra por segundo)
-        window['Tiempo_Ronda'].update("00:0{}".format((((tiempo_jugador//100)%60))))
+        window['Tiempo_Ronda'].update("00:0{}".format((((tiempo_jugador//100)%60))),text_color="red")
     tiempo_jugador-=1
     return(tiempo_jugador)
 #PROGRAMA PRINCIPAL
@@ -982,7 +991,8 @@ def genero_Tablero():
         Turno_Usuario=True
         for x in aux_CCD:
             CCD.add(tuple(x))
-        diseño = [ [sg.Column((Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP))),
+        Layout_Tab,CFT=(Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP))
+        diseño = [[sg.Column(Layout_Tab),
                     sg.Column(Layout_Columna()),
                     sg.Column(Layout_Columna_Historial(Usuario),key='Columna_Historial'),
                     sg.Column(Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT,Lista_TP),key='Columna_Conf')] ]
@@ -1013,6 +1023,7 @@ def genero_Tablero():
         Dicc = Generar_Dicc()
         CFT = 0
         CFT = Actualizar_CFT(CFT,Dicc_Bolsa) #Cantidad Fichas Totales
+        print(CFT)
         fichas_CPU=""
         contador_Turnos_CPU=0
         PT_CPU=0                    #Puntaje Total CPU
@@ -1023,7 +1034,8 @@ def genero_Tablero():
         #Tiempo,tiempo_ronda=tiempo_dificultad(Dificultad)
 
         Turnos_Disponibles = 3
-        diseño = [ [sg.Column((Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP))),
+        Layout_Tab,CFT=(Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP))
+        diseño = [ [sg.Column(Layout_Tab),
                     sg.Column(Layout_Columna()),
                     sg.Column(Layout_Columna_Historial(Usuario),key='Columna_Historial'),
                     sg.Column(Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT,Lista_TP),key='Columna_Conf')] ]
@@ -1040,7 +1052,7 @@ def genero_Tablero():
     Dificil_se_juega=Lista_TP
     window.Refresh()
     tamaño_actual=window.Size
-    while True and (tiempo_ronda>0):
+    while True and (tiempo_ronda>0)and(CFT>0):
         LPI = []                #Lista de Posiciones de Intercambio (Para Intecambiar fichas)
         LCOPR = []              #Lista de Coordenadas Ocupadas Por Ronda
         coords_Bonus = []
@@ -1056,7 +1068,6 @@ def genero_Tablero():
             event = window.Read(timeout=7,timeout_key='Reloj')[0] # timeout=10 no igualaba la velocidad de los segundos reales , por eso reemplaze por "7" que si lo iguala
             Tiempo=reloj_Partida(Tiempo,window)
             tiempo_jugador=reloj_Ronda(tiempo_jugador,window)
-
             #if (tamaño_actual != window.Size):
             #    tamaño_actual=window.Size
                 #Aca deberian estar los cambios a la ventana que centrarian todo el contenido de esta.
@@ -1117,7 +1128,7 @@ def genero_Tablero():
                     window['Mostrar'].update('<')
                 Desplegado = not Desplegado
             elif(event=="Pausar"):
-                print(Dicc)
+                print(CFT)
                 for x in range(len(Lista_Atril)):
                     window[x].update(image_filename=r'ScrabbleAR_Imagenes_png\Transparente.png',image_size=(38,38),image_subsample=5)
                 sg.popup('Presione "OK"para continuar',keep_on_top=True,title='Aviso')
