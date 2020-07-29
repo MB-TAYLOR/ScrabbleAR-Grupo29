@@ -722,11 +722,7 @@ def Intercambio_FichasTablero(LCOPR,Dicc,event1,event2,window,Dicc_rutas_letras_
         if Coord_Ocupada(LCOPR,event2):
             window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event2][0]][0],image_size=(38,38),image_subsample=5)
             window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(38,38),image_subsample=5)
-            #window[event2].update(Dicc[event2][0],button_color=('black','#FDD357'))
-            #window[event1].update(Dicc[event1][0],button_color=('black','#FDD357'))
         else:
-            #window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event2][1]],image_size=(38,38),image_subsample=5)
-            #window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]],image_size=(38,38),image_subsample=5)
             window[event1].update(image_filename=Dicc[event1][2],image_size=(38,38),image_subsample=5)
             window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event2][0]][0],image_size=(38,38),image_subsample=5)
             LCOPR.remove(event1)
@@ -736,17 +732,22 @@ def Intercambio_FichasTablero(LCOPR,Dicc,event1,event2,window,Dicc_rutas_letras_
 
 def Intercambio_FichasAtril(Lista_Atril,Pos_letra1,Pos_letra2,window,Dicc_rutas_letras_puntaje_partida):
     '''Intercambia las fichas del atril , Pos_letra1 x Pos_letra2 '''
-    if (((Pos_letra1 != Pos_letra2))and(((Lista_Atril[Pos_letra2])!="")and((Lista_Atril[Pos_letra1])!="" ))):
+    if ((Pos_letra1 != Pos_letra2)):
+        if((Lista_Atril[Pos_letra2])!=""):
             window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra2]][0],image_size=(38,38),image_subsample=5)
             window[Pos_letra2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra1]][0],image_size=(38,38),image_subsample=5)
-            aux = Lista_Atril[Pos_letra2]
-            Lista_Atril[Pos_letra2] = Lista_Atril[Pos_letra1]
-            Lista_Atril[Pos_letra1] = aux
+        else:
+            window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida["white"],image_size=(38,38),image_subsample=5)
+            window[Pos_letra2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra1]][0],image_size=(38,38),image_subsample=5)
+        aux = Lista_Atril[Pos_letra2]
+        Lista_Atril[Pos_letra2] = Lista_Atril[Pos_letra1]
+        Lista_Atril[Pos_letra1] = aux
     elif((Lista_Atril[Pos_letra1])!="" ):
         window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra1]][0],image_size=(38,38),image_subsample=5)
 
 def Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
     '''Intercambia las fichas entre tablero y atril , event1 x event2'''
+    print("INTERCAMBIO")
     aux = Dicc[event1][0]
     Dicc[event1][0] = Lista_Atril[event2]
     Lista_Atril[event2] = aux
@@ -757,59 +758,47 @@ def Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_p
         window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(38,38),image_subsample=5)
         window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event2]][0],image_size=(38,38),image_subsample=5)
 
-    #window[event1].update(Dicc[event1][0],button_color=('black','#FDD357'))
-    #window[event2].update(Lista_Atril[event2],button_color=('black','#FDD357'))
-
 def Colocar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,Letra1,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
     '''Coloca la ficha del atril seleccionada en la posicion deceada del tablero'''
-    if Letra1!="":
+    print("Colocar Ficha")
+    if(not(Coord_Ocupada(LCO,event2))):
         Dicc[event2][0] = Letra1
-        #window[event2].update(Letra1,button_color=('black','#FDD357'))
         window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Letra1][0],image_size=(38,38),image_subsample=5)
         Lista_Atril[event1] = ''
-        #window[event1].update('')
         window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida["white"],image_size=(38,38),image_subsample=5)
         LCOPR.append(event2)
-        #Coord_Disponible(LCOPR,CCD) #Ya que LCOPR contiene unicamente las fichas actuales se tiene
-        #Coord_Disponible(LCO,CCD)   #que usar LCO para completar la actualizacion/eliminacion de elementos en CCD
-        #Eliminar_Elementos_Ocupados_CDD(LCO,CCD)
-        #Eliminar_Elementos_Ocupados_CDD(LCOPR,CCD)
-        #window[event1].update(button_color=('black','#FDD357'))
-        window[event1].update(image_filename=r'ScrabbleAR_Imagenes_png\modelo_ficha.png',image_size=(38,38),image_subsample=5)
 
 def Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
     '''Quita una ficha del tablero y la pone en una posicion vacia del atril'''
     Lista_Atril[event2] = Dicc[event1][0]
     window[event1].update(image_filename=Dicc[event1][2],image_size=(38,38),image_subsample=5)
     window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(38,38),image_subsample=5)
-    #window[event1].update('',button_color=('white',Dicc[event1][1]))
-    #window[event2].update(Dicc[event1][0])
     Dicc[event1][0] = ''
     LCOPR.remove(event1)
 
 def Acciones_Usuario(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
     '''Gestiona eventos generados por el usuario entre el atril x atril , atril x tablero , tablero x atril y tablero x tablero'''
     if (not (event2 in LCO)): #Esto es para saber si por ejemplo, Se quiere intercambiar una (fichaAtril o FichaTablero) con una ficha ya colocada
+        if (Lista_Atril[event1] != '' if type(event1) == int else Dicc[event1] != '' ):
+            if (type(event1) == int) and (type(event2) == tuple):        #Atril X Tablero:
+                if (Coord_Ocupada(LCOPR,event2)):                       #Intercambio FichaAtril X Tablero:
+                    Intercambio_Fichas(Dicc,Lista_Atril,event2,event1,window,Dicc_rutas_letras_puntaje_partida)
+                else:                                                   #Colocar Ficha:
+                    Colocar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,Lista_Atril[event1],event1,event2,window,Dicc_rutas_letras_puntaje_partida)
 
-        if (type(event1) == int) and (type(event2) == tuple):        #Atril X Tablero:
-            if (Coord_Ocupada(LCOPR,event2)):                       #Intercambio FichaAtril X Tablero:
-                Intercambio_Fichas(Dicc,Lista_Atril,event2,event1,window,Dicc_rutas_letras_puntaje_partida)
-            else:                                                   #Colocar Ficha:
-                Colocar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,Lista_Atril[event1],event1,event2,window,Dicc_rutas_letras_puntaje_partida)
+            elif (type(event1) == tuple) and (type(event2) == int):     #Tablero X Atril:
+                if (Lista_Atril[event2] != ''):                         #Intercambio FichaTablero X FichaAtril:
+                    Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida)
+                else:                                                   #Retirar Ficha:
+                    Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida)
 
-        elif (type(event1) == tuple) and (type(event2) == int):     #Tablero X Atril:
-            if (Lista_Atril[event2] != ''):                         #Intercambio FichaTablero X FichaAtril:
-                Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida)
-            else:                                                   #Retirar Ficha:
-                Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida)
+            elif (type(event1) == tuple) and (type(event2) == tuple):   #Intercambio FichasTablero:
+                Intercambio_FichasTablero(LCOPR,Dicc,event1,event2,window,Dicc_rutas_letras_puntaje_partida)
 
-        elif (type(event1) == tuple) and (type(event2) == tuple):   #Intercambio FichasTablero:
-            Intercambio_FichasTablero(LCOPR,Dicc,event1,event2,window,Dicc_rutas_letras_puntaje_partida)
-
-        elif (type(event1) == int) and (type(event2) == int):       #Intercambio FichasAtril:
-            Intercambio_FichasAtril(Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida)
+            elif (type(event1) == int) and (type(event2) == int):       #Intercambio FichasAtril:
+                Intercambio_FichasAtril(Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida)
     else:
-        window[event1].update(button_color=('black','#FDD357'))
+        window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event1]][0],image_size=(38,38),image_subsample=5)
         Update_Infobox('No puedes interactuar con las fichas ya colocadas!','#5798FD',window)
 
 def Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles,event,window,Dicc_rutas_letras_puntaje_partida):
@@ -817,11 +806,9 @@ def Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,
     if (type(event) == int):
         if event in LPI:
             LPI.remove(event)
-            #window[event].update(button_color=('black','#FDD357'))
             window[event].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event]][0],image_size=(38,38),image_subsample=5)
         else:
             LPI.append(event)
-            #window[event].update(button_color=('white','#57C3FD'))
             window[event].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event]][1],image_size=(38,38),image_subsample=5)
 
     elif (event == "Intercambiar fichas"):
@@ -837,7 +824,6 @@ def Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,
                         Letra = list(Dicc_Bolsa.keys())[x]
                     Lista_Atril[pos] = Letra
                     Dicc_Bolsa[Lista_Atril[pos]] = Dicc_Bolsa[Lista_Atril[pos]] - 1
-                    #window[pos].update(Lista_Atril[pos],button_color=('black','#FDD357'))
                     window[pos].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[pos]][0],image_size=(38,38),image_subsample=5)
 
                 Turnos_Disponibles = Turnos_Disponibles - 1
