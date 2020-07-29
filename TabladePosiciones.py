@@ -7,7 +7,7 @@ sg.theme('DarkGrey2')
 
 def Tabla():
 
-    data = []
+    data_inicial = [[],[],[],[],[],[],[],[],[],[]]
     data_facil = []
     data_normal = []
     data_dificil = []
@@ -28,23 +28,21 @@ def Tabla():
                         data_dificil.append(row)
                     elif row[3] == 'Personalizada':
                         data_personalizada.append(row)
-    except ValueError:
+        for x in range(10):
+            data_inicial[x].extend([["-"],["-"],["-"],["-"],["-"]])
+    except FileNotFoundError:
             sg.popup_error('Error al leer: Archivo_Puntajes.csv')
 
     def DataTotal(window,*Lista):
         Total = []
         Merge = []
         for Dificultad in Lista:
-            print(Dificultad)
             Merge.extend(Dificultad)
-            print(Merge)
         Merge = sorted(Merge,key=lambda x:int(x[1]),reverse=True)
         for x in range(10):
             Total.append(Merge[x].copy()) #sirve el .copy() y el [:] , al estar pasando una lista de una lista , ambas direcciones eran las mismas
             Total[x].insert(0, x+1)
         window['info'].Update(Total)
-    #    for x in range(10):
-    #        Total[x].remove(x+1)
 
     def DataMod(window,Lista):
         Lista = sorted(Lista,key=lambda x:int(x[1]),reverse=True)
@@ -57,7 +55,7 @@ def Tabla():
     sg.set_options(element_padding=(0, 0))
 
     layout: list = [[sg.Button(button_text="Total",size=(17,2),pad=((0,14),(0,0)),key="Total"),sg.Button(button_text="Facil",size=(17,2),pad=((0,14),(0,0)),key="Facil"),sg.Button(button_text="Normal",size=(17,2),pad=((0,14),(0,0)),key="Normal"),sg.Button(button_text="Dificil",size=(17,2),pad=((0,14),(0,0)),key="Dificil"),sg.Button(button_text="Personalizada",size=(17,2),pad=((0,14),(0,0)),key="Personalizada")],
-                     [sg.Table(values=data,
+                     [sg.Table(values=data_inicial,
                             key='info',
                             headings=header_list,
                             def_col_width=17,
