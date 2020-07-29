@@ -1149,4 +1149,7 @@ def genero_Tablero():
 #ProgramaPrincipal-------------
 if __name__ == "__main__":
     sg.theme('DarkGrey2')
-    genero_Tablero()
+    try:
+        genero_Tablero()
+    except FileNotFoundError:
+        sg.popup_error("Archivo no encontrado, ejecute almenos una vez ScrabbleAR para que se creen los archivos requeridos",title='Error de archivos')
