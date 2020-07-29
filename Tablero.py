@@ -2,13 +2,12 @@ from palabra_Existe import verificar_Palabra
 import json
 from Generadores import Selector_de_coordenadas_disponibles
 from AiMaquina import formar_palabra
-from threading import Thread
 import PySimpleGUI as sg
 from random import randint
 import random
 import time
 import csv
-
+from datetime import date
 
 MAX_ROWS = MAX_COL = 15
 temp = 5
@@ -16,6 +15,37 @@ Infobox_Activa = False
 HistorialUsuario = []
 HistorialCPU = []
 PrimerRonda = True
+
+def GuardarDatos_Tabla(datos):
+    Infile = open('Archivo_Puntajes.csv','w')
+    writer = csv.writer(Infile)
+    writer.writerow(['Usuario','Puntaje','Fecha','Dificultad'])
+    for row in datos:
+        writer.writerow([row[0],row[1],row[2],row[3]])
+    Infile.close()
+
+def Agregar_Datos_TabladePosiciones(Dificultad,Usuario,PTU):
+        try:
+            Archi = open('Archivo_Puntajes','r')
+            reader = read(Archi)
+            Data_total = []
+            Lista = []
+            Today = date.today()
+            Today = today.strftime("%d/%m/%Y") # dd/mm/YY
+            Lista.append([Usuario,Puntaje,Today,Dificultad])
+            for row in reader:
+                if Dificultad == row[3]:
+                    Lista.append(row)
+                else:
+                    Data_total.append(row)
+            Archi.close()
+            Lista = sorted(Lista,key=lambda x:int(x[1]),reverse=True)
+            Lista.remove(Lista[10])
+            for row in Lista:
+                Data_total.append(row)
+            GuardarDatos_Tabla(Data_total)
+        except FileNotFoundError:
+                sg.popup_error('Error al guardar datos en: Archivo_Puntajes.csv',title='Error')
 
 def rutas_letras(Dicc_letra_puntajes):
     '''Recibe un diccionario con claves letra y valor puntaje (ej:"A:1") y segun eso , genera un diccionario con clave letra y valor lista de direcciones
@@ -1144,6 +1174,12 @@ def genero_Tablero():
         Update_Fichas_Colocadas(LCOPR,window,Dicc,DiccRLPP)
         Turno_Usuario = not Turno_Usuario
         window['CantFichas'].update('Cantidad de fichas: '+str(CFT))
+
+    if (Tiempo == 0) or (CFT == 0):
+        sg.popup('Fin de Partida')
+        if (PTU > PT_CPU):
+            Agregar_Datos_TabladePosiciones(Dificultad,Usuario,PTU)
+
     window.close()
     return(event)
 #ProgramaPrincipal-------------
