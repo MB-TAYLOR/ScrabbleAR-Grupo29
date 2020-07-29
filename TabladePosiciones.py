@@ -29,7 +29,7 @@ def Tabla():
                     elif row[3] == 'Personalizada':
                         data_personalizada.append(row)
         for x in range(10):
-            data_inicial[x].extend([["-"],["-"],["-"],["-"],["-"]])
+            data_inicial[x].extend([["-"],["-"],["--/--/--"],["-"],["-"]])
     except FileNotFoundError:
             sg.popup_error('Error al leer: Archivo_Puntajes.csv')
 
