@@ -1,6 +1,8 @@
+from playsound import playsound
 import PySimpleGUI as sg
 import random
 import csv
+
 
 
 def Primer_Cargar(values,window,Dicc_Bolsa,letra_Seleccionada):
@@ -259,13 +261,15 @@ def Comprobaciones(values,Cant_Fichas_Total,window):
         for L in values['Usuario']:
             if ((ord(L) < 48) or (ord(L) > 57) and (ord(L) < 65) or (ord(L) > 90) and (ord(L) < 97) or (ord(L) > 122)):
                 window['Usuario'].update(background_color='red')
-                sg.popup('Prueba con un usuario que tenga letras y/o numeros!',title='Aviso',keep_on_top=True)
+                playsound(r'ScrabbleAR_Sonidos/Error_Opciones.mp3',block=False)
+                sg.popup('Prueba con un usuario que tenga letras y/o numeros!',background_color='#B91B1B',title='Aviso',keep_on_top=True)
                 window['Usuario'].update(background_color='#F1D6AB')
                 TodoOk = False
                 break
     else:
         window['Usuario'].update(background_color='red')
-        sg.popup('No puedes guardar un usuario vacio!',title='Aviso',keep_on_top=True)
+        playsound(r'ScrabbleAR_Sonidos/Error_Opciones.mp3',block=False)
+        sg.popup('No puedes guardar un usuario vacio!',background_color='#B91B1B',title='Aviso',keep_on_top=True)
         window['Usuario'].update(background_color='#F1D6AB')
         TodoOk = False
 
@@ -275,20 +279,23 @@ def Comprobaciones(values,Cant_Fichas_Total,window):
             for c in values[T]:
                 if not(ord(c) >= 48 and ord(c) <= 57):
                     window[T].update(background_color='red')
-                    sg.popup('Prueba ingresar un numero valido!',title='Aviso',keep_on_top=True)
+                    playsound(r'ScrabbleAR_Sonidos/Error_Opciones.mp3',block=False)
+                    sg.popup('Prueba ingresar un numero valido!',background_color='#B91B1B',title='Aviso',keep_on_top=True)
                     window[T].update(background_color='#F1D6AB')
                     TodoOk = False
                     break
         else:
             window[T].update(background_color='red')
-            sg.popup('Prueba ingresar un numero!',title='Aviso',keep_on_top=True)
+            playsound(r'ScrabbleAR_Sonidos/Error_Opciones.mp3',block=False)
+            sg.popup('Prueba ingresar un numero!',background_color='#B91B1B',title='Aviso',keep_on_top=True)
             window[T].update(background_color='#F1D6AB')
 
     if values['Adjetivos'] == False and values['Sustantivos'] == False and values['Verbos'] == False:
         window['Adjetivos'].update(background_color='red')
         window['Sustantivos'].update(background_color='red')
         window['Verbos'].update(background_color='red')
-        sg.popup('No puedes dejar las casillas vacias!',title='Aviso',keep_on_top=True)
+        playsound(r'ScrabbleAR_Sonidos/Error_Opciones.mp3',block=False)
+        sg.popup('No puedes dejar las casillas vacias!',background_color='#B91B1B',title='Aviso',keep_on_top=True)
         window['Adjetivos'].update(background_color='#2B2B28')
         window['Sustantivos'].update(background_color='#2B2B28')
         window['Verbos'].update(background_color='#2B2B28')
@@ -296,7 +303,8 @@ def Comprobaciones(values,Cant_Fichas_Total,window):
 
     if Cant_Fichas_Total < 99 or Cant_Fichas_Total > 200:
         window['FichasTotales'].update(background_color='red')
-        sg.popup('Intenta que las fichas totales sean mayores a 99 y menor a 200!',title='Aviso',keep_on_top=True)
+        playsound(r'ScrabbleAR_Sonidos/Error_Opciones.mp3',block=False)
+        sg.popup('Intenta que las fichas totales sean mayores a 99 y menores a 200!',background_color='#B91B1B',title='Aviso',keep_on_top=True)
         window['FichasTotales'].update(background_color='#2B2B28')
         TodoOk = False
 
@@ -364,6 +372,50 @@ def Contabilizar_Fichas(Dicc_Bolsa):
         Cant_Total = Cant_Total + Cant
     return Cant_Total
 
+def Cargar_Perfil(Lista,Dicc_Bolsa,letra_Seleccionada,window):
+    Lista_Usuarios = []
+    for i in Lista:
+        if (i['Actual'] != 'True'):
+            Lista_Usuarios.append(i['Usuario'])
+        else:
+            Lista_Usuarios.append('*'+i['Usuario'])
+    window_cargar = sg.Window('Cargar',[[sg.Listbox(Lista_Usuarios,size=(20, 10))],[sg.Button('Cargar'),sg.Button('Eliminar'),sg.Exit('Salir')]])
+    while True:
+        event_cargar,values_cargar = window_cargar.read()
+
+        if event_cargar in (None, 'Salir'):
+            playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
+            break
+
+        if values_cargar[0] != []: #Si selecciono algo:
+
+            values_cargar[0][0] = values_cargar[0][0].strip('*')
+            Jugador_Seleccionado = list(filter(lambda jug:values_cargar[0][0].strip() == jug['Usuario'],Lista))
+
+            if (event_cargar == 'Cargar'):
+                Lista.pop(Lista.index(Jugador_Seleccionado[0]))
+                Jugador_Seleccionado[0]['Actual'] = True
+                Poner_Todos_En_Falso(Lista)
+                Lista.append(Jugador_Seleccionado[0])
+                GuardarDatos(Lista)
+                values = Cargar(Jugador_Seleccionado[0],window,Dicc_Bolsa,letra_Seleccionada)
+                playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
+            #Eliminar:
+            else:
+                if (len(Lista) > 1):
+                    if Jugador_Seleccionado[0]['Actual'] == 'True':
+                        Lista[0]['Actual'] = True
+                    Lista.pop(Lista.index(Jugador_Seleccionado[0]))
+                    GuardarDatos(Lista)
+                    playsound(r'ScrabbleAR_Sonidos/Exito_Opciones.mp3',block=False)
+                    sg.popup('El perfil se ha eliminado con exito!',background_color='#63B91B',title='Aviso',keep_on_top=True)
+                else:
+                    playsound(r'ScrabbleAR_Sonidos/Error_Opciones.mp3',block=False)
+                    sg.popup('No puedes eliminar el ultimo perfil!',background_color='#B91B1B',title='Aviso',keep_on_top=True)
+        else:
+            playsound(r'ScrabbleAR_Sonidos/Error_Opciones.mp3',block=False)
+            sg.popup('Tienes que seleccionar un perfil!',title='Aviso',background_color='#B91B1B',keep_on_top=True)
+    window_cargar.close()
 
 def Ventana_Opciones ():
     '''Abre menu de opciones con todas sus funciones'''
@@ -391,6 +443,7 @@ def Ventana_Opciones ():
         event, values = window.read()
 
         if event in (None, 'Salir'):
+            playsound(r'ScrabbleAR_Sonidos/Click.mp3')
             break
 
         if event == 'Letras':
@@ -406,9 +459,11 @@ def Ventana_Opciones ():
             Dicc_Bolsa[letra_Seleccionada] = int(Cant_Letra_Actual)
 
         elif (event == 'Restablecer predeterminado'):
+            playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
             values,Dicc_Bolsa,Cant_Fichas_Total = RestablecerPredeterminado(values,window,Dicc_Bolsa,letra_Seleccionada)
 
         elif (event == 'Guardar') or (event == 'Cargar'):
+            playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
             Lista = LeerDatos()
             Transformar_Values(values,Dicc_Bolsa)
             if (event == 'Guardar'):
@@ -419,45 +474,16 @@ def Ventana_Opciones ():
                         values['Actual'] = True
                         Lista.append(values)
                         GuardarDatos(Lista)
-                        sg.popup('El perfil se modifico exitosamente!',title='Aviso',keep_on_top=True)
+                        playsound(r'ScrabbleAR_Sonidos/Exito_Opciones.mp3',block=False)
+                        sg.popup('El perfil se modifico exitosamente!',background_color='#63B91B',title='Aviso',keep_on_top=True)
                     else: #Simplemente lo agrego
                         Poner_Todos_En_Falso(Lista)
                         AgregarDatos(values)
-                        sg.popup('El perfil se guardo exitosamente!',title='Aviso',keep_on_top=True)
+                        playsound(r'ScrabbleAR_Sonidos/Exito_Opciones.mp3',block=False)
+                        sg.popup('El perfil se guardo exitosamente!',background_color='#63B91B',title='Aviso',keep_on_top=True)
 
-            else:           #Cargar
-                Lista_Usuarios = []
-                for i in Lista:
-                    if (i['Actual'] != 'True'):
-                        Lista_Usuarios.append(i['Usuario'])
-                    else:
-                        Lista_Usuarios.append('*'+i['Usuario'])
-                window_cargar = sg.Window('Cargar',[[sg.Listbox(Lista_Usuarios,size=(20, 10))],[sg.Button('Cargar'),sg.Button('Eliminar'),sg.Exit('Salir')]])
-                event_cargar,values_cargar = window_cargar.read()
-                if not(event_cargar in (None, 'Salir')):
-                    values_cargar[0][0] = values_cargar[0][0].strip('*')
-                    Jugador_Seleccionado = list(filter(lambda jug:values_cargar[0][0].strip() == jug['Usuario'],Lista))
-
-                    if (event_cargar == 'Cargar'):
-                        Lista.pop(Lista.index(Jugador_Seleccionado[0]))
-                        Jugador_Seleccionado[0]['Actual'] = True
-                        Poner_Todos_En_Falso(Lista)
-                        Lista.append(Jugador_Seleccionado[0])
-                        GuardarDatos(Lista)
-                        values = Cargar(Jugador_Seleccionado[0],window,Dicc_Bolsa,letra_Seleccionada)
-                    #Eliminar:
-                    else:
-                        if (len(Lista) > 1):
-                            if Jugador_Seleccionado[0]['Actual'] == 'True':
-                                Lista[0]['Actual'] = True
-                            Lista.pop(Lista.index(Jugador_Seleccionado[0]))
-                            GuardarDatos(Lista)
-                            sg.popup('El perfil se ha eliminado con exito!',title='Aviso',keep_on_top=True)
-                        else:
-                            sg.popup('No puedes eliminar el ultimo perfil!',title='Aviso',keep_on_top=True)
-                window_cargar.close()
-
-
+            else:           #Cargar Perfil
+                Cargar_Perfil(Lista,Dicc_Bolsa,letra_Seleccionada,window)
 
         Ultima_Dificultad = Dificultad_Actual
         Dificultad_Actual = Cual_Dificultad(str(values['Facil']),str(values['Normal']),str(values['Dificil']),window)
@@ -468,4 +494,7 @@ def Ventana_Opciones ():
 
 #PROGRAMA PRINCIPAL
 if __name__ == "__main__":
-    values = Ventana_Opciones()
+    try:
+        values = Ventana_Opciones()
+    except FileNotFoundError:
+         sg.popup_error("Archivo no encontrado, ejecute almenos una vez ScrabbleAR para que se creen los archivos requeridos",title='Error de archivos')
