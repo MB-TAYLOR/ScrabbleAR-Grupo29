@@ -838,7 +838,11 @@ def Acciones_Usuario(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_ru
                 playsound(r'ScrabbleAR_Sonidos/IntercambioFichas.mp3',block=False)
                 Intercambio_FichasAtril(Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida)
     else:
-        window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event1]][0],image_size=(38,38),image_subsample=5)
+        
+        if(type(event1)==int):
+            window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event1]][0],image_size=(38,38),image_subsample=5)
+        else:
+            window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(38,38),image_subsample=5)
         playsound(r'ScrabbleAR_Sonidos/Clin.mp3',block=False)
         Update_Infobox('No puedes interactuar con las fichas ya colocadas!','#5798FD',window)
 
