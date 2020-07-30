@@ -8,6 +8,7 @@ import random
 import time
 import csv
 from datetime import date
+from playsound import playsound
 
 MAX_ROWS = MAX_COL = 15
 temp = 5
@@ -459,6 +460,7 @@ def Mensaje_Turno(Turno_Usuario):
         sg.popup('Estas Listo?\nEs tu turno',custom_text="Si,lo estoy",no_titlebar=True,keep_on_top=True)
     else:
         sg.popup('Estas Listo?\nEs el turno de la IA',custom_text="Si,lo estoy",no_titlebar=True,keep_on_top=True)
+    playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
 
 def Eliminar_Elementos_Ocupados_CDD(LCO,CCD):
     '''Elimina los elementos de LCO en CCD '''
@@ -477,9 +479,11 @@ def Verificar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega,window):
             Palabra = Palabra + Dicc[coord][0]
     if verificar_Palabra(Palabra,Dificultad,Dificil_se_juega):
         Texto = '"'+Palabra+'"\n'+'Es una palabra valida'
+        playsound(r'ScrabbleAR_Sonidos/Valido.mp3',block=False)
         Update_Infobox(Texto,'#57FD57',window)
     else:
         Texto = '"'+Palabra+'"\n'+'No es una palabra valida'
+        playsound(r'ScrabbleAR_Sonidos/NoValido.mp3',block=False)
         Update_Infobox(Texto,'#FD5757',window)
         Palabra = ''
     return Palabra
@@ -677,6 +681,7 @@ def Validar(LCOPR,CCD,Dicc,Dificultad,PrimerRonda,Palabra,Dificil_se_juega,windo
             if ((7,7) in LCOPR):
                 Palabra = Verificar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega,window)
             else:
+                playsound(r'ScrabbleAR_Sonidos/Clin.mp3',block=False)
                 Update_Infobox('Debes colocar una letra en la casilla "Inicio"!','#5798FD',window)
         else:
             bool = False
@@ -687,6 +692,7 @@ def Validar(LCOPR,CCD,Dicc,Dificultad,PrimerRonda,Palabra,Dificil_se_juega,windo
             if bool:
                 Palabra = Verificar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega,window)
             else:
+                playsound(r'ScrabbleAR_Sonidos/Clin.mp3',block=False)
                 Update_Infobox('Coloca la palabra en una casilla valida!','#5798FD',window)
     return Palabra
 
@@ -711,9 +717,11 @@ def Palabra_bien_colocada(LCOPR,window):
         if Horizontal or Vertical:
             return True
         else:
+            playsound(r'ScrabbleAR_Sonidos/Clin.mp3',block=False)
             Update_Infobox('Esta palabra esta mal colocada!','#5798FD',window)
             return False
     else:
+        playsound(r'ScrabbleAR_Sonidos/Clin.mp3',block=False)
         Update_Infobox('Debes formar palabras de por lo menos 2 fichas!','#5798FD',window)
         return False
 
@@ -790,7 +798,7 @@ def Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_p
 
 def Colocar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,Letra1,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
     '''Coloca la ficha del atril seleccionada en la posicion deceada del tablero'''
-    print("Colocar Ficha")
+    playsound(r'ScrabbleAR_Sonidos/ColocarFicha.mp3',block=False)
     if(not(Coord_Ocupada(LCO,event2))):
         Dicc[event2][0] = Letra1
         window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Letra1][0],image_size=(38,38),image_subsample=5)
@@ -800,6 +808,7 @@ def Colocar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,Letra1,event1,event2,window,Dic
 
 def Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
     '''Quita una ficha del tablero y la pone en una posicion vacia del atril'''
+    playsound(r'ScrabbleAR_Sonidos/RetirarFicha.mp3',block=False)
     Lista_Atril[event2] = Dicc[event1][0]
     window[event1].update(image_filename=Dicc[event1][2],image_size=(38,38),image_subsample=5)
     window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(38,38),image_subsample=5)
@@ -823,12 +832,15 @@ def Acciones_Usuario(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_ru
                     Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida)
 
             elif (type(event1) == tuple) and (type(event2) == tuple):   #Intercambio FichasTablero:
+                playsound(r'ScrabbleAR_Sonidos/IntercambioFichas.mp3',block=False)
                 Intercambio_FichasTablero(LCOPR,Dicc,event1,event2,window,Dicc_rutas_letras_puntaje_partida)
 
             elif (type(event1) == int) and (type(event2) == int):       #Intercambio FichasAtril:
+                playsound(r'ScrabbleAR_Sonidos/IntercambioFichas.mp3',block=False)
                 Intercambio_FichasAtril(Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida)
     else:
         window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event1]][0],image_size=(38,38),image_subsample=5)
+        playsound(r'ScrabbleAR_Sonidos/Clin.mp3',block=False)
         Update_Infobox('No puedes interactuar con las fichas ya colocadas!','#5798FD',window)
 
 def Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles,event,window,Dicc_rutas_letras_puntaje_partida):
@@ -864,12 +876,14 @@ def Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,
                 sg.popup('No has intercambiado ninguna ficha! no pierdes el turno',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
                 window[event].update(button_color=('#2B2B28','#E3B04B'))
             Boton_Intercambiar = False
+            playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
         else: #Recien "Clickeo" el boton intercambiar Fichas
             if Turnos_Disponibles != 1:
                 sg.popup('Te quedan '+str(Turnos_Disponibles)+' turnos disponibles\nSelecciona las fichas del atril que quieras cambiar!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
             else:
                 sg.popup('Este es el ultimo turno en el que puedes cambiar fichas!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
             Boton_Intercambiar = True
+            playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
             window[event].update(button_color=('#2B2B28','#57C3FD'))
             Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,Dicc_rutas_letras_puntaje_partida)
     elif event != 'Reloj':
@@ -975,6 +989,7 @@ def genero_Tablero():
     global HistorialCPU
 
     event_popup = sg.popup_yes_no('¿Deseas cargar la partida guardada?',title='Aviso',keep_on_top=True)
+    playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
     if (event_popup == 'Yes'):
         partida_carga=True
         CCD=set()
@@ -1092,11 +1107,14 @@ def genero_Tablero():
                 #Aca deberian estar los cambios a la ventana que centrarian todo el contenido de esta.
             if event in (None, 'Salir') and (Boton_Intercambiar == False):
                 if event==('Salir'):
+                    playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
                     event_popup1 = sg.popup_yes_no('Seguro que desea salir de la partida?',title='Aviso',keep_on_top=True)
+                    playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
                 else:
                     event_popup1='Yes'
                 if (event_popup1 == 'Yes'):
                     event_popup2 = sg.popup_yes_no('¿Quieres posponer la partida?',title='Aviso',keep_on_top=True)
+                    playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
                     if (event_popup2 == 'Yes'):
                         Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,DiccRLPP)
                         GuardoPartida(Dificultad,DiccRLPP,Dicc,CFT,Usuario,Turnos_Disponibles,PTU,HistorialUsuario,LCO,Tiempo,DiccRLPP_CPU,PT_CPU,fichas_CPU,contador_Turnos_CPU,HistorialCPU,PrimerRonda,Lista_Atril,Dicc_Bolsa,Dicc_Puntajes,tiempo_ronda,list(CCD),LCO_Usuario,LCO_CPU,tiempo_jugador,Lista_TP)
@@ -1107,12 +1125,13 @@ def genero_Tablero():
                     event1 = event
                     if (type(event1) == int):
                         if ((Lista_Atril[event1] != '')):
-                            #window[event1].update(button_color=('white','#57C3FD'))
-
+                            playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
                             window[event1].update(image_filename=DiccRLPP[Lista_Atril[event1]][1],image_size=(38,38),image_subsample=5)
                     elif Coord_Ocupada(LCOPR,event1):
+                            playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
                             window[event1].update(image_filename=DiccRLPP[Dicc[event1][0]][1],image_size=(38,38),image_subsample=5)
                     else :
+                        playsound(r'ScrabbleAR_Sonidos/Clin.mp3',block=False)
                         Update_Infobox('No puedes interactuar con las fichas ya colocadas!','#5798FD',window) if Coord_Ocupada(LCO,event) else Update_Infobox('Primero selecciona una letra!','#5798FD',window)
                         event1 = ''
                 else:
@@ -1134,10 +1153,12 @@ def genero_Tablero():
                 CFT,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles = Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles,event,window,DiccRLPP)
 
             elif (event == 'Rotar') and (Desplegado):
+                playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
                 Update_Columna_Extra(Columna_Historial,window)
                 Columna_Historial = not Columna_Historial
 
             elif (event == 'Mostrar'):
+                playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
                 if (Desplegado):
                     window['Columna_Historial'].update(visible=False)
                     window['Columna_Conf'].update(visible=False)
@@ -1147,13 +1168,14 @@ def genero_Tablero():
                     window['Mostrar'].update('<')
                 Desplegado = not Desplegado
             elif(event=="Pausar"):
-                print(CFT)
+                playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
                 for x in range(len(Lista_Atril)):
                     window[x].update(image_filename=r'ScrabbleAR_Imagenes_png\Transparente.png',image_size=(38,38),image_subsample=5)
                 sg.popup('Presione "OK"para continuar',keep_on_top=True,title='Aviso')
                 for x in range(len(Lista_Atril)):
                     window[x].update(image_filename=DiccRLPP[Lista_Atril[x]][0],image_size=(38,38),image_subsample=5)
             elif (event=="Rendirse"):
+                playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
                 se_Rinde = sg.popup_yes_no("Si se rinde no se guardaran datos de esta partida , esta seguro?",title='Aviso',keep_on_top=True)
                 if (se_Rinde=="Yes"):
                     Fin=True
