@@ -988,6 +988,11 @@ def reloj_Ronda(tiempo_jugador,window):
         window['Tiempo_Ronda'].update("00:0{}".format((((tiempo_jugador//100)%60))),text_color="red")
     tiempo_jugador-=1
     return(tiempo_jugador)
+def fin_Juego(Tiempo,CFT):
+    Termina=False
+    if((Tiempo==0) or (CFT ==0)):
+        Termina=True
+    return(Termina)
 #PROGRAMA PRINCIPAL
 def genero_Tablero():
     '''Programa Principal '''
@@ -1092,7 +1097,7 @@ def genero_Tablero():
     Dificil_se_juega=Lista_TP
     window.Refresh()
     tamaño_actual=window.Size
-    while True and (Tiempo>0)and(CFT>0):
+    while True and (not(fin_Juego(Tiempo,CFT))):
         LPI = []                #Lista de Posiciones de Intercambio (Para Intecambiar fichas)
         LCOPR = []              #Lista de Coordenadas Ocupadas Por Ronda
         coords_Bonus = []
@@ -1103,7 +1108,7 @@ def genero_Tablero():
         else:
             tiempo_jugador=tiempo_ronda
         Mensaje_Turno(Turno_Usuario)
-        while (Turno_Usuario and (tiempo_jugador>0)and(Tiempo>0)):  #Mientras sea el turno del usuario:
+        while (Turno_Usuario and (not(fin_Juego(Tiempo,CFT)))):  #Mientras sea el turno del usuario:
             Palabra = ''
             event = window.Read(timeout=4,timeout_key='Reloj')[0] # timeout=10 no igualaba la velocidad de los segundos reales , por eso reemplaze por "2"  se acerca mas
             if event != None: #Para que no intente actualizar el tiempo algo luego de darle a X y se haya cerrado la ventana
@@ -1177,7 +1182,7 @@ def genero_Tablero():
                     window['Mostrar'].update('<')
                 Desplegado = not Desplegado
             elif(event=="Pausar"):
-
+                CFT=0
                 playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
                 for x in range(len(Lista_Atril)):
                     window[x].update(image_filename=r'ScrabbleAR_Imagenes_png\Transparente.png',image_size=(38,38),image_subsample=5)
