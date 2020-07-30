@@ -838,7 +838,7 @@ def Acciones_Usuario(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_ru
                 playsound(r'ScrabbleAR_Sonidos/IntercambioFichas.mp3',block=False)
                 Intercambio_FichasAtril(Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida)
     else:
-        
+
         if(type(event1)==int):
             window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event1]][0],image_size=(38,38),image_subsample=5)
         else:
@@ -964,10 +964,17 @@ def cargoPartida():
     return(datos)
 def reloj_Partida(Tiempo,window):
     '''Recibe y Actualiza el tiempo de la partida en la ventana de juego'''
+    print(((Tiempo//100)%60))
     if(Tiempo>(600*100)): #si es mayor a 10 min (600 segs multiplicados por la cantidad de veces que el timeout entra por segundo)
-        window['Tiempo'].update("{}:{}".format(((Tiempo//100)//60),((Tiempo//100)%60)),text_color="white")
+        if(((Tiempo//100)%60)>9):
+            window['Tiempo'].update("{}:{}".format(((Tiempo//100)//60),((Tiempo//100)%60)),text_color="white")
+        else:
+            window['Tiempo'].update("{}:0{}".format(((Tiempo//100)//60),((Tiempo//100)%60)),text_color="white")
     elif(Tiempo<(600*100)and(Tiempo>(10*100))):#si es menor a 10 min y mayor a 10 segs
-        window['Tiempo'].update("0{}:{}".format(((Tiempo//100)//60),((Tiempo//100)%60)),text_color="white")
+        if(((Tiempo//100)%60)>9):
+            window['Tiempo'].update("0{}:{}".format(((Tiempo//100)//60),((Tiempo//100)%60)),text_color="white")
+        else:
+            window['Tiempo'].update("0{}:0{}".format(((Tiempo//100)//60),((Tiempo//100)%60)),text_color="white")
     else:#si es menor a 10 segs(10 segs multiplicados por la cantidad de veces que el timeout entra por segundo)
         window['Tiempo'].update("00:0{}".format((((Tiempo//100)%60))),text_color="red")
     Tiempo -= 1
@@ -1086,7 +1093,7 @@ def genero_Tablero():
     Dificil_se_juega=Lista_TP
     window.Refresh()
     tamaño_actual=window.Size
-    while True and (tiempo_ronda>0)and(CFT>0):
+    while True and (Tiempo>0)and(CFT>0):
         LPI = []                #Lista de Posiciones de Intercambio (Para Intecambiar fichas)
         LCOPR = []              #Lista de Coordenadas Ocupadas Por Ronda
         coords_Bonus = []
@@ -1097,12 +1104,13 @@ def genero_Tablero():
         else:
             tiempo_jugador=tiempo_ronda
         Mensaje_Turno(Turno_Usuario)
-        while (Turno_Usuario and (tiempo_jugador>0)):  #Mientras sea el turno del usuario:
+        while (Turno_Usuario and (tiempo_jugador>0)and(Tiempo>0)):  #Mientras sea el turno del usuario:
             Palabra = ''
-            event = window.Read(timeout=7,timeout_key='Reloj')[0] # timeout=10 no igualaba la velocidad de los segundos reales , por eso reemplaze por "7" que si lo iguala
+            event = window.Read(timeout=4,timeout_key='Reloj')[0] # timeout=10 no igualaba la velocidad de los segundos reales , por eso reemplaze por "2"  se acerca mas
             if event != None: #Para que no intente actualizar el tiempo algo luego de darle a X y se haya cerrado la ventana
                 Tiempo=reloj_Partida(Tiempo,window)
                 tiempo_jugador=reloj_Ronda(tiempo_jugador,window)
+                print(Tiempo)
             if tiempo_jugador == 0:
                 Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,DiccRLPP)
             #if (tamaño_actual != window.Size):
@@ -1171,6 +1179,7 @@ def genero_Tablero():
                     window['Mostrar'].update('<')
                 Desplegado = not Desplegado
             elif(event=="Pausar"):
+
                 playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
                 for x in range(len(Lista_Atril)):
                     window[x].update(image_filename=r'ScrabbleAR_Imagenes_png\Transparente.png',image_size=(38,38),image_subsample=5)
@@ -1201,10 +1210,11 @@ def genero_Tablero():
         window['CantFichas'].update('Cantidad de fichas: '+str(CFT))
 
     if (Tiempo == 0) or (CFT == 0):
-        sg.popup('Fin de Partida')
         if (PTU > PT_CPU):
-            sg.popup("GANASTE")
+            sg.popup("Ganaste")
             Agregar_Datos_TabladePosiciones(Dificultad,Usuario,PTU)
+        else:
+            sg.popup("Perdiste Fraca")
 
     window.close()
     return(event)
