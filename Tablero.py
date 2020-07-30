@@ -964,7 +964,6 @@ def cargoPartida():
     return(datos)
 def reloj_Partida(Tiempo,window):
     '''Recibe y Actualiza el tiempo de la partida en la ventana de juego'''
-    print(((Tiempo//100)%60))
     if(Tiempo>(600*100)): #si es mayor a 10 min (600 segs multiplicados por la cantidad de veces que el timeout entra por segundo)
         if(((Tiempo//100)%60)>9):
             window['Tiempo'].update("{}:{}".format(((Tiempo//100)//60),((Tiempo//100)%60)),text_color="white")
@@ -1110,7 +1109,6 @@ def genero_Tablero():
             if event != None: #Para que no intente actualizar el tiempo algo luego de darle a X y se haya cerrado la ventana
                 Tiempo=reloj_Partida(Tiempo,window)
                 tiempo_jugador=reloj_Ronda(tiempo_jugador,window)
-                print(Tiempo)
             if tiempo_jugador == 0:
                 Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,DiccRLPP)
             #if (tamaño_actual != window.Size):
@@ -1214,7 +1212,7 @@ def genero_Tablero():
             sg.popup("Ganaste")
             Agregar_Datos_TabladePosiciones(Dificultad,Usuario,PTU)
         else:
-            sg.popup("Perdiste Fraca")
+            sg.popup("Perdiste")
 
     window.close()
     return(event)
