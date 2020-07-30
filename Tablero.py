@@ -20,20 +20,19 @@ PrimerRonda = True
 def GuardarDatos_Tabla(datos):
     Infile = open('Archivo_Puntajes.csv','w')
     writer = csv.writer(Infile)
-    writer.writerow(['Usuario','Puntaje','Fecha','Dificultad'])
     for row in datos:
         writer.writerow([row[0],row[1],row[2],row[3]])
     Infile.close()
 
 def Agregar_Datos_TabladePosiciones(Dificultad,Usuario,PTU):
         try:
-            Archi = open('Archivo_Puntajes','r')
-            reader = read(Archi)
+            Archi = open('Archivo_Puntajes.csv','r')
+            reader = csv.reader(Archi)
             Data_total = []
             Lista = []
             Today = date.today()
-            Today = today.strftime("%d/%m/%Y") # dd/mm/YY
-            Lista.append([Usuario,Puntaje,Today,Dificultad])
+            Today = Today.strftime("%d/%m/%Y") # dd/mm/YY
+            Lista.append([Usuario,PTU,Today,Dificultad])
             for row in reader:
                 if Dificultad == row[3]:
                     Lista.append(row)
@@ -1200,6 +1199,7 @@ def genero_Tablero():
     if (Tiempo == 0) or (CFT == 0):
         sg.popup('Fin de Partida')
         if (PTU > PT_CPU):
+            sg.popup("GANASTE")
             Agregar_Datos_TabladePosiciones(Dificultad,Usuario,PTU)
 
     window.close()
