@@ -355,7 +355,7 @@ def Layout_Columna():
                [sg.Text(pad=((6,0),(5,2)),size=(20, 3),key='Infobox',font=("Consolas", 16),background_color='#A4A4A4',justification='center',relief=sg.RELIEF_SOLID)], #Entran 60 caracteres
                [sg.Button(button_text='Terminar turno',size=(15,0),font=("Unispace",20),pad=((5,0),(5,3)))],
                [sg.Button(button_text='Validar',size=(15,0),font=("Unispace",20),pad=((5,0),(5,3)))],
-               [sg.Button(button_text='Intercambiar fichas',size=(15,0),font=("Unispace",20))],
+               [sg.Button(button_text='Intercambiar fichas',key="Intercambiar fichas",size=(15,0),font=("Unispace",20))],
                [sg.Button(button_text='Pausar',key='Pausar',font=("default",16),pad=((5,0),(3,0)) ), #font=("default",19),pad=((5,43),(5,3))
                 sg.Button(button_text='Rendirse',key='Rendirse',font=("default",16),pad=((5,0),(2,0)) ),#font=("default",19),pad=((5,43),(5,3))
                 sg.Button(button_text='Salir',key='Salir',font=("default",16))] ]#font=("default",19)
@@ -988,9 +988,9 @@ def reloj_Ronda(tiempo_jugador,window):
         window['Tiempo_Ronda'].update("00:0{}".format((((tiempo_jugador//100)%60))),text_color="red")
     tiempo_jugador-=1
     return(tiempo_jugador)
-def fin_Juego(Tiempo,CFT):
+def fin_Juego(Tiempo,CFT,terminacion_Manual_Usuario):
     Termina=False
-    if((Tiempo==0) or (CFT ==0)):
+    if((Tiempo==0) or (CFT ==0)or(terminacion_Manual_Usuario)):
         Termina=True
     return(Termina)
 #PROGRAMA PRINCIPAL
@@ -1090,6 +1090,7 @@ def genero_Tablero():
     Columna_Historial = True
     Desplegado = True
     tiemp_ant = ''
+    terminacion_Manual_Usuario=False
     Fin = False
     event1 = ''
     window['Columna_Conf'].update(visible=False)
@@ -1097,7 +1098,7 @@ def genero_Tablero():
     Dificil_se_juega=Lista_TP
     window.Refresh()
     tamaño_actual=window.Size
-    while True and (not(fin_Juego(Tiempo,CFT))):
+    while True and (not(fin_Juego(Tiempo,CFT,terminacion_Manual_Usuario))):
         LPI = []                #Lista de Posiciones de Intercambio (Para Intecambiar fichas)
         LCOPR = []              #Lista de Coordenadas Ocupadas Por Ronda
         coords_Bonus = []
@@ -1108,7 +1109,7 @@ def genero_Tablero():
         else:
             tiempo_jugador=tiempo_ronda
         Mensaje_Turno(Turno_Usuario)
-        while (Turno_Usuario and (not(fin_Juego(Tiempo,CFT)))):  #Mientras sea el turno del usuario:
+        while (Turno_Usuario and (tiempo_jugador>0) and (not(fin_Juego(Tiempo,CFT,terminacion_Manual_Usuario)))):  #Mientras sea el turno del usuario:
             Palabra = ''
             event = window.Read(timeout=4,timeout_key='Reloj')[0] # timeout=10 no igualaba la velocidad de los segundos reales , por eso reemplaze por "2"  se acerca mas
             if event != None: #Para que no intente actualizar el tiempo algo luego de darle a X y se haya cerrado la ventana
@@ -1163,8 +1164,16 @@ def genero_Tablero():
                 Actualizar_CCD(CCD,LCO)
                 break
 
-            elif (((event == "Intercambiar fichas") or (Boton_Intercambiar)) and (Turnos_Disponibles != 0)):
-                CFT,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles = Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles,event,window,DiccRLPP)
+            elif ((event == "Intercambiar fichas") or (Boton_Intercambiar)):
+                if(Turnos_Disponibles != 0):
+                    CFT,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles = Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles,event,window,DiccRLPP)
+                    if(Turnos_Disponibles == 0):
+                        window["Intercambiar fichas"].update("Terminar\nPartida")
+                else:
+                    event_popup3=sg.popup_yes_no("¿Desea Terminar la partida y definir al ganador?",title='Aviso',keep_on_top=True)
+                    if(event_popup3=="Yes"):
+                        terminacion_Manual_Usuario=True
+
 
             elif (event == 'Rotar') and (Desplegado):
                 playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
@@ -1212,7 +1221,7 @@ def genero_Tablero():
         Turno_Usuario = not Turno_Usuario
         window['CantFichas'].update('Cantidad de fichas: '+str(CFT))
 
-    if (Tiempo == 0) or (CFT == 0):
+    if fin_Juego(Tiempo,CFT,terminacion_Manual_Usuario):
         if (PTU > PT_CPU):
             sg.popup("Ganaste")
             Agregar_Datos_TabladePosiciones(Dificultad,Usuario,PTU)
