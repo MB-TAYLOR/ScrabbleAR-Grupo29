@@ -18,7 +18,7 @@ def obtengo_Perfil():                                #Busco el nombre del ultimo
         archivo_csv.close()
 
     except FileNotFoundError:
-        sg.popup_error("Error al abrir archivo o el archivo no se encontro, verifique que el archivo se encuentre en la carpeta 'Datos' ",title='Error')
+        sg.popup_error("Error al abrir 'Archivo_Opciones.csv', o el archivo no se encontro, verifique que el archivo se encuentre en la carpeta 'Datos' ",title='Error')
     return(perfil_Actual)
 
 def establezco_PP(nombre):

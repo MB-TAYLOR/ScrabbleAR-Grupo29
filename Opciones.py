@@ -3,12 +3,14 @@ import PySimpleGUI as sg
 import random
 import csv
 
-
+Error_Op = True
 
 def Primer_Cargar(values,window,Dicc_Bolsa,letra_Seleccionada):
+    global Error_Op
     '''Carga por primera vez los datos de el Archivo_Opciones, devuelve values y Dicc_Bolsa'''
     arch = open('ScrabbleAR_Datos\Archivo_Opciones.csv','r')
     reader = csv.reader(arch)
+    Error_Op = False
     for row in reader:
         if (len(row) > 0):
             if (row[0] == 'True'):
@@ -497,4 +499,4 @@ if __name__ == "__main__":
     try:
         values = Ventana_Opciones()
     except FileNotFoundError:
-        sg.popup_error("Error al abrir archivo o el archivo no se encontro, verifique que el archivo se encuentre en la carpeta 'Datos' ",title='Error')
+        sg.popup_error("Error al abrir archivo o el archivo no se encontro, verifique que el archivo 'Archivo_Opciones.csv' se encuentre en la carpeta 'Datos' ",title='Error')

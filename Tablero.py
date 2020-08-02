@@ -18,7 +18,7 @@ HistorialCPU = []
 PrimerRonda = True
 
 def GuardarDatos_Tabla(datos):
-    Infile = open('Archivo_Puntajes.csv','w')
+    Infile = open(r'ScrabbleAR_Datos\Archivo_Puntajes.csv','w')
     writer = csv.writer(Infile)
     for row in datos:
         writer.writerow([row[0],row[1],row[2],row[3]])
@@ -26,7 +26,7 @@ def GuardarDatos_Tabla(datos):
 
 def Agregar_Datos_TabladePosiciones(Dificultad,Usuario,PTU):
         try:
-            Archi = open('Archivo_Puntajes.csv','r')
+            Archi = open(r'ScrabbleAR_Datos\Archivo_Puntajes.csv','r')
             reader = csv.reader(Archi)
             Data_total = []
             Lista = []
@@ -304,7 +304,6 @@ def Layout_Columna_Historial(Usuario):
 
 def Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT,Lista_TP):
     ''' Diseño de la columna donde se muestra las letras con sus respectivos puntajes y la dificultad actual'''
-    print(Lista_TP)
     TDP = ''
     for tp in Lista_TP:
         if tp == 'sus':
@@ -503,7 +502,7 @@ def verRows(row,Lista_TP):
     return(Lista_TP)
 def Importar_Datos():
     '''Toma los datos del archivo generado en opciones y los retorna para poder crear una partida utilizandolos '''
-    arch = open('Archivo_Opciones.csv','r',encoding="utf8")
+    arch = open(r'ScrabbleAR_Datos\Archivo_Opciones.csv','r',encoding="utf8")
     reader = csv.reader(arch)
     index = 0
     Lista_TP = []
@@ -592,7 +591,6 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
             fichas_CPU=fichas_CPU+nueva_ficha #En la primera jugada toma 7 fichas aleatorias de la bolsa
 
         Palabra=formar_palabra(fichas_CPU,Dificultad,Dificil_se_juega)
-        print(fichas_CPU)
         contador_Turnos_CPU=contador_Turnos_CPU+1
     else:
         Palabra=formar_palabra(fichas_CPU,Dificultad,Dificil_se_juega)
@@ -651,13 +649,9 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
         window['PuntajeCPU'].update(str(PT_CPU))
     else:
         print("No hay palabra valida en este momento para la CPU ,la CPU pasa el turno")
-    print("Atril",fichas_CPU)
     while(((len(fichas_CPU))<7)and(Cant_fichas >0)):          #Añado fichas de la bolsa para completar 7 al finalizar el turno
         nueva_ficha,Cant_fichas=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
         fichas_CPU=fichas_CPU+nueva_ficha
-        print("ATRIL CPU ",(fichas_CPU))
-        print("Tamaño ATRIL CPU ",len(fichas_CPU))
-        print("Cantidad Fichas",Cant_fichas)
     return(contador_Turnos_CPU,fichas_CPU,Cant_fichas,PT_CPU)
 
 def Actualizar_CFT(CFT,Dicc_Bolsa):
@@ -784,7 +778,6 @@ def Intercambio_FichasAtril(Lista_Atril,Pos_letra1,Pos_letra2,window,Dicc_rutas_
 
 def Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
     '''Intercambia las fichas entre tablero y atril , event1 x event2'''
-    print("INTERCAMBIO")
     aux = Dicc[event1][0]
     Dicc[event1][0] = Lista_Atril[event2]
     Lista_Atril[event2] = aux
@@ -934,13 +927,13 @@ def GuardoPartida(Dificultad,DiccRLPP,Dicc,CFT,Usuario,Turnos_Disponibles,PTU,Hi
     info_CPU={"HistorialCPU":HistorialCPU,"DiccRLPP_CPU":DiccRLPP_CPU,"PT_CPU":PT_CPU,"fichas_CPU":fichas_CPU,"contador_Turnos_CPU":contador_Turnos_CPU,"LCO_CPU":LCO_CPU}
     info_Tablero={"Dificultad":Dificultad,"Dicc":Dicc_str,"CFT":CFT,"LCO":LCO,"CCD":CCD,"Tiempo":Tiempo,"PrimerRonda":PrimerRonda,"Dicc_Bolsa":Dicc_Bolsa,"Dicc_Puntajes":Dicc_Puntajes,"Lista_TP":Lista_TP}
     DiccPartida={"info_Usuario":{**info_Usuario},"info_CPU":{**info_CPU},"info_Tablero":{**info_Tablero}      }
-    archivo=open("ScrabbleAR_Datos\Partida_Guardada.json","w")
+    archivo=open(r"ScrabbleAR_Datos\Partida_Guardada.json","w")
     Guardar=json.dump(DiccPartida,archivo)
     archivo.close()
 def cargoPartida():
     '''Busca el archivo en el que se guardo la ultima partida , guarda esos datos en un Diccionario y convierte (en los casos necesarios)los archivos en el tipo
        requerido para poder trabajar con ellos sin problemas'''
-    archivo=open("ScrabbleAR_Datos\Partida_Guardada.json","r")
+    archivo=open(r"ScrabbleAR_Datos\Partida_Guardada.json","r")
     datos=json.load(archivo)
     archivo.close()
     Dicc={}
@@ -1068,7 +1061,6 @@ def genero_Tablero():
         Dicc = Generar_Dicc()
         CFT = 0
         CFT = Actualizar_CFT(CFT,Dicc_Bolsa) #Cantidad Fichas Totales
-        print(CFT)
         fichas_CPU=""
         contador_Turnos_CPU=0
         PT_CPU=0                    #Puntaje Total CPU
@@ -1191,7 +1183,6 @@ def genero_Tablero():
                     window['Mostrar'].update('<')
                 Desplegado = not Desplegado
             elif(event=="Pausar"):
-                CFT=0
                 playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
                 for x in range(len(Lista_Atril)):
                     window[x].update(image_filename=r'ScrabbleAR_Imagenes_png\Transparente.png',image_size=(38,38),image_subsample=5)
