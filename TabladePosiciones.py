@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import PySimpleGUI as sg
 import csv
+from playsound import playsound
 
 # Show CSV data in Table
 sg.theme('DarkGrey2')
@@ -72,7 +73,9 @@ def Tabla():
     window = sg.Window('Top',layout,location=(200,50),size=(797,600),finalize=True)
     while True:
         event, values = window.read()
+        playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
         if(event in (None,"Salir")):
+            playsound(r'ScrabbleAR_Sonidos/Click.mp3')
             break
         elif event == 'Total':
             DataTotal(window,data_facil,data_normal,data_dificil,data_personalizada)

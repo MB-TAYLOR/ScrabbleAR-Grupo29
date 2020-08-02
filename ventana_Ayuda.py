@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+from playsound import playsound
 
 def Comprobaciones(Boton_actual,pagina,window):
     '''Condiciones para activar o desactivar los botones "<" y ">"  '''
@@ -29,8 +30,9 @@ def Ayuda():
     window = sg.Window('Ayuda',Ventana,location=(540,100),size=(500,650),finalize=True)
     while True:
         event,values=window.Read()
-
+        playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
         if(event in (None,"Salir")):
+            playsound(r'ScrabbleAR_Sonidos/Click.mp3')
             break
 
         elif (event != '>') and (event != '<'):

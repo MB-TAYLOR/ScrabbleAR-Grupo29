@@ -4,6 +4,7 @@ from Opciones import Ventana_Opciones
 from TabladePosiciones import Tabla
 from Tablero import genero_Tablero
 from ventana_Ayuda import Ayuda
+from playsound import playsound
 import csv
 
 #Aca Arranca La Pantalla Principal----------------------------------------------------------------------------------------------------------------------------------------------
@@ -39,8 +40,10 @@ def establezco_PP(nombre):
 
     window = sg.Window('Pantalla Principal',diseño,location=(540,100),size=(1035,650))
     boton_cliqueado,datos_ingresados=window.Read()
+    playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
     while True:
         if boton_cliqueado in(None,'SALIR'):
+            playsound(r'ScrabbleAR_Sonidos/Click.mp3')
             break
         elif boton_cliqueado == 'JUGAR':
             #Aca abro la nueva ventana en el mismo lugar que la anterior , luego de cerrar la principal
