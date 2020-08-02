@@ -27,7 +27,7 @@ def identificador_carpeta_error():
         tbinfo = traceback.format_tb(tb)[2]
         ruta_archivo_error=tbinfo[tbinfo.find("(")+1:tbinfo.find(")")].strip(",'r'")
         ruta_carpeta=ruta_archivo_error[:ruta_archivo_error.find(chr(92))]
-        sg.popup("Error al intentar acceder al archivo de la siguiente ruta :",ruta_archivo_error,"\nRevise que el archivo se encuentre en la carpeta",ruta_carpeta)
+        sg.popup_error("Error al intentar acceder al archivo de la siguiente ruta :",ruta_archivo_error,"\nRevise que el archivo se encuentre en la carpeta",ruta_carpeta,title='Error')
     except tkinter.TclError:
         Direciones_error={"inicio":r'ScrabbleAR_Imagenes_png\icono_inicio.png',"yellow":r'ScrabbleAR_Imagenes_png\icono3.png',"red":r'ScrabbleAR_Imagenes_png\icono_x2.png',
         "green":r'ScrabbleAR_Imagenes_png\icono_-3.png',"blue":r'ScrabbleAR_Imagenes_png\icono_-2.png',"white":r'ScrabbleAR_Imagenes_png\modelo_ficha.png'}
@@ -39,9 +39,9 @@ def identificador_carpeta_error():
             ruta_archivo_error=ruta_archivo_error[ruta_archivo_error.find("=")+1:]
             ruta_carpeta=Direciones_error[ruta_archivo_error]
             ruta_carpeta=ruta_carpeta[:ruta_carpeta.find(chr(92))]
-            sg.popup("Error al intentar acceder a la imagen de la siguiente ruta :",Direciones_error[ruta_archivo_error] ,"\nRevise que la imagen se encuentre el la carpeta: ",ruta_carpeta )
+            sg.popup_error("Error al intentar acceder a la imagen de la siguiente ruta :",Direciones_error[ruta_archivo_error] ,"\nRevise que la imagen se encuentre el la carpeta: ",ruta_carpeta ,title='Error')
         else:
-            sg.popup("Falta alguna imagen en la carpeta ScrabbleAR_Imagenes_png")
+            sg.popup_error("Falta alguna imagen en la carpeta ScrabbleAR_Imagenes_png",title='Error')
     except UnicodeDecodeError:
         tb = sys.exc_info()[2]
         if "playsound" in traceback.format_tb(tb)[2]:
@@ -49,9 +49,9 @@ def identificador_carpeta_error():
             ruta_archivo_error=tbinfo[tbinfo.find("(")+1:tbinfo.find(")")].strip(",'r'")
             ruta_archivo_error=ruta_archivo_error[:ruta_archivo_error.find("'")]
             ruta_carpeta=ruta_archivo_error[:ruta_archivo_error.find(chr(92))]
-            sg.popup("Error al intentar acceder al archivo de audio de la siguiente ruta :",ruta_archivo_error,"\nRevise que el archivo de audio se encuentre el la carpeta: ",ruta_carpeta )
+            sg.popup_error("Error al intentar acceder al archivo de audio de la siguiente ruta :",ruta_archivo_error,"\nRevise que el archivo de audio se encuentre el la carpeta: ",ruta_carpeta ,title='Error')
         else:
-            sg.popup("Falta un archivo de audio , revise la carpeta ScrabbleAR_Sonidos ")
+            sg.popup_error("Falta un archivo de audio , revise la carpeta ScrabbleAR_Sonidos ",title='Error')
 
 def GuardarDatos_Tabla(datos):
     Infile = open(r'ScrabbleAR_Datos\Archivo_Puntajes.csv','w')
@@ -1200,7 +1200,7 @@ def genero_Tablero():
                         if(event_popup3=="Yes"):
                             terminacion_Manual_Usuario=True
                     else:
-                        sg.popup("Debes de jugar almenos 10 rondas con el CPU para finalizar la partida.\nRondas actuales :",contador_Turnos_CPU)
+                        sg.popup("Debes de jugar almenos 10 rondas con el CPU para finalizar la partida.\nRondas actuales :",contador_Turnos_CPU,title='Aviso',keep_on_top=True)
 
 
             elif (event == 'Rotar') and (Desplegado):
@@ -1250,10 +1250,10 @@ def genero_Tablero():
 
     if fin_Juego(Tiempo,CFT,terminacion_Manual_Usuario):
         if (PTU > PT_CPU):
-            sg.popup("Ganaste")
+            sg.popup("Ganaste",title='Aviso',keep_on_top=True)
             Agregar_Datos_TabladePosiciones(Dificultad,Usuario,PTU)
         else:
-            sg.popup("Perdiste")
+            sg.popup("Perdiste",title='Aviso',keep_on_top=True)
 
     window.close()
     return(event)
