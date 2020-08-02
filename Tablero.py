@@ -9,6 +9,9 @@ import time
 import csv
 from datetime import date
 from playsound import playsound
+import sys
+import traceback
+import tkinter
 
 MAX_ROWS = MAX_COL = 15
 temp = 5
@@ -16,7 +19,31 @@ Infobox_Activa = False
 HistorialUsuario = []
 HistorialCPU = []
 PrimerRonda = True
-
+def identificador_carpeta_error():
+    try:
+        genero_Tablero()
+    except FileNotFoundError:
+        tb = sys.exc_info()[2]
+        tbinfo = traceback.format_tb(tb)[2]
+        ruta_archivo_error=tbinfo[tbinfo.find("(")+1:tbinfo.find(")")].strip(",'r'")
+        ruta_carpeta=ruta_archivo_error[:ruta_archivo_error.find(chr(92))]
+        sg.popup("Error al intentar acceder al archivo de la siguiente ruta :",ruta_archivo_error,"\nRevise que el archivo se encuentre en la carpeta",ruta_carpeta)
+    except tkinter.TclError:
+        Direciones_error={"inicio":r'ScrabbleAR_Imagenes_png\icono_inicio.png',"yellow":r'ScrabbleAR_Imagenes_png\icono3.png',"red":r'ScrabbleAR_Imagenes_png\icono_x2.png',
+        "green":r'ScrabbleAR_Imagenes_png\icono_-3.png',"blue":r'ScrabbleAR_Imagenes_png\icono_-2.png',"white":r'ScrabbleAR_Imagenes_png\modelo_ficha.png'}
+        tb = sys.exc_info()[2]
+        if("window[coord].update" in traceback.format_tb(tb)[2]):
+            tbinfo = traceback.format_tb(tb)[2]
+            ruta_archivo_error=tbinfo[tbinfo.find("(")+1:tbinfo.find(")")].strip(",'r'")
+            ruta_archivo_error=ruta_archivo_error[:ruta_archivo_error.find(",")]
+            ruta_archivo_error=ruta_archivo_error[ruta_archivo_error.find("=")+1:]
+            ruta_carpeta=Direciones_error[ruta_archivo_error]
+            ruta_carpeta=ruta_carpeta[:ruta_carpeta.find(chr(92))]
+            sg.popup("Error al intentar acceder a la imagen de la siguiente ruta :",Direciones_error[ruta_archivo_error] ,"\nRevise que la imagen se encuentre el la carpeta: ",ruta_carpeta )
+        else:
+            sg.popup("Falta alguna imagen en la carpeta ScrabbleAR_Imagenes_png")
+    except :
+        print(tb)
 def GuardarDatos_Tabla(datos):
     Infile = open(r'ScrabbleAR_Datos\Archivo_Puntajes.csv','w')
     writer = csv.writer(Infile)
@@ -933,7 +960,7 @@ def GuardoPartida(Dificultad,DiccRLPP,Dicc,CFT,Usuario,Turnos_Disponibles,PTU,Hi
 def cargoPartida():
     '''Busca el archivo en el que se guardo la ultima partida , guarda esos datos en un Diccionario y convierte (en los casos necesarios)los archivos en el tipo
        requerido para poder trabajar con ellos sin problemas'''
-    archivo=open(r"ScrabbleAR_Datos\Partida_Guardada.json","r")
+    archivo=open(r"ScrabbleAR_Datos\Partida_Guardada.json",'r')
     datos=json.load(archivo)
     archivo.close()
     Dicc={}
@@ -1224,7 +1251,4 @@ def genero_Tablero():
 #ProgramaPrincipal-------------
 if __name__ == "__main__":
     sg.theme('DarkGrey2')
-    try:
-        genero_Tablero()
-    except FileNotFoundError:
-        sg.popup_error("Error al abrir archivo o el archivo no se encontro, verifique que el archivo se encuentre en la carpeta 'Datos' ",title='Error')
+    identificador_carpeta_error()
