@@ -61,27 +61,24 @@ def GuardarDatos_Tabla(datos):
     Infile.close()
 
 def Agregar_Datos_TabladePosiciones(Dificultad,Usuario,PTU):
-        try:
-            Archi = open(r'ScrabbleAR_Datos\Archivo_Puntajes.csv','r')
-            reader = csv.reader(Archi)
-            Data_total = []
-            Lista = []
-            Today = date.today()
-            Today = Today.strftime("%d/%m/%Y") # dd/mm/YY
-            Lista.append([Usuario,PTU,Today,Dificultad])
-            for row in reader:
-                if Dificultad == row[3]:
-                    Lista.append(row)
-                else:
-                    Data_total.append(row)
-            Archi.close()
-            Lista = sorted(Lista,key=lambda x:int(x[1]),reverse=True)
-            Lista.remove(Lista[10])
-            for row in Lista:
-                Data_total.append(row)
-            GuardarDatos_Tabla(Data_total)
-        except FileNotFoundError:
-                sg.popup_error("Error al abrir archivo o el archivo no se encontro, verifique que el archivo se encuentre en la carpeta 'Datos' ",title='Error')
+    Archi = open(r'ScrabbleAR_Datos\Archivo_Puntajes.csv','r')
+    reader = csv.reader(Archi)
+    Data_total = []
+    Lista = []
+    Today = date.today()
+    Today = Today.strftime("%d/%m/%Y") # dd/mm/YY
+    Lista.append([Usuario,PTU,Today,Dificultad])
+    for row in reader:
+        if Dificultad == row[3]:
+            Lista.append(row)
+        else:
+            Data_total.append(row)
+    Archi.close()
+    Lista = sorted(Lista,key=lambda x:int(x[1]),reverse=True)
+    Lista.remove(Lista[10])
+    for row in Lista:
+        Data_total.append(row)
+    GuardarDatos_Tabla(Data_total)
 
 def rutas_letras(Dicc_letra_puntajes):
     '''Recibe un diccionario con claves letra y valor puntaje (ej:"A:1") y segun eso , genera un diccionario con clave letra y valor lista de direcciones
