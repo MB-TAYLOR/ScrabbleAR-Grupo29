@@ -1195,9 +1195,12 @@ def genero_Tablero():
                     if(Turnos_Disponibles == 0):
                         window["Intercambiar fichas"].update("Terminar\nPartida")
                 else:
-                    event_popup3=sg.popup_yes_no("¿Desea Terminar la partida y definir al ganador?",title='Aviso',keep_on_top=True)
-                    if(event_popup3=="Yes"):
-                        terminacion_Manual_Usuario=True
+                    if(contador_Turnos_CPU>=10):
+                        event_popup3=sg.popup_yes_no("¿Desea Terminar la partida y definir al ganador?",title='Aviso',keep_on_top=True)
+                        if(event_popup3=="Yes"):
+                            terminacion_Manual_Usuario=True
+                    else:
+                        sg.popup("Debes de jugar almenos 10 rondas con el CPU para finalizar la partida.\nRondas actuales :",contador_Turnos_CPU)
 
 
             elif (event == 'Rotar') and (Desplegado):
