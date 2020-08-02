@@ -14,7 +14,7 @@ def Tabla():
     data_personalizada = []
     header_list = []
     try:
-        with open("Archivo_Puntajes.csv", "r") as infile:
+        with open("ScrabbleAR_Datos\Archivo_Puntajes.csv", "r") as infile:
             reader = csv.reader(infile)
             header_list = next(reader)
             header_list.insert(0, 'N°')
@@ -72,7 +72,7 @@ def Tabla():
     window = sg.Window('Top',layout,location=(200,50),size=(797,600),finalize=True)
     while True:
         event, values = window.read()
-        if event in ('Salir',None):
+        if(event in (None,"Salir")):
             break
         elif event == 'Total':
             DataTotal(window,data_facil,data_normal,data_dificil,data_personalizada)
@@ -85,5 +85,11 @@ def Tabla():
         elif event == 'Personalizada':
             DataMod(window,data_personalizada)
     window.close()
+    return event
 
-Tabla()
+#PROGRAMA PRINCIPAL
+if __name__ == "__main__":
+    try:
+        values = Tabla()
+    except FileNotFoundError:
+        sg.popup_error("Error al abrir archivo o el archivo no se encontro, verifique que el archivo se encuentre en la carpeta 'Datos' ",title='Error')

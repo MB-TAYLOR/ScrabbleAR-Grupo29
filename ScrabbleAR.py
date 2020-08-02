@@ -1,7 +1,7 @@
 import json
 import PySimpleGUI as sg
 from Opciones import Ventana_Opciones
-from TabladePosiciones import genero_Top
+from TabladePosiciones import Tabla
 from Tablero import genero_Tablero
 from ventana_Ayuda import Ayuda
 import csv
@@ -9,17 +9,21 @@ import csv
 #Aca Arranca La Pantalla Principal----------------------------------------------------------------------------------------------------------------------------------------------
 
 def obtengo_Perfil():                                #Busco el nombre del ultimo usuario registrado
-    archivo_csv=open('Archivo_Opciones.csv','r')
-    perfiles=csv.reader(archivo_csv)
-    for perfil in perfiles:
-        if((len(perfil))>0):
-            perfil_Actual=perfil[1]
-    archivo_csv.close()
+    try:
+        archivo_csv=open('ScrabbleAR_Datos\Archivo_Opciones.csv','r')
+        perfiles=csv.reader(archivo_csv)
+        for perfil in perfiles:
+            if((len(perfil))>0):
+                perfil_Actual=perfil[1]
+        archivo_csv.close()
+
+    except FileNotFoundError:
+        sg.popup_error("Error al abrir archivo o el archivo no se encontro, verifique que el archivo se encuentre en la carpeta 'Datos' ",title='Error')
     return(perfil_Actual)
 
 def establezco_PP(nombre):
 #Columnas
-    columna_izquierda=[     [sg.Text("USUARIO:"+nombre)],  #Tomar el nombre del usuario del archivo que se deberia generar desde el menu opciones
+    columna_izquierda=[     [sg.Text("USUARIO:"+ nombre)],  #Tomar el nombre del usuario del archivo que se deberia generar desde el menu opciones
                             [sg.Button(button_text="JUGAR",size=(40,4),pad=(0,20))],
                             [sg.Button(button_text="OPCIONES",size=(40,4),pad=(0,20))],
                             [sg.Button(button_text="VER TOP 10",size=(40,4),pad=(0,20))],
@@ -47,7 +51,7 @@ def establezco_PP(nombre):
         elif boton_cliqueado =='VER TOP 10':
             #Aca abro la nueva ventana en el mismo lugar que la anterior , luego de cerrar la principal
             window.close()
-            if(genero_Top()in(None,'Salir')):
+            if(Tabla()in(None,'Salir')):
                 establezco_PP(obtengo_Perfil())
             break
         elif boton_cliqueado =='OPCIONES':

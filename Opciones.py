@@ -7,7 +7,7 @@ import csv
 
 def Primer_Cargar(values,window,Dicc_Bolsa,letra_Seleccionada):
     '''Carga por primera vez los datos de el Archivo_Opciones, devuelve values y Dicc_Bolsa'''
-    arch = open('Archivo_Opciones.csv','r')
+    arch = open('ScrabbleAR_Datos\Archivo_Opciones.csv','r')
     reader = csv.reader(arch)
     for row in reader:
         if (len(row) > 0):
@@ -58,7 +58,7 @@ def Primer_Cargar(values,window,Dicc_Bolsa,letra_Seleccionada):
 
 def Cargar(values,window,Dicc_Bolsa,letra_Seleccionada):
     '''Carga los datos de el Archivo_Opciones, devuelve values'''
-    arch = open('Archivo_Opciones.csv','r')
+    arch = open('ScrabbleAR_Datos\Archivo_Opciones.csv','r')
     reader = csv.reader(arch)
     for row in reader:
         if (len(row) > 0):
@@ -108,14 +108,14 @@ def Cargar(values,window,Dicc_Bolsa,letra_Seleccionada):
 
 def AgregarDatos(values):
     '''Agrega los datos de un usuario nuevo ingresado a Archivo_Opciones'''
-    arch = open('Archivo_Opciones.csv','a')
+    arch = open('ScrabbleAR_Datos\Archivo_Opciones.csv','a')
     writer = csv.writer(arch)
     writer.writerow([True,values['Usuario'].strip(),values['Facil'],values['Normal'],values['Dificil'],values['Personalizado'],int(values['Lote1']),int(values['Lote2']),int(values['Lote3']),int(values['Lote4']),int(values['Lote5']),int(values['Lote6']),int(values['Lote7']),values['TT'],values['TPR'],values['Adjetivos'],values['Sustantivos'],values['Verbos'],values['A'],values['B'],values['C'],values['D'],values['E'],values['F'],values['G'],values['H'],values['I'],values['J'],values['K'],values['L'],values['M'],values['N'],values['Enie'],values['O'],values['P'],values['Q'],values['R'],values['R'],values['S'],values['T'],values['U'],values['V'],values['W'],values['X'],values['Y'],values['Z']])
     arch.close()
 
 def GuardarDatos(lista):
     '''Guarda los datos de un usuario'''
-    arch = open('Archivo_Opciones.csv','w')
+    arch = open('ScrabbleAR_Datos\Archivo_Opciones.csv','w')
     writer = csv.writer(arch)
     writer.writerow(['Actual','Usuario','Facil','Normal','Dificil','Personalizado','Lote1','Lote2','Lote3','Lote4','Lote5','Lote6','Lote7','TT','TPR','Adjetivos','Sustantivos','Verbos','A','B','C','D','E','F','G','H','I','J','K','L','M','N','Enie','O','P','Q','R','S','T','U','V','W','X','Y','Z'])
     for row in lista:
@@ -124,7 +124,7 @@ def GuardarDatos(lista):
 
 def LeerDatos():
     '''Lee los datos de el Archivo_Opciones y los retorna en forma de lista con diccionarios.'''
-    arch = open('Archivo_Opciones.csv','r')
+    arch = open('ScrabbleAR_Datos\Archivo_Opciones.csv','r')
     reader = csv.reader(arch)
     datos = []
     index = 0
@@ -223,7 +223,7 @@ def Layout_Main():
 
 def Poner_Todos_En_Falso(lista):
     '''Reemplaza el valor actual por False a todos los usuarios ingresados en el Archivo_Opciones'''
-    arch = open('Archivo_Opciones.csv','w')
+    arch = open('ScrabbleAR_Datos\Archivo_Opciones.csv','w')
     writer = csv.writer(arch)
     writer.writerow(['Actual','Usuario','Facil','Normal','Dificil','Personalizado','Lote1','Lote2','Lote3','Lote4','Lote5','Lote6','Lote7','TT','TPR','Adjetivos','Sustantivos','Verbos','A','B','C','D','E','F','G','H','I','J','K','L','M','N','Enie','O','P','Q','R','S','T','U','V','W','X','Y','Z'])
     i = 0
@@ -235,7 +235,7 @@ def Poner_Todos_En_Falso(lista):
 
 def Importar_Datos():
     '''Importa de Archivo_Opciones los datos del usuario activo'''
-    arch = open('Archivo_Opciones.csv','r')
+    arch = open('ScrabbleAR_Datos\Archivo_Opciones.csv','r')
     reader = csv.reader(arch)
     index = 0
     for row in reader:
@@ -497,4 +497,4 @@ if __name__ == "__main__":
     try:
         values = Ventana_Opciones()
     except FileNotFoundError:
-         sg.popup_error("Archivo no encontrado, ejecute almenos una vez ScrabbleAR para que se creen los archivos requeridos",title='Error de archivos')
+        sg.popup_error("Error al abrir archivo o el archivo no se encontro, verifique que el archivo se encuentre en la carpeta 'Datos' ",title='Error')

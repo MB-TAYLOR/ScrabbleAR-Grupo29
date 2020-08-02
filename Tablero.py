@@ -45,7 +45,7 @@ def Agregar_Datos_TabladePosiciones(Dificultad,Usuario,PTU):
                 Data_total.append(row)
             GuardarDatos_Tabla(Data_total)
         except FileNotFoundError:
-                sg.popup_error('Error al guardar datos en: Archivo_Puntajes.csv',title='Error')
+                sg.popup_error("Error al abrir archivo o el archivo no se encontro, verifique que el archivo se encuentre en la carpeta 'Datos' ",title='Error')
 
 def rutas_letras(Dicc_letra_puntajes):
     '''Recibe un diccionario con claves letra y valor puntaje (ej:"A:1") y segun eso , genera un diccionario con clave letra y valor lista de direcciones
@@ -390,7 +390,7 @@ def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_pun
                                                     (sg.Image(**formato_fichas_cpu,key='fichasbot5')),
                                                     (sg.Image(**formato_fichas_cpu,key='fichasbot6')),
                                                     (sg.Image(**formato_fichas_cpu,key='fichasbot7'))],
-                [(sg.Image(filename='Atril_back.png',key='atril',pad=(20,3)))]]
+                [(sg.Image(filename='ScrabbleAR_Imagenes_png\Atril_back.png',key='atril',pad=(20,3)))]]
 
     layout.extend([[sg.Button('', size=(4, 2), border_width=1,key=(i,j),pad=(0,0))for j in range(MAX_COL)] for i in range(MAX_ROWS)])
 
@@ -402,7 +402,7 @@ def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_pun
                     (sg.Button(key=4,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[4]][0],image_size=(38,38),image_subsample=5)),
                     (sg.Button(key=5,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[5]][0],image_size=(38,38),image_subsample=5)),
                     (sg.Button(key=6,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[6]][0],image_size=(38,38),image_subsample=5))],
-                    [(sg.Image(filename='Atril.png',key='texto'))]])
+                    [(sg.Image(filename='ScrabbleAR_Imagenes_png\Atril.png',key='texto'))]])
 
     return layout,Cant_fichas
 
@@ -934,13 +934,13 @@ def GuardoPartida(Dificultad,DiccRLPP,Dicc,CFT,Usuario,Turnos_Disponibles,PTU,Hi
     info_CPU={"HistorialCPU":HistorialCPU,"DiccRLPP_CPU":DiccRLPP_CPU,"PT_CPU":PT_CPU,"fichas_CPU":fichas_CPU,"contador_Turnos_CPU":contador_Turnos_CPU,"LCO_CPU":LCO_CPU}
     info_Tablero={"Dificultad":Dificultad,"Dicc":Dicc_str,"CFT":CFT,"LCO":LCO,"CCD":CCD,"Tiempo":Tiempo,"PrimerRonda":PrimerRonda,"Dicc_Bolsa":Dicc_Bolsa,"Dicc_Puntajes":Dicc_Puntajes,"Lista_TP":Lista_TP}
     DiccPartida={"info_Usuario":{**info_Usuario},"info_CPU":{**info_CPU},"info_Tablero":{**info_Tablero}      }
-    archivo=open("Partida_Guardada.json","w")
+    archivo=open("ScrabbleAR_Datos\Partida_Guardada.json","w")
     Guardar=json.dump(DiccPartida,archivo)
     archivo.close()
 def cargoPartida():
     '''Busca el archivo en el que se guardo la ultima partida , guarda esos datos en un Diccionario y convierte (en los casos necesarios)los archivos en el tipo
        requerido para poder trabajar con ellos sin problemas'''
-    archivo=open("Partida_Guardada.json","r")
+    archivo=open("ScrabbleAR_Datos\Partida_Guardada.json","r")
     datos=json.load(archivo)
     archivo.close()
     Dicc={}
@@ -1236,4 +1236,4 @@ if __name__ == "__main__":
     try:
         genero_Tablero()
     except FileNotFoundError:
-        sg.popup_error("Archivo no encontrado, ejecute almenos una vez ScrabbleAR para que se creen los archivos requeridos",title='Error de archivos')
+        sg.popup_error("Error al abrir archivo o el archivo no se encontro, verifique que el archivo se encuentre en la carpeta 'Datos' ",title='Error')
