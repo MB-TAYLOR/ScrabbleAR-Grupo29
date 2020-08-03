@@ -7,6 +7,7 @@ from ventana_Ayuda import Ayuda
 from playsound import playsound
 import csv
 from Generadores import identificador_carpeta_error
+import tkinter
 
 #Aca Arranca La Pantalla Principal----------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -78,5 +79,7 @@ if __name__ == "__main__":
         sg.popup_error("Error al abrir 'Archivo_Opciones.csv'.\nEl archivo no se encontro, verifique que el archivo se encuentre en la carpeta 'ScrabbleAR_Datos' ",title='Error')
     except UnicodeDecodeError:
         sg.popup_error("Falta un archivo de audio , revise la carpeta ScrabbleAR_Sonidos ",title='Error')
+    except tkinter.TclError:
+        sg.popup_error("Falta una imagen , revise la carpeta ScrabbleAR_Imagenes_png ",title='Error')
     except:
         sg.popup_error("Ah ocurrido un error desconocido",title='Error')
