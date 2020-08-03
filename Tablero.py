@@ -25,7 +25,7 @@ def resolucion_adaptable():
         user32=ctypes.windll.user32
         resolucion=user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
         if(resolucion[0]<=1366 and (resolucion[1]<=768)):
-            size=(30,30)
+            size=(33,33)
             subsample=6
         else:
             size=(38,38)
