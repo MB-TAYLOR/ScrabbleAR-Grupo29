@@ -7,7 +7,7 @@ from ventana_Ayuda import Ayuda
 from playsound import playsound
 import csv
 from Generadores import identificador_carpeta_error
-import tkinter
+import tkinter           #Para poder usar su excepcion se tuvo que importar tkinter
 
 #Aca Arranca La Pantalla Principal----------------------------------------------------------------------------------------------------------------------------------------------
 
