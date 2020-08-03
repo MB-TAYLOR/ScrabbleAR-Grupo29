@@ -11,16 +11,12 @@ from Generadores import identificador_carpeta_error
 #Aca Arranca La Pantalla Principal----------------------------------------------------------------------------------------------------------------------------------------------
 
 def obtengo_Perfil():                                #Busco el nombre del ultimo usuario registrado
-    try:
-        archivo_csv=open('ScrabbleAR_Datos\Archivo_Opciones.csv','r')
-        perfiles=csv.reader(archivo_csv)
-        for perfil in perfiles:
-            if((len(perfil))>0):
-                perfil_Actual=perfil[1]
-        archivo_csv.close()
-
-    except FileNotFoundError:
-        sg.popup_error("Error al abrir 'Archivo_Opciones.csv', o el archivo no se encontro, verifique que el archivo se encuentre en la carpeta 'Datos' ",title='Error')
+    archivo_csv=open('ScrabbleAR_Datos\Archivo_Opciones.csv','r')
+    perfiles=csv.reader(archivo_csv)
+    for perfil in perfiles:
+        if((len(perfil))>0):
+            perfil_Actual=perfil[1]
+    archivo_csv.close()
     return(perfil_Actual)
 
 def establezco_PP(nombre):
@@ -76,4 +72,11 @@ def establezco_PP(nombre):
 
 #Programa Principal-----------------------------------------------------------------------------------------------
 if __name__ == "__main__":
-    establezco_PP(obtengo_Perfil())
+    try:
+        establezco_PP(obtengo_Perfil())
+    except FileNotFoundError:
+        sg.popup_error("Error al abrir 'Archivo_Opciones.csv'.\nEl archivo no se encontro, verifique que el archivo se encuentre en la carpeta 'ScrabbleAR_Datos' ",title='Error')
+    except UnicodeDecodeError:
+        sg.popup_error("Falta un archivo de audio , revise la carpeta ScrabbleAR_Sonidos ",title='Error')
+    except:
+        sg.popup_error("Ah ocurrido un error desconocido",title='Error')
