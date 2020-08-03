@@ -746,7 +746,7 @@ def TerminarTurno(LCOPR,LCO,CCD,Dicc,Lista_Atril,PTU,Palabra,Dificultad,Dificil_
         window['PuntajeUsuario'].update(str(PTU))
         HistorialUsuario.append(Palabra +' = '+str(PPR)+' + '+str(Bonus) +' = '+ str((PPR+Bonus)))
         window['Historial_Usuario'].update(HistorialUsuario)
-        Llenar_Atril(Lista_Atril,window,Dicc_Bolsa,CFT,Dicc_rutas_letras_puntaje_partida)
+        Llenar_Atril(Lista_Atril,window,Dicc_Bolsa,CFT,Dicc_rutas_letras_puntaje_partida,size,subsample)
         PrimerRonda = False
     else:
         Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,Dicc_rutas_letras_puntaje_partida,size,subsample)
