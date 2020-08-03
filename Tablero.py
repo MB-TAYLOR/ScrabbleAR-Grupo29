@@ -679,7 +679,7 @@ def Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,Dicc_rutas_le
     '''Retira todas las fichas colocadas en el tablero'''
     for Pos in range(len(Lista_Atril)):
         if (Lista_Atril[Pos] == ''): # Si esta posicion esta vacia:
-            Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,LCOPR[0],Pos,window,Dicc_rutas_letras_puntaje_partida)
+            Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,LCOPR[0],Pos,window,Dicc_rutas_letras_puntaje_partida,size,subsample)
 
 def Validar(LCOPR,CCD,Dicc,Dificultad,PrimerRonda,Palabra,Dificil_se_juega,window):
     '''Retorna la palabra recibida si la validacion es exitosa, o un mensaje en caso de error al colocarla '''
