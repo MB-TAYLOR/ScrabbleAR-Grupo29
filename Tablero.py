@@ -776,6 +776,7 @@ def Intercambio_FichasAtril(Lista_Atril,Pos_letra1,Pos_letra2,window,Dicc_rutas_
 
 def Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
     '''Intercambia las fichas entre tablero y atril , event1 x event2'''
+    playsound(r'ScrabbleAR_Sonidos\IntercambioFichas.mp3',block=False)
     aux = Dicc[event1][0]
     Dicc[event1][0] = Lista_Atril[event2]
     Lista_Atril[event2] = aux
