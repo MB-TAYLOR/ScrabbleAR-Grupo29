@@ -1051,7 +1051,7 @@ def genero_Tablero():
                     sg.Column(Layout_Columna_Historial(Usuario),key='Columna_Historial'),
                     sg.Column(Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT,Lista_TP),key='Columna_Conf')] ]
         window = sg.Window('Tablero',diseño ,location=(400,0),finalize=True)
-        Update_Tablero2(window,Dicc)
+        Update_Tablero2(window,Dicc,size,subsample)
         for coord in LCO:
             if coord in LCO_Usuario:
                 window[coord].update(image_filename=DiccRLPP[Dicc[coord][0]][2],image_size=size,image_subsample=subsample)
