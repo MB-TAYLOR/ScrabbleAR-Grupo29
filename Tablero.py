@@ -638,7 +638,7 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
                                 Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU,LCDPR_CPU,LCO_CPU)
                                 intento=False
             if((intento)and(len(CCD_CPU)>1)):
-                print("El robot no tiene una posicion valida para colocar su palabra") #Implementar que se vuelva a buscar uan palabra pero mas corta
+                Update_Infobox('El robot no tiene una posicion valida para colocar su palabra','#5798FD',window)
         Bonus = Calcular_Bonus(LCDPR_CPU,Dicc_Puntajes,Dicc)
         PPR_CPU = Calcular_Puntaje(Palabra,Dicc_Puntajes)
         PT_CPU = (PT_CPU + PPR_CPU) + Bonus
@@ -646,7 +646,7 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
         window['Historial_CPU'].update(HistorialCPU)
         window['PuntajeCPU'].update(str(PT_CPU))
     else:
-        print("No hay palabra valida en este momento para la CPU ,la CPU pasa el turno")
+        Update_Infobox('No hay palabra valida en este momento para la CPU','#5798FD',window)
     while(((len(fichas_CPU))<7)and(Cant_fichas >0)):          #Añado fichas de la bolsa para completar 7 al finalizar el turno
         nueva_ficha,Cant_fichas=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
         fichas_CPU=fichas_CPU+nueva_ficha
