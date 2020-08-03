@@ -1,5 +1,6 @@
 import PySimpleGUI as sg
 from playsound import playsound
+from Generadores import identificador_carpeta_error
 
 def Comprobaciones(Boton_actual,pagina,window):
     '''Condiciones para activar o desactivar los botones "<" y ">"  '''
@@ -65,4 +66,4 @@ def Ayuda():
 
 if __name__ == "__main__":
     sg.theme('DarkGrey2')
-    Ayuda()
+    identificador_carpeta_error(Ayuda)

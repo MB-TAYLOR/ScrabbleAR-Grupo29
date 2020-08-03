@@ -2,7 +2,7 @@
 import PySimpleGUI as sg
 import csv
 from playsound import playsound
-
+from Generadores import identificador_carpeta_error
 # Show CSV data in Table
 sg.theme('DarkGrey2')
 
@@ -14,25 +14,22 @@ def Tabla():
     data_dificil = []
     data_personalizada = []
     header_list = []
-    try:
-        with open("ScrabbleAR_Datos\Archivo_Puntajes.csv", "r") as infile:
-            reader = csv.reader(infile)
-            header_list = next(reader)
-            header_list.insert(0, 'N°')
-            for row in reader:
-                if (len(row) > 0):
-                    if row[3] == 'Facil':
-                        data_facil.append(row)
-                    elif row[3] == 'Normal':
-                        data_normal.append(row)
-                    elif row[3] == 'Dificil':
-                        data_dificil.append(row)
-                    elif row[3] == 'Personalizada':
-                        data_personalizada.append(row)
-        for x in range(10):
-            data_inicial[x].extend([["-"],["-"],["-"],["--/--/--"],["-"]])
-    except FileNotFoundError:
-            sg.popup_error('Error al leer: Archivo_Puntajes.csv')
+    with open("ScrabbleAR_Datos\Archivo_Puntajes.csv", "r") as infile:
+        reader = csv.reader(infile)
+        header_list = next(reader)
+        header_list.insert(0, 'N°')
+        for row in reader:
+            if (len(row) > 0):
+                if row[3] == 'Facil':
+                    data_facil.append(row)
+                elif row[3] == 'Normal':
+                    data_normal.append(row)
+                elif row[3] == 'Dificil':
+                    data_dificil.append(row)
+                elif row[3] == 'Personalizada':
+                    data_personalizada.append(row)
+    for x in range(10):
+        data_inicial[x].extend([["-"],["-"],["-"],["--/--/--"],["-"]])
 
     def DataTotal(window,*Lista):
         Total = []
@@ -92,7 +89,4 @@ def Tabla():
 
 #PROGRAMA PRINCIPAL
 if __name__ == "__main__":
-    try:
-        values = Tabla()
-    except FileNotFoundError:
-        sg.popup_error("Error al abrir archivo o el archivo no se encontro, verifique que el archivo se encuentre en la carpeta 'Datos' ",title='Error')
+    identificador_carpeta_error(Tabla)

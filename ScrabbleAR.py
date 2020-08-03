@@ -6,6 +6,7 @@ from Tablero import genero_Tablero
 from ventana_Ayuda import Ayuda
 from playsound import playsound
 import csv
+from Generadores import identificador_carpeta_error
 
 #Aca Arranca La Pantalla Principal----------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -48,24 +49,24 @@ def establezco_PP(nombre):
         elif boton_cliqueado == 'JUGAR':
             #Aca abro la nueva ventana en el mismo lugar que la anterior , luego de cerrar la principal
             window.close()
-            if(genero_Tablero()in(None,'Salir')):
+            if((identificador_carpeta_error(genero_Tablero))in(None,'Salir')):
                 establezco_PP(obtengo_Perfil())
             break
         elif boton_cliqueado =='VER TOP 10':
             #Aca abro la nueva ventana en el mismo lugar que la anterior , luego de cerrar la principal
             window.close()
-            if(Tabla()in(None,'Salir')):
+            if((identificador_carpeta_error(Tabla))in(None,'Salir')):
                 establezco_PP(obtengo_Perfil())
             break
         elif boton_cliqueado =='OPCIONES':
             #Aca abro la nueva ventana en el mismo lugar que la anterior , luego de cerrar la principal
             window.close()
-            if(Ventana_Opciones()in(None,'Salir')):
+            if((identificador_carpeta_error(Ventana_Opciones))in(None,'Salir')):
                 establezco_PP(obtengo_Perfil())
             break
         elif boton_cliqueado=="AYUDA":
             window.close()
-            if(Ayuda()in(None,'Salir')):
+            if((identificador_carpeta_error(Ayuda))in(None,'Salir')):
                 establezco_PP(obtengo_Perfil())
             break
 

@@ -2,6 +2,7 @@ from playsound import playsound
 import PySimpleGUI as sg
 import random
 import csv
+from Generadores import identificador_carpeta_error
 
 Error_Op = True
 
@@ -496,7 +497,4 @@ def Ventana_Opciones ():
 
 #PROGRAMA PRINCIPAL
 if __name__ == "__main__":
-    try:
-        values = Ventana_Opciones()
-    except FileNotFoundError:
-        sg.popup_error("Error al abrir archivo o el archivo no se encontro, verifique que el archivo 'Archivo_Opciones.csv' se encuentre en la carpeta 'Datos' ",title='Error')
+    identificador_carpeta_error(Ventana_Opciones)
