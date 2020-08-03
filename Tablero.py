@@ -732,7 +732,7 @@ def Palabra_bien_colocada(LCOPR,window):
         Update_Infobox('Debes formar palabras de por lo menos 2 fichas!','#5798FD',window)
         return False
 
-def TerminarTurno(LCOPR,LCO,CCD,Dicc,Lista_Atril,PTU,Palabra,Dificultad,Dificil_se_juega,Dicc_Puntajes,Dicc_Bolsa,CFT,Bonus,window,Dicc_rutas_letras_puntaje_partida):
+def TerminarTurno(LCOPR,LCO,CCD,Dicc,Lista_Atril,PTU,Palabra,Dificultad,Dificil_se_juega,Dicc_Puntajes,Dicc_Bolsa,CFT,Bonus,window,Dicc_rutas_letras_puntaje_partida,size,subsample):
     '''Finaliza el turno del usuario , comprueba si la palabra colocada es valida , si lo es actualiza el puntaje , sino , retira todas las fichas colocadas en
        este turno , luego finaliza el turno '''
     global PrimerRonda
@@ -1163,7 +1163,7 @@ def genero_Tablero():
 
             elif (((event == 'Terminar turno') or Se_Intercambio_Ficha) and (Boton_Intercambiar == False)):
                 Bonus = Calcular_Bonus(LCOPR,Dicc_Puntajes,Dicc)
-                PTU = TerminarTurno(LCOPR,LCO,CCD,Dicc,Lista_Atril,PTU,Palabra,Dificultad,Dificil_se_juega,Dicc_Puntajes,Dicc_Bolsa,CFT,Bonus,window,DiccRLPP)
+                PTU = TerminarTurno(LCOPR,LCO,CCD,Dicc,Lista_Atril,PTU,Palabra,Dificultad,Dificil_se_juega,Dicc_Puntajes,Dicc_Bolsa,CFT,Bonus,window,DiccRLPP,size,subsample)
                 CFT = Actualizar_CFT(CFT,Dicc_Bolsa)
                 Actualizar_LCO(LCOPR,LCO,LCO_Usuario)
                 Actualizar_CCD(CCD,LCO)
