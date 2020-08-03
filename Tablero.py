@@ -10,6 +10,7 @@ import csv
 from datetime import date
 from playsound import playsound
 from Generadores import identificador_carpeta_error
+import platform
 
 MAX_ROWS = MAX_COL = 15
 temp = 5
@@ -17,7 +18,22 @@ Infobox_Activa = False
 HistorialUsuario = []
 HistorialCPU = []
 PrimerRonda = True
-
+def resolucion_adaptable():
+    sistema_Operativo=platform.system()
+    if sistema_Operativo =="Windows":
+        import ctypes
+        user32=ctypes.windll.user32
+        resolucion=user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
+        if(resolucion[0]<=1366 and (resolucion[1]<=768)):
+            size=(30,30)
+            subsample=6
+        else:
+            size=(38,38)
+            subsample=5
+    elif sistema_Operativo =="Linux":
+        size=(38,38)
+        subsample=5
+    return(size,subsample)
 def GuardarDatos_Tabla(datos):
     Infile = open(r'ScrabbleAR_Datos\Archivo_Puntajes.csv','w')
     writer = csv.writer(Infile)
@@ -127,7 +143,7 @@ def rutas_letras(Dicc_letra_puntajes):
     Dicc_Actual_Punto_Ficha['white']=r'ScrabbleAR_Imagenes_png\modelo_ficha.png'#r'ScrabbleAR_Imagenes_png\Transparente.png'
     return(Dicc_Actual_Punto_Ficha)
 
-def Update_Tablero2(window,Dicc):
+def Update_Tablero2(window,Dicc,size,subsample):
     '''Amplia la lista de cada uno de los elementos de Dicc con direcciones segun corresponde y coloca imagenes en el tablero segun corresponde '''
     inicio=r'ScrabbleAR_Imagenes_png\icono_inicio.png'
     yellow=r'ScrabbleAR_Imagenes_png\icono_x3.png'
@@ -141,22 +157,22 @@ def Update_Tablero2(window,Dicc):
             coord=(x,y)
             if(Dicc[coord][1]=="yellow"):
                 Dicc[coord].append(yellow)
-                window[coord].update(image_filename=yellow,image_size=(38,38),image_subsample=5)
+                window[coord].update(image_filename=yellow,image_size=size,image_subsample=subsample)
             elif(Dicc[coord][1]=="red"):
                 Dicc[coord].append(red)
-                window[coord].update(image_filename=red,image_size=(38,38),image_subsample=5)
+                window[coord].update(image_filename=red,image_size=size,image_subsample=subsample)
             elif(Dicc[coord][1]=="green"):
                 Dicc[coord].append(green)
-                window[coord].update(image_filename=green,image_size=(38,38),image_subsample=5)
+                window[coord].update(image_filename=green,image_size=size,image_subsample=subsample)
             elif(Dicc[coord][1]=="blue"):
                 Dicc[coord].append(blue)
-                window[coord].update(image_filename=blue,image_size=(38,38),image_subsample=5)
+                window[coord].update(image_filename=blue,image_size=size,image_subsample=subsample)
             elif(coord==(7,7)):
                 Dicc[coord].append(inicio)
-                window[coord].update(image_filename=inicio,image_size=(38,38),image_subsample=5)
+                window[coord].update(image_filename=inicio,image_size=size,image_subsample=subsample)
             else:
                 Dicc[coord].append(white)
-                window[coord].update(image_filename=white,image_size=(38,38),image_subsample=5)
+                window[coord].update(image_filename=white,image_size=size,image_subsample=subsample)
     return Dicc
 
 def rutas_letras_CPU(Dicc_letra_puntajes):
@@ -358,7 +374,7 @@ def Layout_Columna():
                 sg.Button(button_text='Salir',key='Salir',font=("default",16))] ]#font=("default",19)
     return layout
 
-def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_puntaje_partida):
+def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_puntaje_partida,size,subsample):
     ''' Diseño de la columna donde se generan los 2 atriles con sus fichas (Usuario y CPU), y el tablero de juego entre ambos'''
     MAX_ROWS = MAX_COL = 15 #ACA????
     formato_fichas_cpu={'filename':r'ScrabbleAR_Imagenes_png\imagen_CPU.png','size':(38,38),'pad':(7,3)  }
@@ -392,18 +408,18 @@ def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_pun
     layout.extend([[sg.Button('', size=(4, 2), border_width=1,key=(i,j),pad=(0,0))for j in range(MAX_COL)] for i in range(MAX_ROWS)])
 
     layout.extend([[sg.Text('',key='texto2',pad=(28,3)),
-                    (sg.Button(key=0,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[0]][0],image_size=(38,38),image_subsample=5)),
-                    (sg.Button(key=1,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[1]][0],image_size=(38,38),image_subsample=5)),
-                    (sg.Button(key=2,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[2]][0],image_size=(38,38),image_subsample=5)),
-                    (sg.Button(key=3,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[3]][0],image_size=(38,38),image_subsample=5)),
-                    (sg.Button(key=4,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[4]][0],image_size=(38,38),image_subsample=5)),
-                    (sg.Button(key=5,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[5]][0],image_size=(38,38),image_subsample=5)),
-                    (sg.Button(key=6,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[6]][0],image_size=(38,38),image_subsample=5))],
+                    (sg.Button(key=0,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[0]][0],image_size=size,image_subsample=subsample)),
+                    (sg.Button(key=1,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[1]][0],image_size=size,image_subsample=subsample)),
+                    (sg.Button(key=2,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[2]][0],image_size=size,image_subsample=subsample)),
+                    (sg.Button(key=3,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[3]][0],image_size=size,image_subsample=subsample)),
+                    (sg.Button(key=4,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[4]][0],image_size=size,image_subsample=subsample)),
+                    (sg.Button(key=5,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[5]][0],image_size=size,image_subsample=subsample)),
+                    (sg.Button(key=6,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[6]][0],image_size=size,image_subsample=subsample))],
                     [(sg.Image(filename='ScrabbleAR_Imagenes_png\Atril.png',key='texto'))]])
 
     return layout,Cant_fichas
 
-def Llenar_Atril(Lista_Atril,window,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_puntaje_partida):
+def Llenar_Atril(Lista_Atril,window,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_puntaje_partida,size,subsample):
     '''Rellena el atril del usuario al colocar una palabra valida y finalizar su turno'''
     for pos in range(len(Lista_Atril)):
         if(Cant_fichas<0):
@@ -411,7 +427,7 @@ def Llenar_Atril(Lista_Atril,window,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_let
         elif (Lista_Atril[pos] == ''):
             Lista_Atril[pos],Cant_fichas= Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
             #window[pos].update(Lista_Atril[pos])
-            window[pos].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[pos]][0],image_size=(38,38),image_subsample=5)
+            window[pos].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[pos]][0],image_size=size,image_subsample=subsample)
 
 
 
@@ -445,10 +461,10 @@ def Coord_Desbloqueada(CCD,event):
     else:
         return False
 
-def Update_Fichas_Colocadas(LCOPR,window,Dicc,Dicc_rutas_letras_puntaje_partida):
+def Update_Fichas_Colocadas(LCOPR,window,Dicc,Dicc_rutas_letras_puntaje_partida,size,subsample):
     '''Cambia la imagen al terminar el turno para remarcar que ya no se puede interactuar con las fichas colocadas'''
     for coord in LCOPR:
-        window[coord].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[coord][0]][2],image_size=(38,38),image_subsample=5)
+        window[coord].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[coord][0]][2],image_size=size,image_subsample=subsample)
 
 def Mensaje_Turno(Turno_Usuario):
     '''Llama a un popup dependiendo de quien es el turno'''
@@ -548,31 +564,31 @@ def Calcular_Puntaje(Palabra,Dicc_Puntajes):
         PPR = PPR + Dicc_Puntajes[letra]
     return PPR
 
-def Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU,LCDPR_CPU,LCO_CPU):
+def Poner_Horizontal(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU,LCDPR_CPU,LCO_CPU,size,subsample):
     '''Recibe la palabra y las coordenadas y la ubica horizontalmente en el tablero haciendo todas las actualizaciones requeridas para su correcta
        visualizacion en el mismo y internamente actualiza Dicc en las coordenadas respectivas en sus posiciones 0 (donde se guarda si hay alguna letra)'''
     for x in range(len(Palabra)):
         #window[(coordenadas_CPU[0],coordenadas_CPU[1]+x)].update(str(Palabra[x]),button_color=('black','#7D4DE4'))
-        window[(coordenadas_CPU[0],coordenadas_CPU[1]+x)].update(image_filename=Dicc_rutas_letras_puntaje_partida_CPU[str(Palabra[x])],image_size=(38,38),image_subsample=5)
+        window[(coordenadas_CPU[0],coordenadas_CPU[1]+x)].update(image_filename=Dicc_rutas_letras_puntaje_partida_CPU[str(Palabra[x])],image_size=size,image_subsample=subsample)
         Dicc[(coordenadas_CPU[0],coordenadas_CPU[1]+x)][0] =str(Palabra[x])
         LCO.append((coordenadas_CPU[0],coordenadas_CPU[1]+x))
         LCO_CPU.append((coordenadas_CPU[0],coordenadas_CPU[1]+x))
         LCDPR_CPU.append((coordenadas_CPU[0],coordenadas_CPU[1]+x))
         Actualizar_CCD(CCD,LCO)
 
-def Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU,LCDPR_CPU,LCO_CPU):
+def Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU,LCDPR_CPU,LCO_CPU,size,subsample):
     '''Recibe la palabra y las coordenadas y la ubica verticalmente en el tablero haciendo todas las actualizaciones requeridas para su correcta
        visualizacion en el mismo y internamente actualiza Dicc en las coordenadas respectivas en sus posiciones 0 (donde se guarda si hay alguna letra)'''
     for y in range(len(Palabra)):
         #window[(coordenadas_CPU[0]+y,coordenadas_CPU[1])].update(str(Palabra[y]),button_color=('black','#7D4DE4'))
-        window[(coordenadas_CPU[0]+y,coordenadas_CPU[1])].update(image_filename=Dicc_rutas_letras_puntaje_partida_CPU[str(Palabra[y])],image_size=(38,38),image_subsample=5)
+        window[(coordenadas_CPU[0]+y,coordenadas_CPU[1])].update(image_filename=Dicc_rutas_letras_puntaje_partida_CPU[str(Palabra[y])],image_size=size,image_subsample=subsample)
         Dicc[(coordenadas_CPU[0]+y,coordenadas_CPU[1])][0] =str(Palabra[y])
         LCO.append((coordenadas_CPU[0]+y,coordenadas_CPU[1]))
         LCO_CPU.append((coordenadas_CPU[0]+y,coordenadas_CPU[1]))
         LCDPR_CPU.append((coordenadas_CPU[0]+y,coordenadas_CPU[1]))
         Actualizar_CCD(CCD,LCO)
 
-def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Bolsa_Diccionario,Cant_fichas,Dicc_Puntajes,PT_CPU,Dicc_rutas_letras_puntaje_partida_CPU,LCO_CPU):
+def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Bolsa_Diccionario,Cant_fichas,Dicc_Puntajes,PT_CPU,Dicc_rutas_letras_puntaje_partida_CPU,LCO_CPU,size,subsample):
     '''El CPU forma palabras usando 7 fichas que obtuvo de la bolsa , verifica si hay alguna posicion disponible para colocarla , si la hay toma una
        y intenta colocarla horizontal o verticalmente , si no puede busca otra de las posiciones disponibles , si no hay mas pasa su turno '''
     global PrimerRonda
@@ -603,7 +619,7 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
         if CCD_CPU == set():
             for x in range(len(Palabra)):  #En el primer case , donde CCD esta vacio y se debe empezar en el cuadro 7,7
                 #window[(7,7+x)].update(str(Palabra[x]),button_color=('black','#7D4DE4'))
-                window[(7,7+x)].update(image_filename=Dicc_rutas_letras_puntaje_partida_CPU[str(Palabra[x])],image_size=(38,38),image_subsample=5)
+                window[(7,7+x)].update(image_filename=Dicc_rutas_letras_puntaje_partida_CPU[str(Palabra[x])],image_size=size,image_subsample=subsample)
                 Dicc[7,7+x][0] =str(Palabra[x])
                 LCO.append((7,7+x))
                 LCO_CPU.append((7,7+x))
@@ -742,110 +758,110 @@ def Actualizar_LCO(LCOPR,LCO,LCO_Usuario):
         LCO.append(coord)
         LCO_Usuario.append(coord)
 
-def Intercambio_FichasTablero(LCOPR,Dicc,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
+def Intercambio_FichasTablero(LCOPR,Dicc,event1,event2,window,Dicc_rutas_letras_puntaje_partida,size,subsample):
     '''Intercambia las fichas del tablero , event1 x event2 '''
     if event1 != event2:
         aux = Dicc[event2][0]
         Dicc[event2][0] = Dicc[event1][0]
         Dicc[event1][0] = aux
         if Coord_Ocupada(LCOPR,event2):
-            window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event2][0]][0],image_size=(38,38),image_subsample=5)
-            window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(38,38),image_subsample=5)
+            window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event2][0]][0],image_size=size,image_subsample=subsample)
+            window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=size,image_subsample=subsample)
         else:
-            window[event1].update(image_filename=Dicc[event1][2],image_size=(38,38),image_subsample=5)
-            window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event2][0]][0],image_size=(38,38),image_subsample=5)
+            window[event1].update(image_filename=Dicc[event1][2],image_size=size,image_subsample=subsample)
+            window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event2][0]][0],image_size=size,image_subsample=subsample)
             LCOPR.remove(event1)
             LCOPR.append(event2)
     else:
-        window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(38,38),image_subsample=5)
+        window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=size,image_subsample=subsample)
 
-def Intercambio_FichasAtril(Lista_Atril,Pos_letra1,Pos_letra2,window,Dicc_rutas_letras_puntaje_partida):
+def Intercambio_FichasAtril(Lista_Atril,Pos_letra1,Pos_letra2,window,Dicc_rutas_letras_puntaje_partida,size,subsample):
     '''Intercambia las fichas del atril , Pos_letra1 x Pos_letra2 '''
     if ((Pos_letra1 != Pos_letra2)):
         if((Lista_Atril[Pos_letra2])!=""):
-            window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra2]][0],image_size=(38,38),image_subsample=5)
-            window[Pos_letra2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra1]][0],image_size=(38,38),image_subsample=5)
+            window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra2]][0],image_size=size,image_subsample=subsample)
+            window[Pos_letra2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra1]][0],image_size=size,image_subsample=subsample)
         else:
-            window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida["white"],image_size=(38,38),image_subsample=5)
-            window[Pos_letra2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra1]][0],image_size=(38,38),image_subsample=5)
+            window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida["white"],image_size=size,image_subsample=subsample)
+            window[Pos_letra2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra1]][0],image_size=size,image_subsample=subsample)
         aux = Lista_Atril[Pos_letra2]
         Lista_Atril[Pos_letra2] = Lista_Atril[Pos_letra1]
         Lista_Atril[Pos_letra1] = aux
     elif((Lista_Atril[Pos_letra1])!="" ):
-        window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra1]][0],image_size=(38,38),image_subsample=5)
+        window[Pos_letra1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[Pos_letra1]][0],image_size=size,image_subsample=subsample)
 
-def Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
+def Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida,size,subsample):
     '''Intercambia las fichas entre tablero y atril , event1 x event2'''
     aux = Dicc[event1][0]
     Dicc[event1][0] = Lista_Atril[event2]
     Lista_Atril[event2] = aux
     if Dicc[event1][0] == "" :
-        window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida["white"],image_size=(38,38),image_subsample=5)
-        window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event2]][0],image_size=(38,38),image_subsample=5)
+        window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida["white"],image_size=size,image_subsample=subsample)
+        window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event2]][0],image_size=size,image_subsample=subsample)
     else:
-        window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(38,38),image_subsample=5)
-        window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event2]][0],image_size=(38,38),image_subsample=5)
+        window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=size,image_subsample=subsample)
+        window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event2]][0],image_size=size,image_subsample=subsample)
 
-def Colocar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,Letra1,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
+def Colocar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,Letra1,event1,event2,window,Dicc_rutas_letras_puntaje_partida,size,subsample):
     '''Coloca la ficha del atril seleccionada en la posicion deceada del tablero'''
     playsound(r'ScrabbleAR_Sonidos\ColocarFicha.mp3',block=False)
     if(not(Coord_Ocupada(LCO,event2))):
         Dicc[event2][0] = Letra1
-        window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Letra1][0],image_size=(38,38),image_subsample=5)
+        window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Letra1][0],image_size=size,image_subsample=subsample)
         Lista_Atril[event1] = ''
-        window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida["white"],image_size=(38,38),image_subsample=5)
+        window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida["white"],image_size=size,image_subsample=subsample)
         LCOPR.append(event2)
 
-def Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
+def Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida,size,subsample):
     '''Quita una ficha del tablero y la pone en una posicion vacia del atril'''
     playsound(r'ScrabbleAR_Sonidos\RetirarFicha.mp3',block=False)
     Lista_Atril[event2] = Dicc[event1][0]
-    window[event1].update(image_filename=Dicc[event1][2],image_size=(38,38),image_subsample=5)
-    window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(38,38),image_subsample=5)
+    window[event1].update(image_filename=Dicc[event1][2],image_size=size,image_subsample=subsample)
+    window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=size,image_subsample=subsample)
     Dicc[event1][0] = ''
     LCOPR.remove(event1)
 
-def Acciones_Usuario(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida):
+def Acciones_Usuario(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida,size,subsample):
     '''Gestiona eventos generados por el usuario entre el atril x atril , atril x tablero , tablero x atril y tablero x tablero'''
     if (not (event2 in LCO)): #Esto es para saber si por ejemplo, Se quiere intercambiar una (fichaAtril o FichaTablero) con una ficha ya colocada
         if (Lista_Atril[event1] != '' if type(event1) == int else Dicc[event1] != '' ):
             if (type(event1) == int) and (type(event2) == tuple):        #Atril X Tablero:
                 if (Coord_Ocupada(LCOPR,event2)):                       #Intercambio FichaAtril X Tablero:
-                    Intercambio_Fichas(Dicc,Lista_Atril,event2,event1,window,Dicc_rutas_letras_puntaje_partida)
+                    Intercambio_Fichas(Dicc,Lista_Atril,event2,event1,window,Dicc_rutas_letras_puntaje_partida,size,subsample)
                 else:                                                   #Colocar Ficha:
-                    Colocar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,Lista_Atril[event1],event1,event2,window,Dicc_rutas_letras_puntaje_partida)
+                    Colocar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,Lista_Atril[event1],event1,event2,window,Dicc_rutas_letras_puntaje_partida,size,subsample)
 
             elif (type(event1) == tuple) and (type(event2) == int):     #Tablero X Atril:
                 if (Lista_Atril[event2] != ''):                         #Intercambio FichaTablero X FichaAtril:
-                    Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida)
+                    Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida,size,subsample)
                 else:                                                   #Retirar Ficha:
-                    Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida)
+                    Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida,size,subsample)
 
             elif (type(event1) == tuple) and (type(event2) == tuple):   #Intercambio FichasTablero:
                 playsound(r'ScrabbleAR_Sonidos\IntercambioFichas.mp3',block=False)
-                Intercambio_FichasTablero(LCOPR,Dicc,event1,event2,window,Dicc_rutas_letras_puntaje_partida)
+                Intercambio_FichasTablero(LCOPR,Dicc,event1,event2,window,Dicc_rutas_letras_puntaje_partida,size,subsample)
 
             elif (type(event1) == int) and (type(event2) == int):       #Intercambio FichasAtril:
                 playsound(r'ScrabbleAR_Sonidos\IntercambioFichas.mp3',block=False)
-                Intercambio_FichasAtril(Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida)
+                Intercambio_FichasAtril(Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida,size,subsample)
     else:
 
         if(type(event1)==int):
-            window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event1]][0],image_size=(38,38),image_subsample=5)
+            window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event1]][0],image_size=size,image_subsample=subsample)
         else:
-            window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=(38,38),image_subsample=5)
+            window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=size,image_subsample=subsample)
         playsound(r'ScrabbleAR_Sonidos\Clin.mp3',block=False)
         Update_Infobox('No puedes interactuar con las fichas ya colocadas!','#5798FD',window)
 
-def Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles,event,window,Dicc_rutas_letras_puntaje_partida):
+def Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles,event,window,Dicc_rutas_letras_puntaje_partida,size,subsample):
     '''Intercambia las fichas seleccionadas , devolviendolas a la bolsa y sacando la misma cantidad de fichas que se devolvieron'''
     if (type(event) == int):
         if event in LPI:
             LPI.remove(event)
-            window[event].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event]][0],image_size=(38,38),image_subsample=5)
+            window[event].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event]][0],image_size=size,image_subsample=subsample)
         else:
             LPI.append(event)
-            window[event].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event]][1],image_size=(38,38),image_subsample=5)
+            window[event].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event]][1],image_size=size,image_subsample=subsample)
 
     elif (event == "Intercambiar fichas"):
         if Boton_Intercambiar:   #Intercambia las fichas y termina
@@ -860,7 +876,7 @@ def Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,
                         Letra = list(Dicc_Bolsa.keys())[x]
                     Lista_Atril[pos] = Letra
                     Dicc_Bolsa[Lista_Atril[pos]] = Dicc_Bolsa[Lista_Atril[pos]] - 1
-                    window[pos].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[pos]][0],image_size=(38,38),image_subsample=5)
+                    window[pos].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[pos]][0],image_size=size,image_subsample=subsample)
 
                 Turnos_Disponibles = Turnos_Disponibles - 1
                 Se_Intercambio_Ficha = True
@@ -992,7 +1008,8 @@ def genero_Tablero():
     global PrimerRonda
     global HistorialUsuario
     global HistorialCPU
-
+    size,subsample=resolucion_adaptable()
+    print(size,subsample)
     event_popup = sg.popup_yes_no('¿Deseas cargar la partida guardada?',title='Aviso',keep_on_top=True)
     playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=False)
     if (event_popup == 'Yes'):
@@ -1027,7 +1044,7 @@ def genero_Tablero():
         Turno_Usuario=True
         for x in aux_CCD:
             CCD.add(tuple(x))
-        Layout_Tab,CFT=(Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP))
+        Layout_Tab,CFT=(Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP,size,subsample))
         diseño = [[sg.Column(Layout_Tab),
                     sg.Column(Layout_Columna()),
                     sg.Column(Layout_Columna_Historial(Usuario),key='Columna_Historial'),
@@ -1036,9 +1053,9 @@ def genero_Tablero():
         Update_Tablero2(window,Dicc)
         for coord in LCO:
             if coord in LCO_Usuario:
-                window[coord].update(image_filename=DiccRLPP[Dicc[coord][0]][2],image_size=(38,38),image_subsample=5)
+                window[coord].update(image_filename=DiccRLPP[Dicc[coord][0]][2],image_size=size,image_subsample=subsample)
             elif coord in LCO_CPU:
-                window[coord].update(image_filename=DiccRLPP_CPU[Dicc[coord][0]],image_size=(38,38),image_subsample=5)
+                window[coord].update(image_filename=DiccRLPP_CPU[Dicc[coord][0]],image_size=size,image_subsample=subsample)
         window['Historial_CPU'].update(HistorialCPU)
         window['PuntajeCPU'].update(str(PT_CPU))
         window['PuntajeUsuario'].update(str(PTU))
@@ -1047,7 +1064,6 @@ def genero_Tablero():
     else:
         partida_carga=False
         Usuario,Dificultad,Dicc_Puntajes,Dicc_Bolsa,tiempo_ronda,Tiempo,Lista_TP = Importar_Datos()
-
         tiempo_ronda=int(tiempo_ronda)*100
         Tiempo=int(Tiempo)*100*60
         Turno_Usuario = bool(random.getrandbits(1))
@@ -1067,16 +1083,15 @@ def genero_Tablero():
         LCO = []                    #Lista de Coordenadas Ocupadas
         Se_necesitan_dos = False
         #Tiempo,tiempo_ronda=tiempo_dificultad(Dificultad)
-
         Turnos_Disponibles = 3
-        Layout_Tab,CFT=(Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP))
+        Layout_Tab,CFT=(Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP,size,subsample))
         diseño = [ [sg.Column(Layout_Tab),
                     sg.Column(Layout_Columna()),
                     sg.Column(Layout_Columna_Historial(Usuario),key='Columna_Historial'),
                     sg.Column(Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT,Lista_TP),key='Columna_Conf')] ]
         window = sg.Window('Tablero',diseño ,location=(400,0),finalize=True)
         Dicc = Update_Tablero(window,Dicc)
-        Dicc = Update_Tablero2(window,Dicc)
+        Dicc = Update_Tablero2(window,Dicc,size,subsample)
     Columna_Historial = True
     Desplegado = True
     tiemp_ant = ''
@@ -1087,7 +1102,6 @@ def genero_Tablero():
     window['PuntosUsuario'].update('Puntos  ' + Usuario)
     Dificil_se_juega=Lista_TP
     window.Refresh()
-    tamaño_actual=window.Size
     while True and (not(fin_Juego(Tiempo,CFT,terminacion_Manual_Usuario))):
         LPI = []                #Lista de Posiciones de Intercambio (Para Intecambiar fichas)
         LCOPR = []              #Lista de Coordenadas Ocupadas Por Ronda
@@ -1131,16 +1145,16 @@ def genero_Tablero():
                     if (type(event1) == int):
                         if ((Lista_Atril[event1] != '')):
                             playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=False)
-                            window[event1].update(image_filename=DiccRLPP[Lista_Atril[event1]][1],image_size=(38,38),image_subsample=5)
+                            window[event1].update(image_filename=DiccRLPP[Lista_Atril[event1]][1],image_size=size,image_subsample=subsample)
                     elif Coord_Ocupada(LCOPR,event1):
                             playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=False)
-                            window[event1].update(image_filename=DiccRLPP[Dicc[event1][0]][1],image_size=(38,38),image_subsample=5)
+                            window[event1].update(image_filename=DiccRLPP[Dicc[event1][0]][1],image_size=size,image_subsample=subsample)
                     else :
                         playsound(r'ScrabbleAR_Sonidos\Clin.mp3',block=False)
                         Update_Infobox('No puedes interactuar con las fichas ya colocadas!','#5798FD',window) if Coord_Ocupada(LCO,event) else Update_Infobox('Primero selecciona una letra!','#5798FD',window)
                         event1 = ''
                 else:
-                    Acciones_Usuario(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event,window,DiccRLPP)
+                    Acciones_Usuario(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event,window,DiccRLPP,size,subsample)
                     event1 = ''
 
             elif (event == 'Validar') and (Boton_Intercambiar == False):
@@ -1186,10 +1200,10 @@ def genero_Tablero():
             elif(event=="Pausar"):
                 playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=False)
                 for x in range(len(Lista_Atril)):
-                    window[x].update(image_filename=r'ScrabbleAR_Imagenes_png\Transparente.png',image_size=(38,38),image_subsample=5)
+                    window[x].update(image_filename=r'ScrabbleAR_Imagenes_png\Transparente.png',image_size=size,image_subsample=subsample)
                 sg.popup('Presione "OK"para continuar',keep_on_top=True,title='Aviso')
                 for x in range(len(Lista_Atril)):
-                    window[x].update(image_filename=DiccRLPP[Lista_Atril[x]][0],image_size=(38,38),image_subsample=5)
+                    window[x].update(image_filename=DiccRLPP[Lista_Atril[x]][0],image_size=size,image_subsample=subsample)
             elif (event=="Rendirse"):
                 playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=False)
                 se_Rinde = sg.popup_yes_no("Si se rinde no se guardaran datos de esta partida , esta seguro?",title='Aviso',keep_on_top=True)
@@ -1205,11 +1219,11 @@ def genero_Tablero():
 
 
         while (Turno_Usuario == False):
-            contador_Turnos_CPU,fichas_CPU,CFT,PT_CPU=Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Dicc_Bolsa,CFT,Dicc_Puntajes,PT_CPU,DiccRLPP_CPU,LCO_CPU)
+            contador_Turnos_CPU,fichas_CPU,CFT,PT_CPU=Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Dicc_Bolsa,CFT,Dicc_Puntajes,PT_CPU,DiccRLPP_CPU,LCO_CPU,size,subsample)
             break
         if Fin:
             break
-        Update_Fichas_Colocadas(LCOPR,window,Dicc,DiccRLPP)
+        Update_Fichas_Colocadas(LCOPR,window,Dicc,DiccRLPP,size,subsample)
         Turno_Usuario = not Turno_Usuario
         window['CantFichas'].update('Cantidad de fichas: '+str(CFT))
 
