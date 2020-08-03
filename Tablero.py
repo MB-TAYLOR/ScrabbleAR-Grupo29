@@ -1171,7 +1171,7 @@ def genero_Tablero():
 
             elif ((event == "Intercambiar fichas") or (Boton_Intercambiar)):
                 if(Turnos_Disponibles != 0):
-                    CFT,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles = Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles,event,window,DiccRLPP)
+                    CFT,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles = Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles,event,window,DiccRLPP,size,subsample)
                     if(Turnos_Disponibles == 0):
                         window["Intercambiar fichas"].update("Terminar\nPartida")
                 else:
