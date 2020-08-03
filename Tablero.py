@@ -19,9 +19,9 @@ Infobox_Activa = False
 HistorialUsuario = []
 HistorialCPU = []
 PrimerRonda = True
-def identificador_carpeta_error():
+def identificador_carpeta_error(ProgramaPrincipal):
     try:
-        genero_Tablero()
+        ProgramaPrincipal()
     except FileNotFoundError:
         tb = sys.exc_info()[2]
         tbinfo = traceback.format_tb(tb)[2]
@@ -1260,4 +1260,4 @@ def genero_Tablero():
 #ProgramaPrincipal-------------
 if __name__ == "__main__":
     sg.theme('DarkGrey2')
-    identificador_carpeta_error()
+    identificador_carpeta_error(genero_Tablero)
