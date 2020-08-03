@@ -675,7 +675,7 @@ def Actualizar_CFT(CFT,Dicc_Bolsa):
         CFT = CFT + cant
     return CFT
 
-def Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,Dicc_rutas_letras_puntaje_partida):
+def Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,Dicc_rutas_letras_puntaje_partida,size,subsample):
     '''Retira todas las fichas colocadas en el tablero'''
     for Pos in range(len(Lista_Atril)):
         if (Lista_Atril[Pos] == ''): # Si esta posicion esta vacia:
@@ -749,7 +749,7 @@ def TerminarTurno(LCOPR,LCO,CCD,Dicc,Lista_Atril,PTU,Palabra,Dificultad,Dificil_
         Llenar_Atril(Lista_Atril,window,Dicc_Bolsa,CFT,Dicc_rutas_letras_puntaje_partida)
         PrimerRonda = False
     else:
-        Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,Dicc_rutas_letras_puntaje_partida)
+        Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,Dicc_rutas_letras_puntaje_partida,size,subsample)
     return PTU
 
 def Actualizar_LCO(LCOPR,LCO,LCO_Usuario):
@@ -896,7 +896,7 @@ def Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,
             Boton_Intercambiar = True
             playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=False)
             window[event].update(button_color=('#2B2B28','#57C3FD'))
-            Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,Dicc_rutas_letras_puntaje_partida)
+            Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,Dicc_rutas_letras_puntaje_partida,size,subsample)
     elif event != 'Reloj':
         sg.popup('Debes seleccionar fichas del Atril!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
     return CFT,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles
@@ -1121,7 +1121,7 @@ def genero_Tablero():
                 Tiempo=reloj_Partida(Tiempo,window)
                 tiempo_jugador=reloj_Ronda(tiempo_jugador,window)
             if tiempo_jugador == 0:
-                Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,DiccRLPP)
+                Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,DiccRLPP,size,subsample)
             #if (tamaño_actual != window.Size):
             #    tamaño_actual=window.Size
                 #Aca deberian estar los cambios a la ventana que centrarian todo el contenido de esta.
@@ -1136,7 +1136,7 @@ def genero_Tablero():
                     event_popup2 = sg.popup_yes_no('¿Quieres posponer la partida?',title='Aviso',keep_on_top=True)
                     playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=False)
                     if (event_popup2 == 'Yes'):
-                        Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,DiccRLPP)
+                        Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,DiccRLPP,size,subsample)
                         GuardoPartida(Dificultad,DiccRLPP,Dicc,CFT,Usuario,Turnos_Disponibles,PTU,HistorialUsuario,LCO,Tiempo,DiccRLPP_CPU,PT_CPU,fichas_CPU,contador_Turnos_CPU,HistorialCPU,PrimerRonda,Lista_Atril,Dicc_Bolsa,Dicc_Puntajes,tiempo_ronda,list(CCD),LCO_Usuario,LCO_CPU,tiempo_jugador,Lista_TP)
                     Fin = True
                     break
