@@ -381,9 +381,9 @@ def Layout_Columna():
                [sg.Text('__________________________________')],
                [sg.Text('Puntos Usuario',key='PuntosUsuario',font=("impact",20))],
                [sg.Text('0000',key='PuntajeUsuario',font=("impact",20))],
-               [sg.Text('__________________________________')],
-               [sg.Button('<',key='Mostrar',pad=((222,0),(29,2)))],
-               [sg.Button('()',key='Rotar',pad=((222,0),(2,29)))],
+               [sg.Text('__________________________________',pad=((5,5),(3,34)))],
+               [sg.Button('<',key='Mostrar',font=('impact',11),pad=((202,0),(3,3))),
+               sg.Button('q',key='Rotar',font=('webdings',12),size=(1,1))],
                [sg.Text(pad=((6,0),(5,2)),size=(20, 3),key='Infobox',font=("Consolas", 16),background_color='#A4A4A4',justification='center',relief=sg.RELIEF_SOLID)], #Entran 60 caracteres
                [sg.Button(button_text='Terminar turno',size=(15,0),font=("Unispace",20),pad=((5,0),(5,3)))],
                [sg.Button(button_text='Validar',size=(15,0),font=("Unispace",20),pad=((5,0),(5,3)))],
@@ -1250,9 +1250,11 @@ def genero_Tablero():
 
     if fin_Juego(Tiempo,CFT,terminacion_Manual_Usuario):
         if (PTU > PT_CPU):
+            playsound(r'ScrabbleAR_Sonidos\Ganar.mp3',block=False)
             sg.popup("Ganaste",title='Aviso',keep_on_top=True)
             Agregar_Datos_TabladePosiciones(Dificultad,Usuario,PTU)
         else:
+            playsound(r'ScrabbleAR_Sonidos\Perder.mp3',block=False)
             sg.popup("Perdiste",title='Aviso',keep_on_top=True)
 
     window.close()
