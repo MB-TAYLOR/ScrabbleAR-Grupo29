@@ -55,28 +55,26 @@ def establezco_PP():
         elif boton_cliqueado == 'JUGAR':
             #Aca abro la nueva ventana en el mismo lugar que la anterior , luego de cerrar la principal
             window.close()
-            if((genero_Tablero)in(None,'Salir')):
+            if((genero_Tablero())in(None,'Salir')):
                 establezco_PP()
             break
-        elif boton_cliqueado =='VER TOP 10':
+        elif boton_cliqueado =='TOP 10':
             #Aca abro la nueva ventana en el mismo lugar que la anterior , luego de cerrar la principal
             window.close()
-            if((Tabla)in(None,'Salir')):
+            if((Tabla())in(None,'Salir')):
                 establezco_PP()
             break
         elif boton_cliqueado =='OPCIONES':
             #Aca abro la nueva ventana en el mismo lugar que la anterior , luego de cerrar la principal
             window.close()
-            if((Ventana_Opciones)in(None,'Salir')):
+            if((Ventana_Opciones())in(None,'Salir')):
                 establezco_PP()
             break
         elif boton_cliqueado=="AYUDA":
             window.close()
-            if((Ayuda)in(None,'Salir')):
+            if((Ayuda())in(None,'Salir')):
                 establezco_PP()
             break
-
-
 
     return(boton_cliqueado)
 
