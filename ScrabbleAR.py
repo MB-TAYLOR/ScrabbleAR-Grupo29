@@ -22,17 +22,27 @@ def obtengo_Perfil():                                #Busco el nombre del ultimo
 
 def establezco_PP(nombre):
 #Columnas
-    columna_izquierda=[     [sg.Text("USUARIO:"+ nombre)],  #Tomar el nombre del usuario del archivo que se deberia generar desde el menu opciones
-                            [sg.Button(button_text="JUGAR",size=(40,4),pad=(0,20))],
-                            [sg.Button(button_text="OPCIONES",size=(40,4),pad=(0,20))],
-                            [sg.Button(button_text="VER TOP 10",size=(40,4),pad=(0,20))],
-                            [sg.Button(button_text="",key="AYUDA",image_filename=r'ScrabbleAR_Imagenes_png\icono_ayuda.png',image_size=(45,45),image_subsample=6,pad=((0,0),(210,0)))]            ]
+    columna_izquierda=[ [sg.Text("USUARIO",relief='groove',font=('default',15),text_color='orange',size=(27,1),pad=((6,5),(3,3)),justification='center')],
+                        [sg.Frame('',[[sg.Text(nombre,font=('default',19),size=(19,1),justification='center')]],relief="sunken",pad=((5,5),(3,30)))],
+                        [sg.Text('.',text_color='orange',font=('webdings',40),relief='solid'),
+                        sg.Button(button_text="JUGAR",font=('impact',20),size=(18,1),pad=(0,20))],
+                        [sg.Text('@',text_color='orange',font=('webdings',40),relief='solid'),
+                        sg.Button(button_text="OPCIONES",font=('impact',20),size=(18,1),pad=(0,20))],
+                        [sg.Text('%',text_color='orange',font=('webdings',40),relief='solid'),
+                        sg.Button(button_text="TOP 10",font=('impact',20),size=(18,1),pad=(0,20))],
+                        [sg.Text('s',text_color='orange',font=('webdings',40),relief='solid'),
+                        sg.Button(button_text="INSTRUCCIONES",key="AYUDA",font=('impact',20),size=(18,1),pad=(0,20))],
+                        [sg.Text('r',text_color='orange',font=('webdings',40),relief='solid',pad=((5,5),(80,3))),
+                        sg.Button(button_text="SALIR",font=('Impact',20),size=(9,1),pad=((5,5),(80,3)))]  ]
 
-    columna_derecha=[       [sg.Text("SCRABBLE-AR",font=("default",40),pad=(130,0))],
-                            [sg.Button(button_text="SALIR",size=(10,3),pad=((550,0),(510,0)))]       ]
+    Linea = [[sg.Image(r'ScrabbleAR_Imagenes_png\Linea.png')]]
+
+    columna_derecha=[ [sg.Text("SCRABBLE-AR",font=("ink free",40),pad=(130,0))] ]
 
 #Diseño
-    diseño=[        [sg.Column(columna_izquierda),sg.Column(columna_derecha)]       ]
+    diseño=[        [sg.Column(columna_izquierda),
+                    sg.Column(Linea),
+                    sg.Column(columna_derecha)]       ]
 
 #Aplico y muestro
 
@@ -41,7 +51,6 @@ def establezco_PP(nombre):
     playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
     while True:
         if boton_cliqueado in(None,'SALIR'):
-            playsound(r'ScrabbleAR_Sonidos/Click.mp3')
             break
         elif boton_cliqueado == 'JUGAR':
             #Aca abro la nueva ventana en el mismo lugar que la anterior , luego de cerrar la principal

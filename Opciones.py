@@ -276,6 +276,13 @@ def Comprobaciones(values,Cant_Fichas_Total,window):
         window['Usuario'].update(background_color='#F1D6AB')
         TodoOk = False
 
+    if len(values['Usuario']) > 10:
+        window['Usuario'].update(background_color='red')
+        playsound(r'ScrabbleAR_Sonidos/Error_Opciones.mp3',block=False)
+        sg.popup('No puedes guardar un usuario con mas de 10 caracteres!',background_color='#B91B1B',title='Aviso',keep_on_top=True)
+        window['Usuario'].update(background_color='#F1D6AB')
+        TodoOk = False
+
     for T in ['TT','TPR']:
         Es_numero = True
         if values[T] != '':
