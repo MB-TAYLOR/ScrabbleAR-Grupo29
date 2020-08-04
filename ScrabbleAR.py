@@ -4,10 +4,10 @@ from Opciones import Ventana_Opciones
 from TabladePosiciones import Tabla
 from Tablero import genero_Tablero
 from ventana_Ayuda import Ayuda
+from Generadores import identificador_carpeta_error
 from playsound import playsound
 import csv
-from Generadores import identificador_carpeta_error
-import tkinter           #Para poder usar su excepcion se tuvo que importar tkinter
+
 
 #Aca Arranca La Pantalla Principal----------------------------------------------------------------------------------------------------------------------------------------------
 
