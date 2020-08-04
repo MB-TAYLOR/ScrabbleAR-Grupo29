@@ -20,10 +20,10 @@ def obtengo_Perfil():                                #Busco el nombre del ultimo
     archivo_csv.close()
     return(perfil_Actual)
 
-def establezco_PP(nombre):
+def establezco_PP():
 #Columnas
     columna_izquierda=[ [sg.Text("USUARIO",relief='groove',font=('default',15),text_color='orange',size=(27,1),pad=((6,5),(3,3)),justification='center')],
-                        [sg.Frame('',[[sg.Text(nombre,font=('default',19),size=(19,1),justification='center')]],relief="sunken",pad=((5,5),(3,30)))],
+                        [sg.Frame('',[[sg.Text(obtengo_Perfil(),font=('default',19),size=(19,1),justification='center')]],relief="sunken",pad=((5,5),(3,30)))],
                         [sg.Text('.',text_color='orange',font=('webdings',40),relief='solid'),
                         sg.Button(button_text="JUGAR",font=('impact',20),size=(18,1),pad=(0,20))],
                         [sg.Text('@',text_color='orange',font=('webdings',40),relief='solid'),
@@ -55,40 +55,31 @@ def establezco_PP(nombre):
         elif boton_cliqueado == 'JUGAR':
             #Aca abro la nueva ventana en el mismo lugar que la anterior , luego de cerrar la principal
             window.close()
-            if((identificador_carpeta_error(genero_Tablero))in(None,'Salir')):
-                establezco_PP(obtengo_Perfil())
+            if((genero_Tablero)in(None,'Salir')):
+                establezco_PP()
             break
         elif boton_cliqueado =='VER TOP 10':
             #Aca abro la nueva ventana en el mismo lugar que la anterior , luego de cerrar la principal
             window.close()
-            if((identificador_carpeta_error(Tabla))in(None,'Salir')):
-                establezco_PP(obtengo_Perfil())
+            if((Tabla)in(None,'Salir')):
+                establezco_PP()
             break
         elif boton_cliqueado =='OPCIONES':
             #Aca abro la nueva ventana en el mismo lugar que la anterior , luego de cerrar la principal
             window.close()
-            if((identificador_carpeta_error(Ventana_Opciones))in(None,'Salir')):
-                establezco_PP(obtengo_Perfil())
+            if((Ventana_Opciones)in(None,'Salir')):
+                establezco_PP()
             break
         elif boton_cliqueado=="AYUDA":
             window.close()
-            if((identificador_carpeta_error(Ayuda))in(None,'Salir')):
-                establezco_PP(obtengo_Perfil())
+            if((Ayuda)in(None,'Salir')):
+                establezco_PP()
             break
 
 
 
-    return()
+    return(boton_cliqueado)
 
 #Programa Principal-----------------------------------------------------------------------------------------------
 if __name__ == "__main__":
-    try:
-        establezco_PP(obtengo_Perfil())
-    except FileNotFoundError:
-        sg.popup_error("Error al abrir 'Archivo_Opciones.csv'.\nEl archivo no se encontro, verifique que el archivo se encuentre en la carpeta 'ScrabbleAR_Datos' ",title='Error')
-    except UnicodeDecodeError:
-        sg.popup_error("Falta un archivo de audio , revise la carpeta ScrabbleAR_Sonidos ",title='Error')
-    except tkinter.TclError:
-        sg.popup_error("Falta una imagen , revise la carpeta ScrabbleAR_Imagenes_png ",title='Error')
-    except:
-        sg.popup_error("Ah ocurrido un error desconocido",title='Error')
+    identificador_carpeta_error(establezco_PP)
