@@ -2,7 +2,7 @@ from playsound import playsound
 import PySimpleGUI as sg
 import random
 import csv
-from Generadores import identificador_carpeta_error
+from ScrabbleAR_py.Generadores import identificador_carpeta_error
 
 Error_Op = True
 

@@ -1,7 +1,7 @@
-from palabra_Existe import verificar_Palabra
+from ScrabbleAR_py.palabra_Existe import verificar_Palabra
 import json
-from Generadores import Selector_de_coordenadas_disponibles
-from AiMaquina import formar_palabra
+from ScrabbleAR_py.Generadores import Selector_de_coordenadas_disponibles
+from ScrabbleAR_py.AiMaquina import formar_palabra
 import PySimpleGUI as sg
 from random import randint
 import random
@@ -9,7 +9,7 @@ import time
 import csv
 from datetime import date
 from playsound import playsound
-from Generadores import identificador_carpeta_error
+from ScrabbleAR_py.Generadores import identificador_carpeta_error
 import platform
 
 MAX_ROWS = MAX_COL = 15

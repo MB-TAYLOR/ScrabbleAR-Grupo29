@@ -1,10 +1,10 @@
 import json
 import PySimpleGUI as sg
-from Opciones import Ventana_Opciones
-from TabladePosiciones import Tabla
-from Tablero import genero_Tablero
-from ventana_Ayuda import Ayuda
-from Generadores import identificador_carpeta_error
+from ScrabbleAR_py.Opciones import Ventana_Opciones
+from ScrabbleAR_py.TabladePosiciones import Tabla
+from ScrabbleAR_py.Tablero import genero_Tablero
+from ScrabbleAR_py.ventana_Ayuda import Ayuda
+from ScrabbleAR_py.Generadores import identificador_carpeta_error
 from playsound import playsound
 import csv
 

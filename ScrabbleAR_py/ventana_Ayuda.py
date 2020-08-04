@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 from playsound import playsound
-from Generadores import identificador_carpeta_error
+from ScrabbleAR_py.Generadores import identificador_carpeta_error
 
 def Comprobaciones(Boton_actual,pagina,window):
     '''Condiciones para activar o desactivar los botones "<" y ">"  '''

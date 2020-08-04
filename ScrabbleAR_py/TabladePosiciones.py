@@ -2,7 +2,7 @@
 import PySimpleGUI as sg
 import csv
 from playsound import playsound
-from Generadores import identificador_carpeta_error
+from ScrabbleAR_py.Generadores import identificador_carpeta_error
 # Show CSV data in Table
 sg.theme('DarkGrey2')
 
