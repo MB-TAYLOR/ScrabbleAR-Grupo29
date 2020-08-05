@@ -4,6 +4,28 @@ import sys
 import traceback
 import tkinter
 import PySimpleGUI as sg
+import platform
+import os
+
+def corrector_paths(path):
+    sistema_Operativo=platform.system()
+    path_base=os.getcwd()
+    if sistema_Operativo =="Linux":
+        path_add=path.split(chr(92))
+        aux=""
+        for x in range(len(path_add)):
+            if x < len(path_add)-1:
+                agregado="/"
+            else:
+                agregado=""
+            aux=aux+path_add[x]+agregado
+        path=path_base+"/"+aux
+    elif(sistema_Operativo=="Windows"):
+        aux=path_base+chr(92)+path
+        path=aux
+    print(path)
+    return(path)
+
 
 def identificador_carpeta_error(ProgramaPrincipal):
     event=""
