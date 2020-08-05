@@ -24,15 +24,15 @@ def establezco_PP():
 #Columnas
     columna_izquierda=[ [sg.Text("USUARIO",relief='groove',font=('default',15),text_color='orange',size=(27,1),pad=((6,5),(3,3)),justification='center')],
                         [sg.Frame('',[[sg.Text(obtengo_Perfil(),font=('default',19),size=(19,1),justification='center')]],relief="sunken",pad=((5,5),(3,30)))],
-                        [sg.Text('.',text_color='orange',font=('webdings',40),relief='solid'),
+                        [sg.Image(corrector_paths(r'ScrabbleAR_Imagenes_png\Icono_Jugar.png')),
                         sg.Button(button_text="JUGAR",font=('impact',20),size=(18,1),pad=(0,20))],
-                        [sg.Text('@',text_color='orange',font=('webdings',40),relief='solid'),
+                        [sg.Image(corrector_paths(r'ScrabbleAR_Imagenes_png\Icono_Opciones.png')),
                         sg.Button(button_text="OPCIONES",font=('impact',20),size=(18,1),pad=(0,20))],
-                        [sg.Text('%',text_color='orange',font=('webdings',40),relief='solid'),
+                        [sg.Image(corrector_paths(r'ScrabbleAR_Imagenes_png\Icono_Top10.png')),
                         sg.Button(button_text="TOP 10",font=('impact',20),size=(18,1),pad=(0,20))],
-                        [sg.Text('s',text_color='orange',font=('webdings',40),relief='solid'),
+                        [sg.Image(corrector_paths(r'ScrabbleAR_Imagenes_png\Icono_Instrucciones.png')),
                         sg.Button(button_text="INSTRUCCIONES",key="AYUDA",font=('impact',20),size=(18,1),pad=(0,20))],
-                        [sg.Text('r',text_color='orange',font=('webdings',40),relief='solid',pad=((5,5),(80,3))),
+                        [sg.Image(corrector_paths(r'ScrabbleAR_Imagenes_png\Icono_Salir.png'),pad=((5,5),(80,3))),
                         sg.Button(button_text="SALIR",font=('Impact',20),size=(9,1),pad=((5,5),(80,3)))]  ]
 
     Linea = [[sg.Image(corrector_paths(r'ScrabbleAR_Imagenes_png\Linea.png'))]]
