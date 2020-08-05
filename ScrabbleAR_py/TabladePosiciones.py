@@ -4,7 +4,7 @@ try:
     import PySimpleGUI as sg
     import csv
     from playsound import playsound
-    from ScrabbleAR_py.Generadores import identificador_carpeta_error
+    from ScrabbleAR_py.Generadores import identificador_carpeta_error,bloqueo_sonido
 except ModuleNotFoundError:
     print("Error ,ejecute el  programa desde 'ScrabbleAR.py'")
     sys.exit()
@@ -75,7 +75,7 @@ def Tabla():
     window = sg.Window('Top',layout,location=(200,50),size=(797,600),finalize=True)
     while True:
         event, values = window.read()
-        playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=False)
+        playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=bloqueo_sonido())
         if(event in (None,"Salir")):
             playsound(r'ScrabbleAR_Sonidos\Click.mp3')
             break

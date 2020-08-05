@@ -2,7 +2,7 @@ try:
     import sys
     import PySimpleGUI as sg
     from playsound import playsound
-    from ScrabbleAR_py.Generadores import identificador_carpeta_error
+    from ScrabbleAR_py.Generadores import identificador_carpeta_error,bloqueo_sonido
 except ModuleNotFoundError:
     print("Error ,ejecute el  programa desde 'ScrabbleAR.py'")
     sys.exit()
@@ -44,7 +44,7 @@ def Ayuda():
     while True:
         event,values=window.Read()
         print(event)
-        playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=False)
+        playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=bloqueo_sonido())
         if(event in (None,"Salir")):
             playsound(r'ScrabbleAR_Sonidos\Click.mp3')
             break
