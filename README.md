@@ -1,4 +1,5 @@
 # ScrabbleAR-Grupo29
+
 Integrantes :
   Delmas Leonardo, Legajo: 15993/3
   Silva Marco, Legajo: 16234/2
@@ -6,15 +7,30 @@ Integrantes :
 
 El programa:
 
-  El programa principal es ScrabbleAR.py su ejecución requiere todos los archivos en la misma carpeta.
-  Si el jugador no configura en opciones el usuario se ejecuatará la partida con un usuario 'Default'.
-  El Tablero permite colocar una ficha seleccionando una en el atril y luego cliqueando la casilla deseada, en caso de ser el usuario quien comience la partida deberá colocar la primera ficha en el cuadrado negro del centro.
-  Las puntuaciones pueden visualizarse en el talero pero no se guardarán en la tabla de posiciones.
+  El programa principal es ScrabbleAR.py, su ejecución requiere un IDE que admita Python 3.6.8 y las dependencias declaradas en la sección 'Dependencias' de este archivo. Las dependencias pueden instalarse mediante el comando 'pip install' luego de instalar Python versión 3.6.8 ó posterior. Para abrir el juego deberá ejecutar el programa principal.
 
+  Carpetas contenidas en ScrabbleAR-Grupo29:
 
-Consideraciones:
+    ScrabbleAR_Datos
+    ScrabbleAR_Imagenes_png
+    ScrabbleAR_Py
+    ScrabbleAR_Sonidos
 
-  El boton intercambiar fichas no funciona adecuadamente, esta disponible para su prueba pero pueden surgir errores.
-  La AiMaquina solo forma palabras de izquierda a derecha y de arriba a  abajo.
-  El reloj no funciona dado que generaba errores con los windows.read y se implementará una correción para la próxima entrega, posiblemente con hilos.
-  Puede que durante la ejecución de la partida se bloquea la posibilidad de colocar una ficha en una posición que ya había sido ocupada en un determinado momento; deberá terminar el turno para poder volver a utilizar esa posición.
+  Dependencias:
+
+    Python 3.6.8
+    Pattern 3.6
+    PySimpleGUI 4.22.0
+    Playsound 1.2.2
+
+  Licencias:
+
+    Playsound: TaylorSMarks/playsound is licensed under the MIT License(https://github.com/TaylorSMarks/playsound).
+    Sonidos extraidos de : https://www.zapsplat.com/sound-effect-categories/.
+    Fondo blanco obtenido : <a href="https://www.vecteezy.com/free-vector/white-texture%22%3EWhite Texture Vectors by Vecteezy</a>.
+    Fuente utilizada en el diseño de las imagenes: CoffeeTin Initials.ttf; Diseñador:	Rick Mueller; Licencia: libre;
+    Link:	http://moorstation.org/typoasis/designers/mueller/index.htm.
+
+  Consideraciones:
+
+    El sonido se ejecutará en Linux, pero debido a que la dependencia 'playsound' no tiene la funcionalidad 'block' disponible para Linux se reproducirá un delay, para mas información acceda a https://github.com/TaylorSMarks/playsound.
