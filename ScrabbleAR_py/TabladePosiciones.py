@@ -4,7 +4,7 @@ try:
     import PySimpleGUI as sg
     import csv
     from playsound import playsound
-    from ScrabbleAR_py.Generadores import identificador_carpeta_error,bloqueo_sonido
+    from ScrabbleAR_py.Generadores import identificador_carpeta_error,bloqueo_sonido,corrector_paths
 except ModuleNotFoundError:
     print("Error ,ejecute el  programa desde 'ScrabbleAR.py'")
     sys.exit()
@@ -19,7 +19,7 @@ def Tabla():
     data_dificil = []
     data_personalizada = []
     header_list = []
-    with open("ScrabbleAR_Datos\Archivo_Puntajes.csv", "r") as infile:
+    with open(corrector_paths(r'ScrabbleAR_Datos\Archivo_Puntajes.csv'), "r") as infile:
         reader = csv.reader(infile)
         header_list = next(reader)
         header_list.insert(0, 'N°')
@@ -75,9 +75,9 @@ def Tabla():
     window = sg.Window('Top',layout,location=(200,50),size=(797,600),finalize=True)
     while True:
         event, values = window.read()
-        playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=bloqueo_sonido())
+        playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
         if(event in (None,"Salir")):
-            playsound(r'ScrabbleAR_Sonidos\Click.mp3')
+            playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'))
             break
         elif event == 'Total':
             DataTotal(window,data_facil,data_normal,data_dificil,data_personalizada)
