@@ -6,7 +6,11 @@ import tkinter
 import PySimpleGUI as sg
 import platform
 import os
-
+def bloqueo_sonido():
+    if platform.system() == "Linux":
+        return True
+    else:
+        return False
 def corrector_paths(path):
     sistema_Operativo=platform.system()
     path_base=os.getcwd()
