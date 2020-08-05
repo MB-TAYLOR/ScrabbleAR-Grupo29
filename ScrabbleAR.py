@@ -48,7 +48,7 @@ def establezco_PP():
 
     window = sg.Window('Pantalla Principal',diseño,location=(540,100),size=(1035,650))
     boton_cliqueado,datos_ingresados=window.Read()
-    playsound(corrector_paths('ScrabbleAR_Sonidos/Click.mp3'),block=False)
+    playsound(corrector_paths('ScrabbleAR_Sonidos\Click.mp3'),block=False)
     while True:
         if boton_cliqueado in(None,'SALIR'):
             break

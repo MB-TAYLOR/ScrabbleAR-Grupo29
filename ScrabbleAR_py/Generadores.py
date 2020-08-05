@@ -10,20 +10,8 @@ import os
 def corrector_paths(path):
     sistema_Operativo=platform.system()
     path_base=os.getcwd()
-    if sistema_Operativo =="Linux":
-        path_add=path.split(chr(92))
-        aux=""
-        for x in range(len(path_add)):
-            if x < len(path_add)-1:
-                agregado="/"
-            else:
-                agregado=""
-            aux=aux+path_add[x]+agregado
-        path=path_base+"/"+aux
-    elif(sistema_Operativo=="Windows"):
-        aux=path_base+chr(92)+path
-        path=aux
-    print(path)
+    path_add=path.split(chr(92))
+    path=os.path.join(path_base,*path_add) 
     return(path)
 
 
@@ -71,3 +59,4 @@ def Selector_de_coordenadas_disponibles(conjunto):
     x=random.randint(0,(len(conjunto)-1))
     conjunto=list(conjunto)
     return(tuple(conjunto[x]))
+corrector_paths('ScrabbleAR_Datos\Archivo_Opciones.csv')
