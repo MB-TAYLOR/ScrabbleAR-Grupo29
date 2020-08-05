@@ -10,7 +10,7 @@ try:
     import csv
     from datetime import date
     from playsound import playsound
-    from ScrabbleAR_py.Generadores import identificador_carpeta_error,bloqueo_sonido,Selector_de_coordenadas_disponibles
+    from ScrabbleAR_py.Generadores import identificador_carpeta_error,bloqueo_sonido,Selector_de_coordenadas_disponibles,corrector_paths
     import platform
 except ModuleNotFoundError:
     print("Error ,ejecute el  programa desde 'ScrabbleAR.py'")
@@ -39,14 +39,14 @@ def resolucion_adaptable():
         subsample=5
     return(size,subsample)
 def GuardarDatos_Tabla(datos):
-    Infile = open(r'ScrabbleAR_Datos\Archivo_Puntajes.csv','w')
+    Infile = open(corrector_paths(r'ScrabbleAR_Datos\Archivo_Puntajes.csv'),'w')
     writer = csv.writer(Infile)
     for row in datos:
         writer.writerow([row[0],row[1],row[2],row[3]])
     Infile.close()
 
 def Agregar_Datos_TabladePosiciones(Dificultad,Usuario,PTU):
-    Archi = open(r'ScrabbleAR_Datos\Archivo_Puntajes.csv','r')
+    Archi = open(corrector_paths(r'ScrabbleAR_Datos\Archivo_Puntajes.csv'),'r')
     reader = csv.reader(Archi)
     Data_total = []
     Lista = []
@@ -68,93 +68,93 @@ def Agregar_Datos_TabladePosiciones(Dificultad,Usuario,PTU):
 def rutas_letras(Dicc_letra_puntajes):
     '''Recibe un diccionario con claves letra y valor puntaje (ej:"A:1") y segun eso , genera un diccionario con clave letra y valor lista de direcciones
     correspondientes a distintos estados de la  ficha con el puntaje recibido (en el atril , al seleccionarla,al terminar turno), para el usuario '''
-    Dicc_letras_rutas={'A1':[r'ScrabbleAR_Imagenes_png\ficha_A1_B.png',r'ScrabbleAR_Imagenes_png\ficha_A1_S.png',r'ScrabbleAR_Imagenes_png\ficha_A1_T.png'],
-                       'A2':[r'ScrabbleAR_Imagenes_png\ficha_A2_B.png',r'ScrabbleAR_Imagenes_png\ficha_A2_S.png',r'ScrabbleAR_Imagenes_png\ficha_A2_T.png'],
-                       'B2':[r'ScrabbleAR_Imagenes_png\ficha_B2_B.png',r'ScrabbleAR_Imagenes_png\ficha_B2_S.png',r'ScrabbleAR_Imagenes_png\ficha_B2_T.png'],
-                       'B3':[r'ScrabbleAR_Imagenes_png\ficha_B3_B.png',r'ScrabbleAR_Imagenes_png\ficha_B3_S.png',r'ScrabbleAR_Imagenes_png\ficha_B3_T.png'],
-                       'B4':[r'ScrabbleAR_Imagenes_png\ficha_B4_B.png',r'ScrabbleAR_Imagenes_png\ficha_B4_S.png',r'ScrabbleAR_Imagenes_png\ficha_B4_T.png'],
-                       'C1':[r'ScrabbleAR_Imagenes_png\ficha_C1_B.png',r'ScrabbleAR_Imagenes_png\ficha_C1_S.png',r'ScrabbleAR_Imagenes_png\ficha_C1_T.png'],
-                       'C2':[r'ScrabbleAR_Imagenes_png\ficha_C2_B.png',r'ScrabbleAR_Imagenes_png\ficha_C2_S.png',r'ScrabbleAR_Imagenes_png\ficha_C2_T.png'],
-                       'C3':[r'ScrabbleAR_Imagenes_png\ficha_C3_B.png',r'ScrabbleAR_Imagenes_png\ficha_C3_S.png',r'ScrabbleAR_Imagenes_png\ficha_C3_T.png'],
-                       'D1':[r'ScrabbleAR_Imagenes_png\ficha_D1_B.png',r'ScrabbleAR_Imagenes_png\ficha_D1_S.png',r'ScrabbleAR_Imagenes_png\ficha_D1_T.png'],
-                       'D2':[r'ScrabbleAR_Imagenes_png\ficha_D2_B.png',r'ScrabbleAR_Imagenes_png\ficha_D2_S.png',r'ScrabbleAR_Imagenes_png\ficha_D2_T.png'],
-                       'D3':[r'ScrabbleAR_Imagenes_png\ficha_D3_B.png',r'ScrabbleAR_Imagenes_png\ficha_D3_S.png',r'ScrabbleAR_Imagenes_png\ficha_D3_T.png'],
-                       'E1':[r'ScrabbleAR_Imagenes_png\ficha_E1_B.png',r'ScrabbleAR_Imagenes_png\ficha_E1_S.png',r'ScrabbleAR_Imagenes_png\ficha_E1_T.png'],
-                       'E2':[r'ScrabbleAR_Imagenes_png\ficha_E2_B.png',r'ScrabbleAR_Imagenes_png\ficha_E2_S.png',r'ScrabbleAR_Imagenes_png\ficha_E2_T.png'],
-                       'F3':[r'ScrabbleAR_Imagenes_png\ficha_F3_B.png',r'ScrabbleAR_Imagenes_png\ficha_F3_S.png',r'ScrabbleAR_Imagenes_png\ficha_F3_T.png'],
-                       'F4':[r'ScrabbleAR_Imagenes_png\ficha_F4_B.png',r'ScrabbleAR_Imagenes_png\ficha_F4_S.png',r'ScrabbleAR_Imagenes_png\ficha_F4_T.png'],
-                       'F5':[r'ScrabbleAR_Imagenes_png\ficha_F5_B.png',r'ScrabbleAR_Imagenes_png\ficha_F5_S.png',r'ScrabbleAR_Imagenes_png\ficha_F5_T.png'],
-                       'G1':[r'ScrabbleAR_Imagenes_png\ficha_G1_B.png',r'ScrabbleAR_Imagenes_png\ficha_G1_S.png',r'ScrabbleAR_Imagenes_png\ficha_G1_T.png'],
-                       'G2':[r'ScrabbleAR_Imagenes_png\ficha_G2_B.png',r'ScrabbleAR_Imagenes_png\ficha_G2_S.png',r'ScrabbleAR_Imagenes_png\ficha_G2_T.png'],
-                       'G3':[r'ScrabbleAR_Imagenes_png\ficha_G3_B.png',r'ScrabbleAR_Imagenes_png\ficha_G3_S.png',r'ScrabbleAR_Imagenes_png\ficha_G3_T.png'],
-                       'H3':[r'ScrabbleAR_Imagenes_png\ficha_H3_B.png',r'ScrabbleAR_Imagenes_png\ficha_H3_S.png',r'ScrabbleAR_Imagenes_png\ficha_H3_T.png'],
-                       'H4':[r'ScrabbleAR_Imagenes_png\ficha_H4_B.png',r'ScrabbleAR_Imagenes_png\ficha_H4_S.png',r'ScrabbleAR_Imagenes_png\ficha_H4_T.png'],
-                       'H5':[r'ScrabbleAR_Imagenes_png\ficha_H5_B.png',r'ScrabbleAR_Imagenes_png\ficha_H5_S.png',r'ScrabbleAR_Imagenes_png\ficha_H5_T.png'],
-                       'I1':[r'ScrabbleAR_Imagenes_png\ficha_I1_B.png',r'ScrabbleAR_Imagenes_png\ficha_I1_S.png',r'ScrabbleAR_Imagenes_png\ficha_I1_T.png'],
-                       'I2':[r'ScrabbleAR_Imagenes_png\ficha_I2_B.png',r'ScrabbleAR_Imagenes_png\ficha_I2_S.png',r'ScrabbleAR_Imagenes_png\ficha_I2_T.png'],
-                       'J5':[r'ScrabbleAR_Imagenes_png\ficha_J5_B.png',r'ScrabbleAR_Imagenes_png\ficha_J5_S.png',r'ScrabbleAR_Imagenes_png\ficha_J5_T.png'],
-                       'J6':[r'ScrabbleAR_Imagenes_png\ficha_J6_B.png',r'ScrabbleAR_Imagenes_png\ficha_J6_S.png',r'ScrabbleAR_Imagenes_png\ficha_J6_T.png'],
-                       'J7':[r'ScrabbleAR_Imagenes_png\ficha_J7_B.png',r'ScrabbleAR_Imagenes_png\ficha_J7_S.png',r'ScrabbleAR_Imagenes_png\ficha_J7_T.png'],
-                       'K7':[r'ScrabbleAR_Imagenes_png\ficha_K7_B.png',r'ScrabbleAR_Imagenes_png\ficha_K7_S.png',r'ScrabbleAR_Imagenes_png\ficha_K7_T.png'],
-                       'K8':[r'ScrabbleAR_Imagenes_png\ficha_K8_B.png',r'ScrabbleAR_Imagenes_png\ficha_K8_S.png',r'ScrabbleAR_Imagenes_png\ficha_K8_T.png'],
-                       'K9':[r'ScrabbleAR_Imagenes_png\ficha_K9_B.png',r'ScrabbleAR_Imagenes_png\ficha_K9_S.png',r'ScrabbleAR_Imagenes_png\ficha_K9_T.png'],
-                       'L1':[r'ScrabbleAR_Imagenes_png\ficha_L1_B.png',r'ScrabbleAR_Imagenes_png\ficha_L1_S.png',r'ScrabbleAR_Imagenes_png\ficha_L1_T.png'],
-                       'L2':[r'ScrabbleAR_Imagenes_png\ficha_L2_B.png',r'ScrabbleAR_Imagenes_png\ficha_L2_S.png',r'ScrabbleAR_Imagenes_png\ficha_L2_T.png'],
-                       'M2':[r'ScrabbleAR_Imagenes_png\ficha_M2_B.png',r'ScrabbleAR_Imagenes_png\ficha_M2_S.png',r'ScrabbleAR_Imagenes_png\ficha_M2_T.png'],
-                       'M3':[r'ScrabbleAR_Imagenes_png\ficha_M3_B.png',r'ScrabbleAR_Imagenes_png\ficha_M3_S.png',r'ScrabbleAR_Imagenes_png\ficha_M3_T.png'],
-                       'M4':[r'ScrabbleAR_Imagenes_png\ficha_M4_B.png',r'ScrabbleAR_Imagenes_png\ficha_M4_S.png',r'ScrabbleAR_Imagenes_png\ficha_M4_T.png'],
-                       'N1':[r'ScrabbleAR_Imagenes_png\ficha_N1_B.png',r'ScrabbleAR_Imagenes_png\ficha_N1_S.png',r'ScrabbleAR_Imagenes_png\ficha_N1_T.png'],
-                       'N2':[r'ScrabbleAR_Imagenes_png\ficha_N2_B.png',r'ScrabbleAR_Imagenes_png\ficha_N2_S.png',r'ScrabbleAR_Imagenes_png\ficha_N2_T.png'],
-                       'Ñ7':[r'ScrabbleAR_Imagenes_png\ficha_Ñ7_B.png',r'ScrabbleAR_Imagenes_png\ficha_Ñ7_S.png',r'ScrabbleAR_Imagenes_png\ficha_Ñ7_T.png'],
-                       'Ñ8':[r'ScrabbleAR_Imagenes_png\ficha_Ñ8_B.png',r'ScrabbleAR_Imagenes_png\ficha_Ñ8_S.png',r'ScrabbleAR_Imagenes_png\ficha_Ñ8_T.png'],
-                       'Ñ9':[r'ScrabbleAR_Imagenes_png\ficha_Ñ9_B.png',r'ScrabbleAR_Imagenes_png\ficha_Ñ9_S.png',r'ScrabbleAR_Imagenes_png\ficha_Ñ9_T.png'],
-                       'O1':[r'ScrabbleAR_Imagenes_png\ficha_O1_B.png',r'ScrabbleAR_Imagenes_png\ficha_O1_S.png',r'ScrabbleAR_Imagenes_png\ficha_O1_T.png'],
-                       'O2':[r'ScrabbleAR_Imagenes_png\ficha_O2_B.png',r'ScrabbleAR_Imagenes_png\ficha_O2_S.png',r'ScrabbleAR_Imagenes_png\ficha_O2_T.png'],
-                       'P2':[r'ScrabbleAR_Imagenes_png\ficha_P2_B.png',r'ScrabbleAR_Imagenes_png\ficha_P2_S.png',r'ScrabbleAR_Imagenes_png\ficha_P2_T.png'],
-                       'P3':[r'ScrabbleAR_Imagenes_png\ficha_P3_B.png',r'ScrabbleAR_Imagenes_png\ficha_P3_S.png',r'ScrabbleAR_Imagenes_png\ficha_P3_T.png'],
-                       'P4':[r'ScrabbleAR_Imagenes_png\ficha_P4_B.png',r'ScrabbleAR_Imagenes_png\ficha_P4_S.png',r'ScrabbleAR_Imagenes_png\ficha_P4_T.png'],
-                       'Q7':[r'ScrabbleAR_Imagenes_png\ficha_Q7_B.png',r'ScrabbleAR_Imagenes_png\ficha_Q7_S.png',r'ScrabbleAR_Imagenes_png\ficha_Q7_T.png'],
-                       'Q8':[r'ScrabbleAR_Imagenes_png\ficha_Q8_B.png',r'ScrabbleAR_Imagenes_png\ficha_Q8_S.png',r'ScrabbleAR_Imagenes_png\ficha_Q8_T.png'],
-                       'Q9':[r'ScrabbleAR_Imagenes_png\ficha_Q9_B.png',r'ScrabbleAR_Imagenes_png\ficha_Q9_S.png',r'ScrabbleAR_Imagenes_png\ficha_Q9_T.png'],
-                       'R1':[r'ScrabbleAR_Imagenes_png\ficha_R1_B.png',r'ScrabbleAR_Imagenes_png\ficha_R1_S.png',r'ScrabbleAR_Imagenes_png\ficha_R1_T.png'],
-                       'R2':[r'ScrabbleAR_Imagenes_png\ficha_R2_B.png',r'ScrabbleAR_Imagenes_png\ficha_R2_S.png',r'ScrabbleAR_Imagenes_png\ficha_R2_T.png'],
-                       'S1':[r'ScrabbleAR_Imagenes_png\ficha_S1_B.png',r'ScrabbleAR_Imagenes_png\ficha_S1_S.png',r'ScrabbleAR_Imagenes_png\ficha_S1_T.png'],
-                       'S2':[r'ScrabbleAR_Imagenes_png\ficha_S2_B.png',r'ScrabbleAR_Imagenes_png\ficha_S2_S.png',r'ScrabbleAR_Imagenes_png\ficha_S2_T.png'],
-                       'T1':[r'ScrabbleAR_Imagenes_png\ficha_T1_B.png',r'ScrabbleAR_Imagenes_png\ficha_T1_S.png',r'ScrabbleAR_Imagenes_png\ficha_T1_T.png'],
-                       'T2':[r'ScrabbleAR_Imagenes_png\ficha_T2_B.png',r'ScrabbleAR_Imagenes_png\ficha_T2_S.png',r'ScrabbleAR_Imagenes_png\ficha_T2_T.png'],
-                       'U1':[r'ScrabbleAR_Imagenes_png\ficha_U1_B.png',r'ScrabbleAR_Imagenes_png\ficha_U1_S.png',r'ScrabbleAR_Imagenes_png\ficha_U1_T.png'],
-                       'U2':[r'ScrabbleAR_Imagenes_png\ficha_U2_B.png',r'ScrabbleAR_Imagenes_png\ficha_U2_S.png',r'ScrabbleAR_Imagenes_png\ficha_U2_T.png'],
-                       'V3':[r'ScrabbleAR_Imagenes_png\ficha_V3_B.png',r'ScrabbleAR_Imagenes_png\ficha_V3_S.png',r'ScrabbleAR_Imagenes_png\ficha_V3_T.png'],
-                       'V4':[r'ScrabbleAR_Imagenes_png\ficha_V4_B.png',r'ScrabbleAR_Imagenes_png\ficha_V4_S.png',r'ScrabbleAR_Imagenes_png\ficha_V4_T.png'],
-                       'V5':[r'ScrabbleAR_Imagenes_png\ficha_V5_B.png',r'ScrabbleAR_Imagenes_png\ficha_V5_S.png',r'ScrabbleAR_Imagenes_png\ficha_V5_T.png'],
-                       'W7':[r'ScrabbleAR_Imagenes_png\ficha_W7_B.png',r'ScrabbleAR_Imagenes_png\ficha_W7_S.png',r'ScrabbleAR_Imagenes_png\ficha_W7_T.png'],
-                       'W8':[r'ScrabbleAR_Imagenes_png\ficha_W8_B.png',r'ScrabbleAR_Imagenes_png\ficha_W8_S.png',r'ScrabbleAR_Imagenes_png\ficha_W8_T.png'],
-                       'W9':[r'ScrabbleAR_Imagenes_png\ficha_W9_B.png',r'ScrabbleAR_Imagenes_png\ficha_W9_S.png',r'ScrabbleAR_Imagenes_png\ficha_W9_T.png'],
-                       'X7':[r'ScrabbleAR_Imagenes_png\ficha_X7_B.png',r'ScrabbleAR_Imagenes_png\ficha_X7_S.png',r'ScrabbleAR_Imagenes_png\ficha_X7_T.png'],
-                       'X8':[r'ScrabbleAR_Imagenes_png\ficha_X8_B.png',r'ScrabbleAR_Imagenes_png\ficha_X8_S.png',r'ScrabbleAR_Imagenes_png\ficha_X8_T.png'],
-                       'X9':[r'ScrabbleAR_Imagenes_png\ficha_X9_B.png',r'ScrabbleAR_Imagenes_png\ficha_X9_S.png',r'ScrabbleAR_Imagenes_png\ficha_X9_T.png'],
-                       'Y3':[r'ScrabbleAR_Imagenes_png\ficha_Y3_B.png',r'ScrabbleAR_Imagenes_png\ficha_Y3_S.png',r'ScrabbleAR_Imagenes_png\ficha_Y3_T.png'],
-                       'Y4':[r'ScrabbleAR_Imagenes_png\ficha_Y4_B.png',r'ScrabbleAR_Imagenes_png\ficha_Y4_S.png',r'ScrabbleAR_Imagenes_png\ficha_Y4_T.png'],
-                       'Y5':[r'ScrabbleAR_Imagenes_png\ficha_Y5_B.png',r'ScrabbleAR_Imagenes_png\ficha_Y5_S.png',r'ScrabbleAR_Imagenes_png\ficha_Y5_T.png'],
-                       'Z9':[r'ScrabbleAR_Imagenes_png\ficha_Z9_B.png',r'ScrabbleAR_Imagenes_png\ficha_Z9_S.png',r'ScrabbleAR_Imagenes_png\ficha_Z9_T.png'],
-                       'Z10':[r'ScrabbleAR_Imagenes_png\ficha_Z10_B.png',r'ScrabbleAR_Imagenes_png\ficha_Z10_S.png',r'ScrabbleAR_Imagenes_png\ficha_Z10_T.png'],
-                       'Z11':[r'ScrabbleAR_Imagenes_png\ficha_Z11_B.png',r'ScrabbleAR_Imagenes_png\ficha_Z11_S.png',r'ScrabbleAR_Imagenes_png\ficha_Z11_T.png']}
+    Dicc_letras_rutas={'A1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_A1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_A1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_A1_T.png')],
+                       'A2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_A2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_A2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_A2_T.png')],
+                       'B2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_B2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_B2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_B2_T.png')],
+                       'B3':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_B3_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_B3_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_B3_T.png')],
+                       'B4':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_B4_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_B4_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_B4_T.png')],
+                       'C1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_C1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_C1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_C1_T.png')],
+                       'C2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_C2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_C2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_C2_T.png')],
+                       'C3':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_C3_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_C3_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_C3_T.png')],
+                       'D1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_D1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_D1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_D1_T.png')],
+                       'D2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_D2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_D2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_D2_T.png')],
+                       'D3':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_D3_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_D3_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_D3_T.png')],
+                       'E1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_E1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_E1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_E1_T.png')],
+                       'E2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_E2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_E2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_E2_T.png')],
+                       'F3':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_F3_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_F3_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_F3_T.png')],
+                       'F4':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_F4_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_F4_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_F4_T.png')],
+                       'F5':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_F5_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_F5_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_F5_T.png')],
+                       'G1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_G1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_G1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_G1_T.png')],
+                       'G2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_G2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_G2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_G2_T.png')],
+                       'G3':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_G3_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_G3_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_G3_T.png')],
+                       'H3':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_H3_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_H3_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_H3_T.png')],
+                       'H4':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_H4_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_H4_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_H4_T.png')],
+                       'H5':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_H5_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_H5_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_H5_T.png')],
+                       'I1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_I1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_I1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_I1_T.png')],
+                       'I2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_I2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_I2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_I2_T.png')],
+                       'J5':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_J5_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_J5_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_J5_T.png')],
+                       'J6':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_J6_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_J6_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_J6_T.png')],
+                       'J7':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_J7_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_J7_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_J7_T.png')],
+                       'K7':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_K7_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_K7_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_K7_T.png')],
+                       'K8':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_K8_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_K8_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_K8_T.png')],
+                       'K9':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_K9_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_K9_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_K9_T.png')],
+                       'L1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_L1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_L1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_L1_T.png')],
+                       'L2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_L2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_L2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_L2_T.png')],
+                       'M2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_M2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_M2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_M2_T.png')],
+                       'M3':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_M3_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_M3_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_M3_T.png')],
+                       'M4':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_M4_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_M4_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_M4_T.png')],
+                       'N1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_N1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_N1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_N1_T.png')],
+                       'N2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_N2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_N2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_N2_T.png')],
+                       'Ñ7':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Ñ7_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Ñ7_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Ñ7_T.png')],
+                       'Ñ8':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Ñ8_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Ñ8_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Ñ8_T.png')],
+                       'Ñ9':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Ñ9_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Ñ9_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Ñ9_T.png')],
+                       'O1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_O1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_O1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_O1_T.png')],
+                       'O2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_O2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_O2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_O2_T.png')],
+                       'P2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_P2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_P2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_P2_T.png')],
+                       'P3':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_P3_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_P3_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_P3_T.png')],
+                       'P4':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_P4_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_P4_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_P4_T.png')],
+                       'Q7':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Q7_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Q7_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Q7_T.png')],
+                       'Q8':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Q8_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Q8_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Q8_T.png')],
+                       'Q9':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Q9_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Q9_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Q9_T.png')],
+                       'R1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_R1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_R1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_R1_T.png')],
+                       'R2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_R2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_R2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_R2_T.png')],
+                       'S1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_S1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_S1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_S1_T.png')],
+                       'S2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_S2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_S2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_S2_T.png')],
+                       'T1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_T1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_T1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_T1_T.png')],
+                       'T2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_T2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_T2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_T2_T.png')],
+                       'U1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_U1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_U1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_U1_T.png')],
+                       'U2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_U2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_U2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_U2_T.png')],
+                       'V3':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_V3_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_V3_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_V3_T.png')],
+                       'V4':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_V4_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_V4_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_V4_T.png')],
+                       'V5':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_V5_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_V5_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_V5_T.png')],
+                       'W7':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_W7_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_W7_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_W7_T.png')],
+                       'W8':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_W8_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_W8_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_W8_T.png')],
+                       'W9':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_W9_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_W9_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_W9_T.png')],
+                       'X7':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_X7_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_X7_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_X7_T.png')],
+                       'X8':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_X8_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_X8_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_X8_T.png')],
+                       'X9':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_X9_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_X9_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_X9_T.png')],
+                       'Y3':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Y3_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Y3_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Y3_T.png')],
+                       'Y4':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Y4_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Y4_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Y4_T.png')],
+                       'Y5':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Y5_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Y5_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Y5_T.png')],
+                       'Z9':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Z9_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Z9_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Z9_T.png')],
+                       'Z10':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Z10_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Z10_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Z10_T.png')],
+                       'Z11':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Z11_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Z11_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Z11_T.png')]}
 
     Dicc_Actual_Punto_Ficha={}
     for x in Dicc_letra_puntajes:
         clave_Dicc_letras_rutas=x+str(Dicc_letra_puntajes[x])
         Dicc_Actual_Punto_Ficha[x]=Dicc_letras_rutas[clave_Dicc_letras_rutas]
-    Dicc_Actual_Punto_Ficha['white']=r'ScrabbleAR_Imagenes_png\modelo_ficha.png'#r'ScrabbleAR_Imagenes_png\Transparente.png'
+    Dicc_Actual_Punto_Ficha['white']=corrector_paths(r'ScrabbleAR_Imagenes_png\modelo_ficha.png')#corrector_paths(r'ScrabbleAR_Imagenes_png\Transparente.png')
     return(Dicc_Actual_Punto_Ficha)
 
 def Update_Tablero2(window,Dicc,size,subsample):
     '''Amplia la lista de cada uno de los elementos de Dicc con direcciones segun corresponde y coloca imagenes en el tablero segun corresponde '''
-    inicio=r'ScrabbleAR_Imagenes_png\icono_inicio.png'
-    yellow=r'ScrabbleAR_Imagenes_png\icono_x3.png'
-    red=r'ScrabbleAR_Imagenes_png\icono_x2.png'
-    green=r'ScrabbleAR_Imagenes_png\icono_-3.png'
-    blue=r'ScrabbleAR_Imagenes_png\icono_-2.png'
-    white=r'ScrabbleAR_Imagenes_png\modelo_ficha.png'#r'ScrabbleAR_Imagenes_png\icono_blanco.png'
+    inicio=corrector_paths(r'ScrabbleAR_Imagenes_png\icono_inicio.png')
+    yellow=corrector_paths(r'ScrabbleAR_Imagenes_png\icono_x3.png')
+    red=corrector_paths(r'ScrabbleAR_Imagenes_png\icono_x2.png')
+    green=corrector_paths(r'ScrabbleAR_Imagenes_png\icono_-3.png')
+    blue=corrector_paths(r'ScrabbleAR_Imagenes_png\icono_-2.png')
+    white=corrector_paths(r'ScrabbleAR_Imagenes_png\modelo_ficha.png')#corrector_paths(r'ScrabbleAR_Imagenes_png\icono_blanco.png')
 
     for x in range(15):
         for y in range(15):
@@ -181,18 +181,18 @@ def Update_Tablero2(window,Dicc,size,subsample):
 
 def rutas_letras_CPU(Dicc_letra_puntajes):
     '''Recibe un diccionario con claves letra y valor puntaje (ej:"A:1") y segun eso , genera un diccionario con clave letra y valor direccion de la imagen a usar,para el CPU '''
-    Dicc_letras_rutas_CPU={'A1':r'ScrabbleAR_Imagenes_png\ficha_A1_N.png','A2':r'ScrabbleAR_Imagenes_png\ficha_A2_N.png','B2':r'ScrabbleAR_Imagenes_png\ficha_B2_N.png','B3':r'ScrabbleAR_Imagenes_png\ficha_B3_N.png','B4':r'ScrabbleAR_Imagenes_png\ficha_B4_N.png',
-        'C1':r'ScrabbleAR_Imagenes_png\ficha_C1_N.png','C2':r'ScrabbleAR_Imagenes_png\ficha_C2_N.png','C3':r'ScrabbleAR_Imagenes_png\ficha_C3_N.png','D1':r'ScrabbleAR_Imagenes_png\ficha_D1_N.png','D2':r'ScrabbleAR_Imagenes_png\ficha_D2_N.png','D3':r'ScrabbleAR_Imagenes_png\ficha_D3_N.png',
-        'E1':r'ScrabbleAR_Imagenes_png\ficha_E1_N.png','E2':r'ScrabbleAR_Imagenes_png\ficha_E2_N.png','F3':r'ScrabbleAR_Imagenes_png\ficha_F3_N.png','F4':r'ScrabbleAR_Imagenes_png\ficha_F4_N.png','F5':r'ScrabbleAR_Imagenes_png\ficha_F5_N.png','G1':r'ScrabbleAR_Imagenes_png\ficha_G1_N.png',
-        'G2':r'ScrabbleAR_Imagenes_png\ficha_G2_N.png','G3':r'ScrabbleAR_Imagenes_png\ficha_G3_N.png','H3':r'ScrabbleAR_Imagenes_png\ficha_H3_N.png','H4':r'ScrabbleAR_Imagenes_png\ficha_H4_N.png','H5':r'ScrabbleAR_Imagenes_png\ficha_H5_N.png','I1':r'ScrabbleAR_Imagenes_png\ficha_I1_N.png',
-        'I2':r'ScrabbleAR_Imagenes_png\ficha_I2_N.png','J5':r'ScrabbleAR_Imagenes_png\ficha_J5_N.png','J6':r'ScrabbleAR_Imagenes_png\ficha_J6_N.png','J7':r'ScrabbleAR_Imagenes_png\ficha_J7_N.png','K7':r'ScrabbleAR_Imagenes_png\ficha_K7_N.png','K8':r'ScrabbleAR_Imagenes_png\ficha_K8_N.png',
-        'K9':r'ScrabbleAR_Imagenes_png\ficha_K9_N.png','L1':r'ScrabbleAR_Imagenes_png\ficha_L1_N.png','L2':r'ScrabbleAR_Imagenes_png\ficha_L2_N.png','M2':r'ScrabbleAR_Imagenes_png\ficha_M2_N.png','M3':r'ScrabbleAR_Imagenes_png\ficha_M3_N.png','M4':r'ScrabbleAR_Imagenes_png\ficha_M4_N.png',
-        'N1':r'ScrabbleAR_Imagenes_png\ficha_N1_N.png','N2':r'ScrabbleAR_Imagenes_png\ficha_N2_N.png','Ñ7':r'ScrabbleAR_Imagenes_png\ficha_Ñ7_N.png','Ñ8':r'ScrabbleAR_Imagenes_png\ficha_Ñ8_N.png','Ñ9':r'ScrabbleAR_Imagenes_png\ficha_Ñ9_N.png','O1':r'ScrabbleAR_Imagenes_png\ficha_O1_N.png',
-        'O2':r'ScrabbleAR_Imagenes_png\ficha_O2_N.png','P2':r'ScrabbleAR_Imagenes_png\ficha_P2_N.png','P3':r'ScrabbleAR_Imagenes_png\ficha_P3_N.png','P4':r'ScrabbleAR_Imagenes_png\ficha_P4_N.png','Q7':r'ScrabbleAR_Imagenes_png\ficha_Q7_N.png','Q8':r'ScrabbleAR_Imagenes_png\ficha_Q8_N.png',
-        'Q9':r'ScrabbleAR_Imagenes_png\ficha_Q9_N.png','R1':r'ScrabbleAR_Imagenes_png\ficha_R1_N.png','R2':r'ScrabbleAR_Imagenes_png\ficha_R2_N.png','S1':r'ScrabbleAR_Imagenes_png\ficha_S1_N.png','S2':r'ScrabbleAR_Imagenes_png\ficha_S2_N.png','T1':r'ScrabbleAR_Imagenes_png\ficha_T1_N.png',
-        'T2':r'ScrabbleAR_Imagenes_png\ficha_T2_N.png','U1':r'ScrabbleAR_Imagenes_png\ficha_U1_N.png','U2':r'ScrabbleAR_Imagenes_png\ficha_U2_N.png','V3':r'ScrabbleAR_Imagenes_png\ficha_V3_N.png','V4':r'ScrabbleAR_Imagenes_png\ficha_V4_N.png','V5':r'ScrabbleAR_Imagenes_png\ficha_V5_N.png',
-        'W7':r'ScrabbleAR_Imagenes_png\ficha_W7_N.png','W8':r'ScrabbleAR_Imagenes_png\ficha_W8_N.png','W9':r'ScrabbleAR_Imagenes_png\ficha_W9_N.png','X7':r'ScrabbleAR_Imagenes_png\ficha_X7_N.png','X8':r'ScrabbleAR_Imagenes_png\ficha_X8_N.png','X9':r'ScrabbleAR_Imagenes_png\ficha_X9_N.png',
-        'Y3':r'ScrabbleAR_Imagenes_png\ficha_Y3_N.png','Y4':r'ScrabbleAR_Imagenes_png\ficha_Y4_N.png','Y5':r'ScrabbleAR_Imagenes_png\ficha_Y5_N.png','Z9':r'ScrabbleAR_Imagenes_png\ficha_Z9_N.png','Z10':r'ScrabbleAR_Imagenes_png\ficha_Z10_N.png','Z11':r'ScrabbleAR_Imagenes_png\ficha_Z11_N.png'}
+    Dicc_letras_rutas_CPU={'A1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_A1_N.png'),'A2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_A2_N.png'),'B2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_B2_N.png'),'B3':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_B3_N.png'),'B4':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_B4_N.png'),
+        'C1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_C1_N.png'),'C2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_C2_N.png'),'C3':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_C3_N.png'),'D1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_D1_N.png'),'D2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_D2_N.png'),'D3':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_D3_N.png'),
+        'E1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_E1_N.png'),'E2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_E2_N.png'),'F3':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_F3_N.png'),'F4':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_F4_N.png'),'F5':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_F5_N.png'),'G1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_G1_N.png'),
+        'G2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_G2_N.png'),'G3':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_G3_N.png'),'H3':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_H3_N.png'),'H4':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_H4_N.png'),'H5':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_H5_N.png'),'I1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_I1_N.png'),
+        'I2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_I2_N.png'),'J5':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_J5_N.png'),'J6':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_J6_N.png'),'J7':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_J7_N.png'),'K7':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_K7_N.png'),'K8':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_K8_N.png'),
+        'K9':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_K9_N.png'),'L1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_L1_N.png'),'L2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_L2_N.png'),'M2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_M2_N.png'),'M3':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_M3_N.png'),'M4':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_M4_N.png'),
+        'N1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_N1_N.png'),'N2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_N2_N.png'),'Ñ7':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Ñ7_N.png'),'Ñ8':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Ñ8_N.png'),'Ñ9':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Ñ9_N.png'),'O1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_O1_N.png'),
+        'O2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_O2_N.png'),'P2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_P2_N.png'),'P3':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_P3_N.png'),'P4':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_P4_N.png'),'Q7':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Q7_N.png'),'Q8':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Q8_N.png'),
+        'Q9':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Q9_N.png'),'R1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_R1_N.png'),'R2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_R2_N.png'),'S1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_S1_N.png'),'S2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_S2_N.png'),'T1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_T1_N.png'),
+        'T2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_T2_N.png'),'U1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_U1_N.png'),'U2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_U2_N.png'),'V3':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_V3_N.png'),'V4':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_V4_N.png'),'V5':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_V5_N.png'),
+        'W7':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_W7_N.png'),'W8':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_W8_N.png'),'W9':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_W9_N.png'),'X7':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_X7_N.png'),'X8':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_X8_N.png'),'X9':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_X9_N.png'),
+        'Y3':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Y3_N.png'),'Y4':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Y4_N.png'),'Y5':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Y5_N.png'),'Z9':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Z9_N.png'),'Z10':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Z10_N.png'),'Z11':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Z11_N.png')}
 
     Dicc_Actual_Punto_Ficha_CPU={}
     for x in Dicc_letra_puntajes:
@@ -368,7 +368,7 @@ def Layout_Columna():
                [sg.Text('0000',key='PuntajeUsuario',font=("impact",20))],
                [sg.Text('__________________________________',pad=((5,5),(3,34)))],
                [sg.Button('<',key='Mostrar',font=('impact',11),pad=((202,0),(3,3))),
-               sg.Button('q',key='Rotar',font=('webdings',12),size=(1,1))],
+               sg.Button(image_filename=corrector_paths(r'ScrabbleAR_Imagenes_png\Icono_Rotar.png'),key='Rotar')],
                [sg.Text(pad=((6,0),(5,2)),size=(20, 3),key='Infobox',font=("Consolas", 16),background_color='#A4A4A4',justification='center',relief=sg.RELIEF_SOLID)], #Entran 60 caracteres
                [sg.Button(button_text='Terminar turno',size=(15,0),font=("Unispace",20),pad=((5,0),(5,3)))],
                [sg.Button(button_text='Validar',size=(15,0),font=("Unispace",20),pad=((5,0),(5,3)))],
@@ -381,9 +381,9 @@ def Layout_Columna():
 def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_puntaje_partida,size,subsample):
     ''' Diseño de la columna donde se generan los 2 atriles con sus fichas (Usuario y CPU), y el tablero de juego entre ambos'''
     MAX_ROWS = MAX_COL = 15 #ACA????
-    formato_fichas_cpu={'filename':r'ScrabbleAR_Imagenes_png\imagen_CPU.png','size':(38,38),'pad':(7,3)  }
+    formato_fichas_cpu={'filename':corrector_paths(r'ScrabbleAR_Imagenes_png\imagen_CPU.png'),'size':(38,38),'pad':(7,3)  }
 
-    #formato_fichas_jugador={'font':('',25),'button_color':(None,'black'),'image_filename':'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Ficha.png','image_size':(40,40),'pad':(7,3)  }
+    #formato_fichas_jugador={'font':('',25),'button_color':(None,'black'),'image_filename':'C:\Users\delma\Desktop\2do Año\PYTHON\Practicas\Scrabble\Ficha.png'),'image_size':(40,40),'pad':(7,3)  }
     #Para luego reemplazar los colores dados por el boton con imagenes
     if len(Lista_Atril) < 7 :
         Letra_1,Cant_fichas=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
@@ -407,7 +407,7 @@ def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_pun
                                                     (sg.Image(**formato_fichas_cpu,key='fichasbot5')),
                                                     (sg.Image(**formato_fichas_cpu,key='fichasbot6')),
                                                     (sg.Image(**formato_fichas_cpu,key='fichasbot7'))],
-                [(sg.Image(filename='ScrabbleAR_Imagenes_png\Atril_back.png',key='atril',pad=(20,3)))]]
+                [(sg.Image(filename=corrector_paths('ScrabbleAR_Imagenes_png\Atril_back.png'),key='atril',pad=(20,3)))]]
 
     layout.extend([[sg.Button('', size=(4, 2), border_width=1,key=(i,j),pad=(0,0))for j in range(MAX_COL)] for i in range(MAX_ROWS)])
 
@@ -419,7 +419,7 @@ def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_pun
                     (sg.Button(key=4,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[4]][0],image_size=size,image_subsample=subsample)),
                     (sg.Button(key=5,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[5]][0],image_size=size,image_subsample=subsample)),
                     (sg.Button(key=6,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[6]][0],image_size=size,image_subsample=subsample))],
-                    [(sg.Image(filename='ScrabbleAR_Imagenes_png\Atril.png',key='texto'))]])
+                    [(sg.Image(filename=corrector_paths('ScrabbleAR_Imagenes_png\Atril.png'),key='texto'))]])
 
     return layout,Cant_fichas
 
@@ -476,7 +476,7 @@ def Mensaje_Turno(Turno_Usuario):
         sg.popup('Estas Listo?\nEs tu turno',custom_text="Si,lo estoy",no_titlebar=True,keep_on_top=True)
     else:
         sg.popup('Estas Listo?\nEs el turno de la IA',custom_text="Si,lo estoy",no_titlebar=True,keep_on_top=True)
-    playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=bloqueo_sonido())
+    playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
 
 def Eliminar_Elementos_Ocupados_CDD(LCO,CCD):
     '''Elimina los elementos de LCO en CCD '''
@@ -495,11 +495,11 @@ def Verificar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega,window):
             Palabra = Palabra + Dicc[coord][0]
     if verificar_Palabra(Palabra,Dificultad,Dificil_se_juega):
         Texto = '"'+Palabra+'"\n'+'Es una palabra valida'
-        playsound(r'ScrabbleAR_Sonidos\Valido.mp3',block=bloqueo_sonido())
+        playsound(corrector_paths(r'ScrabbleAR_Sonidos\Valido.mp3'),block=bloqueo_sonido())
         Update_Infobox(Texto,'#57FD57',window)
     else:
         Texto = '"'+Palabra+'"\n'+'No es una palabra valida'
-        playsound(r'ScrabbleAR_Sonidos\NoValido.mp3',block=bloqueo_sonido())
+        playsound(corrector_paths(r'ScrabbleAR_Sonidos\NoValido.mp3'),block=bloqueo_sonido())
         Update_Infobox(Texto,'#FD5757',window)
         Palabra = ''
     return Palabra
@@ -520,7 +520,7 @@ def verRows(row,Lista_TP):
     return(Lista_TP)
 def Importar_Datos():
     '''Toma los datos del archivo generado en opciones y los retorna para poder crear una partida utilizandolos '''
-    arch = open(r'ScrabbleAR_Datos\Archivo_Opciones.csv','r',encoding="utf8")
+    arch = open(corrector_paths(r'ScrabbleAR_Datos\Archivo_Opciones.csv'),'r',encoding="utf8")
     reader = csv.reader(arch)
     index = 0
     Lista_TP = []
@@ -692,7 +692,7 @@ def Validar(LCOPR,CCD,Dicc,Dificultad,PrimerRonda,Palabra,Dificil_se_juega,windo
             if ((7,7) in LCOPR):
                 Palabra = Verificar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega,window)
             else:
-                playsound(r'ScrabbleAR_Sonidos\Clin.mp3',block=bloqueo_sonido())
+                playsound(corrector_paths(r'ScrabbleAR_Sonidos\Clin.mp3'),block=bloqueo_sonido())
                 Update_Infobox('Debes colocar una letra en la casilla "Inicio"!','#5798FD',window)
         else:
             bool = False
@@ -703,7 +703,7 @@ def Validar(LCOPR,CCD,Dicc,Dificultad,PrimerRonda,Palabra,Dificil_se_juega,windo
             if bool:
                 Palabra = Verificar(Palabra,LCOPR,Dicc,Dificultad,Dificil_se_juega,window)
             else:
-                playsound(r'ScrabbleAR_Sonidos\Clin.mp3',block=bloqueo_sonido())
+                playsound(corrector_paths(r'ScrabbleAR_Sonidos\Clin.mp3'),block=bloqueo_sonido())
                 Update_Infobox('Coloca la palabra en una casilla valida!','#5798FD',window)
     return Palabra
 
@@ -728,11 +728,11 @@ def Palabra_bien_colocada(LCOPR,window):
         if Horizontal or Vertical:
             return True
         else:
-            playsound(r'ScrabbleAR_Sonidos\Clin.mp3',block=bloqueo_sonido())
+            playsound(corrector_paths(r'ScrabbleAR_Sonidos\Clin.mp3'),block=bloqueo_sonido())
             Update_Infobox('Esta palabra esta mal colocada!','#5798FD',window)
             return False
     else:
-        playsound(r'ScrabbleAR_Sonidos\Clin.mp3',block=bloqueo_sonido())
+        playsound(corrector_paths(r'ScrabbleAR_Sonidos\Clin.mp3'),block=bloqueo_sonido())
         Update_Infobox('Debes formar palabras de por lo menos 2 fichas!','#5798FD',window)
         return False
 
@@ -796,7 +796,7 @@ def Intercambio_FichasAtril(Lista_Atril,Pos_letra1,Pos_letra2,window,Dicc_rutas_
 
 def Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida,size,subsample):
     '''Intercambia las fichas entre tablero y atril , event1 x event2'''
-    playsound(r'ScrabbleAR_Sonidos\IntercambioFichas.mp3',block=bloqueo_sonido())
+    playsound(corrector_paths(r'ScrabbleAR_Sonidos\IntercambioFichas.mp3'),block=bloqueo_sonido())
     aux = Dicc[event1][0]
     Dicc[event1][0] = Lista_Atril[event2]
     Lista_Atril[event2] = aux
@@ -809,7 +809,7 @@ def Intercambio_Fichas(Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_p
 
 def Colocar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,Letra1,event1,event2,window,Dicc_rutas_letras_puntaje_partida,size,subsample):
     '''Coloca la ficha del atril seleccionada en la posicion deceada del tablero'''
-    playsound(r'ScrabbleAR_Sonidos\ColocarFicha.mp3',block=bloqueo_sonido())
+    playsound(corrector_paths(r'ScrabbleAR_Sonidos\ColocarFicha.mp3'),block=bloqueo_sonido())
     if(not(Coord_Ocupada(LCO,event2))):
         Dicc[event2][0] = Letra1
         window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Letra1][0],image_size=size,image_subsample=subsample)
@@ -819,7 +819,7 @@ def Colocar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,Letra1,event1,event2,window,Dic
 
 def Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida,size,subsample):
     '''Quita una ficha del tablero y la pone en una posicion vacia del atril'''
-    playsound(r'ScrabbleAR_Sonidos\RetirarFicha.mp3',block=bloqueo_sonido())
+    playsound(corrector_paths(r'ScrabbleAR_Sonidos\RetirarFicha.mp3'),block=bloqueo_sonido())
     Lista_Atril[event2] = Dicc[event1][0]
     window[event1].update(image_filename=Dicc[event1][2],image_size=size,image_subsample=subsample)
     window[event2].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=size,image_subsample=subsample)
@@ -843,11 +843,11 @@ def Acciones_Usuario(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_ru
                     Retirar_Ficha(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida,size,subsample)
 
             elif (type(event1) == tuple) and (type(event2) == tuple):   #Intercambio FichasTablero:
-                playsound(r'ScrabbleAR_Sonidos\IntercambioFichas.mp3',block=bloqueo_sonido())
+                playsound(corrector_paths(r'ScrabbleAR_Sonidos\IntercambioFichas.mp3'),block=bloqueo_sonido())
                 Intercambio_FichasTablero(LCOPR,Dicc,event1,event2,window,Dicc_rutas_letras_puntaje_partida,size,subsample)
 
             elif (type(event1) == int) and (type(event2) == int):       #Intercambio FichasAtril:
-                playsound(r'ScrabbleAR_Sonidos\IntercambioFichas.mp3',block=bloqueo_sonido())
+                playsound(corrector_paths(r'ScrabbleAR_Sonidos\IntercambioFichas.mp3'),block=bloqueo_sonido())
                 Intercambio_FichasAtril(Lista_Atril,event1,event2,window,Dicc_rutas_letras_puntaje_partida,size,subsample)
     else:
 
@@ -855,7 +855,7 @@ def Acciones_Usuario(LCOPR,LCO,CCD,Dicc,Lista_Atril,event1,event2,window,Dicc_ru
             window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[event1]][0],image_size=size,image_subsample=subsample)
         else:
             window[event1].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[event1][0]][0],image_size=size,image_subsample=subsample)
-        playsound(r'ScrabbleAR_Sonidos\Clin.mp3',block=bloqueo_sonido())
+        playsound(corrector_paths(r'ScrabbleAR_Sonidos\Clin.mp3'),block=bloqueo_sonido())
         Update_Infobox('No puedes interactuar con las fichas ya colocadas!','#5798FD',window)
 
 def Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles,event,window,Dicc_rutas_letras_puntaje_partida,size,subsample):
@@ -891,14 +891,14 @@ def Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,
                 sg.popup('No has intercambiado ninguna ficha! no pierdes el turno',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
                 window[event].update(button_color=('#2B2B28','#E3B04B'))
             Boton_Intercambiar = False
-            playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=bloqueo_sonido())
+            playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
         else: #Recien "Clickeo" el boton intercambiar Fichas
             if Turnos_Disponibles != 1:
                 sg.popup('Te quedan '+str(Turnos_Disponibles)+' turnos disponibles\nSelecciona las fichas del atril que quieras cambiar!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
             else:
                 sg.popup('Este es el ultimo turno en el que puedes cambiar fichas!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
             Boton_Intercambiar = True
-            playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=bloqueo_sonido())
+            playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
             window[event].update(button_color=('#2B2B28','#57C3FD'))
             Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,Dicc_rutas_letras_puntaje_partida,size,subsample)
     elif event != 'Reloj':
@@ -946,13 +946,13 @@ def GuardoPartida(Dificultad,DiccRLPP,Dicc,CFT,Usuario,Turnos_Disponibles,PTU,Hi
     info_CPU={"HistorialCPU":HistorialCPU,"DiccRLPP_CPU":DiccRLPP_CPU,"PT_CPU":PT_CPU,"fichas_CPU":fichas_CPU,"contador_Turnos_CPU":contador_Turnos_CPU,"LCO_CPU":LCO_CPU}
     info_Tablero={"Dificultad":Dificultad,"Dicc":Dicc_str,"CFT":CFT,"LCO":LCO,"CCD":CCD,"Tiempo":Tiempo,"PrimerRonda":PrimerRonda,"Dicc_Bolsa":Dicc_Bolsa,"Dicc_Puntajes":Dicc_Puntajes,"Lista_TP":Lista_TP}
     DiccPartida={"info_Usuario":{**info_Usuario},"info_CPU":{**info_CPU},"info_Tablero":{**info_Tablero}      }
-    archivo=open(r"ScrabbleAR_Datos\Partida_Guardada.json","w")
+    archivo=open(corrector_paths(r'ScrabbleAR_Datos\Partida_Guardada.json'),"w")
     Guardar=json.dump(DiccPartida,archivo)
     archivo.close()
 def cargoPartida():
     '''Busca el archivo en el que se guardo la ultima partida , guarda esos datos en un Diccionario y convierte (en los casos necesarios)los archivos en el tipo
        requerido para poder trabajar con ellos sin problemas'''
-    archivo=open(r"ScrabbleAR_Datos\Partida_Guardada.json",'r')
+    archivo=open(corrector_paths(r'ScrabbleAR_Datos\Partida_Guardada.json'),'r')
     datos=json.load(archivo)
     archivo.close()
     Dicc={}
@@ -1016,7 +1016,7 @@ def genero_Tablero():
     size,subsample=resolucion_adaptable()
     print(size,subsample)
     event_popup = sg.popup_yes_no('¿Deseas cargar la partida guardada?',title='Aviso',keep_on_top=True)
-    playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=bloqueo_sonido())
+    playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
     if (event_popup == 'Yes'):
         partida_carga=True
         CCD=set()
@@ -1131,14 +1131,14 @@ def genero_Tablero():
                 #Aca deberian estar los cambios a la ventana que centrarian todo el contenido de esta.
             if event in (None, 'Salir') and (Boton_Intercambiar == False):
                 if event==('Salir'):
-                    playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=bloqueo_sonido())
+                    playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
                     event_popup1 = sg.popup_yes_no('Seguro que desea salir de la partida?',title='Aviso',keep_on_top=True)
-                    playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=bloqueo_sonido())
+                    playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
                 else:
                     event_popup1='Yes'
                 if (event_popup1 == 'Yes'):
                     event_popup2 = sg.popup_yes_no('¿Quieres posponer la partida?',title='Aviso',keep_on_top=True)
-                    playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=bloqueo_sonido())
+                    playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
                     if (event_popup2 == 'Yes'):
                         Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,DiccRLPP,size,subsample)
                         GuardoPartida(Dificultad,DiccRLPP,Dicc,CFT,Usuario,Turnos_Disponibles,PTU,HistorialUsuario,LCO,Tiempo,DiccRLPP_CPU,PT_CPU,fichas_CPU,contador_Turnos_CPU,HistorialCPU,PrimerRonda,Lista_Atril,Dicc_Bolsa,Dicc_Puntajes,tiempo_ronda,list(CCD),LCO_Usuario,LCO_CPU,tiempo_jugador,Lista_TP)
@@ -1149,13 +1149,13 @@ def genero_Tablero():
                     event1 = event
                     if (type(event1) == int):
                         if ((Lista_Atril[event1] != '')):
-                            playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=bloqueo_sonido())
+                            playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
                             window[event1].update(image_filename=DiccRLPP[Lista_Atril[event1]][1],image_size=size,image_subsample=subsample)
                     elif Coord_Ocupada(LCOPR,event1):
-                            playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=bloqueo_sonido())
+                            playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
                             window[event1].update(image_filename=DiccRLPP[Dicc[event1][0]][1],image_size=size,image_subsample=subsample)
                     else :
-                        playsound(r'ScrabbleAR_Sonidos\Clin.mp3',block=bloqueo_sonido())
+                        playsound(corrector_paths(r'ScrabbleAR_Sonidos\Clin.mp3'),block=bloqueo_sonido())
                         Update_Infobox('No puedes interactuar con las fichas ya colocadas!','#5798FD',window) if Coord_Ocupada(LCO,event) else Update_Infobox('Primero selecciona una letra!','#5798FD',window)
                         event1 = ''
                 else:
@@ -1166,7 +1166,7 @@ def genero_Tablero():
                 Palabra = Validar(LCOPR,CCD,Dicc,Dificultad,PrimerRonda,Palabra,Dificil_se_juega,window)
 
             elif (((event == 'Terminar turno') or Se_Intercambio_Ficha) and (Boton_Intercambiar == False)):
-                playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=bloqueo_sonido())
+                playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
                 Bonus = Calcular_Bonus(LCOPR,Dicc_Puntajes,Dicc)
                 PTU = TerminarTurno(LCOPR,LCO,CCD,Dicc,Lista_Atril,PTU,Palabra,Dificultad,Dificil_se_juega,Dicc_Puntajes,Dicc_Bolsa,CFT,Bonus,window,DiccRLPP,size,subsample)
                 CFT = Actualizar_CFT(CFT,Dicc_Bolsa)
@@ -1189,12 +1189,12 @@ def genero_Tablero():
 
 
             elif (event == 'Rotar') and (Desplegado):
-                playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=bloqueo_sonido())
+                playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
                 Update_Columna_Extra(Columna_Historial,window)
                 Columna_Historial = not Columna_Historial
 
             elif (event == 'Mostrar'):
-                playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=bloqueo_sonido())
+                playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
                 if (Desplegado):
                     window['Columna_Historial'].update(visible=False)
                     window['Columna_Conf'].update(visible=False)
@@ -1204,14 +1204,14 @@ def genero_Tablero():
                     window['Mostrar'].update('<')
                 Desplegado = not Desplegado
             elif(event=="Pausar"):
-                playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=bloqueo_sonido())
+                playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
                 for x in range(len(Lista_Atril)):
-                    window[x].update(image_filename=r'ScrabbleAR_Imagenes_png\Transparente.png',image_size=size,image_subsample=subsample)
+                    window[x].update(image_filename=corrector_paths(r'ScrabbleAR_Imagenes_png\Transparente.png'),image_size=size,image_subsample=subsample)
                 sg.popup('Presione "OK"para continuar',keep_on_top=True,title='Aviso')
                 for x in range(len(Lista_Atril)):
                     window[x].update(image_filename=DiccRLPP[Lista_Atril[x]][0],image_size=size,image_subsample=subsample)
             elif (event=="Rendirse"):
-                playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=bloqueo_sonido())
+                playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
                 se_Rinde = sg.popup_yes_no("Si se rinde no se guardaran datos de esta partida , esta seguro?",title='Aviso',keep_on_top=True)
                 if (se_Rinde=="Yes"):
                     Fin=True
@@ -1235,11 +1235,11 @@ def genero_Tablero():
 
     if fin_Juego(Tiempo,CFT,terminacion_Manual_Usuario):
         if (PTU > PT_CPU):
-            playsound(r'ScrabbleAR_Sonidos\Ganar.mp3',block=bloqueo_sonido())
+            playsound(corrector_paths(r'ScrabbleAR_Sonidos\Ganar.mp3'),block=bloqueo_sonido())
             sg.popup("Ganaste",title='Aviso',keep_on_top=True)
             Agregar_Datos_TabladePosiciones(Dificultad,Usuario,PTU)
         else:
-            playsound(r'ScrabbleAR_Sonidos\Perder.mp3',block=bloqueo_sonido())
+            playsound(corrector_paths(r'ScrabbleAR_Sonidos\Perder.mp3'),block=bloqueo_sonido())
             sg.popup("Perdiste",title='Aviso',keep_on_top=True)
 
     window.close()
