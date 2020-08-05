@@ -28,25 +28,25 @@ def Comprobaciones(Boton_actual,pagina,window):
 
 def Ayuda():
     ''' Diseño de la ventana Ayuda , se generan los botones para navegar entre la distinta informacion y la zona donde se muestra dicha informacion'''
-    Dicc_Informacion={'Sobre_El_Juego':['ScrabbleAR_Imagenes_png\SobreElJuego.png'],
-                      'Como_Se_Juega':['ScrabbleAR_Imagenes_png\ComoSeJuega1.png','ScrabbleAR_Imagenes_png\ComoSeJuega2.png','ScrabbleAR_Imagenes_png\ComoSeJuega3.png','ScrabbleAR_Imagenes_png\ComoSeJuega4.png'],
-                      'Opciones':['ScrabbleAR_Imagenes_png\Opciones1.png','ScrabbleAR_Imagenes_png\Opciones2.png','ScrabbleAR_Imagenes_png\Opciones3.png','ScrabbleAR_Imagenes_png\Opciones4.png'],
-                      'Tablero':['ScrabbleAR_Imagenes_png\Tablero1.png','ScrabbleAR_Imagenes_png\Tablero2.png','ScrabbleAR_Imagenes_png\Tablero3.png','ScrabbleAR_Imagenes_png\Tablero4.png','ScrabbleAR_Imagenes_png\Tablero5.png']}
+    Dicc_Informacion={'Sobre_El_Juego':[r'ScrabbleAR_Imagenes_png\SobreElJuego.png'],
+                      'Como_Se_Juega':[r'ScrabbleAR_Imagenes_png\ComoSeJuega1.png',r'ScrabbleAR_Imagenes_png\ComoSeJuega2.png',r'ScrabbleAR_Imagenes_png\ComoSeJuega3.png',r'ScrabbleAR_Imagenes_png\ComoSeJuega4.png'],
+                      'Opciones':[r'ScrabbleAR_Imagenes_png\Opciones1.png',r'ScrabbleAR_Imagenes_png\Opciones2.png',r'ScrabbleAR_Imagenes_png\Opciones3.png',r'ScrabbleAR_Imagenes_png\Opciones4.png'],
+                      'Tablero':[r'ScrabbleAR_Imagenes_png\Tablero1.png',r'ScrabbleAR_Imagenes_png\Tablero2.png',r'ScrabbleAR_Imagenes_png\Tablero3.png',r'ScrabbleAR_Imagenes_png\Tablero4.png',r'ScrabbleAR_Imagenes_png\Tablero5.png']}
 
     botones = [[sg.Button(button_text="Sobre el juego",size=(12,2),key="Sobre_El_Juego"),sg.Button(button_text="Como se juega",size=(12,2),key="Como_Se_Juega"),sg.Button(button_text="Opciones",size=(12,2),key="Opciones"),sg.Button(button_text="Tablero",size=(12,2),key="Tablero")]]
 
     Ventana=[     [sg.Text("Este es el menu de Ayuda , haz click en un boton para saber mas sobre el tema elegido")],
                   [sg.Frame('',botones,relief='raised')],
-                  [sg.Image(corrector_paths('ScrabbleAR_Imagenes_png\Instrucciones.png'),key='Info')],
+                  [sg.Image(corrector_paths(r'ScrabbleAR_Imagenes_png\Instrucciones.png'),key='Info')],
                   [sg.Button(button_text="Salir",size=(10,2),key="Salir"),sg.Button('<',disabled=True,pad=((320,5),(3,3))),sg.Button('>',disabled=True)] ]
 
     window = sg.Window('Ayuda',Ventana,location=(540,100),size=(500,650),finalize=True)
     while True:
         event,values=window.Read()
         print(event)
-        playsound(corrector_paths('ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
+        playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
         if(event in (None,"Salir")):
-            playsound(corrector_paths('ScrabbleAR_Sonidos\Click.mp3'))
+            playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'))
             break
 
         elif (event != '>') and (event != '<'):
