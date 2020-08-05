@@ -353,7 +353,7 @@ def Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT,Lista_TP):
 
 def Layout_Columna():
     ''' Diseño de la columna donde se muestran el tiempo total , tiempo por ronda , Los botones principales TerminarTurno,Validar,Intercambiar,Pausar,Rendirse,Salir
-    y los botones para desplegar/escolder/rotar informacion adicional'''
+    y los botones para desplegar/esconder/rotar informacion adicional'''
     layout = [ [sg.Text('Tiempo Disponible',font=("impact",20))],
                [sg.Text("00:00",font=("Bahnschrift",20),key=('Tiempo_Ronda')),sg.Text('|',font=("Bahnschrift",20)),sg.Text("00:00",font=("Bahnschrift",20),key=('Tiempo'))],
                [sg.Text('__________________________________')],

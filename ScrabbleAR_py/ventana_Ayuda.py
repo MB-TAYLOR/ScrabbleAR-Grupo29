@@ -31,9 +31,9 @@ def Ayuda():
     window = sg.Window('Ayuda',Ventana,location=(540,100),size=(500,650),finalize=True)
     while True:
         event,values=window.Read()
-        playsound(r'ScrabbleAR_Sonidos/Click.mp3',block=False)
+        playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=False)
         if(event in (None,"Salir")):
-            playsound(r'ScrabbleAR_Sonidos/Click.mp3')
+            playsound(r'ScrabbleAR_Sonidos\Click.mp3')
             break
 
         elif (event != '>') and (event != '<'):
