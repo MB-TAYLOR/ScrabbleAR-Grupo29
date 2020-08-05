@@ -1,6 +1,12 @@
-import PySimpleGUI as sg
-from playsound import playsound
-from ScrabbleAR_py.Generadores import identificador_carpeta_error
+try:
+    import sys
+    import PySimpleGUI as sg
+    from playsound import playsound
+    from ScrabbleAR_py.Generadores import identificador_carpeta_error
+except ModuleNotFoundError:
+    print("Error ,ejecute el  programa desde 'ScrabbleAR.py'")
+    sys.exit()
+
 
 def Desabilitar_pag(max,pagina,window):
     '''Condiciones para activar o desactivar los botones "<" y ">"  '''

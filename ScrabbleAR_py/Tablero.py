@@ -1,15 +1,20 @@
-from ScrabbleAR_py.palabra_Existe import verificar_Palabra
-import json
-from ScrabbleAR_py.AiMaquina import formar_palabra
-import PySimpleGUI as sg
-from random import randint
-import random
-import time
-import csv
-from datetime import date
-from playsound import playsound
-from ScrabbleAR_py.Generadores import identificador_carpeta_error,bloqueo_sonido,Selector_de_coordenadas_disponibles
-import platform
+try:
+    import sys
+    from ScrabbleAR_py.palabra_Existe import verificar_Palabra
+    import json
+    from ScrabbleAR_py.AiMaquina import formar_palabra
+    import PySimpleGUI as sg
+    from random import randint
+    import random
+    import time
+    import csv
+    from datetime import date
+    from playsound import playsound
+    from ScrabbleAR_py.Generadores import identificador_carpeta_error,bloqueo_sonido,Selector_de_coordenadas_disponibles
+    import platform
+except ModuleNotFoundError:
+    print("Error ,ejecute el  programa desde 'ScrabbleAR.py'")
+    sys.exit()
 
 MAX_ROWS = MAX_COL = 15
 temp = 5

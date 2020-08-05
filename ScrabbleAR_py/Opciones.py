@@ -1,8 +1,13 @@
-from playsound import playsound
-import PySimpleGUI as sg
-import random
-import csv
-from ScrabbleAR_py.Generadores import identificador_carpeta_error
+try:
+    import sys
+    from playsound import playsound
+    import PySimpleGUI as sg
+    import random
+    import csv
+    from ScrabbleAR_py.Generadores import identificador_carpeta_error
+except ModuleNotFoundError:
+    print("Error ,ejecute el  programa desde 'ScrabbleAR.py'")
+    sys.exit()
 
 Error_Op = True
 

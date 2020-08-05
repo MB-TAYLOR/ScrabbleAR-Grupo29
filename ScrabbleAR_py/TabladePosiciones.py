@@ -1,8 +1,13 @@
 #!/usr/bin/env python
-import PySimpleGUI as sg
-import csv
-from playsound import playsound
-from ScrabbleAR_py.Generadores import identificador_carpeta_error
+try:
+    import sys
+    import PySimpleGUI as sg
+    import csv
+    from playsound import playsound
+    from ScrabbleAR_py.Generadores import identificador_carpeta_error
+except ModuleNotFoundError:
+    print("Error ,ejecute el  programa desde 'ScrabbleAR.py'")
+    sys.exit()
 # Show CSV data in Table
 sg.theme('DarkGrey2')
 
