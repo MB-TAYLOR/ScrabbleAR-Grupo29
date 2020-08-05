@@ -11,7 +11,7 @@ def corrector_paths(path):
     sistema_Operativo=platform.system()
     path_base=os.getcwd()
     path_add=path.split(chr(92))
-    path=os.path.join(path_base,*path_add) 
+    path=os.path.join(path_base,*path_add)
     return(path)
 
 
@@ -59,4 +59,3 @@ def Selector_de_coordenadas_disponibles(conjunto):
     x=random.randint(0,(len(conjunto)-1))
     conjunto=list(conjunto)
     return(tuple(conjunto[x]))
-corrector_paths('ScrabbleAR_Datos\Archivo_Opciones.csv')
