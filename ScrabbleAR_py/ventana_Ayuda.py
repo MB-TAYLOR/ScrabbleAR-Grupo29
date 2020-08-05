@@ -2,16 +2,22 @@ import PySimpleGUI as sg
 from playsound import playsound
 from ScrabbleAR_py.Generadores import identificador_carpeta_error
 
-def Comprobaciones(Boton_actual,pagina,window):
+def Desabilitar_pag(max,pagina,window):
     '''Condiciones para activar o desactivar los botones "<" y ">"  '''
+    if (pagina > 0) and (pagina < max):
+        window['>'].update(disabled=False)
+        window['<'].update(disabled=False)
+    elif (pagina == max):
+        window['>'].update(disabled=True)
+    elif (pagina == 0):
+        window['<'].update(disabled=True)
+
+def Comprobaciones(Boton_actual,pagina,window):
+    ''' Comprobaciones para saber de que boton se debera desabilitar pag'''
     if (Boton_actual=='Como_Se_Juega') or (Boton_actual=='Opciones'):
-        if (pagina > 0) and (pagina < 3):
-            window['>'].update(disabled=False)
-            window['<'].update(disabled=False)
-        elif (pagina == 3):
-            window['>'].update(disabled=True)
-        elif (pagina == 0):
-            window['<'].update(disabled=True)
+        Desabilitar_pag(3,pagina,window)
+    elif (Boton_actual=='Tablero'):
+        Desabilitar_pag(4,pagina,window)
 
 
 def Ayuda():
@@ -19,9 +25,9 @@ def Ayuda():
     Dicc_Informacion={'Sobre_El_Juego':[r'ScrabbleAR_Imagenes_png\SobreElJuego.png'],
                       'Como_Se_Juega':[r'ScrabbleAR_Imagenes_png\ComoSeJuega1.png',r'ScrabbleAR_Imagenes_png\ComoSeJuega2.png',r'ScrabbleAR_Imagenes_png\ComoSeJuega3.png',r'ScrabbleAR_Imagenes_png\ComoSeJuega4.png'],
                       'Opciones':[r'ScrabbleAR_Imagenes_png\Opciones1.png',r'ScrabbleAR_Imagenes_png\Opciones2.png',r'ScrabbleAR_Imagenes_png\Opciones3.png',r'ScrabbleAR_Imagenes_png\Opciones4.png'],
-                      'Tablero':[]}
+                      'Tablero':[r'ScrabbleAR_Imagenes_png\Tablero1.png',r'ScrabbleAR_Imagenes_png\Tablero2.png',r'ScrabbleAR_Imagenes_png\Tablero3.png',r'ScrabbleAR_Imagenes_png\Tablero4.png',r'ScrabbleAR_Imagenes_png\Tablero5.png']}
 
-    botones = [[sg.Button(button_text="Sobre el juego",size=(12,2),key="Sobre_El_Juego"),sg.Button(button_text="Como se juega",size=(12,2),key="Como_Se_Juega"),sg.Button(button_text="Opciones",size=(12,2),key="Opciones"),sg.Button(button_text="Tablero",size=(12,2),key="Botones_Tablero")]]
+    botones = [[sg.Button(button_text="Sobre el juego",size=(12,2),key="Sobre_El_Juego"),sg.Button(button_text="Como se juega",size=(12,2),key="Como_Se_Juega"),sg.Button(button_text="Opciones",size=(12,2),key="Opciones"),sg.Button(button_text="Tablero",size=(12,2),key="Tablero")]]
 
     Ventana=[     [sg.Text("Este es el menu de Ayuda , haz click en un boton para saber mas sobre el tema elegido")],
                   [sg.Frame('',botones,relief='raised')],
@@ -31,6 +37,7 @@ def Ayuda():
     window = sg.Window('Ayuda',Ventana,location=(540,100),size=(500,650),finalize=True)
     while True:
         event,values=window.Read()
+        print(event)
         playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=False)
         if(event in (None,"Salir")):
             playsound(r'ScrabbleAR_Sonidos\Click.mp3')
@@ -52,7 +59,9 @@ def Ayuda():
                 window['>'].update(disabled=False)
                 window['<'].update(disabled=False)
             elif(event=="Tablero"):
-                window["Info"].update(Dicc_Informacion["Botones_Tablero"][0])
+                window["Info"].update(Dicc_Informacion["Tablero"][0])
+                window['>'].update(disabled=False)
+                window['<'].update(disabled=False)
 
         elif(event=='>'):
             pagina = pagina + 1
