@@ -1,9 +1,21 @@
 # ScrabbleAR-Grupo29
 
 Integrantes :
-  Delmas Leonardo, Legajo: 15993/3
-  Silva Marco, Legajo: 16234/2
+
   Batisti Matias, Legajo: 15083/0
+  Delmas Leonardo, Legajo: 15993/3
+  Silva Moreno Marco Natan, Legajo: 16234/2
+
+El juego:
+
+  ScrabbleAR es un juego basado en el popular juego de mesa Scrabble, que consiste en formar palabras de dos o más letras, y colocarlas horizontal o verticalmente sobre un tablero de 15x15 casillas, de manera que puedan ser leídas de izquierda a derecha ó de arriba hacia abajo. A diferencia del Scrabble tradicional, para simplificar la estrategia del juego, las palabras no deben cruzarse. En ScrabbleAR se juega contra la computadora y se re-definen algunas de las reglas del juego original. En particular, respecto a las palabras a construir, sólo se podrán utilizar palabras clasificadas como adjetivos, sustantivos y verbos, de acuerdo a cómo se configure el juego. También es posible configurar la cantidad de fichas los puntajes de las mismas y el tiempo.
+
+  Partida:
+
+  Al comenzar la partida, se le asigna 7 fichas a ambos jugadores para que posteriormente(de forma aleatoria) se indique quien empieza primero.
+  El juego se termina si: se acaban las fichas, si el tiempo se acaba , ó en caso de que el jugador no disponga mas intentos de intercambio de fichas(dispone de 3 intentos de intercambio) y haber sucedido al menos diez rondas, el jugador tendrá la opción de finalizar la partida. Al finalizar, de acuerdo a lo establecido con anterioridad, se procederá a evaluar puntajes y determinar un ganador.
+
+  En el tablero existen ciertas casillas que pueden tanto beneficiarte como perjudicarte: multiplica los puntos de la letra x2 ó x3 y resta -2 o -3 a la palabra, de acuerdo a la casilla/s ocupadas.    
 
 El programa:
 
@@ -22,6 +34,7 @@ El programa:
     Pattern 3.6
     PySimpleGUI 4.22.0
     Playsound 1.2.2
+    Tkinter 2.7
 
   Licencias:
 
