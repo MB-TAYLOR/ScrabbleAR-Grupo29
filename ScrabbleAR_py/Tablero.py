@@ -1123,7 +1123,7 @@ def genero_Tablero():
         Se_necesitan_dos = False
         Turnos_Disponibles = 3
     Layout_Tab,CFT=(Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP,size,subsample))
-    diseño = [[sg.Column(Layout_Tab,scrollable=True,vertical_scroll_only=True, size = (700,int(obtener_tamanio_monitor()[1])-260)),
+    diseño = [[sg.Column(Layout_Tab,scrollable=True,vertical_scroll_only=True, size = (700,(int(obtener_tamanio_monitor()[1])-260) if int(obtener_tamanio_monitor()[1])==1080 else int(obtener_tamanio_monitor()[1]) )),
                 sg.Column(Layout_Columna()),
                 sg.Column(Layout_Columna_Historial(Usuario),key='Columna_Historial'),
                 sg.Column(Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT,Lista_TP),key='Columna_Conf')] ]
