@@ -146,7 +146,20 @@ def rutas_letras(Dicc_letra_puntajes):
         Dicc_Actual_Punto_Ficha[x]=Dicc_letras_rutas[clave_Dicc_letras_rutas]
     Dicc_Actual_Punto_Ficha['white']=corrector_paths(r'ScrabbleAR_Imagenes_png\modelo_ficha.png')#corrector_paths(r'ScrabbleAR_Imagenes_png\Transparente.png')
     return(Dicc_Actual_Punto_Ficha)
-
+def cargar_tablero(Dicc,LCO_Usuario,LCO_CPU,DiccRLPP,DiccRLPP_CPU,window,size,subsample):
+    for x in range (15):
+        for y in range(15):
+            coord=(x,y)
+            if str(Dicc[coord][1]) == "white":
+                    window[coord].update(button_color=('Black',"#2B2B28"))
+            else:
+                window[coord].update(button_color=('Black',str(Dicc[coord][1])))
+            window[coord].update(image_filename=Dicc[coord][2],image_size=size,image_subsample=subsample)
+            if coord in LCO_Usuario:
+                window[coord].update(image_filename=DiccRLPP[Dicc[coord][0]][2],image_size=size,image_subsample=subsample)
+            elif coord in LCO_CPU:
+                window[coord].update(image_filename=DiccRLPP_CPU[Dicc[coord][0]],image_size=size,image_subsample=subsample)
+    return(Dicc)
 def Update_Tablero2(window,Dicc,size,subsample):
     '''Amplia la lista de cada uno de los elementos de Dicc con direcciones segun corresponde y coloca imagenes en el tablero segun corresponde '''
     inicio=corrector_paths(r'ScrabbleAR_Imagenes_png\icono_inicio.png')
@@ -1049,23 +1062,6 @@ def genero_Tablero():
         Turno_Usuario=True
         for x in aux_CCD:
             CCD.add(tuple(x))
-        Layout_Tab,CFT=(Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP,size,subsample))
-        diseño = [[sg.Column(Layout_Tab),
-                    sg.Column(Layout_Columna()),
-                    sg.Column(Layout_Columna_Historial(Usuario),key='Columna_Historial'),
-                    sg.Column(Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT,Lista_TP),key='Columna_Conf')] ]
-        window = sg.Window('Tablero',diseño ,location=(400,0),finalize=True)
-        Update_Tablero2(window,Dicc,size,subsample)
-        for coord in LCO:
-            if coord in LCO_Usuario:
-                window[coord].update(image_filename=DiccRLPP[Dicc[coord][0]][2],image_size=size,image_subsample=subsample)
-            elif coord in LCO_CPU:
-                window[coord].update(image_filename=DiccRLPP_CPU[Dicc[coord][0]],image_size=size,image_subsample=subsample)
-        window['Historial_CPU'].update(HistorialCPU)
-        window['PuntajeCPU'].update(str(PT_CPU))
-        window['PuntajeUsuario'].update(str(PTU))
-        window['Historial_Usuario'].update(HistorialUsuario)
-
     else:
         partida_carga=False
         Usuario,Dificultad,Dicc_Puntajes,Dicc_Bolsa,tiempo_ronda,Tiempo,Lista_TP = Importar_Datos()
@@ -1087,14 +1083,21 @@ def genero_Tablero():
         CCD=set()                   #Conjunto de Coordenadas  Disponibles
         LCO = []                    #Lista de Coordenadas Ocupadas
         Se_necesitan_dos = False
-        #Tiempo,tiempo_ronda=tiempo_dificultad(Dificultad)
         Turnos_Disponibles = 3
-        Layout_Tab,CFT=(Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP,size,subsample))
-        diseño = [ [sg.Column(Layout_Tab),
-                    sg.Column(Layout_Columna()),
-                    sg.Column(Layout_Columna_Historial(Usuario),key='Columna_Historial'),
-                    sg.Column(Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT,Lista_TP),key='Columna_Conf')] ]
-        window = sg.Window('Tablero',diseño ,location=(400,0),finalize=True)
+    Layout_Tab,CFT=(Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP,size,subsample))
+    diseño = [[sg.Column(Layout_Tab),
+                sg.Column(Layout_Columna()),
+                sg.Column(Layout_Columna_Historial(Usuario),key='Columna_Historial'),
+                sg.Column(Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT,Lista_TP),key='Columna_Conf')] ]
+    window = sg.Window('Tablero',diseño ,location=(400,0),finalize=True)
+    if event_popup == 'Yes':
+        cargar_tablero(Dicc,LCO_Usuario,LCO_CPU,DiccRLPP,DiccRLPP_CPU,window,size,subsample)
+        window['Historial_CPU'].update(HistorialCPU)
+        window['PuntajeCPU'].update(str(PT_CPU))
+        window['PuntajeUsuario'].update(str(PTU))
+        window['Historial_Usuario'].update(HistorialUsuario)
+
+    else:
         Dicc = Update_Tablero(window,Dicc)
         Dicc = Update_Tablero2(window,Dicc,size,subsample)
     Columna_Historial = True
