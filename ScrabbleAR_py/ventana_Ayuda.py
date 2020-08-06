@@ -44,9 +44,9 @@ def Ayuda():
     while True:
         event,values=window.Read()
         print(event)
-        playsound(corrector_paths(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
+        playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
         if(event in (None,"Salir")):
-            playsound(corrector_paths(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'))
+            playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'))
             break
 
         elif (event != '>') and (event != '<'):
