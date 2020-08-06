@@ -37,7 +37,7 @@ def establezco_PP():
 
     Linea = [[sg.Image(corrector_paths(r'ScrabbleAR_Imagenes_png\Linea.png'))]]
 
-    columna_derecha=[ [sg.Text("SCRABBLE-AR",font=("ink free",40),pad=(130,0))] ]
+    columna_derecha=[ [sg.Image(corrector_paths(r'ScrabbleAR_Imagenes_png\ScrabbleAR_Inicio.png'),pad=(130,0))] ]
 
 #Diseño
     diseño=[        [sg.Column(columna_izquierda),
