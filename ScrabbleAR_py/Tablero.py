@@ -400,18 +400,18 @@ def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_pun
         Lista_Atril.append(Letra_6)
         Letra_7,Cant_fichas=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
         Lista_Atril.append(Letra_7)
-    layout = [[sg.Text('',key='texto1',pad=(45,3)),(sg.Image(**formato_fichas_cpu,key='fichasbot1')),
+    layout = [[sg.Text('',key='texto1',pad=((105,5),(3,3))),(sg.Image(**formato_fichas_cpu,key='fichasbot1')),
                                                     (sg.Image(**formato_fichas_cpu,key='fichasbot2')),
                                                     (sg.Image(**formato_fichas_cpu,key='fichasbot3')),
                                                     (sg.Image(**formato_fichas_cpu,key='fichasbot4')),
                                                     (sg.Image(**formato_fichas_cpu,key='fichasbot5')),
                                                     (sg.Image(**formato_fichas_cpu,key='fichasbot6')),
                                                     (sg.Image(**formato_fichas_cpu,key='fichasbot7'))],
-                [(sg.Image(filename=corrector_paths('ScrabbleAR_Imagenes_png\Atril_back.png'),key='atril',pad=(20,3)))]]
+                [(sg.Image(filename=corrector_paths('ScrabbleAR_Imagenes_png\Atril_back.png'),key='atril',pad=((35,5),(3,3))))]]
 
     layout.extend([[sg.Button('', size=(4, 2), border_width=1,key=(i,j),pad=(0,0))for j in range(MAX_COL)] for i in range(MAX_ROWS)])
 
-    layout.extend([[sg.Text('',key='texto2',pad=(28,3)),
+    layout.extend([[sg.Text('',key='texto2',pad=((105,5),(3,3))),
                     (sg.Button(key=0,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[0]][0],image_size=size,image_subsample=subsample)),
                     (sg.Button(key=1,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[1]][0],image_size=size,image_subsample=subsample)),
                     (sg.Button(key=2,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[2]][0],image_size=size,image_subsample=subsample)),
@@ -419,7 +419,7 @@ def Layout_Tabla(Lista_Atril,Bolsa_Diccionario,Cant_fichas,Dicc_rutas_letras_pun
                     (sg.Button(key=4,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[4]][0],image_size=size,image_subsample=subsample)),
                     (sg.Button(key=5,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[5]][0],image_size=size,image_subsample=subsample)),
                     (sg.Button(key=6,pad=(7,3),size=(3,1),font=('default',18),button_color=('black','#FDD357'),image_filename=Dicc_rutas_letras_puntaje_partida[Lista_Atril[6]][0],image_size=size,image_subsample=subsample))],
-                    [(sg.Image(filename=corrector_paths('ScrabbleAR_Imagenes_png\Atril.png'),key='texto'))]])
+                    [(sg.Image(filename=corrector_paths('ScrabbleAR_Imagenes_png\Atril.png'),key='texto',pad=((35,5),(3,3))))]])
 
     return layout,Cant_fichas
 
@@ -1180,12 +1180,12 @@ def genero_Tablero():
                     if(Turnos_Disponibles == 0):
                         window["Intercambiar fichas"].update("Terminar\nPartida")
                 else:
-                    if(contador_Turnos_CPU>=10):
+                    if(contador_Turnos_CPU>=10 and (CFT <= 20)):
                         event_popup3=sg.popup_yes_no("¿Desea Terminar la partida y definir al ganador?",title='Aviso',keep_on_top=True)
                         if(event_popup3=="Yes"):
                             terminacion_Manual_Usuario=True
                     else:
-                        sg.popup("Debes de jugar almenos 10 rondas con el CPU para finalizar la partida.\nRondas actuales :",contador_Turnos_CPU,title='Aviso',keep_on_top=True)
+                        sg.popup("Debes de jugar almenos 10 rondas con el CPU y deben quedar 20 fichas o menos  para finalizar la partida.\n\nRondas actuales : "+str(contador_Turnos_CPU),"Fichas restantes : "+str(CFT),title='Aviso',keep_on_top=True)
 
 
             elif (event == 'Rotar') and (Desplegado):
