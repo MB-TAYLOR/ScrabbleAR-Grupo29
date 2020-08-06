@@ -625,7 +625,7 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
     else:
         Palabra=formar_palabra(fichas_CPU,Dificultad,Dificil_se_juega)
         contador_Turnos_CPU=contador_Turnos_CPU+1
-    if(((contador_Turnos_CPU % 3)==0) and (Cant_fichas > 14 )):
+    if(((contador_Turnos_CPU % 3)==0) and (Cant_fichas > 0 )):
         fichas_CPU,Cant_fichas=intercambio_Fichas_CPU(fichas_CPU,Bolsa_Diccionario,Cant_fichas)
         Palabra=formar_palabra(fichas_CPU,Dificultad,Dificil_se_juega)
         contador_Turnos_CPU=contador_Turnos_CPU+1
@@ -670,7 +670,7 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
                                 Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras_puntaje_partida_CPU,LCDPR_CPU,LCO_CPU,size,subsample)
                                 intento=False
             if((intento)and(len(CCD_CPU)>1)):
-                Update_Infobox('El robot no tiene una posicion valida para colocar su palabra','#5798FD',window)
+                Update_Infobox('El robot no tiene una posicion valida para colocar','#5798FD',window)
         Bonus = Calcular_Bonus(LCDPR_CPU,Dicc_Puntajes,Dicc)
         PPR_CPU = Calcular_Puntaje(Palabra,Dicc_Puntajes)
         PT_CPU = (PT_CPU + PPR_CPU) + Bonus
@@ -1234,6 +1234,7 @@ def genero_Tablero():
         window['CantFichas'].update('Cantidad de fichas: '+str(CFT))
 
     if fin_Juego(Tiempo,CFT,terminacion_Manual_Usuario):
+        event="Salir"
         if (PTU > PT_CPU):
             playsound(corrector_paths(r'ScrabbleAR_Sonidos\Ganar.mp3'),block=bloqueo_sonido())
             sg.popup("Ganaste",title='Aviso',keep_on_top=True)
@@ -1243,6 +1244,7 @@ def genero_Tablero():
             sg.popup("Perdiste",title='Aviso',keep_on_top=True)
 
     window.close()
+    print(event)
     return(event)
 #ProgramaPrincipal-------------
 if __name__ == "__main__":

@@ -55,7 +55,7 @@ def establezco_PP():
         elif boton_cliqueado == 'JUGAR':
             #Aca abro la nueva ventana en el mismo lugar que la anterior , luego de cerrar la principal
             window.close()
-            if((genero_Tablero())in(None,'Salir','Rendirse','Intercambiar fichas')):
+            if((genero_Tablero())in(None,'Salir','Rendirse')):
                 establezco_PP()
             break
         elif boton_cliqueado =='TOP 10':
