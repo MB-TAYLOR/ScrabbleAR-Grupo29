@@ -21,7 +21,7 @@ temp = 5
 Infobox_Activa = False
 HistorialUsuario = []
 HistorialCPU = []
-PrimerRonda = True
+
 def resolucion_adaptable():
     sistema_Operativo=platform.system()
     if sistema_Operativo =="Windows":
@@ -605,10 +605,9 @@ def Poner_Vertical(window,Palabra,coordenadas_CPU,LCO,CCD,Dicc,Dicc_rutas_letras
         LCDPR_CPU.append((coordenadas_CPU[0]+y,coordenadas_CPU[1]))
         Actualizar_CCD(CCD,LCO)
 
-def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Bolsa_Diccionario,Cant_fichas,Dicc_Puntajes,PT_CPU,Dicc_rutas_letras_puntaje_partida_CPU,LCO_CPU,size,subsample):
+def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Bolsa_Diccionario,Cant_fichas,Dicc_Puntajes,PT_CPU,Dicc_rutas_letras_puntaje_partida_CPU,LCO_CPU,size,subsample,PrimerRonda):
     '''El CPU forma palabras usando 7 fichas que obtuvo de la bolsa , verifica si hay alguna posicion disponible para colocarla , si la hay toma una
        y intenta colocarla horizontal o verticalmente , si no puede busca otra de las posiciones disponibles , si no hay mas pasa su turno '''
-    global PrimerRonda
     global HistorialCPU
     LCDPR_CPU = []
     CCD_CPU=CCD
@@ -683,7 +682,7 @@ def Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,D
     while(((len(fichas_CPU))<7)and(Cant_fichas >0)):          #Añado fichas de la bolsa para completar 7 al finalizar el turno
         nueva_ficha,Cant_fichas=Letra_Bolsa(Bolsa_Diccionario,Cant_fichas)
         fichas_CPU=fichas_CPU+nueva_ficha
-    return(contador_Turnos_CPU,fichas_CPU,Cant_fichas,PT_CPU)
+    return(contador_Turnos_CPU,fichas_CPU,Cant_fichas,PT_CPU,PrimerRonda)
 
 def Actualizar_CFT(CFT,Dicc_Bolsa):
     '''Retorna la cantidad de fichas totales segun la cantidad de incidencias de cada letra en Dicc_Bolsa'''
@@ -749,10 +748,9 @@ def Palabra_bien_colocada(LCOPR,window):
         Update_Infobox('Debes formar palabras de por lo menos 2 fichas!','#5798FD',window)
         return False
 
-def TerminarTurno(LCOPR,LCO,CCD,Dicc,Lista_Atril,PTU,Palabra,Dificultad,Dificil_se_juega,Dicc_Puntajes,Dicc_Bolsa,CFT,Bonus,window,Dicc_rutas_letras_puntaje_partida,size,subsample):
+def TerminarTurno(LCOPR,LCO,CCD,Dicc,Lista_Atril,PTU,Palabra,Dificultad,Dificil_se_juega,Dicc_Puntajes,Dicc_Bolsa,CFT,Bonus,window,Dicc_rutas_letras_puntaje_partida,size,subsample,PrimerRonda):
     '''Finaliza el turno del usuario , comprueba si la palabra colocada es valida , si lo es actualiza el puntaje , sino , retira todas las fichas colocadas en
        este turno , luego finaliza el turno '''
-    global PrimerRonda
     global HistorialUsuario
     if (Palabra == '') and (LCOPR != []): #Si no se valido antes Y en el tablero hay fichas:
         Palabra = Validar(LCOPR,CCD,Dicc,Dificultad,PrimerRonda,Palabra,Dificil_se_juega,window)
@@ -767,7 +765,7 @@ def TerminarTurno(LCOPR,LCO,CCD,Dicc,Lista_Atril,PTU,Palabra,Dificultad,Dificil_
         PrimerRonda = False
     else:
         Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,Dicc_rutas_letras_puntaje_partida,size,subsample)
-    return PTU
+    return PTU,PrimerRonda
 
 def Actualizar_LCO(LCOPR,LCO,LCO_Usuario):
     '''Agrega los elementos de LCOPR a LCO y LCO_Usuario'''
@@ -1023,11 +1021,10 @@ def genero_Tablero():
     '''Programa Principal '''
     global Infobox_Activa
     global temp
-    global PrimerRonda
     global HistorialUsuario
     global HistorialCPU
     size,subsample=resolucion_adaptable()
-    print(size,subsample)
+    PrimerRonda = True
     event_popup_cargar = sg.popup_yes_no('¿Deseas cargar la partida guardada?',title='Aviso',keep_on_top=True)
     playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
     if (event_popup_cargar == 'Yes'):
@@ -1171,7 +1168,7 @@ def genero_Tablero():
             elif (((event == 'Terminar turno') or Se_Intercambio_Ficha) and (Boton_Intercambiar == False)):
                 playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
                 Bonus = Calcular_Bonus(LCOPR,Dicc_Puntajes,Dicc)
-                PTU = TerminarTurno(LCOPR,LCO,CCD,Dicc,Lista_Atril,PTU,Palabra,Dificultad,Dificil_se_juega,Dicc_Puntajes,Dicc_Bolsa,CFT,Bonus,window,DiccRLPP,size,subsample)
+                PTU,PrimerRonda = TerminarTurno(LCOPR,LCO,CCD,Dicc,Lista_Atril,PTU,Palabra,Dificultad,Dificil_se_juega,Dicc_Puntajes,Dicc_Bolsa,CFT,Bonus,window,DiccRLPP,size,subsample,PrimerRonda)
                 CFT = Actualizar_CFT(CFT,Dicc_Bolsa)
                 Actualizar_LCO(LCOPR,LCO,LCO_Usuario)
                 Actualizar_CCD(CCD,LCO)
@@ -1228,7 +1225,7 @@ def genero_Tablero():
 
 
         while (Turno_Usuario == False):
-            contador_Turnos_CPU,fichas_CPU,CFT,PT_CPU=Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Dicc_Bolsa,CFT,Dicc_Puntajes,PT_CPU,DiccRLPP_CPU,LCO_CPU,size,subsample)
+            contador_Turnos_CPU,fichas_CPU,CFT,PT_CPU,PrimerRonda=Acciones_CPU(window,CCD,LCO,Dicc,contador_Turnos_CPU,fichas_CPU,Dificultad,Dificil_se_juega,Dicc_Bolsa,CFT,Dicc_Puntajes,PT_CPU,DiccRLPP_CPU,LCO_CPU,size,subsample,PrimerRonda)
             break
         if Fin:
             break
