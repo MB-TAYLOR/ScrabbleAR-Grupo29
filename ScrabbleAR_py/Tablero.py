@@ -12,6 +12,8 @@ try:
     from playsound import playsound
     from ScrabbleAR_py.Generadores import identificador_carpeta_error,bloqueo_sonido,Selector_de_coordenadas_disponibles,corrector_paths
     import platform
+    import ctypes
+    import subprocess
 except ModuleNotFoundError:
     print("Error ,ejecute el  programa desde 'ScrabbleAR.py'")
     sys.exit()
@@ -22,22 +24,47 @@ Infobox_Activa = False
 HistorialUsuario = []
 HistorialCPU = []
 
+def obtener_tamanio_monitor():
+    """
+    Descripción: devuelve el tamaño del monitor
+    :return: tamaño del monitor
+    :rtype: tupla
+    """
+    if platform.system() == 'Linux':
+        cmd = ['xrandr']
+        cmd2 = ['grep', '*']
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        p2 = subprocess.Popen(cmd2, stdin=p.stdout, stdout=subprocess.PIPE)
+        p.stdout.close()
+        resolution_string, junk = p2.communicate()
+        return resolution_string.split()[0].decode("utf-8").split('x')
+    elif platform.system() == 'Windows':
+        user32 = ctypes.windll.user32
+        return user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
+    else:
+        return 0, 0
+
 def resolucion_adaptable():
-    sistema_Operativo=platform.system()
-    if sistema_Operativo =="Windows":
-        import ctypes
+    """
+    Descripción: devuelve el tamaño del monitor
+    :return: tamaño del monitor
+    :rtype: tupla
+    """
+    if platform.system() == 'Linux':
+        resolucion = (int(obtener_tamanio_monitor()[0]),int(obtener_tamanio_monitor()[1]))
+    elif platform.system() =="Windows":
         user32=ctypes.windll.user32
-        resolucion=user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
-        if(resolucion[0]<=1366 and (resolucion[1]<=768)):
-            size=(33,33)
-            subsample=6
-        else:
-            size=(38,38)
-            subsample=5
-    elif sistema_Operativo =="Linux":
+        resolucion=(user32.GetSystemMetrics(0), user32.GetSystemMetrics(1))
+    else:
+        resolucion = (1366,768)
+    if((resolucion[0]<=1366) and (resolucion[1]<=768)):
+        size=(33,33)
+        subsample=6
+    else:
         size=(38,38)
         subsample=5
     return(size,subsample)
+
 def GuardarDatos_Tabla(datos):
     Infile = open(corrector_paths(r'ScrabbleAR_Datos\Archivo_Puntajes.csv'),'w')
     writer = csv.writer(Infile)
@@ -1025,6 +1052,7 @@ def vaciar_archivo():
     archivo=open(corrector_paths(r'ScrabbleAR_Datos\Partida_Guardada.json'),"w")
     Guardar=json.dump("Vacio",archivo)
     archivo.close()
+
 #PROGRAMA PRINCIPAL
 def genero_Tablero():
     '''Programa Principal '''
@@ -1095,7 +1123,7 @@ def genero_Tablero():
         Se_necesitan_dos = False
         Turnos_Disponibles = 3
     Layout_Tab,CFT=(Layout_Tabla(Lista_Atril,Dicc_Bolsa,CFT,DiccRLPP,size,subsample))
-    diseño = [[sg.Column(Layout_Tab),
+    diseño = [[sg.Column(Layout_Tab,scrollable=True,vertical_scroll_only=False, size = (700,int(obtener_tamanio_monitor()[1]))),
                 sg.Column(Layout_Columna()),
                 sg.Column(Layout_Columna_Historial(Usuario),key='Columna_Historial'),
                 sg.Column(Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT,Lista_TP),key='Columna_Conf')] ]
