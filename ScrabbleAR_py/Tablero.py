@@ -11,6 +11,7 @@ try:
     from datetime import date
     from playsound import playsound
     from ScrabbleAR_py.Generadores import identificador_carpeta_error,bloqueo_sonido,Selector_de_coordenadas_disponibles,corrector_paths
+    from ScrabbleAR_py.ventana_Ayuda import Ayuda
     import platform
     import ctypes
     import subprocess
@@ -407,7 +408,7 @@ def Layout_Columna():
                [sg.Text('Puntos Usuario',key='PuntosUsuario',font=("impact",20))],
                [sg.Text('0000',key='PuntajeUsuario',font=("impact",20))],
                [sg.Text('__________________________________',pad=((5,5),(3,34)))],
-               [sg.Button('<',key='Mostrar',font=('impact',11),pad=((202,0),(3,3))),
+               [sg.Button('?',key='Ayuda',font=('impact',12)),sg.Button('<',key='Mostrar',font=('impact',11),pad=((170,0),(3,3))),
                sg.Button(image_filename=corrector_paths(r'ScrabbleAR_Imagenes_png\Icono_Rotar.png'),key='Rotar')],
                [sg.Text(pad=((6,0),(5,2)),size=(20, 3),key='Infobox',font=("Consolas", 16),background_color='#A4A4A4',justification='center',relief=sg.RELIEF_SOLID)], #Entran 60 caracteres
                [sg.Button(button_text='Terminar turno',size=(15,0),font=("Unispace",20),pad=((5,0),(5,3)))],
@@ -1233,6 +1234,9 @@ def genero_Tablero():
                 playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
                 Update_Columna_Extra(Columna_Historial,window)
                 Columna_Historial = not Columna_Historial
+
+            elif (event == 'Ayuda'):
+                Ayuda()
 
             elif (event == 'Mostrar'):
                 playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
