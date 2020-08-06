@@ -25,8 +25,9 @@ def identificador_carpeta_error(ProgramaPrincipal):
         event=ProgramaPrincipal()
     except FileNotFoundError:
         tb = sys.exc_info()[2]
-        tbinfo = traceback.format_tb(tb)[3]
-        print(traceback.format_tb(tb)[3])
+        print(traceback.format_tb(tb)[2])
+        tbinfo = traceback.format_tb(tb)[2]
+
         ruta_archivo_error=tbinfo[tbinfo.find("(")+1:tbinfo.find(")")].strip(",'r'")
         ruta_archivo_error=ruta_archivo_error.strip("corrector_paths('")
         ruta_carpeta=ruta_archivo_error[:ruta_archivo_error.find(os.sep)]
