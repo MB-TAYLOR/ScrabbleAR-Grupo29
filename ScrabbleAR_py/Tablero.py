@@ -1091,7 +1091,6 @@ def genero_Tablero():
     global temp
     global HistorialUsuario
     global HistorialCPU
-    print(arch_vacio())
     size,subsample=resolucion_adaptable()
     PrimerRonda = True
     if(not(arch_vacio())):
