@@ -66,6 +66,28 @@ def resolucion_adaptable():
         subsample=5
     return(size,subsample)
 
+def Desabilitar_Botones(window):
+    window['Ayuda'].update(disabled=True)
+    window['Mostrar'].update(disabled=True)
+    window['Rotar'].update(disabled=True)
+    window['Terminar turno'].update(disabled=True)
+    window['Validar'].update(disabled=True)
+    window['Intercambiar fichas'].update(disabled=True)
+    window['Pausar'].update(disabled=True)
+    window['Rendirse'].update(disabled=True)
+    window['Salir'].update(disabled=True)
+
+def Habilitar_Botones(window):
+    window['Ayuda'].update(disabled=False)
+    window['Mostrar'].update(disabled=False)
+    window['Rotar'].update(disabled=False)
+    window['Terminar turno'].update(disabled=False)
+    window['Validar'].update(disabled=False)
+    window['Intercambiar fichas'].update(disabled=False)
+    window['Pausar'].update(disabled=False)
+    window['Rendirse'].update(disabled=False)
+    window['Salir'].update(disabled=False)
+
 def GuardarDatos_Tabla(datos):
     Infile = open(corrector_paths(r'ScrabbleAR_Datos\Archivo_Puntajes.csv'),'w')
     writer = csv.writer(Infile)
@@ -411,8 +433,8 @@ def Layout_Columna():
                [sg.Button('?',key='Ayuda',font=('impact',12)),sg.Button('<',key='Mostrar',font=('impact',11),pad=((170,0),(3,3))),
                sg.Button(image_filename=corrector_paths(r'ScrabbleAR_Imagenes_png\Icono_Rotar.png'),key='Rotar')],
                [sg.Text(pad=((6,0),(5,2)),size=(20, 3),key='Infobox',font=("Consolas", 16),background_color='#A4A4A4',justification='center',relief=sg.RELIEF_SOLID)], #Entran 60 caracteres
-               [sg.Button(button_text='Terminar turno',size=(15,0),font=("Unispace",20),pad=((5,0),(5,3)))],
-               [sg.Button(button_text='Validar',size=(15,0),font=("Unispace",20),pad=((5,0),(5,3)))],
+               [sg.Button(button_text='Terminar turno',key='Terminar turno',size=(15,0),font=("Unispace",20),pad=((5,0),(5,3)))],
+               [sg.Button(button_text='Validar',key='Validar',size=(15,0),font=("Unispace",20),pad=((5,0),(5,3)))],
                [sg.Button(button_text='Intercambiar fichas',key="Intercambiar fichas",size=(15,0),font=("Unispace",20))],
                [sg.Button(button_text='Pausar',key='Pausar',font=("default",16),pad=((5,0),(3,0)) ), #font=("default",19),pad=((5,43),(5,3))
                 sg.Button(button_text='Rendirse',key='Rendirse',font=("default",16),pad=((5,0),(2,0)) ),#font=("default",19),pad=((5,43),(5,3))
@@ -511,12 +533,14 @@ def Update_Fichas_Colocadas(LCOPR,window,Dicc,Dicc_rutas_letras_puntaje_partida,
     for coord in LCOPR:
         window[coord].update(image_filename=Dicc_rutas_letras_puntaje_partida[Dicc[coord][0]][2],image_size=size,image_subsample=subsample)
 
-def Mensaje_Turno(Turno_Usuario):
+def Mensaje_Turno(Turno_Usuario,window):
     '''Llama a un popup dependiendo de quien es el turno'''
+    Desabilitar_Botones(window)
     if Turno_Usuario:
         sg.popup('Estas Listo?\nEs tu turno',custom_text="Si,lo estoy",no_titlebar=True,keep_on_top=True)
     else:
         sg.popup('Estas Listo?\nEs el turno de la IA',custom_text="Si,lo estoy",no_titlebar=True,keep_on_top=True)
+    Habilitar_Botones(window)
     playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
 
 def Eliminar_Elementos_Ocupados_CDD(LCO,CCD):
@@ -927,21 +951,27 @@ def Boton_Intercambiar_Fichas(LCOPR,LCO,CCD,CFT,LPI,Dicc,Dicc_Bolsa,Lista_Atril,
                 CFT = Actualizar_CFT(CFT,Dicc_Bolsa)
                 window[event].update(button_color=('#2B2B28','#E3B04B'))
             else:
+                Desabilitar_Botones(window)
                 sg.popup('No has intercambiado ninguna ficha! no pierdes el turno',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
+                Habilitar_Botones(window)
                 window[event].update(button_color=('#2B2B28','#E3B04B'))
             Boton_Intercambiar = False
             playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
         else: #Recien "Clickeo" el boton intercambiar Fichas
+            Desabilitar_Botones(window)
             if Turnos_Disponibles != 1:
-                sg.popup('Te quedan '+str(Turnos_Disponibles)+' turnos disponibles\nSelecciona las fichas del atril que quieras cambiar!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
+                sg.popup('Te quedan '+str(Turnos_Disponibles)+' turnos disponibles\nSelecciona las fichas del atril que quieras cambiar!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True)
             else:
-                sg.popup('Este es el ultimo turno en el que puedes cambiar fichas!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
+                sg.popup('Este es el ultimo turno en el que puedes cambiar fichas!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True)
+            Habilitar_Botones(window)
             Boton_Intercambiar = True
             playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
             window[event].update(button_color=('#2B2B28','#57C3FD'))
             Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,Dicc_rutas_letras_puntaje_partida,size,subsample)
     elif event != 'Reloj':
+        Desabilitar_Botones(window)
         sg.popup('Debes seleccionar fichas del Atril!',title='Ayuda',background_color='#5798FD',button_color=('Black','White'),keep_on_top=True,non_blocking=True)
+        Habilitar_Botones(window)
     return CFT,Boton_Intercambiar,Se_Intercambio_Ficha,Turnos_Disponibles
 
 def Calcular_Bonus(LCOPR,Dicc_Puntajes,Dicc):
@@ -1106,7 +1136,7 @@ def genero_Tablero():
         Usuario,Dificultad,Dicc_Puntajes,Dicc_Bolsa,tiempo_ronda,Tiempo,Lista_TP = Importar_Datos()
         tiempo_ronda=int(tiempo_ronda)*100
         Tiempo=int(Tiempo)*100*60
-        Turno_Usuario = True#bool(random.getrandbits(1))
+        Turno_Usuario = bool(random.getrandbits(1))
         LCO_Usuario=[] #Lista cordenadas ocuupadas usuario
         LCO_CPU=[]      #Lista cordenadas ocuupadas CPU
         DiccRLPP=rutas_letras(Dicc_Puntajes)  #Dicc Dicc_rutas_letras_puntaje_partida
@@ -1159,7 +1189,7 @@ def genero_Tablero():
             partida_carga=False
         else:
             tiempo_jugador=tiempo_ronda
-        Mensaje_Turno(Turno_Usuario)
+        Mensaje_Turno(Turno_Usuario,window)
         while (Turno_Usuario and (tiempo_jugador>0) and (not(fin_Juego(Tiempo,CFT,terminacion_Manual_Usuario)))):  #Mientras sea el turno del usuario:
             Palabra = ''
             event = window.Read(timeout=7,timeout_key='Reloj')[0] # timeout=10 no igualaba la velocidad de los segundos reales , por eso reemplaze por "7"  se acerca mas
@@ -1172,6 +1202,7 @@ def genero_Tablero():
             #    tamaño_actual=window.Size
                 #Aca deberian estar los cambios a la ventana que centrarian todo el contenido de esta.
             if event in (None, 'Salir') and (Boton_Intercambiar == False):
+                Desabilitar_Botones(window)
                 if event==('Salir'):
                     playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
                     event_popup1 = sg.popup_yes_no('Seguro que desea salir de la partida?',title='Aviso',keep_on_top=True)
@@ -1180,12 +1211,14 @@ def genero_Tablero():
                     event_popup1='Yes'
                 if (event_popup1 == 'Yes'):
                     event_popup2 = sg.popup_yes_no('¿Quieres posponer la partida?',title='Aviso',keep_on_top=True)
+                    Habilitar_Botones(window)
                     playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
                     if (event_popup2 == 'Yes'):
                         Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,DiccRLPP,size,subsample)
                         GuardoPartida(Dificultad,DiccRLPP,Dicc,CFT,Usuario,Turnos_Disponibles,PTU,HistorialUsuario,LCO,Tiempo,DiccRLPP_CPU,PT_CPU,fichas_CPU,contador_Turnos_CPU,HistorialCPU,PrimerRonda,Lista_Atril,Dicc_Bolsa,Dicc_Puntajes,tiempo_ronda,list(CCD),LCO_Usuario,LCO_CPU,tiempo_jugador,Lista_TP)
                     Fin = True
                     break
+                Habilitar_Botones(window)
             if (((type(event) == int) or (type(event) == tuple)) and (Boton_Intercambiar == False)):
                 if event1 == '':
                     event1 = event
@@ -1223,11 +1256,15 @@ def genero_Tablero():
                         window["Intercambiar fichas"].update("Terminar\nPartida")
                 else:
                     if(contador_Turnos_CPU>=10 and (CFT <= 20)):
+                        Desabilitar_Botones(window)
                         event_popup3=sg.popup_yes_no("¿Desea Terminar la partida y definir al ganador?",title='Aviso',keep_on_top=True)
+                        Habilitar_Botones(window)
                         if(event_popup3=="Yes"):
                             terminacion_Manual_Usuario=True
                     else:
+                        Desabilitar_Botones(window)
                         sg.popup("Debes de jugar almenos 10 rondas con el CPU y deben quedar 20 fichas o menos  para finalizar la partida.\n\nRondas actuales : "+str(contador_Turnos_CPU),"Fichas restantes : "+str(CFT),title='Aviso',keep_on_top=True)
+                        Habilitar_Botones(window)
 
 
             elif (event == 'Rotar') and (Desplegado):
@@ -1236,7 +1273,9 @@ def genero_Tablero():
                 Columna_Historial = not Columna_Historial
 
             elif (event == 'Ayuda'):
+                Desabilitar_Botones(window)
                 Ayuda()
+                Habilitar_Botones(window)
 
             elif (event == 'Mostrar'):
                 playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
@@ -1252,12 +1291,16 @@ def genero_Tablero():
                 playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
                 for x in range(len(Lista_Atril)):
                     window[x].update(image_filename=corrector_paths(r'ScrabbleAR_Imagenes_png\Transparente.png'),image_size=size,image_subsample=subsample)
+                Desabilitar_Botones(window)
                 sg.popup('Presione "OK"para continuar',keep_on_top=True,title='Aviso')
+                Habilitar_Botones(window)
                 for x in range(len(Lista_Atril)):
                     window[x].update(image_filename=DiccRLPP[Lista_Atril[x]][0],image_size=size,image_subsample=subsample)
             elif (event=="Rendirse"):
                 playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
+                Desabilitar_Botones(window)
                 se_Rinde = sg.popup_yes_no("Si se rinde no se guardaran datos de esta partida , esta seguro?",title='Aviso',keep_on_top=True)
+                Habilitar_Botones(window)
                 if (se_Rinde=="Yes"):
                     Fin=True
                     break
