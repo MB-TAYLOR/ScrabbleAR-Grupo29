@@ -55,8 +55,8 @@ def identificador_carpeta_error(ProgramaPrincipal):
             sg.popup_error("Error al intentar acceder al archivo de audio de la siguiente ruta :",corrector_paths(ruta_archivo_error),"\nRevise que el archivo de audio se encuentre el la carpeta: ",ruta_carpeta ,title='Error')
         else:
             sg.popup_error("Falta un archivo de audio , revise la carpeta ScrabbleAR_Sonidos ",title='Error')
-    #except:
-    #    sg.popup_error("Ah ocurrido un error desconocido",title='Error')
+    except:
+        sg.popup_error("Ah ocurrido un error desconocido",title='Error')
     return(event)
 
 
