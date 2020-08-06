@@ -1016,6 +1016,15 @@ def fin_Juego(Tiempo,CFT,terminacion_Manual_Usuario):
     if((Tiempo==0) or (CFT ==0)or(terminacion_Manual_Usuario)):
         Termina=True
     return(Termina)
+def arch_vacio():
+    archivo=open(corrector_paths(r'ScrabbleAR_Datos\Partida_Guardada.json'),'r')
+    datos=json.load(archivo)
+    archivo.close()
+    return(datos=="Vacio")
+def vaciar_archivo():
+    archivo=open(corrector_paths(r'ScrabbleAR_Datos\Partida_Guardada.json'),"w")
+    Guardar=json.dump("Vacio",archivo)
+    archivo.close()
 #PROGRAMA PRINCIPAL
 def genero_Tablero():
     '''Programa Principal '''
@@ -1023,10 +1032,14 @@ def genero_Tablero():
     global temp
     global HistorialUsuario
     global HistorialCPU
+    print(arch_vacio())
     size,subsample=resolucion_adaptable()
     PrimerRonda = True
-    event_popup_cargar = sg.popup_yes_no('¿Deseas cargar la partida guardada?',title='Aviso',keep_on_top=True)
-    playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
+    if(not(arch_vacio())):
+        event_popup_cargar = sg.popup_yes_no('¿Deseas cargar la partida guardada?',title='Aviso',keep_on_top=True)
+        playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
+    else:
+        event_popup_cargar="No"
     if (event_popup_cargar == 'Yes'):
         partida_carga=True
         CCD=set()
@@ -1242,9 +1255,9 @@ def genero_Tablero():
         else:
             playsound(corrector_paths(r'ScrabbleAR_Sonidos\Perder.mp3'),block=bloqueo_sonido())
             sg.popup("Perdiste",title='Aviso',keep_on_top=True)
+        vaciar_archivo()
 
     window.close()
-    print(event)
     return(event)
 #ProgramaPrincipal-------------
 if __name__ == "__main__":
