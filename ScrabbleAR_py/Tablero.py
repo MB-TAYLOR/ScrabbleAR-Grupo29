@@ -1202,8 +1202,8 @@ def genero_Tablero():
             #    tamaño_actual=window.Size
                 #Aca deberian estar los cambios a la ventana que centrarian todo el contenido de esta.
             if event in (None, 'Salir') and (Boton_Intercambiar == False):
-                Desabilitar_Botones(window)
                 if event==('Salir'):
+                    Desabilitar_Botones(window)
                     playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
                     event_popup1 = sg.popup_yes_no('Seguro que desea salir de la partida?',title='Aviso',keep_on_top=True)
                     playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
@@ -1211,7 +1211,8 @@ def genero_Tablero():
                     event_popup1='Yes'
                 if (event_popup1 == 'Yes'):
                     event_popup2 = sg.popup_yes_no('¿Quieres posponer la partida?',title='Aviso',keep_on_top=True)
-                    Habilitar_Botones(window)
+                    if event=='Salir':
+                        Habilitar_Botones(window)
                     playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
                     if (event_popup2 == 'Yes'):
                         Retirar_Ficha_Automatico(LCOPR,LCO,CCD,Dicc,Lista_Atril,window,DiccRLPP,size,subsample)
