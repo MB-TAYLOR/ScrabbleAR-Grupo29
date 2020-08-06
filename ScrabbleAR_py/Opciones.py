@@ -269,21 +269,21 @@ def Comprobaciones(values,Cant_Fichas_Total,window):
         for L in values['Usuario']:
             if ((ord(L) < 48) or (ord(L) > 57) and (ord(L) < 65) or (ord(L) > 90) and (ord(L) < 97) or (ord(L) > 122)):
                 window['Usuario'].update(background_color='red')
-                playsound(r'ScrabbleAR_Sonidos\Error_Opciones.mp3',block=bloqueo_sonido())
+                playsound(corrector_paths(r'ScrabbleAR_Sonidos\Error_Opciones.mp3'),block=bloqueo_sonido())
                 sg.popup('Prueba con un usuario que tenga letras y/o numeros!',background_color='#B91B1B',title='Aviso',keep_on_top=True)
                 window['Usuario'].update(background_color='#F1D6AB')
                 TodoOk = False
                 break
     else:
         window['Usuario'].update(background_color='red')
-        playsound(r'ScrabbleAR_Sonidos\Error_Opciones.mp3',block=bloqueo_sonido())
+        playsound(corrector_paths(r'ScrabbleAR_Sonidos\Error_Opciones.mp3'),block=bloqueo_sonido())
         sg.popup('No puedes guardar un usuario vacio!',background_color='#B91B1B',title='Aviso',keep_on_top=True)
         window['Usuario'].update(background_color='#F1D6AB')
         TodoOk = False
 
     if len(values['Usuario']) > 10:
         window['Usuario'].update(background_color='red')
-        playsound(r'ScrabbleAR_Sonidos\Error_Opciones.mp3',block=bloqueo_sonido())
+        playsound(corrector_paths(r'ScrabbleAR_Sonidos\Error_Opciones.mp3'),block=bloqueo_sonido())
         sg.popup('No puedes guardar un usuario con mas de 10 caracteres!',background_color='#B91B1B',title='Aviso',keep_on_top=True)
         window['Usuario'].update(background_color='#F1D6AB')
         TodoOk = False
@@ -294,14 +294,14 @@ def Comprobaciones(values,Cant_Fichas_Total,window):
             for c in values[T]:
                 if not(ord(c) >= 48 and ord(c) <= 57):
                     window[T].update(background_color='red')
-                    playsound(r'ScrabbleAR_Sonidos\Error_Opciones.mp3',block=bloqueo_sonido())
+                    playsound(corrector_paths(r'ScrabbleAR_Sonidos\Error_Opciones.mp3'),block=bloqueo_sonido())
                     sg.popup('Prueba ingresar un numero valido!',background_color='#B91B1B',title='Aviso',keep_on_top=True)
                     window[T].update(background_color='#F1D6AB')
                     TodoOk = False
                     break
         else:
             window[T].update(background_color='red')
-            playsound(r'ScrabbleAR_Sonidos\Error_Opciones.mp3',block=bloqueo_sonido())
+            playsound(corrector_paths(r'ScrabbleAR_Sonidos\Error_Opciones.mp3'),block=bloqueo_sonido())
             sg.popup('Prueba ingresar un numero!',background_color='#B91B1B',title='Aviso',keep_on_top=True)
             window[T].update(background_color='#F1D6AB')
 
@@ -309,7 +309,7 @@ def Comprobaciones(values,Cant_Fichas_Total,window):
         window['Adjetivos'].update(background_color='red')
         window['Sustantivos'].update(background_color='red')
         window['Verbos'].update(background_color='red')
-        playsound(r'ScrabbleAR_Sonidos\Error_Opciones.mp3',block=bloqueo_sonido())
+        playsound(corrector_paths(r'ScrabbleAR_Sonidos\Error_Opciones.mp3'),block=bloqueo_sonido())
         sg.popup('No puedes dejar las casillas vacias!',background_color='#B91B1B',title='Aviso',keep_on_top=True)
         window['Adjetivos'].update(background_color='#2B2B28')
         window['Sustantivos'].update(background_color='#2B2B28')
@@ -318,7 +318,7 @@ def Comprobaciones(values,Cant_Fichas_Total,window):
 
     if Cant_Fichas_Total < 99 or Cant_Fichas_Total > 200:
         window['FichasTotales'].update(background_color='red')
-        playsound(r'ScrabbleAR_Sonidos\Error_Opciones.mp3',block=bloqueo_sonido())
+        playsound(corrector_paths(r'ScrabbleAR_Sonidos\Error_Opciones.mp3'),block=bloqueo_sonido())
         sg.popup('Intenta que las fichas totales sean mayores a 99 y menores a 200!',background_color='#B91B1B',title='Aviso',keep_on_top=True)
         window['FichasTotales'].update(background_color='#2B2B28')
         TodoOk = False
@@ -399,7 +399,7 @@ def Cargar_Perfil(Lista,Dicc_Bolsa,letra_Seleccionada,window):
         event_cargar,values_cargar = window_cargar.read()
 
         if event_cargar in (None, 'Salir'):
-            playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=bloqueo_sonido())
+            playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
             break
 
         if values_cargar[0] != []: #Si selecciono algo:
@@ -414,7 +414,7 @@ def Cargar_Perfil(Lista,Dicc_Bolsa,letra_Seleccionada,window):
                 Lista.append(Jugador_Seleccionado[0])
                 GuardarDatos(Lista)
                 values = Cargar(Jugador_Seleccionado[0],window,Dicc_Bolsa,letra_Seleccionada)
-                playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=bloqueo_sonido())
+                playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
             #Eliminar:
             else:
                 if (len(Lista) > 1):
@@ -422,13 +422,13 @@ def Cargar_Perfil(Lista,Dicc_Bolsa,letra_Seleccionada,window):
                         Lista[0]['Actual'] = True
                     Lista.pop(Lista.index(Jugador_Seleccionado[0]))
                     GuardarDatos(Lista)
-                    playsound(r'ScrabbleAR_Sonidos\Exito_Opciones.mp3',block=bloqueo_sonido())
+                    playsound(corrector_paths(r'ScrabbleAR_Sonidos\Exito_Opciones.mp3'),block=bloqueo_sonido())
                     sg.popup('El perfil se ha eliminado con exito!',background_color='#63B91B',title='Aviso',keep_on_top=True)
                 else:
-                    playsound(r'ScrabbleAR_Sonidos\Error_Opciones.mp3',block=bloqueo_sonido())
+                    playsound(corrector_paths(r'ScrabbleAR_Sonidos\Error_Opciones.mp3'),block=bloqueo_sonido())
                     sg.popup('No puedes eliminar el ultimo perfil!',background_color='#B91B1B',title='Aviso',keep_on_top=True)
         else:
-            playsound(r'ScrabbleAR_Sonidos\Error_Opciones.mp3',block=bloqueo_sonido())
+            playsound(corrector_paths(r'ScrabbleAR_Sonidos\Error_Opciones.mp3'),block=bloqueo_sonido())
             sg.popup('Tienes que seleccionar un perfil!',title='Aviso',background_color='#B91B1B',keep_on_top=True)
     window_cargar.close()
 
@@ -458,7 +458,7 @@ def Ventana_Opciones ():
         event, values = window.read()
 
         if event in (None, 'Salir'):
-            playsound(r'ScrabbleAR_Sonidos\Click.mp3')
+            playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'))
             break
 
         if event == 'Letras':
@@ -474,11 +474,11 @@ def Ventana_Opciones ():
             Dicc_Bolsa[letra_Seleccionada] = int(Cant_Letra_Actual)
 
         elif (event == 'Restablecer predeterminado'):
-            playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=bloqueo_sonido())
+            playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
             values,Dicc_Bolsa,Cant_Fichas_Total = RestablecerPredeterminado(values,window,Dicc_Bolsa,letra_Seleccionada)
 
         elif (event == 'Guardar') or (event == 'Cargar'):
-            playsound(r'ScrabbleAR_Sonidos\Click.mp3',block=bloqueo_sonido())
+            playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
             Lista = LeerDatos()
             Transformar_Values(values,Dicc_Bolsa)
             if (event == 'Guardar'):
@@ -489,12 +489,12 @@ def Ventana_Opciones ():
                         values['Actual'] = True
                         Lista.append(values)
                         GuardarDatos(Lista)
-                        playsound(r'ScrabbleAR_Sonidos\Exito_Opciones.mp3',block=bloqueo_sonido())
+                        playsound(corrector_paths(r'ScrabbleAR_Sonidos\Exito_Opciones.mp3'),block=bloqueo_sonido())
                         sg.popup('El perfil se modifico exitosamente!',background_color='#63B91B',title='Aviso',keep_on_top=True)
                     else: #Simplemente lo agrego
                         Poner_Todos_En_Falso(Lista)
                         AgregarDatos(values)
-                        playsound(r'ScrabbleAR_Sonidos\Exito_Opciones.mp3',block=bloqueo_sonido())
+                        playsound(corrector_paths(r'ScrabbleAR_Sonidos\Exito_Opciones.mp3'),block=bloqueo_sonido())
                         sg.popup('El perfil se guardo exitosamente!',background_color='#63B91B',title='Aviso',keep_on_top=True)
 
             else:           #Cargar Perfil

@@ -30,8 +30,8 @@ def identificador_carpeta_error(ProgramaPrincipal):
         ruta_carpeta=ruta_archivo_error[:ruta_archivo_error.find(chr(92))]
         sg.popup_error("Error al intentar acceder al archivo de la siguiente ruta :",ruta_archivo_error,"\nRevise que el archivo se encuentre en la carpeta",ruta_carpeta,title='Error')
     except tkinter.TclError:
-        Direciones_error={"inicio":r'ScrabbleAR_Imagenes_png\icono_inicio.png',"yellow":r'ScrabbleAR_Imagenes_png\icono3.png',"red":r'ScrabbleAR_Imagenes_png\icono_x2.png',
-        "green":r'ScrabbleAR_Imagenes_png\icono_-3.png',"blue":r'ScrabbleAR_Imagenes_png\icono_-2.png',"white":r'ScrabbleAR_Imagenes_png\modelo_ficha.png'}
+        Direciones_error={"inicio":corrector_paths(r'ScrabbleAR_Imagenes_png\icono_inicio.png'),"yellow":corrector_paths(r'ScrabbleAR_Imagenes_png\icono3.png'),"red":corrector_paths(r'ScrabbleAR_Imagenes_png\icono_x2.png'),
+        "green":corrector_paths(r'ScrabbleAR_Imagenes_png\icono_-3.png'),"blue":corrector_paths(r'ScrabbleAR_Imagenes_png\icono_-2.png'),"white":corrector_paths(r'ScrabbleAR_Imagenes_png\modelo_ficha.png')}
         tb = sys.exc_info()[2]
         if("window[coord].update" in traceback.format_tb(tb)[2]):
             tbinfo = traceback.format_tb(tb)[2]
