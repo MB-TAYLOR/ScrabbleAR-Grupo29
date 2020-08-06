@@ -262,30 +262,28 @@ def Transformar_Values(values,Dicc_Bolsa):
     for key,elem in Dicc_Bolsa.items():
         values[key] = elem
 
+def Infomar_Error_Usuario(evento,mensaje,colorOriginal,window):
+    '''Informa al usuario que inconveniente se presenta'''
+    window[evento].update(background_color='red')
+    playsound(corrector_paths(r'ScrabbleAR_Sonidos\Error_Opciones.mp3'),block=bloqueo_sonido())
+    sg.popup(mensaje,background_color='#B91B1B',title='Aviso',keep_on_top=True)
+    window[evento].update(background_color=colorOriginal)
+
 def Comprobaciones(values,Cant_Fichas_Total,window):
     '''Se comprueba que no el usuario no haya ingresado algo que no debe'''
     TodoOk = True
     if values['Usuario'] != '':
         for L in values['Usuario']:
             if ((ord(L) < 48) or (ord(L) > 57) and (ord(L) < 65) or (ord(L) > 90) and (ord(L) < 97) or (ord(L) > 122)):
-                window['Usuario'].update(background_color='red')
-                playsound(corrector_paths(r'ScrabbleAR_Sonidos\Error_Opciones.mp3'),block=bloqueo_sonido())
-                sg.popup('Prueba con un usuario que tenga letras y/o numeros!',background_color='#B91B1B',title='Aviso',keep_on_top=True)
-                window['Usuario'].update(background_color='#F1D6AB')
+                Infomar_Error_Usuario('Usuario','Prueba con un usuario que tenga letras y/o numeros!','#F1D6AB',window)
                 TodoOk = False
                 break
     else:
-        window['Usuario'].update(background_color='red')
-        playsound(corrector_paths(r'ScrabbleAR_Sonidos\Error_Opciones.mp3'),block=bloqueo_sonido())
-        sg.popup('No puedes guardar un usuario vacio!',background_color='#B91B1B',title='Aviso',keep_on_top=True)
-        window['Usuario'].update(background_color='#F1D6AB')
+        Infomar_Error_Usuario('Usuario','No puedes guardar un usuario vacio!','#F1D6AB',window)
         TodoOk = False
 
     if len(values['Usuario']) > 10:
-        window['Usuario'].update(background_color='red')
-        playsound(corrector_paths(r'ScrabbleAR_Sonidos\Error_Opciones.mp3'),block=bloqueo_sonido())
-        sg.popup('No puedes guardar un usuario con mas de 10 caracteres!',background_color='#B91B1B',title='Aviso',keep_on_top=True)
-        window['Usuario'].update(background_color='#F1D6AB')
+        Infomar_Error_Usuario('Usuario','No puedes guardar un usuario con mas de 10 caracteres!','#F1D6AB',window)
         TodoOk = False
 
     for T in ['TT','TPR']:
@@ -293,17 +291,23 @@ def Comprobaciones(values,Cant_Fichas_Total,window):
         if values[T] != '':
             for c in values[T]:
                 if not(ord(c) >= 48 and ord(c) <= 57):
-                    window[T].update(background_color='red')
-                    playsound(corrector_paths(r'ScrabbleAR_Sonidos\Error_Opciones.mp3'),block=bloqueo_sonido())
-                    sg.popup('Prueba ingresar un numero valido!',background_color='#B91B1B',title='Aviso',keep_on_top=True)
-                    window[T].update(background_color='#F1D6AB')
+                    Infomar_Error_Usuario(T,'Prueba ingresar un numero valido!','#F1D6AB',window)
                     TodoOk = False
+                    sonNumeros = False
                     break
+                else:
+                    sonNumeros = True
+            if sonNumeros:
+                if (T == 'TT') and (int(values[T]) > 120):
+                    Infomar_Error_Usuario('TT','Intenta ingresar un numero menor a 120!','#F1D6AB',window)
+                    TodoOk = False
+                if (T == 'TPR') and (int(values[T]) > 600):
+                    Infomar_Error_Usuario('TPR','Intenta ingresar un numero menor a 600!','#F1D6AB',window)
+                    TodoOk = False
+
         else:
-            window[T].update(background_color='red')
-            playsound(corrector_paths(r'ScrabbleAR_Sonidos\Error_Opciones.mp3'),block=bloqueo_sonido())
-            sg.popup('Prueba ingresar un numero!',background_color='#B91B1B',title='Aviso',keep_on_top=True)
-            window[T].update(background_color='#F1D6AB')
+            Infomar_Error_Usuario(T,'Prueba ingresar un numero!','#F1D6AB',window)
+            TodoOk = False
 
     if values['Adjetivos'] == False and values['Sustantivos'] == False and values['Verbos'] == False:
         window['Adjetivos'].update(background_color='red')
@@ -317,10 +321,7 @@ def Comprobaciones(values,Cant_Fichas_Total,window):
         TodoOk = False
 
     if Cant_Fichas_Total < 99 or Cant_Fichas_Total > 200:
-        window['FichasTotales'].update(background_color='red')
-        playsound(corrector_paths(r'ScrabbleAR_Sonidos\Error_Opciones.mp3'),block=bloqueo_sonido())
-        sg.popup('Intenta que las fichas totales sean mayores a 99 y menores a 200!',background_color='#B91B1B',title='Aviso',keep_on_top=True)
-        window['FichasTotales'].update(background_color='#2B2B28')
+        Infomar_Error_Usuario('FichasTotales','Intenta que las fichas totales sean mayores a 99 y menores a 200!','#2B2B28',window)
         TodoOk = False
 
     return TodoOk
