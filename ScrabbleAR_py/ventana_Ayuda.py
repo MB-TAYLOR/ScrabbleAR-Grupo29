@@ -37,13 +37,12 @@ def Ayuda():
 
     Ventana=[     [sg.Text("Este es el menu de Ayuda , haz click en un boton para saber mas sobre el tema elegido")],
                   [sg.Frame('',botones,relief='raised')],
-                  [sg.Image(corrector_paths(r'ScrabbleAR_Imagenes_png\Instrucciones.png'),key='Info')],
+                  [sg.Image(corrector_paths(r'ScrabbleAR_Imagenes_png\Inicio_Ayuda.png'),key='Info')],
                   [sg.Button(button_text="Salir",size=(10,2),key="Salir"),sg.Button('<',disabled=True,pad=((320,5),(3,3))),sg.Button('>',disabled=True)] ]
 
     window = sg.Window('Ayuda',Ventana,location=(540,100),size=(500,650),finalize=True)
     while True:
         event,values=window.Read()
-        print(event)
         playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
         if(event in (None,"Salir")):
             playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'))

@@ -37,7 +37,7 @@ def establezco_PP():
 
     Linea = [[sg.Image(corrector_paths(r'ScrabbleAR_Imagenes_png\Linea.png'))]]
 
-    columna_derecha=[ [sg.Image(corrector_paths(r'ScrabbleAR_Imagenes_png\ScrabbleAR_Inicio.png'),pad=(130,0))] ]
+    columna_derecha=[ [sg.Image(corrector_paths(r'ScrabbleAR_Imagenes_png\ScrabbleAR_Inicio.png'),pad=(50,0))] ]
 
 #Diseño
     diseño=[        [sg.Column(columna_izquierda),
@@ -46,7 +46,7 @@ def establezco_PP():
 
 #Aplico y muestro
 
-    window = sg.Window('Pantalla Principal',diseño,location=(540,100),size=(1035,650))
+    window = sg.Window('Pantalla Principal',diseño,location=(540,100),size=(600,650))
     boton_cliqueado,datos_ingresados=window.Read()
     playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
     while True:
