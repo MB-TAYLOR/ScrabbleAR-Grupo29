@@ -1131,6 +1131,8 @@ def genero_Tablero():
         for x in aux_CCD:
             CCD.add(tuple(x))
     else:
+        HistorialUsuario = []
+        HistorialCPU = []
         partida_carga=False
         Usuario,Dificultad,Dicc_Puntajes,Dicc_Bolsa,tiempo_ronda,Tiempo,Lista_TP = Importar_Datos()
         tiempo_ronda=int(tiempo_ronda)*100
