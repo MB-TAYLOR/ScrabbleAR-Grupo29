@@ -220,8 +220,8 @@ def Layout_Main():
             [sg.Text('Z:'),sg.Slider(range=(9,11),orientation="h",size=(6,10),pad=((146,3),(0,22)),default_value=10,key='Lote7')]]
 
     frame_Dificultad = [[sg.Radio('Facil','Dificultad',key='Facil',enable_events=True,tooltip='En "Facil" se aplicaran los siguientes cambios:\n_____________\nSe aceptaran: Adjetivos, Sustantivos y Verbos\nTiempo por ronda: 60sg \nTiempo Total: 60Min',pad=(8,3)),
-    sg.Radio('Normal','Dificultad', default='1',key='Normal',enable_events=True,tooltip='En "Normal" se aplicaran los siguientes cambios:\n_____________\nSe aceptaran: Sustantivos y Verbos\nTiempo por ronda: 45sg \nTiempo Total: 45Min',pad=(8,3))],
-    [sg.Radio('Dificil','Dificultad',key='Dificil',enable_events=True,tooltip='En "Dificil" se aplicaran los siguientes cambios:\n_____________\nSe aceptaran: Adjetivos,Sustantivos y Verbos(De forma Aleatoria)\nTiempo por ronda: 30sg \nTiempo Total: 30Min',pad=(8,3)),sg.Radio('Personalizado','Dificultad',key='Personalizado',enable_events=True,tooltip='Puedes cambiar la configuracion a tu antojo',pad=(8,3))]]
+    sg.Radio('Normal','Dificultad', default='1',key='Normal',enable_events=True,tooltip='En "Normal" se aplicaran los siguientes cambios:\n_____________\nSe aceptaran: Adjetivos y Verbos\nTiempo por ronda: 45sg \nTiempo Total: 45Min',pad=(8,3))],
+    [sg.Radio('Dificil','Dificultad',key='Dificil',enable_events=True,tooltip='En "Dificil" se aplicaran los siguientes cambios:\n_____________\nSe aceptaran: Adjetivos y Verbos(De forma Aleatoria)\nTiempo por ronda: 30sg \nTiempo Total: 30Min',pad=(8,3)),sg.Radio('Personalizado','Dificultad',key='Personalizado',enable_events=True,tooltip='Puedes cambiar la configuracion a tu antojo',pad=(8,3))]]
 
     layout = [[sg.Text('Usuario:'),sg.Input(size=(15, 6),key='Usuario',default_text='Default'),sg.OK('Cargar perfil',key='Cargar')],
             [sg.Frame('Dificultad:',frame_Dificultad,pad=(5,10))],
@@ -344,17 +344,17 @@ def Deshabilitar(Dificultad_Actual,window):
         elif Dificultad_Actual == 'Normal':
             window['TT'].update('45',disabled=True)
             window['TPR'].update('45',disabled=True)
-            window['Adjetivos'].update(False,disabled=True)
-            window['Sustantivos'].update(True,disabled=True)
+            window['Adjetivos'].update(True,disabled=True)
+            window['Sustantivos'].update(False,disabled=True)
             window['Verbos'].update(True,disabled=True)
-        else:
+        elif Dificultad_Actual == 'Dificil':
             window['TT'].update('30',disabled=True)
             window['TPR'].update('30',disabled=True)
-            Lista_random = ['Adjetivos','Sustantivos','Verbos']
+            Lista_random = ['Adjetivos','Verbos']
             random.shuffle(Lista_random)
             window[Lista_random[0]].update(True,disabled=True)
             window[Lista_random[1]].update(False,disabled=True)
-            window[Lista_random[2]].update(False,disabled=True)
+            window['Sustantivos'].update(False,disabled=True)
     else:
         window['TT'].update(disabled=False)
         window['TPR'].update(disabled=False)
