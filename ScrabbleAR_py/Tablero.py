@@ -1257,7 +1257,7 @@ def genero_Tablero():
                     if(Turnos_Disponibles == 0):
                         window["Intercambiar fichas"].update("Terminar\nPartida")
                 else:
-                    if(contador_Turnos_CPU>=10 and (CFT <= 20)):
+                    if(contador_Turnos_CPU>=10 and (CFT <= 50)):
                         Desabilitar_Botones(window)
                         event_popup3=sg.popup_yes_no("¿Desea Terminar la partida y definir al ganador?",title='Aviso',keep_on_top=True)
                         Habilitar_Botones(window)
@@ -1265,7 +1265,7 @@ def genero_Tablero():
                             terminacion_Manual_Usuario=True
                     else:
                         Desabilitar_Botones(window)
-                        sg.popup("Debes de jugar almenos 10 rondas con el CPU y deben quedar 20 fichas o menos  para finalizar la partida.\n\nRondas actuales : "+str(contador_Turnos_CPU),"Fichas restantes : "+str(CFT),title='Aviso',keep_on_top=True)
+                        sg.popup("Debes de jugar almenos 10 rondas con el CPU y deben quedar 50 fichas o menos  para finalizar la partida.\n\nRondas actuales : "+str(contador_Turnos_CPU),"Fichas restantes : "+str(CFT),title='Aviso',keep_on_top=True)
                         Habilitar_Botones(window)
 
 
@@ -1327,11 +1327,11 @@ def genero_Tablero():
         event="Salir"
         if (PTU > PT_CPU):
             playsound(corrector_paths(r'ScrabbleAR_Sonidos\Ganar.mp3'),block=bloqueo_sonido())
-            sg.popup("Ganaste",title='Aviso',keep_on_top=True)
-            Agregar_Datos_TabladePosiciones(Dificultad,Usuario,PTU)
+            sg.popup("Ganaste , si hiciste el puntaje suficiente apareceras en el TOP ",title='Aviso',keep_on_top=True)
         else:
             playsound(corrector_paths(r'ScrabbleAR_Sonidos\Perder.mp3'),block=bloqueo_sonido())
-            sg.popup("Perdiste",title='Aviso',keep_on_top=True)
+            sg.popup("Perdiste pero si hiciste el puntaje suficiente apareceras en el TOP ",title='Aviso',keep_on_top=True)
+        Agregar_Datos_TabladePosiciones(Dificultad,Usuario,PTU)
         vaciar_archivo()
 
     window.close()

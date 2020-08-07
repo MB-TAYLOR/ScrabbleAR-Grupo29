@@ -13,7 +13,7 @@ El juego:
   Partida:
 
   Al comenzar la partida, se le asigna 7 fichas a ambos jugadores para que posteriormente(de forma aleatoria) se indique quien empieza primero.
-  El juego se termina si: se acaban las fichas, si el tiempo se acaba , ó en caso de que el jugador no disponga mas intentos de intercambio de fichas(dispone de 3 intentos de intercambio), deben quedar menos de 20 fichas en la bolsa y haber sucedido al menos diez rondas, el jugador tendrá la opción de finalizar la partida. Al finalizar, de acuerdo a lo establecido con anterioridad, se procederá a evaluar puntajes y determinar un ganador.
+  El juego se termina si: se acaban las fichas, si el tiempo se acaba , ó en caso de que el jugador no disponga mas intentos de intercambio de fichas(dispone de 3 intentos de intercambio), deben quedar menos de 50 fichas en la bolsa y haber sucedido al menos diez rondas, el jugador tendrá la opción de finalizar la partida. Al finalizar, de acuerdo a lo establecido con anterioridad, se procederá a evaluar puntajes y determinar un ganador.
 
   En el tablero existen ciertas casillas que pueden tanto beneficiarte como perjudicarte: multiplica los puntos de la letra x2 ó x3 y resta -2 o -3 a la palabra, de acuerdo a la casilla/s ocupadas.    
 
