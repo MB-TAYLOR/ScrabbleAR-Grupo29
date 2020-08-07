@@ -17,7 +17,7 @@ El juego:
 
   En el tablero existen ciertas casillas que pueden tanto beneficiarte como perjudicarte: multiplica los puntos de la letra x2 ó x3 y resta -2 o -3 a la palabra, de acuerdo a la casilla/s ocupadas.    
 
-  La partida pospuesta permanece guardada hasta que se determine un ganador, luego de eso la partida se elimina.
+  La partida pospuesta permanece guardada hasta que se determine un ganador, luego de eso la partida se elimina. Esto fue definido en base a la posibilidad de multiples usuarios y la limitación de poder posponer una sola partida.  
 
 El programa:
 
