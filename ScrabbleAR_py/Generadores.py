@@ -44,7 +44,7 @@ def identificador_carpeta_error(ProgramaPrincipal):
             ruta_capeta=ruta_carpeta.split(str(os.sep))
             sg.popup_error("Error al intentar acceder a la imagen de la siguiente ruta :",Direciones_error[ruta_archivo_error] ,"\nRevise que la imagen se encuentre el la carpeta: ",ruta_capeta[len(ruta_capeta)-2] ,"\nError en : ",tbinfo ,title='Error')
         else:
-            sg.popup_error("Falta alguna imagen en la carpeta ScrabbleAR_Imagenes_png\nError en : ",tbinfo,title='Error')#Tambien puede ser un error con PySimpleGUI
+            sg.popup_error("Hubo un error con PySimpleGUI\nError en : ",tbinfo,title='Error')#Tambien puede ser un error con PySimpleGUI
     except UnicodeDecodeError:
         tb = sys.exc_info()[2]
         tbinfo = traceback.format_tb(tb)[1]
