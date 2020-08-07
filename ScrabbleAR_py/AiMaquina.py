@@ -21,18 +21,13 @@ def palabra_larga(lista_palabras):
 def Facil(i,palabras_existentes):
     '''Para Facil ,verifica si la palabra es valida(cumple con las condiciones) y si lo es lo agrega a la lista palabras_existentes'''
     if (i in spelling.keys() or i in lexicon.keys()):
-        if(parse(i).split("/")[1] in Tipo['sus']):
-            palabras_existentes.append(i)
-        elif(parse(i).split("/")[1] in Tipo['adj']):
-            palabras_existentes.append(i)
-        elif(parse(i).split("/")[1] in Tipo['verb']):
-            palabras_existentes.append(i)
+        palabras_existentes.append(i)
 def Medio(i,palabras_existentes):
     '''Para Medio ,verifica si la palabra es valida(cumple con las condiciones) y si lo es lo agrega a la lista palabras_existentes'''
     if i in spelling.keys() and i in lexicon.keys(): #Dificultad -> Medio(Sea adjetivo o verbo)
         if(parse(i).split("/")[1] in Tipo['verb']):
             palabras_existentes.append(i)
-        elif(parse(i).split("/")[1] in Tipo['sus']):
+        elif(parse(i).split("/")[1] in Tipo['adj']):
             palabras_existentes.append(i)
 def Dificil_Personalizado(i,palabras_existentes,Dificil_elegido):
     '''Para Dificil y Personalizado ,verifica si la palabra es valida(cumple con las condiciones) y si lo es lo agrega a la lista palabras_existentes'''
@@ -50,11 +45,11 @@ def formar_palabra(letras,dificultad,Dificil_elegido):
     palabras_existentes=[]
     for i in palabras:
         if (dificultad=="Facil"):
-            Facil(i,palabras_existentes)
+            Facil(i,palabras_existentes) or Facil(i.upper(),palabras_existentes)
         elif(dificultad=="Medio"):
-            Medio(i,palabras_existentes)
+            Medio(i,palabras_existentes) or Medio(i.upper(),palabras_existentes)
         elif((dificultad=="Dificil") or (dificultad=="Personalizado")):
-            Dificil_Personalizado(i,palabras_existentes,Dificil_elegido)
+            Dificil_Personalizado(i,palabras_existentes,Dificil_elegido) or Dificil_Personalizado(i.upper(),palabras_existentes,Dificil_elegido)
     return(palabra_larga(palabras_existentes))
 
 
