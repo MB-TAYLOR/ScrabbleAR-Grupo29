@@ -50,3 +50,4 @@ El programa:
   Consideraciones:
 
     El sonido se ejecutará en Linux, pero debido a que la dependencia 'playsound' no tiene la funcionalidad 'block' disponible para Linux se producirá un delay, para mas información acceda a https://github.com/TaylorSMarks/playsound.
+    Puede ocurrir un error si , se cierra la partida con la X mientras que hay algun pop up abierto , debido a que no podemos deshabilitar momentaneamente la X, podriamos deshabilitarla permanentemene si se requiere.
