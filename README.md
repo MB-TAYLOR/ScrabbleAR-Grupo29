@@ -17,6 +17,8 @@ El juego:
 
   En el tablero existen ciertas casillas que pueden tanto beneficiarte como perjudicarte: multiplica los puntos de la letra x2 ó x3 y resta -2 o -3 a la palabra, de acuerdo a la casilla/s ocupadas.    
 
+  La partida pospuesta permanece guardada hasta que se determine un ganador, luego de eso la partida se elimina.
+
 El programa:
 
   El programa principal es ScrabbleAR.py, su ejecución requiere un IDE que admita Python 3.6.8 y las dependencias declaradas en la sección 'Dependencias' de este archivo. Las dependencias pueden instalarse mediante el comando 'pip install' luego de instalar Python versión 3.6.8 ó posterior. Para abrir el juego deberá ejecutar el programa principal.
