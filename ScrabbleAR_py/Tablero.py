@@ -1,5 +1,6 @@
 try:
     import sys
+    import os
     from ScrabbleAR_py.palabra_Existe import verificar_Palabra
     import json
     from ScrabbleAR_py.AiMaquina import formar_palabra
@@ -118,77 +119,17 @@ def Agregar_Datos_TabladePosiciones(Dificultad,Usuario,PTU):
 def rutas_letras(Dicc_letra_puntajes):
     '''Recibe un diccionario con claves letra y valor puntaje (ej:"A:1") y segun eso , genera un diccionario con clave letra y valor lista de direcciones
     correspondientes a distintos estados de la  ficha con el puntaje recibido (en el atril , al seleccionarla,al terminar turno), para el usuario '''
-    Dicc_letras_rutas={'A1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_A1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_A1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_A1_T.png')],
-                       'A2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_A2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_A2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_A2_T.png')],
-                       'B2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_B2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_B2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_B2_T.png')],
-                       'B3':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_B3_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_B3_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_B3_T.png')],
-                       'B4':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_B4_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_B4_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_B4_T.png')],
-                       'C1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_C1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_C1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_C1_T.png')],
-                       'C2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_C2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_C2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_C2_T.png')],
-                       'C3':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_C3_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_C3_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_C3_T.png')],
-                       'D1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_D1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_D1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_D1_T.png')],
-                       'D2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_D2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_D2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_D2_T.png')],
-                       'D3':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_D3_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_D3_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_D3_T.png')],
-                       'E1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_E1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_E1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_E1_T.png')],
-                       'E2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_E2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_E2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_E2_T.png')],
-                       'F3':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_F3_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_F3_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_F3_T.png')],
-                       'F4':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_F4_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_F4_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_F4_T.png')],
-                       'F5':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_F5_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_F5_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_F5_T.png')],
-                       'G1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_G1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_G1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_G1_T.png')],
-                       'G2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_G2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_G2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_G2_T.png')],
-                       'G3':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_G3_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_G3_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_G3_T.png')],
-                       'H3':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_H3_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_H3_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_H3_T.png')],
-                       'H4':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_H4_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_H4_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_H4_T.png')],
-                       'H5':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_H5_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_H5_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_H5_T.png')],
-                       'I1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_I1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_I1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_I1_T.png')],
-                       'I2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_I2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_I2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_I2_T.png')],
-                       'J5':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_J5_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_J5_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_J5_T.png')],
-                       'J6':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_J6_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_J6_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_J6_T.png')],
-                       'J7':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_J7_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_J7_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_J7_T.png')],
-                       'K7':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_K7_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_K7_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_K7_T.png')],
-                       'K8':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_K8_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_K8_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_K8_T.png')],
-                       'K9':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_K9_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_K9_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_K9_T.png')],
-                       'L1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_L1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_L1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_L1_T.png')],
-                       'L2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_L2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_L2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_L2_T.png')],
-                       'M2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_M2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_M2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_M2_T.png')],
-                       'M3':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_M3_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_M3_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_M3_T.png')],
-                       'M4':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_M4_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_M4_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_M4_T.png')],
-                       'N1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_N1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_N1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_N1_T.png')],
-                       'N2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_N2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_N2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_N2_T.png')],
-                       'Ñ7':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Ñ7_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Ñ7_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Ñ7_T.png')],
-                       'Ñ8':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Ñ8_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Ñ8_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Ñ8_T.png')],
-                       'Ñ9':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Ñ9_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Ñ9_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Ñ9_T.png')],
-                       'O1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_O1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_O1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_O1_T.png')],
-                       'O2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_O2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_O2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_O2_T.png')],
-                       'P2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_P2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_P2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_P2_T.png')],
-                       'P3':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_P3_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_P3_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_P3_T.png')],
-                       'P4':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_P4_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_P4_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_P4_T.png')],
-                       'Q7':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Q7_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Q7_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Q7_T.png')],
-                       'Q8':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Q8_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Q8_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Q8_T.png')],
-                       'Q9':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Q9_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Q9_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Q9_T.png')],
-                       'R1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_R1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_R1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_R1_T.png')],
-                       'R2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_R2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_R2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_R2_T.png')],
-                       'S1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_S1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_S1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_S1_T.png')],
-                       'S2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_S2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_S2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_S2_T.png')],
-                       'T1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_T1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_T1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_T1_T.png')],
-                       'T2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_T2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_T2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_T2_T.png')],
-                       'U1':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_U1_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_U1_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_U1_T.png')],
-                       'U2':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_U2_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_U2_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_U2_T.png')],
-                       'V3':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_V3_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_V3_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_V3_T.png')],
-                       'V4':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_V4_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_V4_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_V4_T.png')],
-                       'V5':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_V5_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_V5_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_V5_T.png')],
-                       'W7':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_W7_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_W7_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_W7_T.png')],
-                       'W8':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_W8_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_W8_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_W8_T.png')],
-                       'W9':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_W9_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_W9_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_W9_T.png')],
-                       'X7':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_X7_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_X7_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_X7_T.png')],
-                       'X8':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_X8_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_X8_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_X8_T.png')],
-                       'X9':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_X9_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_X9_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_X9_T.png')],
-                       'Y3':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Y3_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Y3_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Y3_T.png')],
-                       'Y4':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Y4_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Y4_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Y4_T.png')],
-                       'Y5':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Y5_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Y5_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Y5_T.png')],
-                       'Z9':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Z9_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Z9_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Z9_T.png')],
-                       'Z10':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Z10_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Z10_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Z10_T.png')],
-                       'Z11':[corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Z11_B.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Z11_S.png'),corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Z11_T.png')]}
+    letras_rutas=['A1','A2','B2','B3','B4','C1','C2','C3','D1','D2','D3','E1','E2','F3','F4','F5','G1','G2','G3','H3','H4','H5','I1','I2','J5','J6','J7','K7','K8','K9','L1','L2','M2','M3','M4','N1','N2','O1','O2',
+                'P2','P3','P4','Q7','Q8','Q9','R1','R2','S1','S2','T1','T2','U1','U2','V3','V4','V5','W7','W8','W9','X7','X8','X9','Y3','Y4','Y5','Z10','Z11','Z9','Ñ7','Ñ8','Ñ9']
+    carpeta_imagen="ScrabbleAR_Imagenes_png"+chr(92)
+    ruta_imagen_B=sorted(os.listdir(carpeta_imagen+"FichasUsuario_B"))#Fichas Blancas
+    ruta_imagen_S=sorted(os.listdir(carpeta_imagen+"FichasUsuario_S"))
+    ruta_imagen_T=sorted(os.listdir(carpeta_imagen+"FichasUsuario_T"))
+    Dicc_letras_rutas={}
+    x=0
+    for imagen in letras_rutas:
+        Dicc_letras_rutas[imagen]=[corrector_paths(carpeta_imagen+"FichasUsuario_B"+chr(92)+ruta_imagen_B[x]),corrector_paths(carpeta_imagen+"FichasUsuario_S"+chr(92)+ruta_imagen_S[x]),corrector_paths(carpeta_imagen+"FichasUsuario_T"+chr(92)+ruta_imagen_T[x])]
+        x=x+1
 
     Dicc_Actual_Punto_Ficha={}
     for x in Dicc_letra_puntajes:
@@ -244,23 +185,22 @@ def Update_Tablero2(window,Dicc,size,subsample):
 
 def rutas_letras_CPU(Dicc_letra_puntajes):
     '''Recibe un diccionario con claves letra y valor puntaje (ej:"A:1") y segun eso , genera un diccionario con clave letra y valor direccion de la imagen a usar,para el CPU '''
-    Dicc_letras_rutas_CPU={'A1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_A1_N.png'),'A2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_A2_N.png'),'B2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_B2_N.png'),'B3':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_B3_N.png'),'B4':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_B4_N.png'),
-        'C1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_C1_N.png'),'C2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_C2_N.png'),'C3':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_C3_N.png'),'D1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_D1_N.png'),'D2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_D2_N.png'),'D3':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_D3_N.png'),
-        'E1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_E1_N.png'),'E2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_E2_N.png'),'F3':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_F3_N.png'),'F4':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_F4_N.png'),'F5':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_F5_N.png'),'G1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_G1_N.png'),
-        'G2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_G2_N.png'),'G3':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_G3_N.png'),'H3':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_H3_N.png'),'H4':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_H4_N.png'),'H5':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_H5_N.png'),'I1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_I1_N.png'),
-        'I2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_I2_N.png'),'J5':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_J5_N.png'),'J6':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_J6_N.png'),'J7':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_J7_N.png'),'K7':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_K7_N.png'),'K8':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_K8_N.png'),
-        'K9':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_K9_N.png'),'L1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_L1_N.png'),'L2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_L2_N.png'),'M2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_M2_N.png'),'M3':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_M3_N.png'),'M4':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_M4_N.png'),
-        'N1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_N1_N.png'),'N2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_N2_N.png'),'Ñ7':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Ñ7_N.png'),'Ñ8':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Ñ8_N.png'),'Ñ9':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Ñ9_N.png'),'O1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_O1_N.png'),
-        'O2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_O2_N.png'),'P2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_P2_N.png'),'P3':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_P3_N.png'),'P4':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_P4_N.png'),'Q7':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Q7_N.png'),'Q8':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Q8_N.png'),
-        'Q9':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Q9_N.png'),'R1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_R1_N.png'),'R2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_R2_N.png'),'S1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_S1_N.png'),'S2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_S2_N.png'),'T1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_T1_N.png'),
-        'T2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_T2_N.png'),'U1':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_U1_N.png'),'U2':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_U2_N.png'),'V3':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_V3_N.png'),'V4':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_V4_N.png'),'V5':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_V5_N.png'),
-        'W7':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_W7_N.png'),'W8':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_W8_N.png'),'W9':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_W9_N.png'),'X7':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_X7_N.png'),'X8':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_X8_N.png'),'X9':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_X9_N.png'),
-        'Y3':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Y3_N.png'),'Y4':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Y4_N.png'),'Y5':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Y5_N.png'),'Z9':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Z9_N.png'),'Z10':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Z10_N.png'),'Z11':corrector_paths(r'ScrabbleAR_Imagenes_png\ficha_Z11_N.png')}
-
+    letras_rutas_CPU=['A1','A2','B2','B3','B4','C1','C2','C3','D1','D2','D3','E1','E2','F3','F4','F5','G1','G2','G3','H3','H4','H5','I1','I2','J5','J6','J7','K7','K8','K9','L1','L2',
+                    'M2','M3','M4','N1','N2','O1','O2','P2','P3','P4','Q7','Q8','Q9','R1','R2','S1','S2','T1','T2','U1','U2','V3','V4','V5','W7','W8','W9','X7','X8','X9','Y3','Y4','Y5','Z10','Z11','Z9','Ñ7','Ñ8','Ñ9']
+    carpeta_imagen="ScrabbleAR_Imagenes_png"+chr(92)
+    ruta_imagen_CPU=sorted(os.listdir(carpeta_imagen+"FichasCPU"))#Fichas Negras
+    Dicc_letras_rutas_CPU={}
+    x=0
+    for imagen in letras_rutas_CPU:
+        Dicc_letras_rutas_CPU[imagen]=corrector_paths(carpeta_imagen+"FichasCPU"+chr(92)+ruta_imagen_CPU[x])
+        x=x+1
+    print(ruta_imagen_CPU)
+    print(Dicc_letras_rutas_CPU)
     Dicc_Actual_Punto_Ficha_CPU={}
     for x in Dicc_letra_puntajes:
         clave_Dicc_letras_rutas_CPU=x+str(Dicc_letra_puntajes[x])
         Dicc_Actual_Punto_Ficha_CPU[x]=Dicc_letras_rutas_CPU[clave_Dicc_letras_rutas_CPU]
+
     return(Dicc_Actual_Punto_Ficha_CPU)
 
 def Update_Infobox(Texto,Color,window):
@@ -301,68 +241,50 @@ def Update_Tablero(window,Dicc):
     '''Genera un tablero usando de forma aleatoria alguno de los posibles tableros en Lista_Tableros ,Guarda en Dicc el tablero
        seleccionado(como clave tipo tupla de las coordenadas y valor una lista , en la posicion 1 de esta se guarda el color del boton ),
        cambia los colores de los botones del layaut para mostrarlo y retorna Dicc'''
-    Lista_Tableros=[
-        {"0,0":"white","0,1":"white","0,2":"red","0,3":"white","0,4":"green","0,5":"white","0,6":"white","0,7":"white","0,8":"white","0,9":"white","0,10":"green","0,11":"white","0,12":"red","0,13":"white","0,14":"white",
-         "1,0":"white","1,1":"green","1,2":"white","1,3":"white","1,4":"white","1,5":"yellow","1,6":"white","1,7":"blue","1,8":"white","1,9":"yellow","1,10":"white","1,11":"white","1,12":"white","1,13":"green","1,14":"white",
-         "2,0":"red","2,1":"white","2,2":"white","2,3":"white","2,4":"white","2,5":"white","2,6":"green","2,7":"white","2,8":"green","2,9":"white","2,10":"white","2,11":"white","2,12":"white","2,13":"white","2,14":"red",
-         "3,0":"white","3,1":"white","3,2":"white","3,3":"blue","3,4":"white","3,5":"white","3,6":"white","3,7":"yellow","3,8":"white","3,9":"white","3,10":"white","3,11":"blue","3,12":"white","3,13":"white","3,14":"white",
-         "4,0":"green","4,1":"white","4,2":"white","4,3":"white","4,4":"white","4,5":"white","4,6":"white","4,7":"white","4,8":"white","4,9":"white","4,10":"white","4,11":"white","4,12":"white","4,13":"white","4,14":"green",
-         "5,0":"white","5,1":"yellow","5,2":"white","5,3":"white","5,4":"white","5,5":"blue","5,6":"white","5,7":"red","5,8":"white","5,9":"blue","5,10":"white","5,11":"white","5,12":"white","5,13":"yellow","5,14":"white",
-         "6,0":"white","6,1":"white","6,2":"green","6,3":"white","6,4":"white","6,5":"white","6,6":"white","6,7":"white","6,8":"white","6,9":"white","6,10":"white","6,11":"white","6,12":"green","6,13":"white","6,14":"white",
-         "7,0":"white","7,1":"blue","7,2":"white","7,3":"yellow","7,4":"white","7,5":"red","7,6":"white","7,7":"black","7,8":"white","7,9":"red","7,10":"white","7,11":"yellow","7,12":"white","7,13":"blue","7,14":"white",
-         "8,0":"white","8,1":"white","8,2":"green","8,3":"white","8,4":"white","8,5":"white","8,6":"white","8,7":"white","8,8":"white","8,9":"white","8,10":"white","8,11":"white","8,12":"green","8,13":"white","8,14":"white",
-         "9,0":"white","9,1":"yellow","9,2":"white","9,3":"white","9,4":"white","9,5":"blue","9,6":"white","9,7":"red","9,8":"white","9,9":"blue","9,10":"white","9,11":"white","9,12":"white","9,13":"yellow","9,14":"white",
-         "10,0":"green","10,1":"white","10,2":"white","10,3":"white","10,4":"white","10,5":"white","10,6":"white","10,7":"white","10,8":"white","10,9":"white","10,10":"white","10,11":"white","10,12":"white","10,13":"white","10,14":"green",
-         "11,0":"white","11,1":"white","11,2":"white","11,3":"blue","11,4":"white","11,5":"white","11,6":"white","11,7":"yellow","11,8":"white","11,9":"white","11,10":"white","11,11":"blue","11,12":"white","11,13":"white","11,14":"white",
-         "12,0":"red","12,1":"white","12,2":"white","12,3":"white","12,4":"white","12,5":"white","12,6":"green","12,7":"white","12,8":"green","12,9":"white","12,10":"white","12,11":"white","12,12":"white","12,13":"white","12,14":"red",
-         "13,0":"white","13,1":"green","13,2":"white","13,3":"white","13,4":"white","13,5":"yellow","13,6":"white","13,7":"blue","13,8":"white","13,9":"yellow","13,10":"white","13,11":"white","13,12":"white","13,13":"green","13,14":"white",
-         "14,0":"white","14,1":"white","14,2":"red","14,3":"white","14,4":"green","14,5":"white","14,6":"white","14,7":"white","14,8":"white","14,9":"white","14,10":"green","14,11":"white","14,12":"red","14,13":"white","14,14":"white",
-             },
-        {"0,0":"green","0,1":"white","0,2":"white","0,3":"white","0,4":"white","0,5":"red","0,6":"white","0,7":"white","0,8":"white","0,9":"red","0,10":"white","0,11":"white","0,12":"white","0,13":"white","0,14":"green",
-         "1,0":"white","1,1":"green","1,2":"white","1,3":"white","1,4":"white","1,5":"white","1,6":"red","1,7":"white","1,8":"red","1,9":"white","1,10":"white","1,11":"white","1,12":"white","1,13":"green","1,14":"white",
-         "2,0":"white","2,1":"white","2,2":"blue","2,3":"green","2,4":"white","2,5":"white","2,6":"white","2,7":"yellow","2,8":"white","2,9":"white","2,10":"white","2,11":"green","2,12":"blue","2,13":"white","2,14":"white",
-         "3,0":"white","3,1":"white","3,2":"green","3,3":"blue","3,4":"white","3,5":"white","3,6":"white","3,7":"white","3,8":"white","3,9":"white","3,10":"white","3,11":"blue","3,12":"green","3,13":"white","3,14":"white",
-         "4,0":"white","4,1":"white","4,2":"white","4,3":"white","4,4":"blue","4,5":"white","4,6":"white","4,7":"white","4,8":"white","4,9":"blue","4,10":"white","4,11":"white","4,12":"white","4,13":"white","4,14":"white",
-         "5,0":"white","5,1":"white","5,2":"green","5,3":"white","5,4":"white","5,5":"yellow","5,6":"red","5,7":"white","5,8":"red","5,9":"yellow","5,10":"white","5,11":"white","5,12":"green","5,13":"white","5,14":"white",
-         "6,0":"white","6,1":"red","6,2":"white","6,3":"white","6,4":"white","6,5":"red","6,6":"white","6,7":"white","6,8":"white","6,9":"red","6,10":"white","6,11":"white","6,12":"white","6,13":"red","6,14":"white",
-         "7,0":"white","7,1":"white","7,2":"yellow","7,3":"white","7,4":"white","7,5":"white","7,6":"white","7,7":"black","7,8":"white","7,9":"white","7,10":"white","7,11":"white","7,12":"yellow","7,13":"white","7,14":"white",
-         "8,0":"white","8,1":"red","8,2":"white","8,3":"white","8,4":"white","8,5":"red","8,6":"white","8,7":"white","8,8":"white","8,9":"red","8,10":"white","8,11":"white","8,12":"white","8,13":"red","8,14":"white",
-         "9,0":"white","9,1":"white","9,2":"green","9,3":"white","9,4":"white","9,5":"yellow","9,6":"red","9,7":"white","9,8":"red","9,9":"yellow","9,10":"white","9,11":"white","9,12":"green","9,13":"white","9,14":"white",
-         "10,0":"white","10,1":"white","10,2":"white","10,3":"white","10,4":"blue","10,5":"white","10,6":"white","10,7":"white","10,8":"white","10,9":"white","10,10":"blue","10,11":"white","10,12":"white","10,13":"white","10,14":"white",
-         "11,0":"white","11,1":"white","11,2":"green","11,3":"blue","11,4":"white","11,5":"white","11,6":"white","11,7":"white","11,8":"white","11,9":"white","11,10":"white","11,11":"blue","11,12":"green","11,13":"white","11,14":"white",
-         "12,0":"white","12,1":"white","12,2":"blue","12,3":"green","12,4":"white","12,5":"white","12,6":"white","12,7":"yellow","12,8":"white","12,9":"white","12,10":"white","12,11":"green","12,12":"blue","12,13":"white","12,14":"white",
-         "13,0":"white","13,1":"green","13,2":"white","13,3":"white","13,4":"white","13,5":"white","13,6":"red","13,7":"white","13,8":"red","13,9":"white","13,10":"white","13,11":"white","13,12":"white","13,13":"green","13,14":"white",
-         "14,0":"green","14,1":"white","14,2":"white","14,3":"white","14,4":"white","14,5":"red","14,6":"white","14,7":"white","14,8":"white","14,9":"red","14,10":"white","14,11":"white","14,12":"white","14,13":"white","14,14":"green",
-             },
-        {"0,0":"white","0,1":"white","0,2":"white","0,3":"white","0,4":"blue","0,5":"white","0,6":"white","0,7":"white","0,8":"white","0,9":"white","0,10":"red","0,11":"white","0,12":"white","0,13":"white","0,14":"white",
-         "1,0":"green","1,1":"white","1,2":"white","1,3":"white","1,4":"white","1,5":"white","1,6":"white","1,7":"blue","1,8":"white","1,9":"white","1,10":"white","1,11":"white","1,12":"white","1,13":"white","1,14":"green",
-         "2,0":"white","2,1":"white","2,2":"white","2,3":"white","2,4":"white","2,5":"white","2,6":"blue","2,7":"white","2,8":"white","2,9":"white","2,10":"white","2,11":"white","2,12":"white","2,13":"white","2,14":"white",
-         "3,0":"red","3,1":"white","3,2":"blue","3,3":"white","3,4":"white","3,5":"white","3,6":"red","3,7":"white","3,8":"white","3,9":"white","3,10":"white","3,11":"white","3,12":"red","3,13":"white","3,14":"red",
-         "4,0":"white","4,1":"white","4,2":"white","4,3":"white","4,4":"white","4,5":"white","4,6":"white","4,7":"white","4,8":"white","4,9":"white","4,10":"white","4,11":"white","4,12":"white","4,13":"white","4,14":"white",
-         "5,0":"white","5,1":"white","5,2":"white","5,3":"yellow","5,4":"white","5,5":"white","5,6":"white","5,7":"white","5,8":"white","5,9":"white","5,10":"white","5,11":"yellow","5,12":"white","5,13":"white","5,14":"white",
-         "6,0":"blue","6,1":"white","6,2":"white","6,3":"white","6,4":"white","6,5":"white","6,6":"white","6,7":"white","6,8":"white","6,9":"white","6,10":"white","6,11":"white","6,12":"white","6,13":"white","6,14":"red",
-         "7,0":"white","7,1":"white","7,2":"white","7,3":"green","7,4":"white","7,5":"white","7,6":"white","7,7":"black","7,8":"white","7,9":"white","7,10":"white","7,11":"green","7,12":"white","7,13":"white","7,14":"white",
-         "8,0":"blue","8,1":"white","8,2":"white","8,3":"white","8,4":"white","8,5":"blue","8,6":"white","8,7":"white","8,8":"white","8,9":"blue","8,10":"white","8,11":"white","8,12":"white","8,13":"white","8,14":"red",
-         "9,0":"white","9,1":"white","9,2":"white","9,3":"white","9,4":"white","9,5":"white","9,6":"white","9,7":"white","9,8":"white","9,9":"white","9,10":"white","9,11":"white","9,12":"white","9,13":"white","9,14":"white",
-         "10,0":"white","10,1":"white","10,2":"white","10,3":"white","10,4":"yellow","10,5":"white","10,6":"white","10,7":"white","10,8":"white","10,9":"white","10,10":"yellow","10,11":"white","10,12":"white","10,13":"white","10,14":"white",
-         "11,0":"red","11,1":"white","11,2":"blue","11,3":"white","11,4":"white","11,5":"white","11,6":"white","11,7":"white","11,8":"red","11,9":"white","11,10":"white","11,11":"white","11,12":"red","11,13":"white","11,14":"red",
-         "12,0":"white","12,1":"white","12,2":"white","12,3":"white","12,4":"white","12,5":"white","12,6":"white","12,7":"white","12,8":"blue","12,9":"white","12,10":"white","12,11":"white","12,12":"white","12,13":"white","12,14":"white",
-         "13,0":"green","13,1":"white","13,2":"white","13,3":"white","13,4":"white","13,5":"white","13,6":"white","13,7":"blue","13,8":"white","13,9":"white","13,10":"white","13,11":"white","13,12":"white","13,13":"white","13,14":"green",
-         "14,0":"white","14,1":"white","14,2":"white","14,3":"white","14,4":"blue","14,5":"white","14,6":"white","14,7":"white","14,8":"white","14,9":"white","14,10":"red","14,11":"white","14,12":"white","14,13":"white","14,14":"white",
-             }
-             ]
+    Tablero={}
+    #red,yellow,blue,green
+    Lista_diseños=[
+                {"red":["0,2","0,12","2,0","2,14","5,7","7,5","7,9","9,7","12,0","12,14","14,2","14,12"],
+                "yellow":["1,5","1,9","3,7","5,1","5,13","7,3","7,11","9,1","9,13","11,7","13,5","13,9"],
+                "blue":["1,7","3,3","3,11","5,5","5,9","7,1","7,13","9,5","9,9","11,3","11,11","13,7"],
+                "green":[ "0,4","0,10","1,1","1,13","2,6","2,8","4,0","4,14","6,2","6,12","8,2","8,12","10,0","10,14","12,6","12,8","13,1","13,13","14,4","14,10"]},
+                {"red":[ "0,5","0,9","1,6","1,8","5,6","5,8","6,1","6,5","6,9","6,13","8,1","8,5","8,9","8,13","9,6","9,8","13,6","13,8","14,5","14,9"],
+                "yellow":["2,7","5,5","5,9","7,2","7,12","9,5","9,9","12,7"],
+                "blue":["2,2","2,12","3,3","3,11","4,4","4,9","10,4","10,10","11,3","11,11","12,2","12,12"],
+                "green":["0,0","0,14","1,1","1,13","2,3","2,11","3,2","3,12","5,2","5,12","9,2","9,12","11,2","11,12","12,3","12,11","13,1","13,13","14,0","14,14"]},
+                {"red":["0,10","3,0","3,6","3,12","3,14","6,14","8,14","11,0","11,8","11,12","11,14","14,10"],
+                "yellow":["5,3","5,11","10,4","10,10"],
+                "blue":["0,4","1,7","2,6","3,2","6,0","8,0","8,5","8,9","11,2","12,8","13,7","14,4"],
+                "green":["1,0","1,14","7,3","7,11","13,0","13,14"]}
+    ]
+    num = randint(0,(len(Lista_diseños)-1))
+    Tablero=(Lista_diseños[num])
 
-    num = randint(0,(len(Lista_Tableros)-1))
-    tablero_random=(Lista_Tableros[num])
+    #Primero se ve cual diseño se va a usar
+    for x in range(15):         #por ejemplo
+        for y in range(15):
+            coordenada=str(x)+","+str(y)
+            if(coordenada) in Lista_diseños[num]["red"]:
+                Tablero[coordenada]="red"
+            elif(coordenada) in Lista_diseños[num]["yellow"]:
+                 Tablero[coordenada]="yellow"
+            elif(coordenada) in  Lista_diseños[num]["blue"]:
+                 Tablero[coordenada]="blue"
+            elif(coordenada) in  Lista_diseños[num]["green"]:
+                 Tablero[coordenada]="green"
+            else:
+                Tablero[coordenada]="white"
+
+
     for x in range(15):
         for y in range(15):
             coord = (x,y)
             Pos_Dicc = str(x) + ',' + str(y)
-            Dicc[coord][1] = tablero_random[Pos_Dicc]
-            if str(tablero_random[Pos_Dicc]) == "white":
+            Dicc[coord][1] = Tablero[Pos_Dicc]
+            if str(Tablero[Pos_Dicc]) == "white":
                     window[coord].update(button_color=('Black',"#2B2B28"))
             else:
-                window[coord].update(button_color=('Black',str(tablero_random[Pos_Dicc])))
+                window[coord].update(button_color=('Black',str(Tablero[Pos_Dicc])))
 
     return Dicc
 
