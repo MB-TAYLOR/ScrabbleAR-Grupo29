@@ -57,7 +57,7 @@ def Tabla():
 
     sg.set_options(element_padding=(0, 0))
 
-    layout: list = [[sg.Button(button_text="Total",size=(17,2),pad=((0,14),(0,0)),key="Total"),sg.Button(button_text="Facil",size=(17,2),pad=((0,14),(0,0)),key="Facil"),sg.Button(button_text="Normal",size=(17,2),pad=((0,14),(0,0)),key="Normal"),sg.Button(button_text="Dificil",size=(17,2),pad=((0,14),(0,0)),key="Dificil"),sg.Button(button_text="Personalizada",size=(17,2),pad=((0,14),(0,0)),key="Personalizada")],
+    layout: list = [[sg.Button(button_text="Total",size=(17,2),pad=((0,14),(0,0)),key="Total"),sg.Button(button_text="Facil",size=(17,2),pad=((0,14),(0,0)),key="Facil"),sg.Button(button_text="Normal",size=(17,2),pad=((0,14),(0,0)),key="Normal"),sg.Button(button_text="Dificil",size=(17,2),pad=((0,14),(0,0)),key="Dificil"),sg.Button(button_text="Personalizado",size=(17,2),pad=((0,14),(0,0)),key="Personalizado")],
                      [sg.Table(values=data_inicial,
                             key='info',
                             headings=header_list,
