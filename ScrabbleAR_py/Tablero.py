@@ -194,8 +194,6 @@ def rutas_letras_CPU(Dicc_letra_puntajes):
     for imagen in letras_rutas_CPU:
         Dicc_letras_rutas_CPU[imagen]=corrector_paths(carpeta_imagen+"FichasCPU"+chr(92)+ruta_imagen_CPU[x])
         x=x+1
-    print(ruta_imagen_CPU)
-    print(Dicc_letras_rutas_CPU)
     Dicc_Actual_Punto_Ficha_CPU={}
     for x in Dicc_letra_puntajes:
         clave_Dicc_letras_rutas_CPU=x+str(Dicc_letra_puntajes[x])
