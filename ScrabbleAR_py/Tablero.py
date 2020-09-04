@@ -105,10 +105,11 @@ def Agregar_Datos_TabladePosiciones(Dificultad,Usuario,PTU):
     Today = Today.strftime("%d/%m/%Y") # dd/mm/YY
     Lista.append([Usuario,PTU,Today,Dificultad])
     for row in reader:
-        if Dificultad == row[3]:
-            Lista.append(row)
-        else:
-            Data_total.append(row)
+        if row != []:
+            if Dificultad == row[3]:
+                Lista.append(row)
+            else:
+                Data_total.append(row)
     Archi.close()
     Lista = sorted(Lista,key=lambda x:int(x[1]),reverse=True)
     Lista.remove(Lista[10])
