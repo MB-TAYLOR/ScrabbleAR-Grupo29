@@ -31,7 +31,7 @@ def Tabla():
                     data_normal.append(row)
                 elif row[3] == 'Dificil':
                     data_dificil.append(row)
-                elif row[3] == 'Personalizada':
+                elif row[3] == 'Personalizado':
                     data_personalizada.append(row)
     for x in range(10):
         data_inicial[x].extend([["-"],["-"],["-"],["--/--/--"],["-"]])
@@ -87,7 +87,7 @@ def Tabla():
             DataMod(window,data_normal)
         elif event == 'Dificil':
             DataMod(window,data_dificil)
-        elif event == 'Personalizada':
+        elif event == 'Personalizado':
             DataMod(window,data_personalizada)
     window.close()
     return event
