@@ -1179,7 +1179,7 @@ def genero_Tablero():
                     if(Turnos_Disponibles == 0):
                         window["Intercambiar fichas"].update("Terminar\nPartida")
                 else:
-                    if(contador_Turnos_CPU>=10 and (CFT <= 50)):
+                    if(contador_Turnos_CPU>=5 and (CFT <= 80)):
                         Desabilitar_Botones(window)
                         event_popup3=sg.popup_yes_no("¿Desea Terminar la partida y definir al ganador?",title='Aviso',keep_on_top=True)
                         Habilitar_Botones(window)
@@ -1187,7 +1187,7 @@ def genero_Tablero():
                             terminacion_Manual_Usuario=True
                     else:
                         Desabilitar_Botones(window)
-                        sg.popup("Debes de jugar almenos 10 rondas con el CPU y deben quedar 50 fichas o menos  para finalizar la partida.\n\nRondas actuales : "+str(contador_Turnos_CPU),"Fichas restantes : "+str(CFT),title='Aviso',keep_on_top=True)
+                        sg.popup("Debes de jugar almenos 5 rondas con el CPU y deben quedar 80 fichas o menos  para finalizar la partida.\n\nRondas actuales : "+str(contador_Turnos_CPU),"Fichas restantes : "+str(CFT),title='Aviso',keep_on_top=True)
                         Habilitar_Botones(window)
 
 
