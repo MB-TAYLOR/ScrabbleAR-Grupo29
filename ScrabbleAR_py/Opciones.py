@@ -9,14 +9,10 @@ except ModuleNotFoundError:
     print("Error ,ejecute el  programa desde 'ScrabbleAR.py'")
     sys.exit()
 
-Error_Op = True
-
 def Primer_Cargar(values,window,Dicc_Bolsa,letra_Seleccionada):
-    global Error_Op
     '''Carga por primera vez los datos de el Archivo_Opciones, devuelve values y Dicc_Bolsa'''
     arch = open(corrector_paths('ScrabbleAR_Datos\Archivo_Opciones.csv'),'r')
     reader = csv.reader(arch)
-    Error_Op = False
     for row in reader:
         if (len(row) > 0):
             if (row[0] == 'True'):
@@ -24,13 +20,13 @@ def Primer_Cargar(values,window,Dicc_Bolsa,letra_Seleccionada):
                 values[3] = row[3]
                 values[4] = row[4]
                 if (values[2] == 'True'):
-                    window['Facil'].update(values[0])
+                    window['Facil'].update(True)
                 elif(values[3] == 'True'):
-                    window['Normal'].update(values[3])
+                    window['Normal'].update(True)
                 elif(values[4] == 'True'):
-                    window['Dificil'].update(values[4])
+                    window['Dificil'].update(True)
                 else:
-                    window['Personalizado'].update(values[5])
+                    window['Personalizado'].update(True)
                 values[6] = row[6]
                 window['Lote1'].update(values[6])
                 values[7] = row[7]
@@ -71,17 +67,18 @@ def Cargar(values,window,Dicc_Bolsa,letra_Seleccionada):
     for row in reader:
         if (len(row) > 0):
             if (row[1] == values['Usuario']):
+                window['Usuario'].update(row[1])
                 values['Facil'] = row[2]
                 values['Normal'] = row[3]
                 values['Dificil'] = row[4]
                 if (values['Facil'] == 'True'):
-                    window['Facil'].update(values['Facil'])
+                    window['Facil'].update(True)
                 elif(values['Normal'] == 'True'):
-                    window['Normal'].update(values['Normal'])
+                    window['Normal'].update(True)
                 elif(values['Dificil'] == 'True'):
-                    window['Dificil'].update(values['Dificil'])
+                    window['Dificil'].update(True)
                 else:
-                    window['Personalizado'].update(values['Personalizado'])
+                    window['Personalizado'].update(True)
                 values['Lote1'] = row[6]
                 window['Lote1'].update(values['Lote1'])
                 values['Lote2'] = row[7]
@@ -388,14 +385,18 @@ def Contabilizar_Fichas(Dicc_Bolsa):
         Cant_Total = Cant_Total + Cant
     return Cant_Total
 
-def Cargar_Perfil(Lista,Dicc_Bolsa,letra_Seleccionada,window):
+def Update_Listbox(Lista):
     Lista_Usuarios = []
     for i in Lista:
-        if (i['Actual'] != 'True'):
+        if (str(i['Actual']) != 'True'):
             Lista_Usuarios.append(i['Usuario'])
         else:
             Lista_Usuarios.append('*'+i['Usuario'])
-    window_cargar = sg.Window('Cargar',[[sg.Listbox(Lista_Usuarios,size=(20, 10))],[sg.Button('Cargar'),sg.Button('Eliminar'),sg.Exit('Salir')]])
+    return Lista_Usuarios
+
+def Cargar_Perfil(Lista,Dicc_Bolsa,letra_Seleccionada,window):
+    Lista_Usuarios = Update_Listbox(Lista)
+    window_cargar = sg.Window('Cargar',[[sg.Listbox(Lista_Usuarios,size=(20, 10),key='UsuariosL')],[sg.Button('Cargar'),sg.Button('Eliminar'),sg.Exit('Salir')]])
     while True:
         event_cargar,values_cargar = window_cargar.read()
 
@@ -403,10 +404,10 @@ def Cargar_Perfil(Lista,Dicc_Bolsa,letra_Seleccionada,window):
             playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
             break
 
-        if values_cargar[0] != []: #Si selecciono algo:
+        if values_cargar['UsuariosL'] != []: #Si selecciono algo:
 
-            values_cargar[0][0] = values_cargar[0][0].strip('*')
-            Jugador_Seleccionado = list(filter(lambda jug:values_cargar[0][0].strip() == jug['Usuario'],Lista))
+            values_cargar['UsuariosL'][0] = values_cargar['UsuariosL'][0].strip('*')
+            Jugador_Seleccionado = list(filter(lambda jug:values_cargar['UsuariosL'][0].strip() == jug['Usuario'],Lista))
 
             if (event_cargar == 'Cargar'):
                 Lista.pop(Lista.index(Jugador_Seleccionado[0]))
@@ -428,6 +429,8 @@ def Cargar_Perfil(Lista,Dicc_Bolsa,letra_Seleccionada,window):
                 else:
                     playsound(corrector_paths(r'ScrabbleAR_Sonidos\Error_Opciones.mp3'),block=bloqueo_sonido())
                     sg.popup('No puedes eliminar el ultimo perfil!',background_color='#B91B1B',title='Aviso',keep_on_top=True)
+            Lista_Usuarios = Update_Listbox(Lista)
+            window_cargar['UsuariosL'].update(Lista_Usuarios)
         else:
             playsound(corrector_paths(r'ScrabbleAR_Sonidos\Error_Opciones.mp3'),block=bloqueo_sonido())
             sg.popup('Tienes que seleccionar un perfil!',title='Aviso',background_color='#B91B1B',keep_on_top=True)
