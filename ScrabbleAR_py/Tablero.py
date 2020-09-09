@@ -68,6 +68,7 @@ def resolucion_adaptable():
     return(size,subsample)
 
 def Habilitar_Deshabilitar_Botones(window,estado):
+    estado = not estado
     window['Ayuda'].update(disabled=estado)
     window['Mostrar'].update(disabled=estado)
     window['Rotar'].update(disabled=estado)
@@ -306,26 +307,24 @@ def Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT,Lista_TP):
             tp = 'Verbos\n'
         TDP = TDP + tp
     TDP = TDP.strip('\n')
+    print(TDP)
 
-    framePuntos = [[sg.Text('A  |  '+str(Dicc_Puntajes['A']),pad=((5,5),(3,3)),font='sitka'),sg.Text('Ñ  |  '+str(Dicc_Puntajes['Ñ']),pad=((30,5),(3,3)),font='sitka')],
-                   [sg.Text('B  |  '+str(Dicc_Puntajes['B']),pad=((5,5),(3,3)),font='sitka'),sg.Text('O  |  '+str(Dicc_Puntajes['O']),pad=((29,5),(3,3)),font='sitka')],
-                   [sg.Text('C  |  '+str(Dicc_Puntajes['C']),pad=((4,5),(3,3)),font='sitka'),sg.Text('P  |  '+str(Dicc_Puntajes['P']),pad=((30,5),(3,3)),font='sitka')],
-                   [sg.Text('D  |  '+str(Dicc_Puntajes['D']),pad=((4,5),(3,3)),font='sitka'),sg.Text('Q  |  '+str(Dicc_Puntajes['Q']),pad=((29,5),(3,3)),font='sitka')],
-                   [sg.Text('E  |  '+str(Dicc_Puntajes['E']),pad=((5,5),(3,3)),font='sitka'),sg.Text('R  |  '+str(Dicc_Puntajes['R']),pad=((30,5),(3,3)),font='sitka')],
-                   [sg.Text('F  |  '+str(Dicc_Puntajes['F']),pad=((6,5),(3,3)),font='sitka'),sg.Text('S  |  '+str(Dicc_Puntajes['S']),pad=((30,5),(3,3)),font='sitka')],
-                   [sg.Text('G  |  '+str(Dicc_Puntajes['G']),pad=((4,5),(3,3)),font='sitka'),sg.Text('T  |  '+str(Dicc_Puntajes['T']),pad=((32,5),(3,3)),font='sitka')],
-                   [sg.Text('H  |  '+str(Dicc_Puntajes['H']),pad=((5,5),(3,3)),font='sitka'),sg.Text('U  |  '+str(Dicc_Puntajes['U']),pad=((30,5),(3,3)),font='sitka')],
-                   [sg.Text('I  |  '+str(Dicc_Puntajes['I']),pad=((13,5),(3,3)),font='sitka'),sg.Text('V  |  '+str(Dicc_Puntajes['V']),pad=((31,5),(3,3)),font='sitka')],
-                   [sg.Text('J  |  '+str(Dicc_Puntajes['J']),pad=((8,5),(3,3)),font='sitka'),sg.Text('W  |  '+str(Dicc_Puntajes['W']),pad=((27,5),(3,3)),font='sitka')],
-                   [sg.Text('K  |  '+str(Dicc_Puntajes['K']),pad=((5,5),(3,3)),font='sitka'),sg.Text('X  |  '+str(Dicc_Puntajes['X']),pad=((30,5),(3,3)),font='sitka')],
-                   [sg.Text('L  |  '+str(Dicc_Puntajes['L']),pad=((7,5),(3,3)),font='sitka'),sg.Text('Y  |  '+str(Dicc_Puntajes['Y']),pad=((32,5),(3,3)),font='sitka')],
-                   [sg.Text('M  |  '+str(Dicc_Puntajes['M']),pad=((3,5),(3,3)),font='sitka'),sg.Text('Z  |  '+str(Dicc_Puntajes['Z']),pad=((32,5),(3,3)),font='sitka')],
-                   [sg.Text('N  |  '+str(Dicc_Puntajes['N']),pad=((5,5),(3,3)),font='sitka')] ]
-
+    lista_framePuntos = [' A','Ñ','B','O','C','P','D','Q','E','R','F','S','G','T','H','U',' I ','V','J','W','K','X','L',' Y','M','Z','N']
+    framePuntos = ''
+    par = False
+    for letra in lista_framePuntos:
+        key = letra.strip(' ')
+        fp1 =  str(letra)
+        fp2 =  str(Dicc_Puntajes[key])
+        framePuntos = framePuntos + fp1 + ' | ' + fp2 + '    '
+        if par:
+            framePuntos = framePuntos + ' \n '
+        par = not par
+    print(framePuntos)
 
     layout = [[sg.Frame('Dificultad',[[sg.Text(Dificultad,font='sitka')]],pad =((50,0),(15,5)),font=("impact",16))],
               [sg.Frame('Tipos de palabra',[[sg.Text(TDP,font='sitka')]],pad =((50,0),(5,5)),font=("impact",13))],
-              [sg.Frame('Fichas | Puntos',framePuntos,pad =((50,0),(5,5)),font=("impact",15))],
+              [sg.Frame('Fichas | Puntos',[[sg.Text(framePuntos,font='sitka')]],pad =((50,0),(5,5)),font=("impact",15))],
               [sg.Text('Cantidad de fichas: '+str(CFT),key='CantFichas',pad =((50,0),(5,5)),font=("sitka",13),relief='groove')]]
     return layout
 
