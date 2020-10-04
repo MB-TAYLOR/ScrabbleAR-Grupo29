@@ -73,6 +73,7 @@ def Tabla():
 
 
     window = sg.Window('Top',layout,location=(200,50),size=(797,600),finalize=True)
+    sg.popup('Presiona una categoria para visualizar el top deseado',custom_text="Ok",title='Aviso',keep_on_top=True)
     while True:
         event, values = window.read()
         playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
