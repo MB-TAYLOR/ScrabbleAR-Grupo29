@@ -1,4 +1,3 @@
-import json
 import PySimpleGUI as sg
 from ScrabbleAR_py.Opciones import Ventana_Opciones
 from ScrabbleAR_py.TabladePosiciones import Tabla
@@ -47,7 +46,7 @@ def establezco_PP():
 #Aplico y muestro
 
     window = sg.Window('Pantalla Principal',diseño,location=(540,100),size=(800,650))
-    boton_cliqueado,datos_ingresados=window.Read()
+    boton_cliqueado=window.Read()[0]
     playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
     while True:
         if boton_cliqueado in(None,'SALIR'):

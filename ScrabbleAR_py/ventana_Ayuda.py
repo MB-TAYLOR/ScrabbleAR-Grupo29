@@ -42,7 +42,7 @@ def Ayuda():
 
     window = sg.Window('Ayuda',Ventana,location=(540,100),size=(500,650),finalize=True)
     while True:
-        event,values=window.Read()
+        event=window.Read()[0]
         playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'),block=bloqueo_sonido())
         if(event in (None,"Salir")):
             playsound(corrector_paths(r'ScrabbleAR_Sonidos\Click.mp3'))

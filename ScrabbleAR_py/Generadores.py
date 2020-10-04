@@ -12,7 +12,6 @@ def bloqueo_sonido():
     else:
         return False
 def corrector_paths(path):
-    sistema_Operativo=platform.system()
     path_base=os.getcwd()
     path_add=path.split(chr(92))
     path=os.path.join(path_base,*path_add)

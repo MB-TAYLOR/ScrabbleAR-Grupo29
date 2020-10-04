@@ -307,7 +307,7 @@ def Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT,Lista_TP):
             tp = 'Verbos\n'
         TDP = TDP + tp
     TDP = TDP.strip('\n')
-    print(TDP)
+
 
     lista_framePuntos = [' A','Ñ','B','O','C','P','D','Q','E','R','F','S','G','T','H','U',' I ','V','J','W','K','X','L',' Y','M','Z','N']
     framePuntos = ''
@@ -320,7 +320,7 @@ def Layout_Columna_Conf(Dicc_Puntajes,Dificultad,CFT,Lista_TP):
         if par:
             framePuntos = framePuntos + ' \n '
         par = not par
-    print(framePuntos)
+
 
     layout = [[sg.Frame('Dificultad',[[sg.Text(Dificultad,font='sitka')]],pad =((50,0),(15,5)),font=("impact",16))],
               [sg.Frame('Tipos de palabra',[[sg.Text(TDP,font='sitka')]],pad =((50,0),(5,5)),font=("impact",13))],

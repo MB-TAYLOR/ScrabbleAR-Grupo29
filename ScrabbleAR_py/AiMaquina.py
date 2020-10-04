@@ -1,6 +1,5 @@
 import itertools as it
 from pattern.es import spelling,lexicon,parse
-import random
 
 Tipo= {'adj':["AO", "JJ","AQ","DI","DT"],
 'sus':["NC", "NCS","NCP", "NNS","NP", "NNP","W"],#Revisar volver a comprobar en facil , primero en spell y lexi luego en sus
